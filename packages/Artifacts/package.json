@@ -1,0 +1,19 @@
+{
+  "name": "artifacts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "eslint": "^5.0.1",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "mocha": "^5.2.0"
+  }
+}

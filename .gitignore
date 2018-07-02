@@ -1,0 +1,12 @@
+build/
+.DS_Store
+node_modules/
+ipfs/
+.nyc_output
+coverage/
+.idea/
+node_modules/
+docs/
+test/TestArtifactsModule/contracts/*.json
+/dist/*
+package-lock.json

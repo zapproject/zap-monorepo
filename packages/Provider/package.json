@@ -1,0 +1,24 @@
+{
+  "name": "provider",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "arbiter": "^1.0.0",
+    "bondage": "^1.0.0",
+    "dispatch": "^1.0.0",
+    "eslint": "^5.0.1",
+    "path": "^0.12.7",
+    "registry": "^1.0.0",
+    "web3": "^1.0.0-beta.34"
+  },
+  "devDependencies": {
+    "mocha": "^5.2.0"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "name": "bondage",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "basecontract": "^1.0.0",
+    "eslint": "^5.0.1",
+    "path": "^0.12.7",
+    "web3": "^1.0.0-beta.34"
+  },
+  "devDependencies": {
+    "mocha": "^5.2.0"
+  }
+}
