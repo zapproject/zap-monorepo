@@ -1,5 +1,5 @@
 {
-  "name": "dispatch",
+  "name": "@zap/dispatch",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,12 +10,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "basecontract": "^1.0.0",
-    "eslint": "^5.0.1",
+    "@zap/basecontract": "^1.0.0",
     "path": "^0.12.7",
     "web3": "^1.0.0-beta.34"
   },
   "devDependencies": {
-    "mocha": "^5.2.0"
+    "@types/node": "^10.5.1",
+    "mocha": "^5.2.0",
+    "tsc": "^1.20150623.0",
+    "tslint": "^5.10.0",
+    "typescript": "^2.9.2"
   }
 }

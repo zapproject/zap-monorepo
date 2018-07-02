@@ -1,6 +1,6 @@
 const assert = require('assert');
 const Curve = require('./Curve');
-const Arbiter = require('');
+const Arbiter = require('packages/Provider/src/index');
 const Dispatch = require('./../contracts/Dispatch');
 const Registry = require('./../contracts/Registry');
 const Bondage = require('./../contracts/Bondage');
