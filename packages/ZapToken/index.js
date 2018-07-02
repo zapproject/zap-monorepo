@@ -1,0 +1,34 @@
+const basecontract = require('basecontract');
+
+class ZapToken extends basecontract {
+
+    constructor({networkId=null,networkProvider=null}={}){
+        super({contract:"ZapToken",networkId,networkProvider});
+    }
+
+    async balanceOf(address) {
+        let balance = await this.contract.methods.balanceOf(address).call();
+        return fromBase(balance);
+    }
+
+    async send({destination, amount, from}) {
+        let bigAmount = toBase(amount)
+        return await this.contract.methods.transfer(destination, bigAmount).send({from});
+    }
+
+    async allocate({to, amount, from}) {
+        let bigAmount = toBase(amount)
+        return await this.contract.methods.allocate(to, bigAmount).send({from: from});
+    }
+
+    async approve({address, amount, from}) {
+        let bigAmount = toBase(amount)
+        const success = await this.contract.methods.approve(address, bigAmount).send({from: from});
+        if (!success) {
+            throw new Error('Failed to approve Bondage transfer');
+        }
+        return success;
+    }
+}
+
+module.exports = ZapToken;
