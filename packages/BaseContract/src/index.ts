@@ -1,9 +1,10 @@
 const assert = require("assert");
 const Web3 = require("web3");
 const Artifacts = require("artifacts");
-class Base {
+import {baseContractType} from "./types";
 
-    constructor({contract,networkId,provider}) {
+class Base {
+    constructor({contract,networkId,provider}:baseContractType) {
         try {
             let artifact = Artifacts[contract];
             this.provider = provider ||

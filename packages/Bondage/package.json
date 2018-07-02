@@ -2,7 +2,7 @@
   "name": "@zap/bondage",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "mocha"
   },
@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "@zap/basecontract": "^1.0.0",
+    "@zap/utils": "^1.0.0",
     "path": "^0.12.7",
     "web3": "^1.0.0-beta.34"
   },

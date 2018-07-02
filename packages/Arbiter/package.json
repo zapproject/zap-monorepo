@@ -10,7 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@zap/basecontract": "^1.0.0"
+    "@zap/basecontract": "^1.0.0",
+    "@zap/utils": "^1.0.0",
+    "web3": "^1.0.0-beta.34"
   },
   "devDependencies": {
     "@types/node": "^10.5.1",

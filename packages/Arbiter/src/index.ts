@@ -1,28 +1,14 @@
 const basecontract = require('basecontract');
+import {SubscriptionInit,SubscriptionEnd} from "./types"
 class Arbiter extends basecontract {
 
     constructor({networkId=null,networkProvider=null}={}){
         super({contract:'Arbiter',networkId,networkProvider});
     }
 
-    /**
-     *
-     * @param provider
-     * @param endpoint
-     * @param endpointParams
-     * @param blocks
-     * @param publicKey
-     * @param from
-     * @param gas
-     * @returns {Promise<any>}
-     */
     async initiateSubscription(
-        {provider, endpoint, endpointParams, blocks, publicKey, from, gas}) {
+        {provider, endpoint, endpointParams, blocks, publicKey, from, gas} : SubscriptionInit) {
         try {
-            // Make sure we could parse it correctly
-            if (endpointParams instanceof Error) {
-                throw endpointParams;
-            }
             for (let i in endpointParams){
                 endpointParams[i] = this.web3.utils.utf8ToHex(endpointParams[i]);
             }
@@ -38,7 +24,7 @@ class Arbiter extends basecontract {
         }
     }
 
-    async endSubscription({provider, endpoint, from, gas}) {
+    async endSubscription({provider, endpoint, from, gas}:SubscriptionEnd) {
         try {
             return await this.contract.methods.endSubscriptionSubscriber(
                 provider,
@@ -54,7 +40,7 @@ class Arbiter extends basecontract {
      * @param filters
      * @param callback
      */
-    listenSubscriptionEnd(filters, callback){
+    listenSubscriptionEnd(filters:object, callback:Function){
         try {
             // Specify filters and watch Incoming event
             let filter = this.contract.events
@@ -72,7 +58,7 @@ class Arbiter extends basecontract {
      * @param filters
      * @param callback
      */
-    listenSubscriptionStart(filters, callback){
+    listenSubscriptionStart(filters, callback:Function){
         try {
             // Specify filters and watch Incoming event
             let filter = this.contract.events.DataPurchase(
@@ -89,7 +75,7 @@ class Arbiter extends basecontract {
      * Listen to all events
      * @param callback
      */
-    listen(callback){
+    listen(callback:Funtion){
         this.contract.events.allEvents({fromBlock: 0, toBlock: 'latest'},callback);
     }
 
