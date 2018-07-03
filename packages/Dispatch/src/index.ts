@@ -1,13 +1,13 @@
 const basecontract = require('basecontract');
 const Artifacts = require("artifacts");
-
+import {QueryArgs,ResponseArgs} from './types'
 class ZapDispatch extends basecontract {
 
     constructor({networkId=null,networkProvider=null}={}){
         super({contract:"Dispatch",networkId,networkProvider});
     }
 
-    async queryData({provider, query, endpoint, params, onchainProvider, onchainSubscriber}){
+    async queryData({provider, query, endpoint, params, onchainProvider, onchainSubscriber}:QueryArgs){
         let resultQuery = await this.contract.methods.query(
             provider,
             query,
@@ -19,7 +19,7 @@ class ZapDispatch extends basecontract {
     }
 
 
-    async respond({queryId, responseParams, dynamic, from}) {
+    async respond({queryId, responseParams, dynamic, from}:ResponseArgs) {
         if (dynamic){
             return this.contract.methods.respondBytes32Array(
                 queryId,
@@ -65,25 +65,29 @@ class ZapDispatch extends basecontract {
      * @param filters event filters
      * @param callback callback function that will be called after event received
      */
-    listen(filters, callback) {
+    listen(filters :object ={}, callback:Function) {
         this.contract.events.allEvents(
             filters,
             { fromBlock: filters.fromBlock ? filters.fromBlock : 0, toBlock: 'latest' },
             callback);
     }
-    listenIncoming(filters, callback){
+    listenIncoming(filters:object ={}, callback:Function){
         this.contract.events.Incoming(filters, callback);
     }
 
-    listenFulfillQuery(filters, callback){
+    listenFulfillQuery(filters:object={}, callback:Function){
         this.contract.events.FulfillQuery(filters, callback);
     }
 
-    listenOffchainResponse(filters, callback){
+    listenOffchainResponse(filters:object={}, callback:Function){
         this.contract.events.OffchainResponse(filters, callback);
     }
 
 
+
 }
 
-module.exports = new ZapDispatch();
+module.exports = {
+  ZapDispatch,
+  DispatchTypes :"./types"
+}

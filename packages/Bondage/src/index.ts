@@ -1,16 +1,16 @@
 const basecontract=  require('basecontract')
-import {BondageArgs} from "./types";
-import {toBase} from '@zap/utils'
+import {BondArgs,UnbondArgs,BondageArgs} from "./types";
+import {toBase} from '@zap/utils';
 import assert;
 
-class Bondage extends basecontract {
+class ZapBondage extends basecontract {
 
 
     constructor({networkId=null,networkProvider=null}={}){
         super({contract:"Bondage",networkId,networkProvider});
     }
     // Do a bond to a ZapOracle's endpoint
-    async bond({provider, endpoint, zapNum, from, gas}:BondageArgs) {
+    async bond({provider, endpoint, zapNum, from, gas}:BondArgs) {
         try{
             assert(zapNum && zapNum>0,"Zap to Bond must be greater than 0");
             let bondResult = await this.contract.bond(
@@ -29,7 +29,7 @@ class Bondage extends basecontract {
     }
 
 
-    async unbond({provider, endpoint, dots, from, gas}:BondageArgs) {
+    async unbond({provider, endpoint, dots, from, gas}:UnbondArgs) {
         return await this.contract.methods.unbond(
             provider,
             this.web3.utils.utf8ToHex(endpoint),
@@ -62,11 +62,11 @@ class Bondage extends basecontract {
         ).call();
     }
 
-    async currentCostOfDot({provider, endpoint, totalBound}:BondageArgs){
+    async currentCostOfDot({provider, endpoint, dots}:BondageArgs){
         return this.contract.methods.currentCostOfDot(
             provider,
             this.web3.utils.utf8ToHex(endpoint),
-            this.web3.utils.toBN(totalBound)
+            this.web3.utils.toBN(dots)
         ).call();
     }
 
@@ -106,4 +106,7 @@ class Bondage extends basecontract {
 
 }
 
-module.exports = new Bondage();
+module.exports = {
+   ZapBondage,
+   BondageTypes : "./types"
+}

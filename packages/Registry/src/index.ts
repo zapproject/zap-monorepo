@@ -1,6 +1,7 @@
 const Web3 = require('web3');
 const web3 = new Web3();
-const BaseContract = require("BaseContract")
+import BaseContract;
+import {InitProvider, InitCurve, Curve, NextEndpoint, EndpointParams} from "./types"
 
 class ZapRegistry extends BaseContract {
 
@@ -8,7 +9,7 @@ class ZapRegistry extends BaseContract {
         super({contract:"Registry",networkId,networkProvider});
     }
 
-    async initiateProvider({public_key, title, endpoint, endpoint_params, from, gas}) {
+    async initiateProvider({public_key, title, endpoint, endpoint_params, from, gas}:InitProvider) {
         try {
             return await this.contract.methods.initiateProvider(
                 public_key,
@@ -25,7 +26,7 @@ class ZapRegistry extends BaseContract {
         }
     }
 
-    async initiateProviderCurve({endpoint, curve, from, gas}) {
+    async initiateProviderCurve({endpoint, curve, from, gas}:InitCurve) {
         try {
             let convertedConstants = curve.constants.map(item => {
                 return web3.utils.toHex(item);
@@ -50,7 +51,7 @@ class ZapRegistry extends BaseContract {
         }
     }
 
-    async setEndpointParams({endpoint, params, from, gas}) {
+    async setEndpointParams({endpoint, params, from, gas}:EndpointParams) {
         try {
             let endpoint_params = [];
             params.forEach(el => endpoint_params.push(web3.utils.utf8ToHex(el)));
@@ -65,16 +66,11 @@ class ZapRegistry extends BaseContract {
         }
     }
 
-    async getProviderPublicKey({provider}){
+    async getProviderPublicKey(provider:string):string{
         return await this.contract.methods.getProviderPublicKey(provider).call();
     }
 
-    /**
-     *
-     * @param provider
-     * @returns {Promise<any>}
-     */
-    async getProviderTitle({provider}){
+    async getProviderTitle(provider:string):string{
         return await this.contract.methods.getProviderTitle(provider).call();
     }
 
@@ -83,7 +79,7 @@ class ZapRegistry extends BaseContract {
      * @param provider address
      * @returns {Promise<any>}
      */
-    async getProviderCurve({provider}){
+    async getProviderCurve(provider:string):Curve{
         return await this.contract.methods.getProviderCurve.call(provider).call();
     }
 
@@ -92,7 +88,7 @@ class ZapRegistry extends BaseContract {
      * @param index
      * @returns {Promise<any>}
      */
-    async getNextProvider({index}){
+    async getNextProvider(index:number){
         return await this.contract.methods.getNextProvider(index).call();
     }
 
@@ -103,7 +99,7 @@ class ZapRegistry extends BaseContract {
      * @param index
      * @returns {Promise<any>}
      */
-    async getNextEndpointParams({provider, endpoint, index}){
+    async getNextEndpointParams({provider, endpoint, index}:NextEndpoint){
         return this.contract.methods.getNextEndpointParam(
             provider,
             this.web3.utils.utf8ToHex(endpoint),
@@ -113,18 +109,21 @@ class ZapRegistry extends BaseContract {
 
     // ==== Events ====//
 
-    async listen(filters, callback){
+    async listen(filters:object={}, callback:Function){
         this.contract.events.allEvents(filters, callback);
     }
 
-    async listenNewProvider(filters, callback){
+    async listenNewProvider(filters:object={}, callback:Function){
         this.contract.events.NewProvider(filters, callback);
     }
 
-    async listenNewCurve({provider}, callback){
+    async listenNewCurve({provider}:{provider:string}, callback:Function){
         this.contract.events.NewCurve(provider, callback);
     }
 
 }
 
-module.exports = new ZapRegistry();
+module.exports = {
+  ZapRegistry,
+  RegistryTypes :"./types"
+}

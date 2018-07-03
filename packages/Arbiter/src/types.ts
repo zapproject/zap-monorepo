@@ -16,3 +16,9 @@ export type SubscriptionEnd = {
     gas?:number
 }
 
+export type Filter = {
+    fromBlock ?: number,
+    toBlock ?: number,
+    provider ?: string
+}
+

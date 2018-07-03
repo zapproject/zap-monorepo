@@ -1,6 +1,6 @@
 const basecontract = require('basecontract');
-import {SubscriptionInit,SubscriptionEnd} from "./types"
-class Arbiter extends basecontract {
+import {SubscriptionInit,SubscriptionEnd,Filter} from "./types"
+class ZapArbiter extends basecontract {
 
     constructor({networkId=null,networkProvider=null}={}){
         super({contract:'Arbiter',networkId,networkProvider});
@@ -40,7 +40,7 @@ class Arbiter extends basecontract {
      * @param filters
      * @param callback
      */
-    listenSubscriptionEnd(filters:object, callback:Function){
+    listenSubscriptionEnd(filters:Filter={}, callback:Function){
         try {
             // Specify filters and watch Incoming event
             let filter = this.contract.events
@@ -58,7 +58,7 @@ class Arbiter extends basecontract {
      * @param filters
      * @param callback
      */
-    listenSubscriptionStart(filters, callback:Function){
+    listenSubscriptionStart(filters:Filter ={}, callback:Function){
         try {
             // Specify filters and watch Incoming event
             let filter = this.contract.events.DataPurchase(
@@ -75,11 +75,14 @@ class Arbiter extends basecontract {
      * Listen to all events
      * @param callback
      */
-    listen(callback:Funtion){
+    listen(callback:Function){
         this.contract.events.allEvents({fromBlock: 0, toBlock: 'latest'},callback);
     }
 
 
 }
 
-module.exports =  Arbiter;
+module.exports = {
+  ZapArbiter,
+  ArbiterTypes:"./types"
+}

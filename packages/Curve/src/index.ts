@@ -1,5 +1,5 @@
 class Curve {
-    constructor(constants, parts, dividers) {
+    constructor(constants:Array<number>, parts: Array<number>, dividers: Array<number>) {
         this.constants = constants;
         this.parts = parts;
         this.dividers = dividers;
@@ -33,7 +33,7 @@ class Curve {
     }
 
     // Get the price of a dot at a given totalBound
-    getPrice(total) {
+    getPrice(tota:number) {
         if (total < 0) {
             return 0;
         }
@@ -51,7 +51,7 @@ class Curve {
         return 0;
     }
 
-    _calculateTerm(term, x) {
+    _calculateTerm(term, x:number) {
         let val = 1;
 
         if (term.fn === 0) {
@@ -71,7 +71,7 @@ class Curve {
         return val * term.coef;
     }
 
-    _calculatePolynomial(terms, x) {
+    _calculatePolynomial(terms, x:number) {
         let sum = 0;
 
         for (let i = 0; i < terms.length; i++ ) {
@@ -82,4 +82,7 @@ class Curve {
     }
 }
 
-module.exports = Curve;
+module.exports = {
+    Curve,
+    CurveTypes:"./types"
+};
