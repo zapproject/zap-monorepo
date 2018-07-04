@@ -2,14 +2,14 @@ const {migrate }  = require ('./../node_modules/truffle-core/lib/commands/migrat
 
 const path = require('path');
 const fs = require('fs');
-import { provider, server } from 'ganache-core'
-import { promisify } from 'util'
-import {ganacheServerOptions} from './constants'
+import { provider, server } from 'ganache-core';
+import { promisify } from 'util';
+import {ganacheServerOptions} from './constants';
 const asyncMigrate = promisify(migrate.run);
-const zapContractDir = "./../node_modules/zap_contracts/"
+const zapContractDir = "./../node_modules/zap_contracts/";
 class Bootstrap{
     constructor(dirname:string){
-        this.buildDir = path.join(dirname,'contracts')
+        this.buildDir = path.join(dirname,'contracts');
        // initiate and run ganache server
       const ganacheServer = server(ganacheServerOptions);
        ganacheServer.listen(ganacheServerOptions.port, (err, blockchain) => {
