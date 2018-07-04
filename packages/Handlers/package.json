@@ -1,5 +1,5 @@
 {
-  "name": "@zap/basecontract",
+  "name": "@zap/handlers",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,19 +11,9 @@
   "license": "ISC",
   "dependencies": {
     "@types/node": "^10.5.1",
-    "@zap/utils": "^1.0.0",
     "mocha": "^5.2.0",
-    "path": "^0.12.7",
     "tslint": "^5.10.0",
     "typescript": "^2.9.2",
-    "web3": "^1.0.0-beta.34",
     "zap_contracts": "git+https://github.com/zapproject/zap-ethereum-api.git"
-  },
-  "devDependencies": {
-    "@types/node": "^10.5.1",
-    "mocha": "^5.2.0",
-    "tsc": "^1.20150623.0",
-    "tslint": "^5.10.0",
-    "typescript": "^2.9.2"
   }
 }

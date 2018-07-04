@@ -1,7 +1,7 @@
-##ZAP.JS
+## ZAP.JS
 This monorepo repository includes packages that are published to NPM (todo) and managed independently. 
 
-###Packages
+### Packages
 [@zap/artifacts](/packages/Artifacts) : Contains .json files for mainnet  
 [@zap/basecontract](/packages/BaseContract) : parent class for all contracts class
 

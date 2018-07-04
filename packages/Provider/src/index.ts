@@ -10,7 +10,7 @@ const web3 = new Web3();
 
 class Provider {
 
-    constructor({owner :{owner:string}, handler:{handler:object={}}}) {
+    constructor({owner :{owner:string}, handler:SubscriptionHandler}) {
         this.owner = owner;
         this.handler = handler;
         this.pubkey = this.title = this.curve = null;
@@ -233,7 +233,7 @@ class Provider {
         };
 
         ZapDispatch.listen('Incoming',
-            {id, provider: this.owner, subscriber, fromBlock},
+            {queryId, provider: this.owner, subscriber, fromBlock},
             callback);
     }
 

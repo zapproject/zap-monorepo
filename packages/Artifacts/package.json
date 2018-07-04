@@ -10,9 +10,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/node": "^10.5.1",
     "@zap/utils": "^1.0.0",
+    "mocha": "^5.2.0",
     "path": "^0.12.7",
-    "web3": "^1.0.0-beta.34"
+    "tslint": "^5.10.0",
+    "typescript": "^2.9.2",
+    "web3": "^1.0.0-beta.34",
+    "zap_contracts": "git+https://github.com/zapproject/zap-ethereum-api.git"
   },
   "devDependencies": {
     "@types/node": "^10.5.1",

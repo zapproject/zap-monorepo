@@ -4,15 +4,20 @@
   "description": "",
   "main": "lib/index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "./node_modules/.bin/nyc ./node_modules/.bin/mocha && nyc report --reporter=text-lcov | coveralls"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/node": "^10.5.1",
     "@zap/basecontract": "^1.0.0",
     "@zap/utils": "^1.0.0",
-    "web3": "^1.0.0-beta.34"
+    "mocha": "^5.2.0",
+    "tslint": "^5.10.0",
+    "typescript": "^2.9.2",
+    "web3": "^1.0.0-beta.34",
+    "zap_contracts": "git+https://github.com/zapproject/zap-ethereum-api.git"
   },
   "devDependencies": {
     "@types/node": "^10.5.1",

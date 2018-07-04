@@ -2,7 +2,7 @@
   "name": "@zap/subscriber",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/node": "^10.5.1",
     "@zap/arbiter": "^1.0.0",
     "@zap/bondage": "^1.0.0",
     "@zap/curve": "^1.0.0",
@@ -17,8 +18,12 @@
     "@zap/registry": "^1.0.0",
     "@zap/utils": "^1.0.0",
     "@zap/zaptoken": "^1.0.0",
+    "mocha": "^5.2.0",
     "path": "^0.12.7",
-    "web3": "^1.0.0-beta.34"
+    "tslint": "^5.10.0",
+    "typescript": "^2.9.2",
+    "web3": "^1.0.0-beta.34",
+    "zap_contracts": "git+https://github.com/zapproject/zap-ethereum-api.git"
   },
   "devDependencies": {
     "@types/node": "^10.5.1",
