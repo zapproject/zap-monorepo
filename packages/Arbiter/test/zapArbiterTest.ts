@@ -54,12 +54,8 @@ describe('Arbiter, path to "/src/api/contracts/ZapArbiter"', () => {
       try {
         deployedZapToken = getDeployedContract(testArtifacts['ZapToken'], {id:bootstrap.networkId}, bootstrap.provider);
         deployedZapRegistry = getDeployedContract(testArtifacts['Registry'], {id:bootstrap.networkId}, bootstrap.provider);
-        currentCostStorage = getDeployedContract(testArtifacts['CurrentCost'], {id:bootstrap.networkId}, bootstrap.provider);
         deployedZapBondage = getDeployedContract(testArtifacts['Bondage'],{id:bootstrap.networkId}, bootstrap.provider);
         deployedZapArbiter = getDeployedContract(testArtifacts['Arbiter'], {id:bootstrap.networkId}, bootstrap.provider);
-
-        addressZapArbiter = deployedZapArbiter.address;
-
       } catch (err) {
         throw err;
       }

@@ -10,7 +10,12 @@ const web3 = new Web3();
 
 class Provider {
 
-    constructor({owner :{owner:string}, handler:SubscriptionHandler}) {
+    /**
+     *
+     * @param {any} string
+     * @param {any} any
+     */
+    constructor({owner :{owner:string}, handler:any}) {
         this.owner = owner;
         this.handler = handler;
         this.pubkey = this.title = this.curve = null;
@@ -30,10 +35,10 @@ class Provider {
 
     /**
      *
-     * @param pubkey
-     * @param title
-     * @param endpoint
-     * @param params
+     * @param {string} public_key
+     * @param {string} title
+     * @param {string} endpoint
+     * @param {Array<string>} endpoint_params
      * @returns {Promise<any>}
      */
     async initiate({public_key, title, endpoint, endpoint_params}:InitProvider) {
@@ -53,11 +58,11 @@ class Provider {
 
     /**
      *
-     * @param endpoint
-     * @param constants
-     * @param parts
-     * @param dividers
-     * @returns {Promise<*>}
+     * @param {string} endpoint
+     * @param {number[]} constants
+     * @param {number[]} parts
+     * @param {number[]} dividers
+     * @returns {boolean}
      */
     async initCurve({endpoint, constants, parts, dividers}: InitCurve) :boolean {
         try {
@@ -117,6 +122,11 @@ class Provider {
     }
 
 
+    /**
+     *
+     * @param {string} endpoint
+     * @returns {CurveTypes.Curve}
+     */
     async getProviderCurve({endpoint}: {endpoint:string}):CurveTypes.Curve {
         if (this.curve) return this.curve;
         try {
@@ -130,6 +140,11 @@ class Provider {
     }
 
 
+    /**
+     *
+     * @param {string} endpoint
+     * @returns {number}
+     */
     async getZapBound({endpoint} : {endpoint:string}):number {
         assert(endpoint, 'endpoint required');
         let zapBound = await Bondage.getZapBound(this.owner, endpoint);
@@ -149,9 +164,9 @@ class Provider {
 
     /**
      *
-     * @param endpoint
-     * @param zapNum
-     * @returns {Promise<any>}
+     * @param {string} endpoint
+     * @param {number} zapNum
+     * @returns {number}
      */
     async calcDotsForZap({endpoint, zapNum}:{endpoint:string, zapNum:number}): number {
         let res = await ZapBondage.calcBondRate({
@@ -164,9 +179,8 @@ class Provider {
 
     /**
      *
-     * @param subscriber
-     * @param fromBlock
-     * @returns {Promise<*>}
+     * @param {string} subscriber
+     * @param {number} fromBlock
      */
     async listenSubscribes({subscriber, fromBlock}:{subscriber:string, fromBlock: number}):void {
         let callback = (error, result) => {
@@ -188,9 +202,9 @@ class Provider {
 
     /**
      *
-     * @param subscriber
-     * @param terminator
-     * @param fromBlock
+     * @param {string} subscriber
+     * @param {string} terminator
+     * @param {number} fromBlock
      * @returns {Promise<void>}
      */
     async listenUnsubscribes({subscriber, terminator, fromBlock}:UnsubscribeListen) {
@@ -219,7 +233,7 @@ class Provider {
      * @param from
      * @returns {Promise<void>}
      */
-    async listenQueries({queryId, subscriber, fromBlock}:ListenQuery) {
+    async listenQueries({queryId, subscriber, fromBlock}:ListenQuery) :void {
         let callback = (error, result) => {
             if (error) {
                 console.error(error);
@@ -239,14 +253,14 @@ class Provider {
 
     /**
      *
-     * @param queryId
-     * @param responseParams
-     * @param dynamic
-     * @returns {Promise<void>}
+     * @param {string} queryId
+     * @param {string[]} responseParams
+     * @param {boolean} dynamic
+     * @returns {Promise<any>}
      */
     async respond({queryId, responseParams, dynamic}:Respond){
         try {
-            let res = await Dispatch.respond({queryId, responseParams, dynamic, from: this.owner});
+            let res = await ZapDispatch.respond({queryId, responseParams, dynamic, from: this.owner});
             return res;
         } catch (e){
             console.error(e);

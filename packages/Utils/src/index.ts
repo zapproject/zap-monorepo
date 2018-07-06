@@ -71,4 +71,4 @@ export= {
     Bootstrap : "./testBootstrap",
     testProvider,
     GAS_LIMIT
-}
+  }

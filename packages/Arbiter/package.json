@@ -4,7 +4,8 @@
   "description": "",
   "main": "lib/index.js",
   "scripts": {
-    "test": "./node_modules/.bin/nyc ./node_modules/.bin/mocha && nyc report --reporter=text-lcov | coveralls"
+    "build": "tsc",
+    "test": " mocha 'lib/test/**/*.js' --timeout 100000 --bail --exit"
   },
   "keywords": [],
   "author": "",
@@ -13,7 +14,9 @@
     "@types/node": "^10.5.1",
     "@zap/basecontract": "^1.0.0",
     "@zap/utils": "^1.0.0",
-    "mocha": "^5.2.0",
+    "chai": "^4.1.2",
+    "make-promises-safe": "^1.1.0",
+    "ts-node": "^7.0.0",
     "tslint": "^5.10.0",
     "typescript": "^2.9.2",
     "web3": "^1.0.0-beta.34",
