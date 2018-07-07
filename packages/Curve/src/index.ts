@@ -82,7 +82,6 @@ class Curve {
     }
 }
 
-module.exports = {
-    Curve,
-    CurveTypes:"./types"
+export = {
+    Curve
 };

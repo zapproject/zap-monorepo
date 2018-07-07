@@ -2,16 +2,16 @@
   "name": "@zap/handlers",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "main": "lib/index.js",
+  "scripts": {},
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@types/node": "^10.5.1",
     "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
+    "chai-bignumber": "^2.0.2",
     "make-promises-safe": "^1.1.0",
     "truffle-core": "^4.1.13",
     "ts-node": "^7.0.0",
