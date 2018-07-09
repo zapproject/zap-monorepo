@@ -1,9 +1,9 @@
-const assert = require("assert");
-const Web3 = require("web3");
-const Artifacts = require("artifacts");
+import * as assert from "assert";
+import * as Web3 fro 'web3';
+import Artifacts from "artifacts";
 import {baseContractType} from "./types";
 
-class Base {
+class BaseContract {
     constructor({contract,networkId,provider}:baseContractType) {
         try {
             let artifact = Artifacts[contract];
@@ -22,5 +22,5 @@ class Base {
     }
 }
 
-module.exports = Base;
+export default BaseContract
 

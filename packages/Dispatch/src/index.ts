@@ -1,9 +1,8 @@
-const basecontract = require('basecontract');
-const Artifacts = require("artifacts");
+import {BaseContract,BaseContractType} from '@zap/basecontract';
 import {QueryArgs,ResponseArgs} from './types'
-class ZapDispatch extends basecontract {
+class ZapDispatch extends BaseContract {
 
-    constructor({networkId=null,networkProvider=null}={}){
+    constructor({artifactsDir=null,networkId=null,networkProvider=null}:BaseContractType){
         super({contract:"Dispatch",networkId,networkProvider});
     }
 

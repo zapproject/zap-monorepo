@@ -1,9 +1,10 @@
-const basecontract = require('basecontract');
+import  {BaseContract,BaseContractTypes} from '@zap/basecontract';
 import {SubscriptionInit,SubscriptionEnd,Filter} from "./types"
-class ZapArbiter extends basecontract {
+import {toBN,utf8ToHex} from 'web3-utils';
+class ZapArbiter extends BaseContract {
 
-    constructor({networkId=null,networkProvider=null}={}){
-        super({contract:'Arbiter',networkId,networkProvider});
+    constructor({artifactsDir, networkId,networkProvider}:BaseContractTypes){
+        super({artifactsDir,artifactName:'Arbiter',networkId,networkProvider});
     }
 
     async initiateSubscription(
@@ -81,8 +82,4 @@ class ZapArbiter extends basecontract {
 
 
 }
-
-module.exports = {
-  ZapArbiter,
-  ArbiterTypes:"./types"
-}
+export default ZapArbiter;

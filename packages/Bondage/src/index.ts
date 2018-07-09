@@ -1,13 +1,13 @@
-const basecontract=  require('basecontract')
+import {BaseContract,BaseContractType} from '@zap/basecontract'
 import {BondArgs,UnbondArgs,BondageArgs} from "./types";
 import {toBase} from '@zap/utils';
-import assert;
+import * as assert from 'assert';
 
-class ZapBondage extends basecontract {
+class ZapBondage extends BaseContract {
 
 
-    constructor({networkId=null,networkProvider=null}={}){
-        super({contract:"Bondage",networkId,networkProvider});
+    constructor({artifactsDir=null,artifactName=null,networkId=null,networkProvider=null}:BaseContractType){
+        super({artifactDir,artifactName:"Bondage",networkId,networkProvider});
     }
     // Do a bond to a ZapOracle's endpoint
     async bond({provider, endpoint, zapNum, from, gas}:BondArgs) {
@@ -106,7 +106,7 @@ class ZapBondage extends basecontract {
 
 }
 
-module.exports = {
+export default = {
    ZapBondage,
    BondageTypes : "./types"
 }

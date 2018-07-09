@@ -5,7 +5,7 @@ import {ZapRegistry,RegistryTypes} from "@zap/registry";
 import {ZapBondage, BondageTypes} from "@zap/bondage";
 import {ZapArbiter} from "@zap/arbiter"
 import {InitProvider, InitCurve, UnsubscribeListen, ListenQuery,Respond} from "./types"
-const Web3 = require('web3');
+import * as Web3 from 'web3';
 const web3 = new Web3();
 
 class Provider {
@@ -64,7 +64,7 @@ class Provider {
      * @param {number[]} dividers
      * @returns {boolean}
      */
-    async initCurve({endpoint, constants, parts, dividers}: InitCurve) :boolean {
+    async initCurve({endpoint, constants, parts, dividers}: InitCurve) :Promise<boolean>{
         try {
             assert((constants instanceof Array
                 && parts instanceof Array
@@ -92,7 +92,7 @@ class Provider {
      *
      * @returns {Promise<string>}
      */
-    async getProviderTitle():string {
+    async getProviderTitle():Promise<string> {
         try {
             if (this.title) return this.title;
             let title = await ZapRegistry.getProviderTitle(this.owner);
@@ -127,7 +127,7 @@ class Provider {
      * @param {string} endpoint
      * @returns {CurveTypes.Curve}
      */
-    async getProviderCurve({endpoint}: {endpoint:string}):CurveTypes.Curve {
+    async getProviderCurve({endpoint}: {endpoint:string}):Promise<CurveTypes.Curve> {
         if (this.curve) return this.curve;
         try {
             let curve = await ZapRegistry.getProviderCurve(this.owner, endpoint);
@@ -147,7 +147,7 @@ class Provider {
      */
     async getZapBound({endpoint} : {endpoint:string}):number {
         assert(endpoint, 'endpoint required');
-        let zapBound = await Bondage.getZapBound(this.owner, endpoint);
+        let zapBound = await ZapBondage.getZapBound(this.owner, endpoint);
         return zapBound;
     }
 
@@ -157,7 +157,7 @@ class Provider {
      * @param dots
      * @returns {Promise<number>}
      */
-    async getZapRequired({endpoint, dots}:{endpoint:string,dots:number}):number {
+    async getZapRequired({endpoint, dots}:{endpoint:string,dots:number}):Promise<number> {
         let zapRequired = await ZapBondage.calcZapForDots({provider: this.owner, endpoint, dots});
         return parseInt(zapRequired);
     }
@@ -168,7 +168,7 @@ class Provider {
      * @param {number} zapNum
      * @returns {number}
      */
-    async calcDotsForZap({endpoint, zapNum}:{endpoint:string, zapNum:number}): number {
+    async calcDotsForZap({endpoint, zapNum}:{endpoint:string, zapNum:number}): Promise<number> {
         let res = await ZapBondage.calcBondRate({
             provider: this.owner,
             endpoint,
@@ -182,7 +182,7 @@ class Provider {
      * @param {string} subscriber
      * @param {number} fromBlock
      */
-    async listenSubscribes({subscriber, fromBlock}:{subscriber:string, fromBlock: number}):void {
+    async listenSubscribes({subscriber, fromBlock}:{subscriber:string, fromBlock: number}):Promise<void> {
         let callback = (error, result) => {
             if (error) {
                 console.log(error);
@@ -208,7 +208,7 @@ class Provider {
      * @returns {Promise<void>}
      */
     async listenUnsubscribes({subscriber, terminator, fromBlock}:UnsubscribeListen) {
-        let callback = (error, result) => {
+        let callback = (error:Error, result:string) => {
             if (error) {
                 console.log(error);
             } else {
@@ -233,7 +233,7 @@ class Provider {
      * @param from
      * @returns {Promise<void>}
      */
-    async listenQueries({queryId, subscriber, fromBlock}:ListenQuery) :void {
+    async listenQueries({queryId, subscriber, fromBlock}:ListenQuery) :Promise<void> {
         let callback = (error, result) => {
             if (error) {
                 console.error(error);
@@ -269,5 +269,4 @@ class Provider {
     }
 
 }
-
-module.exports = Provider;
+export default Provider;
