@@ -2,9 +2,6 @@ import {readdirSync} from "fs";
 
 const Web3 = require('web3');
 const web3 = new Web3();
-import {testProvider,GAS_LIMIT} from "./constants"
-import {migrateContracts,startGanacheServer} from './migrations'
-import {basename, join} from "path";
 export const toHex = (str:string) => {
     let hex = '';
     for (let i = 0; i < str.length; i++) {
@@ -50,4 +47,3 @@ return instance;
 
 
 export * from "./migrations"
-export * from "./constants"

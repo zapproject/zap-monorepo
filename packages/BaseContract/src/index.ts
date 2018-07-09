@@ -1,27 +1,26 @@
 import * as assert from "assert";
 import * as Web3 from 'web3';
-import Artifacts from "artifacts";
-import {baseContractType} from "./types";
+import {Artifacts} from "@zap/artifacts";
+import {BaseContractType} from "./types";
+import {getArtifacts} from "@zap/utils"
 
-class BaseContract {
-    constructor({artifactsDir,artifactName,networkId,provider}:baseContractType) {
-      let artifact;
+export class BaseContract {
+    constructor({artifactsDir=null,artifactName,networkId=null,networkProvider=null}:BaseContractType) {
+        let artifact;
         try {
           if(!artifactsDir){
             artifact = Artifacts[artifactName];
           }
           else{
-            let artifacts = contractLoader(artifactsDir)
+            let artifacts = getArtifacts(artifactsDir)
             artifact = artifacts[artifactName];
           }
-          this.provider = provider ||
+          this.provider = networkProvider ||
               new Web3.providers.WebsocketProvider('ws://127.0.0.1:8545');
           //network id default to mainnet
           this.networkId = networkId || 1;
-          this.DEFAULT_GAS = 400000;
-          this.web3 = new Web3(this.provider);
+          this.web3 = new Web3(networkProvider);
           this.contract = new this.web3.eth.Contract(artifact.abi,artifact.networks[this.networkId].address)
-          console.log(this.contract)
 
         } catch (err) {
             throw err;
@@ -29,6 +28,5 @@ class BaseContract {
     }
 }
 
-export default BaseContract ;
 export * from "./types"
 

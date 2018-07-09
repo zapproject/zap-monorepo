@@ -1,21 +1,30 @@
-import {toHex} from "web3-utils";
+import {toHex,utf8ToHex,toBN, hexToUtf8} from "web3-utils";
 import {BaseContract,BaseContractType} from "@zap/basecontract";
 import {CurveType} from "@zap/curve";
 import {GAS_LIMIT} from "@zap/utils"
 import {InitProvider, InitCurve, NextEndpoint, EndpointParams} from "./types"
-
-class ZapRegistry extends BaseContract {
+console.log(BaseContract)
+export class ZapRegistry extends BaseContract {
 
     constructor({artifactsDir=null,networkId=null,networkProvider=null}:BaseContractType){
-        super({artifactsDir,artifacrName:"Registry",networkId,networkProvider});
+        console.log("in registry constructor : ", artifactsDir, networkId,networkProvider)
+        super({artifactsDir,artifactName:"Registry",networkId,networkProvider});
     }
 
     async initiateProvider({public_key, title, endpoint, endpoint_params, from, gas=GAS_LIMIT}:InitProvider) {
         try {
+            if(!endpoint_params){
+                endpoint_params=[];
+            }
+            else if(endpoint_params.length >0) {
+                for (let i in endpoint_params) {
+                    endpoint_params[i] = utf8ToHex(endpoint_params[i])
+                }
+            }
             return await this.contract.methods.initiateProvider(
-                public_key,
-                title,
-                endpoint,
+                toBN(public_key),
+                utf8ToHex(title),
+                utf8ToHex(endpoint),
                 endpoint_params)
                 .send({from,gas});
         } catch (err) {
@@ -26,13 +35,13 @@ class ZapRegistry extends BaseContract {
     async initiateProviderCurve({endpoint, curve, from, gas}:InitCurve) {
         try {
             let convertedConstants = curve.constants.map(item => {
-                return web3.utils.toHex(item);
+                return toHex(item);
             });
             let convertedParts = curve.parts.map(item => {
-                return web3.utils.toHex(item);
+                return toHex(item);
             });
             let convertedDividers = curve.dividers.map(item => {
-                return web3.utils.toHex(item);
+                return toHex(item);
             });
             return await this.contract.methods.initiateProviderCurve(
                 this.web3.utils.utf8ToHex(endpoint),
@@ -48,7 +57,7 @@ class ZapRegistry extends BaseContract {
     async setEndpointParams({endpoint, params, from, gas}:EndpointParams) {
         try {
             let endpoint_params = [];
-            params.forEach(el => endpoint_params.push(web3.utils.utf8ToHex(el)));
+            params.forEach(el => endpoint_params.push(utf8ToHex(el)));
             return await this.contract.methods.setEndpointParams(
                 endpoint,
                 endpoint_params).send({from, gas});
@@ -58,11 +67,13 @@ class ZapRegistry extends BaseContract {
     }
 
     async getProviderPublicKey(provider:string):Promise<string>{
-        return await this.contract.methods.getProviderPublicKey(provider).call();
+        let pubKey =  await this.contract.methods.getProviderPublicKey(provider).call();
+        return Number(pubKey.valueOf());
     }
 
     async getProviderTitle(provider:string):Promise<string>{
-        return await this.contract.methods.getProviderTitle(provider).call();
+        let title = await this.contract.methods.getProviderTitle(provider).call();
+        return hexToUtf8(title)
     }
 
     /**
@@ -91,11 +102,13 @@ class ZapRegistry extends BaseContract {
      * @returns {Promise<any>}
      */
     async getNextEndpointParams({provider, endpoint, index}:NextEndpoint){
-        return this.contract.methods.getNextEndpointParam(
+        let params = await  this.contract.methods.getNextEndpointParam(
             provider,
             this.web3.utils.utf8ToHex(endpoint),
             this.web3.utils.toBN(index)
         ).call();
+        console.log(params.Result.endpointParams)
+        return hexToUtf8(params.Result.endpointParams)
     }
 
     // ==== Events ====//
@@ -114,5 +127,4 @@ class ZapRegistry extends BaseContract {
 
 }
 
-export default ZapRegistry;
 export * from "./types" ;

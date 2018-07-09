@@ -1,5 +1,5 @@
 
-import {readdirSync,readFileSync,writeFileSync,unlinkSync} from 'fs'
+import {readdirSync,readFileSync,writeFileSync,unlinkSync, existsSync,mkdirSync} from 'fs'
 import {join,basename} from 'path'
 import { provider, server } from 'ganache-core';
 import { promisify } from 'util';
@@ -17,14 +17,17 @@ export function startGanacheServer(_serverOptions ?: any){
     if (err) {
       console.log("server might already is created from other tests");
     }
-    return resolve("done")
+    return resolve(ganacheServer)
     });
    console.log('server started on port: ' + serverOptions.port);
-   return resolve("done")
+   return resolve(ganacheServer)
   })
 }
 
 export function  clearBuild(onlyRemoveNetworks = true, buildDir:string) {
+    if(!existsSync(buildDir)){
+        mkdirSync(buildDir)
+    }
     let files = readdirSync(buildDir+'');
 
     for (let i = 0; i < files.length; i++) {
@@ -72,11 +75,11 @@ export function getArtifacts(buildDir:string){
     try {
       clearBuild(false, buildDir);
       console.log("running all");
-      await asyncMigrate(options, (err,res)=>{
-        console.log('ran all: ', err,res;
-      return getArtifacts(buildDir)
-      });
+      await asyncMigrate(options)
+      return true;
     } catch (err) {
-      throw err;
+      return true;
     }
   }
+
+  export * from "./constants"

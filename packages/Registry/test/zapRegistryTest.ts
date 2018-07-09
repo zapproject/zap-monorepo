@@ -6,48 +6,64 @@ const expect = require('chai')
     .use(require('chai-bignumber'))
     .expect;
 
-import { migrateContracts,
+import {
+    migrateContracts,
     clearBuild,
     startGanacheServer,
     testZapProvider,
     ganacheProvider ,
     ganacheServerOptions,
-    contractsLoader
-} from "zap/utils";
-import {BaseContractType} from "@zap/basecontract"
-import {ZapRegistry} from '../src'
+    getArtifacts
+} from "@zap/utils";
+import {BaseContract,BaseContractType} from "@zap/basecontract"
+import {ZapRegistry} from '../src/index.js'
 
 async function configureEnvironment(func) {
     await func();
 }
 
-describe('Registry test"', () => {
-    let accounts :Array<string>= [];
-    let addressRegistry;
-    let abiJSON;
-    let registryWrapper:BaseContractType;
-    let deployedStorage;
-    let abiJSONStorage;
-    let web3;
-    let testArtifacts;
+describe('Registry test', () => {
+    let accounts :Array<string>= [],
+        ganacheServer:any,
+        addressRegistry,
+        abiJSON,
+        registryWrapper:BaseContractType,
+        deployedStorage ,
+        abiJSONStorage,
+        web3,
+        testArtifacts;
     let buildDir = join(__dirname,"contracts");
 
     before(function (done) {
         configureEnvironment(async() => {
+            ganacheServer = await startGanacheServer();
             web3 =new Web3(ganacheProvider);
             accounts = await web3.eth.getAccounts();
-            delete require.cache[require.resolve('/contracts')];
-            testArtifacts = contractsLoader(join(__dirname,"contracts"));
+            //delete require.cache[require.resolve('/contracts')];
+            await migrateContracts(join(__dirname,"contracts"));
             done();
         });
     });
 
     describe('Registry', function () {
+        before(function(done){
+            configureEnvironment(async ()=>{
+                //delete require.cache[require.resolve(join(__dirname,'contracts'))];
+                testArtifacts = getArtifacts(join(__dirname,"contracts"));
+                deployedStorage = new BaseContract({
+                        artifactsDir : buildDir,
+                        artifactName:"RegistryStorage",
+                        networkId: ganacheServerOptions.network_id,
+                        networkProvider: ganacheProvider
+                });
+                done();
+            })
+        })
         it("should be able to create registryWrapper", async ()=>{
             registryWrapper = new ZapRegistry({
                 artifactsDir : buildDir,
-                id: ganacheServerOptions.id,
-                provider: ganacheProvider
+                networkId: ganacheServerOptions.network_id,
+                networkProvider: ganacheProvider
             })
         })
 
@@ -60,10 +76,16 @@ describe('Registry test"', () => {
                 from: accounts[0],
                 gas: 600000
             });
-            let registryInstance = await registryWrapper.contractInstance();
-            const title = hexToUtf8(await registryInstance.getProviderTitle(accounts[0]));
-
+            const title = await registryWrapper.getProviderTitle(accounts[0]);
             await expect(title).to.be.equal(testZapProvider.title);
+            const pubkey = await registryWrapper.getProviderPublicKey(accounts[0]);
+            await expect(pubkey).to.be.equal(testZapProvider.pubkey);
+            const params = await registryWrapper.getNextEndpointParams({
+                provider:accounts[0],
+                endpoint:testZapProvider.endpoint,
+                index:0});
+            await expect(title).to.be.equal(testZapProvider.params);
+
         });
 
         it('Should initiate Provider curve in zap registry contract', async () => {
@@ -74,8 +96,7 @@ describe('Registry test"', () => {
                 from: accounts[0],
                 gas: 3000000
             });
-            let registryInstance = await registryWrapper.contractInstance();
-            const c = await registryInstance.getProviderCurve(accounts[0], testZapProvider.endpoint);
+            const c = await registryWrapper.getProviderCurve(accounts[0], testZapProvider.endpoint);
 
             let resultConstants = c[0].map((val:BN) => { return val.toNumber() });
             let resultParts = c[1].map((val:BN) => { return val.toNumber() });
@@ -93,7 +114,7 @@ describe('Registry test"', () => {
                 from: accounts[0],
                 gas: 300000
             });
-            const endpointsSize = await deployedStorage.getEndpointIndexSize.call(accounts[0], testZapProvider.endpoint, { from: accounts[0] });
+            const endpointsSize = await deployedStorage.contract.methods.getEndpointIndexSize.call(accounts[0], testZapProvider.endpoint, { from: accounts[0] });
 
             await expect(endpointsSize.valueOf()).to.be.equal(testZapProvider.params.length.toString());
         });

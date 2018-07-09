@@ -8,15 +8,13 @@ const contractsDir = join(__dirname,'./../../../node_modules/zap_contracts/contr
 const workingDir = join(__dirname,'./../../../node_modules/zap_contracts')
 export const ganacheServerOptions={
      hostname: 'localhost',
-     // "mnemonic": "candy maple cake sugar pudding cream honey rich smooth crumble sweet treat",
      network_id: 5777,
      port: 7545,
      total_accounts: 10,
      ws: true,
-    gas: 6721975 ,
-    gasPrice: 10000000,
-    network: "ganache-gui" ,
-    //because zap_contracts use ganache-gui for port 7545
+    gas: 6721900 ,
+    gasPrice: 20000000,
+    network: "ganache-gui"
 };
 export let  buildOptions ={
     logger: console,
@@ -36,8 +34,8 @@ export const testZapProvider = {
 
 }
 
-export const ganacheProvider = new Web3.providers.WebsockerProvider('ws://127.0.0.1:7545');
+export const ganacheProvider = new Web3.providers.HttpProvider('http://127.0.0.1:7545');
 
-export const GAS_LIMIT = 6721975
-export const GAS_PRICE = 10000000
+export const GAS_LIMIT = 6000000
+export const GAS_PRICE = 40000000
 export const NETWORK = "ganache-gui"
