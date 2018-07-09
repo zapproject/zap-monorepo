@@ -2,7 +2,7 @@ import * as assert from "assert"
 import {Curve,CurveTypes} from "@zap/curve"
 import {ZapDispatch,DispatchTypes} from "@zap/dispatch";
 import {ZapRegistry,RegistryTypes} from "@zap/registry";
-import {ZapBondage, BondageTypes} from "@zap/bondage";
+import {ZapBondage} from "@zap/bondage";
 import {ZapArbiter} from "@zap/arbiter"
 import {InitProvider, InitCurve, UnsubscribeListen, ListenQuery,Respond} from "./types"
 import * as Web3 from 'web3';
@@ -109,7 +109,7 @@ class Provider {
      *
      * @returns {Promise<string>}
      */
-    async getProviderPubkey():string {
+    async getProviderPubkey():Promise<string> {
         try {
             if (this.pubkey) return this.pubkey;
             let pubkey = await ZapRegistry.getProviderPubkey(this.owner);
@@ -145,7 +145,7 @@ class Provider {
      * @param {string} endpoint
      * @returns {number}
      */
-    async getZapBound({endpoint} : {endpoint:string}):number {
+    async getZapBound({endpoint} : {endpoint:string}):Promise<number> {
         assert(endpoint, 'endpoint required');
         let zapBound = await ZapBondage.getZapBound(this.owner, endpoint);
         return zapBound;

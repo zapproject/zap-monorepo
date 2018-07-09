@@ -2,6 +2,8 @@ import {BaseContract,BaseContractType} from '@zap/basecontract'
 import {BondArgs,UnbondArgs,BondageArgs} from "./types";
 import {toBase} from '@zap/utils';
 import * as assert from 'assert';
+import {toBN, utf8ToHex} from "web3-utils";
+import {GAS_LIMIT} from "@zap/utils";
 
 class ZapBondage extends BaseContract {
 
@@ -10,16 +12,14 @@ class ZapBondage extends BaseContract {
         super({artifactDir,artifactName:"Bondage",networkId,networkProvider});
     }
     // Do a bond to a ZapOracle's endpoint
-    async bond({provider, endpoint, zapNum, from, gas}:BondArgs) {
+    async bond({provider, endpoint, zapNum, from, gas=GAS_LIMIT}:BondArgs) {
         try{
             assert(zapNum && zapNum>0,"Zap to Bond must be greater than 0");
             let bondResult = await this.contract.bond(
                 provider,
-                this.web3.utils.utf8ToHex(endpoint),
+                utf8ToHex(endpoint),
                 toBase(zapNum))
-                .send({
-                    from: from,
-                    gas: gas || this.DEFAULT_GAS});
+                .send({from,gas});
             return bondResult;
         }catch(e){
             console.error(e);
@@ -29,14 +29,12 @@ class ZapBondage extends BaseContract {
     }
 
 
-    async unbond({provider, endpoint, dots, from, gas}:UnbondArgs) {
+    async unbond({provider, endpoint, dots, from, gas=GAS_LIMIT}:UnbondArgs) {
         return await this.contract.methods.unbond(
             provider,
-            this.web3.utils.utf8ToHex(endpoint),
-            this.web3.utils.toBN(dots))
-            .send({
-                from: from,
-                gas: gas || this.DEFAULT_GAS});
+            utf8ToHex(endpoint),
+            toBN(dots))
+            .send({from,gas});
     }
 
     async getBoundDots({subscriber, provider, endpoint}:BondageArgs) {
@@ -50,37 +48,37 @@ class ZapBondage extends BaseContract {
     async calcZapForDots({provider, endpoint, dots}:BondageArgs){
         return await this.contract.methods.calcZapForDots(
             provider,
-            this.web3.utils.utf8ToHex(endpoint),
-            this.web3.utils.toBN(dots)).call();
+            utf8ToHex(endpoint),
+            toBN(dots)).call();
     }
 
     async calcBondRate({provider, endpoint, zapNum}:BondageArgs){
         return await this.contract.methods.calcBondRate(
             provider,
-            this.web3.utils.utf8ToHex(endpoint),
-            this.web3.utils.toBN(zapNum)
+            utf8ToHex(endpoint),
+            toBN(zapNum)
         ).call();
     }
 
     async currentCostOfDot({provider, endpoint, dots}:BondageArgs){
         return this.contract.methods.currentCostOfDot(
             provider,
-            this.web3.utils.utf8ToHex(endpoint),
-            this.web3.utils.toBN(dots)
+            utf8ToHex(endpoint),
+            toBN(dots)
         ).call();
     }
 
     async getDotsIssued({provider, endpoint}:BondageArgs){
         return this.contract.methods.getDotsIssued(
             provider,
-            this.web3.utils.utf8ToHex(endpoint)
+            utf8ToHex(endpoint)
         ).call();
     }
 
     async getZapBound({provider, endpoint} :BondageArgs ){
         return this.contract.methods.getZapBound(
             provider,
-            this.web3.utils.utf8ToHex(endpoint)
+            utf8ToHex(endpoint)
         ).call();
     }
 
@@ -106,7 +104,4 @@ class ZapBondage extends BaseContract {
 
 }
 
-export default = {
-   ZapBondage,
-   BondageTypes : "./types"
-}
+export default  ZapBondage

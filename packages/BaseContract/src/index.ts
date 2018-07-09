@@ -29,5 +29,6 @@ class BaseContract {
     }
 }
 
-export default BaseContract
+export default BaseContract ;
+export * from "./types"
 

@@ -1,26 +1,23 @@
-const Web3 = require('web3');
-const web3 = new Web3();
-import BaseContract;
-import {InitProvider, InitCurve, Curve, NextEndpoint, EndpointParams} from "./types"
+import {toHex} from "web3-utils";
+import {BaseContract,BaseContractType} from "@zap/basecontract";
+import {CurveType} from "@zap/curve";
+import {GAS_LIMIT} from "@zap/utils"
+import {InitProvider, InitCurve, NextEndpoint, EndpointParams} from "./types"
 
 class ZapRegistry extends BaseContract {
 
-    constructor({networkId=null,networkProvider=null}={}){
-        super({contract:"Registry",networkId,networkProvider});
+    constructor({artifactsDir=null,networkId=null,networkProvider=null}:BaseContractType){
+        super({artifactsDir,artifacrName:"Registry",networkId,networkProvider});
     }
 
-    async initiateProvider({public_key, title, endpoint, endpoint_params, from, gas}:InitProvider) {
+    async initiateProvider({public_key, title, endpoint, endpoint_params, from, gas=GAS_LIMIT}:InitProvider) {
         try {
             return await this.contract.methods.initiateProvider(
                 public_key,
                 title,
                 endpoint,
                 endpoint_params)
-                .send({
-                        from: from,
-                        gas: gas || this.DEFAULT_GAS,
-                    }
-                );
+                .send({from,gas});
         } catch (err) {
             throw err;
         }
@@ -42,10 +39,7 @@ class ZapRegistry extends BaseContract {
                 convertedConstants,
                 convertedParts,
                 convertedDividers)
-                .send({
-                    from: from,
-                    gas: gas || this.DEFAULT_GAS,
-                });
+                .send({from, gas});
         } catch (err) {
             throw err;
         }
@@ -57,20 +51,17 @@ class ZapRegistry extends BaseContract {
             params.forEach(el => endpoint_params.push(web3.utils.utf8ToHex(el)));
             return await this.contract.methods.setEndpointParams(
                 endpoint,
-                endpoint_params).send({
-                from: from,
-                gas: gas || this.DEFAULT_GAS,
-            });
+                endpoint_params).send({from, gas});
         } catch (err) {
             throw err;
         }
     }
 
-    async getProviderPublicKey(provider:string):string{
+    async getProviderPublicKey(provider:string):Promise<string>{
         return await this.contract.methods.getProviderPublicKey(provider).call();
     }
 
-    async getProviderTitle(provider:string):string{
+    async getProviderTitle(provider:string):Promise<string>{
         return await this.contract.methods.getProviderTitle(provider).call();
     }
 
@@ -79,7 +70,7 @@ class ZapRegistry extends BaseContract {
      * @param provider address
      * @returns {Promise<any>}
      */
-    async getProviderCurve(provider:string):Curve{
+    async getProviderCurve(provider:string):Promise<Curve>{
         return await this.contract.methods.getProviderCurve.call(provider).call();
     }
 
@@ -123,7 +114,5 @@ class ZapRegistry extends BaseContract {
 
 }
 
-module.exports = {
-  ZapRegistry,
-  RegistryTypes :"./types"
-}
+export default ZapRegistry;
+export * from "./types" ;

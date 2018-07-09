@@ -3,12 +3,10 @@ import {readdirSync,readFileSync,writeFileSync,unlinkSync} from 'fs'
 import {join,basename} from 'path'
 import { provider, server } from 'ganache-core';
 import { promisify } from 'util';
-const {ganacheServerOptions,GAS_LIMIT,GAS_PRICE} = require('./constants');
+import {ganacheServerOptions,GAS_LIMIT,GAS_PRICE,buildOptions} from './constants';
+import {serverOptionsType,buildOptionsType} from "../types";
 const migrate = require(join(__dirname,'./../../../node_modules/truffle-core/lib/commands/migrate.js'));
 const asyncMigrate = promisify(migrate.run);
-const  migrationDir = join(__dirname,'./../../../node_modules/zap_contracts/migrations')
-const contractsDir = join(__dirname,'./../../../node_modules/zap_contracts/contracts')
-const workingDir = join(__dirname,'./../../../node_modules/zap_contracts')
 
 
 export function startGanacheServer(_serverOptions ?: any){
@@ -51,46 +49,34 @@ export function  clearBuild(onlyRemoveNetworks = true, buildDir:string) {
     }
 }
 
-export function getContracts(buildDir:string){
-  let artifacts = {}
-  readdirSync(buildDir).forEach(function (file) {
+export function getArtifacts(buildDir:string){
+    let artifacts = {}
+    readdirSync(buildDir).forEach(function (file) {
 
-    /* If its the current file ignore it */
-    if (!file.endsWith('.json')) return;
+        /* If its the current file ignore it */
+        if (!file.endsWith('.json')) return;
 
-    /* Store module with its name (from filename) */
-    artifacts[basename(file, '.json')] = require(join(buildDir, file));
-  });
-  return artifacts
+        /* Store module with its name (from filename) */
+        artifacts[basename(file, '.json')] = require(join(buildDir, file));
+    });
+    return artifacts
 
 }
 
-  export async function migrateContracts(buildDir:string,_serverOptions ?:any) {
+  export async function migrateContracts(buildDir:string,_serverOptions ?:serverOptionsType) {
     console.log("start migrating")
-    let serverOptions = _serverOptions || ganacheServerOptions
-      const options = {
-          logger: console,
-          contracts_build_directory: buildDir,
-          contracts_directory:contractsDir,
-          working_directory: workingDir,
-          migrations_directory: migrationDir,
-          network: 'ganache-gui',
-          network_id: serverOptions.network_id,
-          hostname: serverOptions.hostname,
-          port: serverOptions.port,
-          gas: GAS_LIMIT,
-          gasPrice: GAS_PRICE
-      };
-      console.log(options)
-
-      try {
-          clearBuild(false, buildDir);
-          console.log("running all")
-          await asyncMigrate(options, (err,res)=>{
-            console.log('ran all: ', err,res)
-          return getContracts(buildDir)
-          });
-      } catch (err) {
-          throw err;
-      }
+    let serverOpts = _serverOptions || ganacheServerOptions;
+    let buildOpts:buildOptionsType = buildOptions;
+    buildOpts.contracts_build_directory = buildDir;
+    let options = Object.assign(serverOpts,buildOpts);
+    try {
+      clearBuild(false, buildDir);
+      console.log("running all");
+      await asyncMigrate(options, (err,res)=>{
+        console.log('ran all: ', err,res;
+      return getArtifacts(buildDir)
+      });
+    } catch (err) {
+      throw err;
+    }
   }
