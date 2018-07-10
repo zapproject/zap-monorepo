@@ -35,6 +35,9 @@
   },
   "devDependencies": {
     "@types/node": "^10.5.1",
+    "@zap/basecontract": "^1.0.0",
+    "@zap/curve": "^1.0.0",
+    "@zap/utils": "^1.0.0",
     "mocha": "^5.2.0",
     "tsc": "^1.20150623.0",
     "tslint": "^5.10.0",

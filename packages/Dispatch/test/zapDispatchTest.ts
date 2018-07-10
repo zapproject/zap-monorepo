@@ -63,7 +63,7 @@ describe('Zap Dispatch Test"', () => {
                 deployedDispatchStorage = new BaseContract(Object.assign(options, {artifactName: "DispatchStorage"}));
             })
         });
-        it("should have all pre conditions set up for dispatch to work", async () => {
+        it("Should have all pre conditions set up for dispatch to work", async () => {
             await bootstrap(testZapProvider, accounts, deployedRegistry, deployedToken, deployedBondage);
         })
         it("should initiate Dispatch Wrapper", async () => {

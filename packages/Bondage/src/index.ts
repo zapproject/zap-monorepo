@@ -5,7 +5,7 @@ import * as assert from 'assert';
 const {toBN, utf8ToHex} = require("web3-utils");
 import {DEFAULT_GAS} from "@zap/utils";
 
-class ZapBondage extends BaseContract {
+export class ZapBondage extends BaseContract {
 
 
     constructor({artifactsDir=undefined,artifactName=undefined,networkId=undefined,networkProvider=undefined}:BaseContractType){
@@ -104,4 +104,4 @@ class ZapBondage extends BaseContract {
 
 }
 
-export default  ZapBondage
+export * from "./types"

@@ -13,7 +13,6 @@ import {normalizeProvider,ZapProviderType,DEFAULT_GAS,toZapBase} from "@zap/util
  */
 export async function bootstrap(zapProvider:ZapProviderType,accounts:Array<string>,deployedRegistry:any, deployedBondage:any,deployedToken:any){
     let normalizedP = normalizeProvider(zapProvider);
-    const dots = 10;
     let defaultTx = {from:accounts[0],gas:DEFAULT_GAS}
     await deployedRegistry.methods.initiateProvider(normalizedP).send(defaultTx);
     await deployedRegistry.methods.initiateProviderCurve(accounts[0],zapProvider.curve.convertToBNArrays()).send(defaultTx);

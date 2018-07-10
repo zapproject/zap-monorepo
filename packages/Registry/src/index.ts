@@ -5,7 +5,7 @@ import {DEFAULT_GAS} from "@zap/utils"
 import {InitProvider, InitCurve, NextEndpoint, EndpointParams} from "./types"
 
 export class ZapRegistry extends BaseContract {
-
+    contract:any;
     constructor({artifactsDir=undefined,networkId=undefined,networkProvider=undefined}:BaseContractType){
         super({artifactsDir,artifactName:"Registry",networkId,networkProvider});
     }
@@ -100,8 +100,8 @@ export class ZapRegistry extends BaseContract {
     async getNextEndpointParams({provider, endpoint, index}:NextEndpoint){
         let params = await  this.contract.methods.getNextEndpointParam(
             provider,
-            this.web3.utils.utf8ToHex(endpoint),
-            this.web3.utils.toBN(index)
+            utf8ToHex(endpoint),
+            toBN(index)
         ).call();
         let endpointParams = params.endpointParam;
         console.log(hexToUtf8(endpointParams));
