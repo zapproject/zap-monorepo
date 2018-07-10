@@ -3,8 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "main": "lib/src/index.js",
-  "type":"lib/src/types.d.ts",
-  "scripts": {},
+  "type": "lib/src/types.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "mocha  -r ts-node/register test/*.ts --serial",
+    "run_test": "run-s build test"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

@@ -2,10 +2,12 @@
   "name": "@zap/arbiter",
   "version": "1.0.0",
   "description": "",
-  "main": "lib/index.js",
+  "main": "lib/src/index.js",
+  "type": "lib/src/types.d.ts",
   "scripts": {
     "build": "tsc",
-    "test": " mocha 'lib/test/**/*.js' --timeout 100000 --bail --exit"
+    "test": "mocha  -r ts-node/register test/*.ts --serial",
+    "run_test": "run-s build test"
   },
   "keywords": [],
   "author": "",

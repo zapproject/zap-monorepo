@@ -2,10 +2,12 @@
   "name": "@zap/provider",
   "version": "1.0.0",
   "description": "",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "main": "lib/src/index.js",
+  "type": "lib/src/types.d.ts",
   "scripts": {
-    "test": "mocha  lib/test/*.js --serial"
+    "build": "tsc",
+    "test": "mocha  -r ts-node/register test/*.ts --serial",
+    "run_test": "run-s build test"
   },
   "keywords": [],
   "author": "",
