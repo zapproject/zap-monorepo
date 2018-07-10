@@ -1,6 +1,6 @@
 import {BaseContract,BaseContractType} from '@zap/basecontract';
 import {QueryArgs,ResponseArgs} from './types'
-import {GAS_LIMIT} from "@zap/utils";
+import {DEFAULT_GAS} from "@zap/utils";
 import {toBN,utf8ToHex} from "web3-utils";
 class ZapDispatch extends BaseContract {
 
@@ -8,7 +8,7 @@ class ZapDispatch extends BaseContract {
         super({artifactsDir,artifactName:"Dispatch",networkId,networkProvider});
     }
 
-    async queryData({provider, query, endpoint, params, onchainProvider, onchainSubscriber,from,gas=GAS_LIMIT}:QueryArgs){
+    async queryData({provider, query, endpoint, params, onchainProvider, onchainSubscriber,from,gas=DEFAULT_GAS}:QueryArgs){
         if(params.length>0) {
             for (let i in params) {
                 params[i] = utf8ToHex(params[i]);
@@ -25,7 +25,7 @@ class ZapDispatch extends BaseContract {
     }
 
 
-    async respond({queryId, responseParams, dynamic, from,gas=GAS_LIMIT}:ResponseArgs) {
+    async respond({queryId, responseParams, dynamic, from,gas=DEFAULT_GAS}:ResponseArgs) {
         if (dynamic){
             return this.contract.methods.respondBytes32Array(
                 queryId,

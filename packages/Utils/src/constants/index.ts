@@ -21,4 +21,4 @@ export const testProvider = {
 }
 
 
-export const GAS_LIMIT = 600000
+export const DEFAULT_GAS = 600000

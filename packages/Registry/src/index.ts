@@ -1,7 +1,7 @@
 import {toHex,utf8ToHex,toBN, hexToUtf8} from "web3-utils";
 import {BaseContract,BaseContractType} from "@zap/basecontract";
-import {CurveType} from "@zap/curve";
-import {GAS_LIMIT} from "@zap/utils"
+import {Curve,CurveType} from "@zap/curve";
+import {DEFAULT_GAS} from "@zap/utils"
 import {InitProvider, InitCurve, NextEndpoint, EndpointParams} from "./types"
 console.log(BaseContract)
 export class ZapRegistry extends BaseContract {
@@ -11,28 +11,21 @@ export class ZapRegistry extends BaseContract {
         super({artifactsDir,artifactName:"Registry",networkId,networkProvider});
     }
 
-    async initiateProvider({public_key, title, endpoint, endpoint_params, from, gas=GAS_LIMIT}:InitProvider) {
+    async initiateProvider({public_key, title, endpoint, endpoint_params, from, gas=DEFAULT_GAS}:InitProvider) {
         try {
-            if(!endpoint_params){
-                endpoint_params=[];
-            }
-            else if(endpoint_params.length >0) {
-                for (let i in endpoint_params) {
-                    endpoint_params[i] = utf8ToHex(endpoint_params[i])
-                }
-            }
+            let params = endpoint_params? endpoint_params.map((item:string) =>{return utf8ToHex(item)}) : [];
             return await this.contract.methods.initiateProvider(
                 toBN(public_key),
                 utf8ToHex(title),
                 utf8ToHex(endpoint),
-                endpoint_params)
+                params)
                 .send({from,gas});
         } catch (err) {
             throw err;
         }
     }
 
-    async initiateProviderCurve({endpoint, curve, from, gas}:InitCurve) {
+    async initiateProviderCurve({endpoint, curve, from, gas=DEFAULT_GAS}:InitCurve) {
         try {
             let convertedConstants = curve.constants.map(item => {
                 return toHex(item);
@@ -44,7 +37,7 @@ export class ZapRegistry extends BaseContract {
                 return toHex(item);
             });
             return await this.contract.methods.initiateProviderCurve(
-                this.web3.utils.utf8ToHex(endpoint),
+                utf8ToHex(endpoint),
                 convertedConstants,
                 convertedParts,
                 convertedDividers)
@@ -54,13 +47,13 @@ export class ZapRegistry extends BaseContract {
         }
     }
 
-    async setEndpointParams({endpoint, params, from, gas}:EndpointParams) {
+    async setEndpointParams({endpoint, endpoint_params, from, gas=DEFAULT_GAS}:EndpointParams) {
         try {
-            let endpoint_params = [];
-            params.forEach(el => endpoint_params.push(utf8ToHex(el)));
-            return await this.contract.methods.setEndpointParams(
-                endpoint,
-                endpoint_params).send({from, gas});
+          let params = endpoint_params ? endpoint_params.map(el =>{return utf8ToHex(el)}) : [];
+            let result =  await this.contract.methods.setEndpointParams(
+                utf8ToHex(endpoint),
+                params).send({from, gas});
+            return result
         } catch (err) {
             throw err;
         }
@@ -78,11 +71,17 @@ export class ZapRegistry extends BaseContract {
 
     /**
      *
-     * @param provider address
-     * @returns {Promise<any>}
+     * @param {string} provider
+     * @param {string} endpoint
+     * @returns {Promise<Curve>}
      */
-    async getProviderCurve(provider:string):Promise<Curve>{
-        return await this.contract.methods.getProviderCurve.call(provider).call();
+    async getProviderCurve(provider:string,endpoint:string):Promise<Curve>{
+        let curve =  await this.contract.methods.getProviderCurve(
+            provider,
+            utf8ToHex(endpoint)
+        ).call();
+        console.log(curve)
+        return new Curve(curve['0'].map(i=>parseInt(i)),curve['1'].map(i=>parseInt(i)),curve['2'].map(i=>parseInt(i)))
     }
 
     /**
@@ -107,8 +106,9 @@ export class ZapRegistry extends BaseContract {
             this.web3.utils.utf8ToHex(endpoint),
             this.web3.utils.toBN(index)
         ).call();
-        console.log(params.Result.endpointParams)
-        return hexToUtf8(params.Result.endpointParams)
+        let endpointParams = params.endpointParam
+        console.log(hexToUtf8(endpointParams))
+        return hexToUtf8(endpointParams)
     }
 
     // ==== Events ====//

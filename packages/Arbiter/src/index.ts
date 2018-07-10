@@ -1,7 +1,7 @@
 import  {BaseContract,BaseContractTypes} from '@zap/basecontract';
 import {SubscriptionInit,SubscriptionEnd,Filter} from "./types"
 import {toBN,utf8ToHex} from 'web3-utils';
-import {GAS_LIMIT} from "@zap/utils"
+import {DEFAULT_GAS} from "@zap/utils"
 class ZapArbiter extends BaseContract {
 
     constructor({artifactsDir, networkId,networkProvider}:BaseContractTypes){
@@ -9,7 +9,7 @@ class ZapArbiter extends BaseContract {
     }
 
     async initiateSubscription(
-        {provider, endpoint, endpointParams, blocks, publicKey, from, gas=GAS_LIMIT} : SubscriptionInit) {
+        {provider, endpoint, endpointParams, blocks, publicKey, from, gas=DEFAULT_GAS} : SubscriptionInit) {
         try {
             for (let i in endpointParams){
                 endpointParams[i] = utf8ToHex(endpointParams[i]);
@@ -26,7 +26,7 @@ class ZapArbiter extends BaseContract {
         }
     }
 
-    async endSubscription({provider, endpoint, from, gas=GAS_LIMIT}:SubscriptionEnd) {
+    async endSubscription({provider, endpoint, from, gas=DEFAULT_GAS}:SubscriptionEnd) {
         try {
             return await this.contract.methods.endSubscriptionSubscriber(
                 provider,

@@ -3,7 +3,7 @@ import {BondArgs,UnbondArgs,BondageArgs} from "./types";
 import {toBase} from '@zap/utils';
 import * as assert from 'assert';
 import {toBN, utf8ToHex} from "web3-utils";
-import {GAS_LIMIT} from "@zap/utils";
+import {DEFAULT_GAS} from "@zap/utils";
 
 class ZapBondage extends BaseContract {
 
@@ -12,7 +12,7 @@ class ZapBondage extends BaseContract {
         super({artifactDir,artifactName:"Bondage",networkId,networkProvider});
     }
     // Do a bond to a ZapOracle's endpoint
-    async bond({provider, endpoint, zapNum, from, gas=GAS_LIMIT}:BondArgs) {
+    async bond({provider, endpoint, zapNum, from, gas=DEFAULT_GAS}:BondArgs) {
         try{
             assert(zapNum && zapNum>0,"Zap to Bond must be greater than 0");
             let bondResult = await this.contract.bond(
@@ -29,7 +29,7 @@ class ZapBondage extends BaseContract {
     }
 
 
-    async unbond({provider, endpoint, dots, from, gas=GAS_LIMIT}:UnbondArgs) {
+    async unbond({provider, endpoint, dots, from, gas=DEFAULT_GAS}:UnbondArgs) {
         return await this.contract.methods.unbond(
             provider,
             utf8ToHex(endpoint),

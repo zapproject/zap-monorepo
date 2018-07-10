@@ -22,4 +22,4 @@ export const testProvider = {
 }
 
 
-export const GAS_LIMIT = {gas:toBN(600000)};
+export const DEFAULT_GAS = {gas:toBN(600000)};

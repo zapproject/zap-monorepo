@@ -26,7 +26,7 @@ export type NextEndpoint = {
 
 export type EndpointParams = {
   endpoint:string,
-  params: string[],
+  endpoint_params: string[],
   from: string,
   gas : BN
 }

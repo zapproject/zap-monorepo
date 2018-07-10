@@ -11,7 +11,7 @@ import {Bootstrap,
     startGanacheServer,
     migrateContracts,
         testProvider,
-        GAS_LIMIT
+        DEFAULT_GAS
       } from "@zap/utils"
 const tokensForOwner =100, tokensForOracle = 100;
 
@@ -81,7 +81,7 @@ describe('Arbiter, path to "/src/api/contracts/ZapArbiter"', () => {
         testProvider.title,
         testProvider.endpoint,
         testProvider.params,
-        { from: accounts[2], gas: GAS_LIMIT });
+        { from: accounts[2], gas: DEFAULT_GAS });
 
       await deployedZapRegistry.initiateProviderCurve(
         testProvider.endpoint,
@@ -93,28 +93,28 @@ describe('Arbiter, path to "/src/api/contracts/ZapArbiter"', () => {
       await deployedZapToken.allocate(
         accounts[0],
         tokensForOwner,
-        { from: accounts[0], gas: GAS_LIMIT });
+        { from: accounts[0], gas: DEFAULT_GAS });
 
       await deployedZapToken.allocate(
         accounts[2],
         tokensForOracle,
-        { from: accounts[0], gas: GAS_LIMIT });
+        { from: accounts[0], gas: DEFAULT_GAS });
 
       await deployedZapToken.allocate(
         deployedZapBondage.address,
         tokensForOracle,
-        { from: accounts[0], gas: GAS_LIMIT });
+        { from: accounts[0], gas: DEFAULT_GAS });
 
       await deployedZapToken.approve(
         deployedZapBondage.address,
         tokensForOracle,
-        { from: accounts[0], gas: GAS_LIMIT });
+        { from: accounts[0], gas: DEFAULT_GAS });
 
       await deployedZapBondage.bond(
         accounts[2],
         oracleEndpoint,
         100,
-        { from: accounts[0], gas: GAS_LIMIT });
+        { from: accounts[0], gas: DEFAULT_GAS });
 
       await zapArbiterWrapper.initiateSubscription({
         oracleAddress: accounts[2],
@@ -123,7 +123,7 @@ describe('Arbiter, path to "/src/api/contracts/ZapArbiter"', () => {
         blocks: 4,
         publicKey: testProvider.pubkey,
         from: accounts[0],
-        gas: GAS_LIMIT,
+        gas: DEFAULT_GAS,
       });
     });
     it('Should listen to Data purchase in zapArbiter', async function() {
