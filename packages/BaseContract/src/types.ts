@@ -1,5 +1,6 @@
-export type baseContractType = {
-    contract: string,
+export type BaseContractType = {
+  artifactsDir ?:string,
+    artifactName: string,
     networkId?: number,
-    provider?: string
+    networkProvider?: any
 }

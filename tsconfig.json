@@ -9,6 +9,7 @@
     "noImplicitReturns": true,
     "pretty": true,
     "skipLibCheck": true,
-    "strict": true
+    "strict": true,
+    "outDir": "lib"
   }
 }

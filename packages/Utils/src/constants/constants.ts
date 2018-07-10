@@ -1,4 +1,5 @@
 import {Curve} from "@zap/curve"
+import {toBN} from "web3-utils"
 export const ganacheServerOptions = {
   ganacheServerOptions : {
      hostname: 'localhost',
@@ -21,4 +22,4 @@ export const testProvider = {
 }
 
 
-export const GAS_LIMIT = 600000
+export const DEFAULT_GAS = {gas:toBN(600000)};

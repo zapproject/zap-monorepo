@@ -3,3 +3,4 @@ export type Curve = {
   parts : number[],
   dividers: number[]
 }
+

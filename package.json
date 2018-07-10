@@ -15,6 +15,9 @@
   },
   "scripts": {
     "ganache": "ganache-cli -p 8545 --networkId 5777",
-    "test": "lerna run test"
+    "test": "wsrun test $PKG --fast-exit --serial --exclude-missing"
+  },
+  "dependencies": {
+    "zap_contracts": "git+https://github.com/zapproject/zap-ethereum-api.git#master"
   }
 }

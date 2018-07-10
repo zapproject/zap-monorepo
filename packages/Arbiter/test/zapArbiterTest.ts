@@ -3,14 +3,17 @@ const expect = require('chai')
   .use(require('chai-bignumber'))
   .expect;
 
-const Web3 = require('web3');
+import * as  Web3 from 'web3';
+import {join} from 'path';
 import {Bootstrap,
-        testContractsLoader,
+        contractsLoader,
         getDeployedContract,
+    startGanacheServer,
+    migrateContracts,
         testProvider,
-        GAS_LIMIT
+        DEFAULT_GAS
       } from "@zap/utils"
-let tokensForOwner =100, tokensForOracle = 100;
+const tokensForOwner =100, tokensForOracle = 100;
 
 
 async function configureEnvironment(func) {
@@ -19,7 +22,7 @@ async function configureEnvironment(func) {
 
 
 describe('Arbiter, path to "/src/api/contracts/ZapArbiter"', () => {
-  const bootstrap = new Bootstrap(__dirname);
+  const bootstrap = new Bootstrap(join(__dirname,"contracts"));
   let accounts = [];
   let deployedZapArbiter;
   let deployedZapToken;
@@ -30,11 +33,13 @@ describe('Arbiter, path to "/src/api/contracts/ZapArbiter"', () => {
   let web3;
   let Arbiter;
   let testArtifacts;
+  let testServer;
+  let buildDir = join(__dirname,"contracts")
   before(function(done) {
     configureEnvironment(async() => {
       this.timeout(60000);
-      await bootstrap.migrateContracts();
-      done();
+      testServer = await startGanacheServer();
+      await migrateContracts(join(buildDir));
     });
   });
 
@@ -45,21 +50,17 @@ describe('Arbiter, path to "/src/api/contracts/ZapArbiter"', () => {
         web3 = new Web3(bootstrap.provider);
         accounts = await web3.eth.getAccounts();
         delete require.cache[require.resolve('/contracts')];
-        testArtifacts = testContractsLoader();
+        testArtifacts = contractsLoader(join(__dirname,"contracts"));
         done();
       });
 
     });
     it('Should get instances of smart contracts, their storages and bind owners', function() {
       try {
-        deployedZapToken = getDeployedContract(testArtifacts['ZapToken'], {id:bootstrap.networkId}, bootstrap.provider);
-        deployedZapRegistry = getDeployedContract(testArtifacts['Registry'], {id:bootstrap.networkId}, bootstrap.provider);
-        currentCostStorage = getDeployedContract(testArtifacts['CurrentCost'], {id:bootstrap.networkId}, bootstrap.provider);
-        deployedZapBondage = getDeployedContract(testArtifacts['Bondage'],{id:bootstrap.networkId}, bootstrap.provider);
-        deployedZapArbiter = getDeployedContract(testArtifacts['Arbiter'], {id:bootstrap.networkId}, bootstrap.provider);
-
-        addressZapArbiter = deployedZapArbiter.address;
-
+        deployedZapToken = getDeployedContract(testArtifacts['ZapToken'], {id:testServer.networkId}, testServer.provider);
+        deployedZapRegistry = getDeployedContract(testArtifacts['Registry'], {id:testServer.networkId}, testServer.provider);
+        deployedZapBondage = getDeployedContract(testArtifacts['Bondage'],{id:testServer.networkId}, testServer.provider);
+        deployedZapArbiter = getDeployedContract(testArtifacts['Arbiter'], {id:testServer.networkId}, testServer.provider);
       } catch (err) {
         throw err;
       }
@@ -67,9 +68,9 @@ describe('Arbiter, path to "/src/api/contracts/ZapArbiter"', () => {
 
     it('Should initiate zapArbiter wrapper', function() {
       zapArbiterWrapper = new Arbiter({
-          artifactsModule:bootstrap.buildDir,
-          networkId: bootstrap.networkId,
-          provider : bootstrap.provider
+          artifactsModule:.buildDir,
+          networkId: testServer.networkId,
+          provider : testServer.provider
       });
     });
 
@@ -80,7 +81,7 @@ describe('Arbiter, path to "/src/api/contracts/ZapArbiter"', () => {
         testProvider.title,
         testProvider.endpoint,
         testProvider.params,
-        { from: accounts[2], gas: GAS_LIMIT });
+        { from: accounts[2], gas: DEFAULT_GAS });
 
       await deployedZapRegistry.initiateProviderCurve(
         testProvider.endpoint,
@@ -92,28 +93,28 @@ describe('Arbiter, path to "/src/api/contracts/ZapArbiter"', () => {
       await deployedZapToken.allocate(
         accounts[0],
         tokensForOwner,
-        { from: accounts[0], gas: GAS_LIMIT });
+        { from: accounts[0], gas: DEFAULT_GAS });
 
       await deployedZapToken.allocate(
         accounts[2],
         tokensForOracle,
-        { from: accounts[0], gas: GAS_LIMIT });
+        { from: accounts[0], gas: DEFAULT_GAS });
 
       await deployedZapToken.allocate(
         deployedZapBondage.address,
         tokensForOracle,
-        { from: accounts[0], gas: GAS_LIMIT });
+        { from: accounts[0], gas: DEFAULT_GAS });
 
       await deployedZapToken.approve(
         deployedZapBondage.address,
         tokensForOracle,
-        { from: accounts[0], gas: GAS_LIMIT });
+        { from: accounts[0], gas: DEFAULT_GAS });
 
       await deployedZapBondage.bond(
         accounts[2],
         oracleEndpoint,
         100,
-        { from: accounts[0], gas: GAS_LIMIT });
+        { from: accounts[0], gas: DEFAULT_GAS });
 
       await zapArbiterWrapper.initiateSubscription({
         oracleAddress: accounts[2],
@@ -122,7 +123,7 @@ describe('Arbiter, path to "/src/api/contracts/ZapArbiter"', () => {
         blocks: 4,
         publicKey: testProvider.pubkey,
         from: accounts[0],
-        gas: GAS_LIMIT,
+        gas: DEFAULT_GAS,
       });
     });
     it('Should listen to Data purchase in zapArbiter', async function() {

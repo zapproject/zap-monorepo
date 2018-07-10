@@ -1,86 +1,87 @@
-const Web3 = require('web3');
-const web3 = new Web3();
-import BaseContract;
-import {InitProvider, InitCurve, Curve, NextEndpoint, EndpointParams} from "./types"
+import {toHex,utf8ToHex,toBN, hexToUtf8} from "web3-utils";
+import {BaseContract,BaseContractType} from "@zap/basecontract";
+import {Curve,CurveType} from "@zap/curve";
+import {DEFAULT_GAS} from "@zap/utils"
+import {InitProvider, InitCurve, NextEndpoint, EndpointParams} from "./types"
+console.log(BaseContract)
+export class ZapRegistry extends BaseContract {
 
-class ZapRegistry extends BaseContract {
-
-    constructor({networkId=null,networkProvider=null}={}){
-        super({contract:"Registry",networkId,networkProvider});
+    constructor({artifactsDir=null,networkId=null,networkProvider=null}:BaseContractType){
+        console.log("in registry constructor : ", artifactsDir, networkId,networkProvider)
+        super({artifactsDir,artifactName:"Registry",networkId,networkProvider});
     }
 
-    async initiateProvider({public_key, title, endpoint, endpoint_params, from, gas}:InitProvider) {
+    async initiateProvider({public_key, title, endpoint, endpoint_params, from, gas=DEFAULT_GAS}:InitProvider) {
         try {
+            let params = endpoint_params? endpoint_params.map((item:string) =>{return utf8ToHex(item)}) : [];
             return await this.contract.methods.initiateProvider(
-                public_key,
-                title,
-                endpoint,
-                endpoint_params)
-                .send({
-                        from: from,
-                        gas: gas || this.DEFAULT_GAS,
-                    }
-                );
+                toBN(public_key),
+                utf8ToHex(title),
+                utf8ToHex(endpoint),
+                params)
+                .send({from,gas});
         } catch (err) {
             throw err;
         }
     }
 
-    async initiateProviderCurve({endpoint, curve, from, gas}:InitCurve) {
+    async initiateProviderCurve({endpoint, curve, from, gas=DEFAULT_GAS}:InitCurve) {
         try {
             let convertedConstants = curve.constants.map(item => {
-                return web3.utils.toHex(item);
+                return toHex(item);
             });
             let convertedParts = curve.parts.map(item => {
-                return web3.utils.toHex(item);
+                return toHex(item);
             });
             let convertedDividers = curve.dividers.map(item => {
-                return web3.utils.toHex(item);
+                return toHex(item);
             });
             return await this.contract.methods.initiateProviderCurve(
-                this.web3.utils.utf8ToHex(endpoint),
+                utf8ToHex(endpoint),
                 convertedConstants,
                 convertedParts,
                 convertedDividers)
-                .send({
-                    from: from,
-                    gas: gas || this.DEFAULT_GAS,
-                });
+                .send({from, gas});
         } catch (err) {
             throw err;
         }
     }
 
-    async setEndpointParams({endpoint, params, from, gas}:EndpointParams) {
+    async setEndpointParams({endpoint, endpoint_params, from, gas=DEFAULT_GAS}:EndpointParams) {
         try {
-            let endpoint_params = [];
-            params.forEach(el => endpoint_params.push(web3.utils.utf8ToHex(el)));
-            return await this.contract.methods.setEndpointParams(
-                endpoint,
-                endpoint_params).send({
-                from: from,
-                gas: gas || this.DEFAULT_GAS,
-            });
+          let params = endpoint_params ? endpoint_params.map(el =>{return utf8ToHex(el)}) : [];
+            let result =  await this.contract.methods.setEndpointParams(
+                utf8ToHex(endpoint),
+                params).send({from, gas});
+            return result
         } catch (err) {
             throw err;
         }
     }
 
-    async getProviderPublicKey(provider:string):string{
-        return await this.contract.methods.getProviderPublicKey(provider).call();
+    async getProviderPublicKey(provider:string):Promise<string>{
+        let pubKey =  await this.contract.methods.getProviderPublicKey(provider).call();
+        return Number(pubKey.valueOf());
     }
 
-    async getProviderTitle(provider:string):string{
-        return await this.contract.methods.getProviderTitle(provider).call();
+    async getProviderTitle(provider:string):Promise<string>{
+        let title = await this.contract.methods.getProviderTitle(provider).call();
+        return hexToUtf8(title)
     }
 
     /**
      *
-     * @param provider address
-     * @returns {Promise<any>}
+     * @param {string} provider
+     * @param {string} endpoint
+     * @returns {Promise<Curve>}
      */
-    async getProviderCurve(provider:string):Curve{
-        return await this.contract.methods.getProviderCurve.call(provider).call();
+    async getProviderCurve(provider:string,endpoint:string):Promise<Curve>{
+        let curve =  await this.contract.methods.getProviderCurve(
+            provider,
+            utf8ToHex(endpoint)
+        ).call();
+        console.log(curve)
+        return new Curve(curve['0'].map(i=>parseInt(i)),curve['1'].map(i=>parseInt(i)),curve['2'].map(i=>parseInt(i)))
     }
 
     /**
@@ -100,11 +101,14 @@ class ZapRegistry extends BaseContract {
      * @returns {Promise<any>}
      */
     async getNextEndpointParams({provider, endpoint, index}:NextEndpoint){
-        return this.contract.methods.getNextEndpointParam(
+        let params = await  this.contract.methods.getNextEndpointParam(
             provider,
             this.web3.utils.utf8ToHex(endpoint),
             this.web3.utils.toBN(index)
         ).call();
+        let endpointParams = params.endpointParam
+        console.log(hexToUtf8(endpointParams))
+        return hexToUtf8(endpointParams)
     }
 
     // ==== Events ====//
@@ -123,7 +127,4 @@ class ZapRegistry extends BaseContract {
 
 }
 
-module.exports = {
-  ZapRegistry,
-  RegistryTypes :"./types"
-}
+export * from "./types" ;

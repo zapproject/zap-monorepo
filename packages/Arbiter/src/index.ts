@@ -1,35 +1,37 @@
-const basecontract = require('basecontract');
+import  {BaseContract,BaseContractTypes} from '@zap/basecontract';
 import {SubscriptionInit,SubscriptionEnd,Filter} from "./types"
-class ZapArbiter extends basecontract {
+import {toBN,utf8ToHex} from 'web3-utils';
+import {DEFAULT_GAS} from "@zap/utils"
+class ZapArbiter extends BaseContract {
 
-    constructor({networkId=null,networkProvider=null}={}){
-        super({contract:'Arbiter',networkId,networkProvider});
+    constructor({artifactsDir, networkId,networkProvider}:BaseContractTypes){
+        super({artifactsDir,artifactName:'Arbiter',networkId,networkProvider});
     }
 
     async initiateSubscription(
-        {provider, endpoint, endpointParams, blocks, publicKey, from, gas} : SubscriptionInit) {
+        {provider, endpoint, endpointParams, blocks, publicKey, from, gas=DEFAULT_GAS} : SubscriptionInit) {
         try {
             for (let i in endpointParams){
-                endpointParams[i] = this.web3.utils.utf8ToHex(endpointParams[i]);
+                endpointParams[i] = utf8ToHex(endpointParams[i]);
             }
 
             return await this.contract.methods.initiateSubscription(
                 provider,
-                this.web3.utils.utf8ToHex(endpoint),
+                utf8ToHex(endpoint),
                 endpointParams,
-                this.web3.utils.toBN(publicKey),
-                this.web3.utils.toBN(blocks)).send({from: from, gas: gas});
+                toBN(publicKey),
+                toBN(blocks)).send({from, gas});
         } catch (err) {
             throw err;
         }
     }
 
-    async endSubscription({provider, endpoint, from, gas}:SubscriptionEnd) {
+    async endSubscription({provider, endpoint, from, gas=DEFAULT_GAS}:SubscriptionEnd) {
         try {
             return await this.contract.methods.endSubscriptionSubscriber(
                 provider,
-                this.web3.utils.utf8ToHex(endpoint))
-                .send({from: from, gas: gas});
+                utf8ToHex(endpoint))
+                .send({from, gas});
         } catch (err) {
             throw err;
         }
@@ -81,8 +83,4 @@ class ZapArbiter extends basecontract {
 
 
 }
-
-module.exports = {
-  ZapArbiter,
-  ArbiterTypes:"./types"
-}
+export default ZapArbiter;
