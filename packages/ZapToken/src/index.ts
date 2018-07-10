@@ -1,31 +1,31 @@
-const basecontract = require('basecontract');
-import {toBase,fromBase} from "@zap/utils";
+import {BaseContract,BaseContractType} from "@zap/basecontract";
+import {toZapBase, fromZapBase,DEFAULT_GAS} from "@zap/utils";
 import {TransferType} from "./types";
 
-class ZapToken extends basecontract {
+class ZapToken extends BaseContract {
 
-    constructor({networkId=null,networkProvider=null}={}){
-        super({contract:"ZapToken",networkId,networkProvider});
+    constructor({artifactsDir=undefined,artifactName=undefined,networkId=undefined,networkProvider=undefined}:BaseContractType){
+        super({artifactsDir,artifactName:"ZapToken",networkId,networkProvider});
     }
 
     async balanceOf(address:string) {
         let balance = await this.contract.methods.balanceOf(address).call();
-        return fromBase(balance);
+        return fromZapBase(balance);
     }
 
-    async send({to, amount, from}:TransferType) {
-        let bigAmount = toBase(amount)
-        return await this.contract.methods.transfer(to, bigAmount).send({from});
+    async send({to, amount, from,gas=DEFAULT_GAS}:TransferType) {
+        let bigAmount = toZapBase(amount);
+        return await this.contract.methods.transfer(to, bigAmount).send({from,gas});
     }
 
-    async allocate({to, amount, from}:TransferType) {
-        let bigAmount = toBase(amount)
-        return await this.contract.methods.allocate(to, bigAmount).send({from: from});
+    async allocate({to, amount, from,gas=DEFAULT_GAS}:TransferType) {
+        let bigAmount = toZapBase(amount)
+        return await this.contract.methods.allocate(to, bigAmount).send({from,gas});
     }
 
-    async approve({to, amount, from}:TransferType) {
-        let bigAmount = toBase(amount);
-        const success = await this.contract.methods.approve(to, bigAmount).send({from: from});
+    async approve({to, amount, from,gas=DEFAULT_GAS}:TransferType) {
+        let bigAmount = toZapBase(amount);
+        const success = await this.contract.methods.approve(to, bigAmount).send({from,gas});
         if (!success) {
             throw new Error('Failed to approve Bondage transfer');
         }

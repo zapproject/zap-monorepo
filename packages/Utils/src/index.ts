@@ -1,5 +1,6 @@
 import {readdirSync} from "fs";
-
+import {ZapProviderType} from "./types";
+const {utf8ToHex,toBN} = require("web3-utils");
 const Web3 = require('web3');
 const web3 = new Web3();
 export const toHex = (str:string) => {
@@ -19,7 +20,7 @@ export const getHexString = (str:string) => {
     return `0x${hex}`;
 };
 
-export function fixTruffleContractCompatibilityIssue(contract) {
+export function fixTruffleContractCompatibilityIssue(contract:any) {
     if (!contract.currentProvider.sendAsync || typeof contract.currentProvider.sendAsync !== 'function') {
         contract.currentProvider.sendAsync = function() {
             return contract.currentProvider.send.apply(
@@ -30,15 +31,26 @@ export function fixTruffleContractCompatibilityIssue(contract) {
     return contract;
 };
 
-export function toBase(num:number){
+export function toZapBase(num:number){
     return web3.utils.toBN(num).mul(web3.utils.toBN(10).pow(web3.utils.toBN(18)));
 }
 
-export function fromBase(num:number) {
+export function fromZapBase(num:number) {
     return web3.utils.toBN(num).div(web3.utils.toBN(10).pow(web3.utils.toBN(18))).toNumber();
 }
 
-export function getDeployedContract(artifact, { id }, provider) {
+export function normalizeProvider(provider:ZapProviderType):any{
+    let normalize = provider;
+    normalize.title = utf8ToHex(provider.title);
+    normalize.pubkey= toBN(provider.pubkey);
+    normalize.endpoint = utf8ToHex(provider.endpoint);
+    for(let i in provider.endpoint_params){
+        normalize.endpoint_params[i] = utf8ToHex(provider.endpoint_params);
+    }
+    return normalize;
+}
+
+export function getDeployedContract(artifact:any, { id }:{id:number}, provider:any) {
 const web3 = new Web3(provider);
 let instance = new web3.eth.Contract(artifact, artifact.networkS[id].address);
 instance = fixTruffleContractCompatibilityIssue(instance);

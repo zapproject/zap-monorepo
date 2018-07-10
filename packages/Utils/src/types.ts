@@ -1,3 +1,4 @@
+import {CurveType} from "@zap/curve";
 export type serverOptionsType = {
     network: string ,
     network_id: number,
@@ -13,4 +14,13 @@ export type buildOptionsType = {
     contracts_directory:string,
     working_directory: string,
     migrations_directory: string,
+}
+
+export interface ZapProviderType {
+    provider: string,
+    pubkey:number,
+    title:string,
+    endpoint: string,
+    endpoint_params:Array<string>,
+    curve: CurveType
 }

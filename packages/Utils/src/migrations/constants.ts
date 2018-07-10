@@ -1,7 +1,7 @@
 import {Curve} from "@zap/curve"
-import * as Web3 from 'web3'
+const Web3  = require('web3');
 import {join} from "path";
-import {serverOptions} from "./../types"
+import {serverOptionsType} from "./../types"
  Web3.providers.HttpProvider.prototype.sendAsync = Web3.providers.HttpProvider.prototype.send;
 const  migrationDir = join(__dirname,'./../../../node_modules/zap_contracts/migrations')
 const contractsDir = join(__dirname,'./../../../node_modules/zap_contracts/contracts')
@@ -24,7 +24,7 @@ export let  buildOptions ={
     migrations_directory: migrationDir
 } ;
 
-export const testZapProvider = {
+export const testZapProvider:any = {
   pubkey: 111,
   title :"testProvider",
   params:  ["p1", "p2"],

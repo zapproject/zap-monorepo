@@ -1,15 +1,21 @@
-class Curve {
+export {CurveType} from "./types";
+const {toHex}  = require("web3-utils");
+
+export class Curve {
+    constants : Array<number>;
+    parts: Array<number>;
+    dividers : Array<number>;
+    pieces:Array<any>;
     constructor(constants:Array<number>, parts: Array<number>, dividers: Array<number>) {
         this.constants = constants;
         this.parts = parts;
         this.dividers = dividers;
-
+        this.pieces = Array();
         this.structurize();
     }
 
     // should be called if fields were updated
     structurize() {
-        this.pieces = Array();
         let pStart = 0;
 
         for (let i = 0; i < this.dividers.length; i++) {
@@ -33,7 +39,7 @@ class Curve {
     }
 
     // Get the price of a dot at a given totalBound
-    getPrice(tota:number) {
+    getPrice(total:number) {
         if (total < 0) {
             return 0;
         }
@@ -51,7 +57,7 @@ class Curve {
         return 0;
     }
 
-    _calculateTerm(term, x:number) {
+    _calculateTerm(term:any, x:number) {
         let val = 1;
 
         if (term.fn === 0) {
@@ -71,7 +77,20 @@ class Curve {
         return val * term.coef;
     }
 
-    _calculatePolynomial(terms, x:number) {
+    convertToBNArrays() {
+        let convertedConstants = this.constants.map((item: number) => {
+            return toHex(item);
+        });
+        let convertedParts = this.parts.map((item: number) => {
+            return toHex(item);
+        });
+        let convertedDividers = this.dividers.map((item: number) => {
+            return toHex(item);
+        });
+        return [convertedConstants, convertedParts, convertedDividers];
+
+    }
+    _calculatePolynomial(terms:any, x:number) {
         let sum = 0;
 
         for (let i = 0; i < terms.length; i++ ) {
@@ -82,6 +101,4 @@ class Curve {
     }
 }
 
-export = {
-    Curve
-};
+export * from "./types";

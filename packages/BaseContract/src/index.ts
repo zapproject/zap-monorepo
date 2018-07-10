@@ -1,18 +1,22 @@
 import * as assert from "assert";
-import * as Web3 from 'web3';
+const Web3 =require('web3');
 import {Artifacts} from "@zap/artifacts";
 import {BaseContractType} from "./types";
 import {getArtifacts} from "@zap/utils"
 
 export class BaseContract {
+    provider : any;
+    web3:any;
+    contract:any;
+    networkId:number;
     constructor({artifactsDir=null,artifactName,networkId=null,networkProvider=null}:BaseContractType) {
-        let artifact;
+        let artifact:any = null;
         try {
           if(!artifactsDir){
             artifact = Artifacts[artifactName];
           }
           else{
-            let artifacts = getArtifacts(artifactsDir)
+            let artifacts:any = getArtifacts(artifactsDir);
             artifact = artifacts[artifactName];
           }
           this.provider = networkProvider ||

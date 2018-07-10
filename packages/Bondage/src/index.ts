@@ -2,14 +2,14 @@ import {BaseContract,BaseContractType} from '@zap/basecontract'
 import {BondArgs,UnbondArgs,BondageArgs} from "./types";
 import {toBase} from '@zap/utils';
 import * as assert from 'assert';
-import {toBN, utf8ToHex} from "web3-utils";
+const {toBN, utf8ToHex} = require("web3-utils");
 import {DEFAULT_GAS} from "@zap/utils";
 
 class ZapBondage extends BaseContract {
 
 
-    constructor({artifactsDir=null,artifactName=null,networkId=null,networkProvider=null}:BaseContractType){
-        super({artifactDir,artifactName:"Bondage",networkId,networkProvider});
+    constructor({artifactsDir=undefined,artifactName=undefined,networkId=undefined,networkProvider=undefined}:BaseContractType){
+        super({artifactsDir,artifactName:"Bondage",networkId,networkProvider});
     }
     // Do a bond to a ZapOracle's endpoint
     async bond({provider, endpoint, zapNum, from, gas=DEFAULT_GAS}:BondArgs) {
@@ -49,7 +49,7 @@ class ZapBondage extends BaseContract {
         return await this.contract.methods.calcZapForDots(
             provider,
             utf8ToHex(endpoint),
-            toBN(dots)).call();
+            toBN(dots)).call().valueOf();
     }
 
     async calcBondRate({provider, endpoint, zapNum}:BondageArgs){

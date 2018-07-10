@@ -1,5 +1,6 @@
 export type TransferType = {
     to:string,
     amount:number,
-    from:string
+    from:string,
+    gas ?: number
 }

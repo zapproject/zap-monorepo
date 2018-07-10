@@ -1,7 +1,7 @@
 import {join,basename} from "path";
 import {readdirSync} from "fs";
 function getArtifacts(){
-    let Artifacts = {}
+    let Artifacts:any = {};
         readdirSync(join(__dirname,'../../','contracts')).forEach(function (file) {
         /* If its the current file ignore it */
         if (!file.endsWith('.json')) return;
@@ -13,4 +13,4 @@ function getArtifacts(){
 
 }
 
-export const Artifacts = getArtifacts();
+export const Artifacts:any = getArtifacts();

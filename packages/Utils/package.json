@@ -9,7 +9,7 @@
     "build": "yarn tsc",
     "test": "mocha  lib/test/*.js --serial",
     "rebuild_and_test": "run-s build test",
-    "run_mocha": "mocha 'lib/test/**/*.js' --timeout 100000 --bail --exit",
+    "run_mocha": "mocha -r ts-node/register 'test/*.ts' --timeout 100000 --bail --exit",
     "compile": "sol-compiler --contracts-dir src",
     "clean": "shx rm -rf lib generated_contract_wrappers",
     "run_lint": "./node_modules/.bin/tslint --project . --exclude **/contracts/**/* --exclude **/lib/**/*"
@@ -18,6 +18,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/chai": "^4.1.4",
+    "@types/mocha": "^5.2.4",
     "@types/node": "^10.5.1",
     "@zap/curve": "^1.0.0",
     "chai": "^4.1.2",

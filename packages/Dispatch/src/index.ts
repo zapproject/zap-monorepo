@@ -1,10 +1,10 @@
 import {BaseContract,BaseContractType} from '@zap/basecontract';
-import {QueryArgs,ResponseArgs} from './types'
+import {QueryArgs,ResponseArgs,FilterType} from './types'
 import {DEFAULT_GAS} from "@zap/utils";
-import {toBN,utf8ToHex} from "web3-utils";
-class ZapDispatch extends BaseContract {
+const {toBN,utf8ToHex} = require ("web3-utils");
+export class ZapDispatch extends BaseContract {
 
-    constructor({artifactsDir=null,networkId=null,networkProvider=null}:BaseContractType){
+    constructor({artifactsDir=undefined,networkId=undefined,networkProvider=undefined}:BaseContractType){
         super({artifactsDir,artifactName:"Dispatch",networkId,networkProvider});
     }
 
@@ -71,7 +71,7 @@ class ZapDispatch extends BaseContract {
      * @param filters event filters
      * @param callback callback function that will be called after event received
      */
-    listen(filters :object ={}, callback:Function) {
+    listen(filters :FilterType, callback:Function) {
         this.contract.events.allEvents(
             filters,
             { fromBlock: filters.fromBlock ? filters.fromBlock : 0, toBlock: 'latest' },
@@ -93,7 +93,4 @@ class ZapDispatch extends BaseContract {
 
 }
 
-module.exports = {
-  ZapDispatch,
-  DispatchTypes :"./types"
-}
+export * from "./types"
