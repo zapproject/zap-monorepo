@@ -33,7 +33,8 @@ describe('Zap Bondage Test"', () => {
         web3:any,
         testArtifacts,
         options:any,
-        buildDir:string = join(__dirname,"contracts");
+        buildDir:string = join(__dirname,"contracts"),
+        requiredZap:number;
 
     before(function (done) {
         configureEnvironment(async() => {
@@ -72,18 +73,27 @@ describe('Zap Bondage Test"', () => {
             expect(boundDots).to.equal(0);
         });
         it('Should get required Zap for 5 dots', async () => {
-            let requiredZap = await bondageWrapper.calcZapForDots({
+            requiredZap = await bondageWrapper.calcZapForDots({
                 provider:accounts[0],
                 endpoint : testZapProvider.endpoint,
                 dots:5
             });
             expect(requiredZap).to.equal(110)
         });
+        it("Should have calc Bond rate the same with dots",async()=>{
+            let calcDots = await bondageWrapper.calcBondRate({
+                provider: accounts[0],
+                endpoint: testZapProvider.endpoint,
+                zapNum: requiredZap
+            })
+            expect(calcDots).to.equal(5)
+        })
         it('Should bond required Zap', async () => {
-
+            let bonded = await bondageWrapper.bond({provider:accounts[0],
+            endpoint:testZapProvider.endpoint,zapNum:requiredZap,from:accounts[2]})
+            console.log("bonded : ", bonded)
         });
         it("should unbond 1 dots",async()=>{
-
         });
         it("Should calculate correct current cost of Dots",async ()=>{
 

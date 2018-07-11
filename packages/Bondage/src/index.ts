@@ -1,9 +1,9 @@
 import {BaseContract,BaseContractType} from '@zap/basecontract'
-import {BondArgs,UnbondArgs,BondageArgs} from "./types";
+import {BondArgs,UnbondArgs,BondageArgs, CalcBondRateType} from "./types";
 import {toZapBase} from '@zap/utils';
-const {assert} = require('assert');
-const {toBN, utf8ToHex} = require("web3-utils");
+const {toBN, utf8ToHex,toHex} = require("web3-utils");
 import {DEFAULT_GAS} from "@zap/utils";
+const assert = require("assert");
 
 export class ZapBondage extends BaseContract {
 
@@ -13,18 +13,13 @@ export class ZapBondage extends BaseContract {
     }
     // Do a bond to a ZapOracle's endpoint
     async bond({provider, endpoint, zapNum, from, gas=DEFAULT_GAS}:BondArgs) {
-        try{
-            assert(zapNum && zapNum>0,"Zap to Bond must be greater than 0");
-            let bondResult = await this.contract.bond(
-                provider,
-                utf8ToHex(endpoint),
-                toZapBase(zapNum))
-                .send({from,gas});
-            return bondResult;
-        }catch(e){
-            console.error(e);
-            return 0;
-        }
+        console.log("args : ", provider, endpoint, zapNum, from)
+        assert(zapNum && zapNum>0,"Zap to Bond must be greater than 0");
+        return await this.contract.methods.bond(
+            provider,
+            utf8ToHex(endpoint),
+            toHex(zapNum))
+            .send({from,gas});
 
     }
 
@@ -55,12 +50,14 @@ export class ZapBondage extends BaseContract {
         return parseInt(zapRequired);
     }
 
-    async calcBondRate({provider, endpoint, zapNum}:BondageArgs){
-        return await this.contract.methods.calcBondRate(
+    async calcBondRate({provider, endpoint, zapNum}:CalcBondRateType){
+        let bondRate =  await this.contract.methods.calcBondRate(
             provider,
             utf8ToHex(endpoint),
-            toBN(zapNum)
+            zapNum
         ).call();
+        return parseInt(bondRate['1'])
+
     }
 
     async currentCostOfDot({provider, endpoint, dots}:BondageArgs){

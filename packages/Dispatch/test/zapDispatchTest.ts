@@ -1,5 +1,4 @@
 import {join} from "path";
-
 const expect = require('chai')
     .use(require('chai-as-promised'))
     .use(require('chai-bignumber'))
@@ -43,7 +42,7 @@ describe('Zap Dispatch Test"', () => {
             web3 =new Web3(ganacheProvider);
             accounts = await web3.eth.getAccounts();
             //delete require.cache[require.resolve('/contracts')];
-            await migrateContracts(join(__dirname,"contracts"));
+            await migrateContracts(buildDir);
             done();
         });
     });
@@ -61,6 +60,7 @@ describe('Zap Dispatch Test"', () => {
                 deployedRegistry = new BaseContract(Object.assign(options, {artifactName: "Registry"}));
                 deployedToken = new BaseContract(Object.assign(options, {artifactName: "ZapToken"}));
                 deployedDispatchStorage = new BaseContract(Object.assign(options, {artifactName: "DispatchStorage"}));
+                done()
             })
         });
         it("Should have all pre conditions set up for dispatch to work", async () => {

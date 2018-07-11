@@ -11,7 +11,7 @@ export type UnbondArgs = {
     endpoint : string,
     dots :number,
     from : string,
-    gas ?: number	
+    gas ?: number
 }
 
 export type BondageArgs = {
@@ -20,6 +20,11 @@ export type BondageArgs = {
 	endpoint: string,
 	dots ?: number ,
 	zapNum ?: number
+}
+export type CalcBondRateType = {
+    provider: string,
+    endpoint: string,
+    zapNum :number
 }
 
 
