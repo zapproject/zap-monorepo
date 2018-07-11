@@ -1,20 +1,22 @@
-import {CurveTypes} from "@zap/curve"
-import {BN} from "web3-utils";
+import {CurveType} from "@zap/curve"
+import BigNumber from 'bignumber.js';
+
+
 export type InitProvider = {
   public_key : string,
   title :string,
   endpoint: string,
   endpoint_params ?: Array<string>,
   from: string,
-  gas : BN
+  gas : BigNumber
 }
 
 
 export type InitCurve = {
   endpoint:string,
-  curve:CurveTypes.Curve,
+  curve:CurveType,
   from: string,
-  gas : BN
+  gas : BigNumber
 }
 
 
@@ -28,5 +30,5 @@ export type EndpointParams = {
   endpoint:string,
   endpoint_params: string[],
   from: string,
-  gas : BN
+  gas : BigNumber
 }

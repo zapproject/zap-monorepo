@@ -1,30 +1,25 @@
 import {BaseContract,BaseContractType} from '@zap/basecontract'
-import {BondArgs,UnbondArgs,BondageArgs} from "./types";
-import {toBase} from '@zap/utils';
-import * as assert from 'assert';
-import {toBN, utf8ToHex} from "web3-utils";
+import {BondArgs,UnbondArgs,BondageArgs, CalcBondRateType} from "./types";
+import {toZapBase} from '@zap/utils';
+const {toBN, utf8ToHex,toHex} = require("web3-utils");
 import {DEFAULT_GAS} from "@zap/utils";
+const assert = require("assert");
 
-class ZapBondage extends BaseContract {
+export class ZapBondage extends BaseContract {
 
 
-    constructor({artifactsDir=null,artifactName=null,networkId=null,networkProvider=null}:BaseContractType){
-        super({artifactDir,artifactName:"Bondage",networkId,networkProvider});
+    constructor({artifactsDir=undefined,artifactName=undefined,networkId=undefined,networkProvider=undefined}:BaseContractType){
+        super({artifactsDir,artifactName:"Bondage",networkId,networkProvider});
     }
     // Do a bond to a ZapOracle's endpoint
     async bond({provider, endpoint, zapNum, from, gas=DEFAULT_GAS}:BondArgs) {
-        try{
-            assert(zapNum && zapNum>0,"Zap to Bond must be greater than 0");
-            let bondResult = await this.contract.bond(
-                provider,
-                utf8ToHex(endpoint),
-                toBase(zapNum))
-                .send({from,gas});
-            return bondResult;
-        }catch(e){
-            console.error(e);
-            return 0;
-        }
+        console.log("args : ", provider, endpoint, zapNum, from)
+        assert(zapNum && zapNum>0,"Zap to Bond must be greater than 0");
+        return await this.contract.methods.bond(
+            provider,
+            utf8ToHex(endpoint),
+            toHex(zapNum))
+            .send({from,gas});
 
     }
 
@@ -38,26 +33,31 @@ class ZapBondage extends BaseContract {
     }
 
     async getBoundDots({subscriber, provider, endpoint}:BondageArgs) {
-        return await this.contract.methods.getBoundDots(
+        let boundDots=  await this.contract.methods.getBoundDots(
             subscriber,
             provider,
-            this.web3.utils.utf8ToHex(endpoint),
+            utf8ToHex(endpoint),
         ).call();
+        return parseInt(boundDots);
     }
 
     async calcZapForDots({provider, endpoint, dots}:BondageArgs){
-        return await this.contract.methods.calcZapForDots(
+        console.log("get zxap required ", provider,endpoint,dots)
+        let zapRequired =  await this.contract.methods.calcZapForDots(
             provider,
             utf8ToHex(endpoint),
             toBN(dots)).call();
+        return parseInt(zapRequired);
     }
 
-    async calcBondRate({provider, endpoint, zapNum}:BondageArgs){
-        return await this.contract.methods.calcBondRate(
+    async calcBondRate({provider, endpoint, zapNum}:CalcBondRateType){
+        let bondRate =  await this.contract.methods.calcBondRate(
             provider,
             utf8ToHex(endpoint),
-            toBN(zapNum)
+            zapNum
         ).call();
+        return parseInt(bondRate['1'])
+
     }
 
     async currentCostOfDot({provider, endpoint, dots}:BondageArgs){
@@ -104,4 +104,4 @@ class ZapBondage extends BaseContract {
 
 }
 
-export default  ZapBondage
+export * from "./types"

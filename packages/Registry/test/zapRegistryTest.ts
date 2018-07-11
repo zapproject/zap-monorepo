@@ -1,6 +1,6 @@
 import {join} from "path";
-import * as Web3 from 'web3';
-import {hexToUtf8,BN,utf8ToHex} from "web3-utils";
+const Web3 = require('web3');
+const {hexToUtf8,BN,utf8ToHex} = require("web3-utils");
 const expect = require('chai')
     .use(require('chai-as-promised'))
     .use(require('chai-bignumber'))
@@ -8,7 +8,6 @@ const expect = require('chai')
 
 import {
     migrateContracts,
-    clearBuild,
     startGanacheServer,
     testZapProvider,
     ganacheProvider ,
@@ -16,23 +15,20 @@ import {
     getArtifacts
 } from "@zap/utils";
 import {BaseContract,BaseContractType} from "@zap/basecontract"
-import {ZapRegistry} from '../src/index.js'
+import {ZapRegistry} from '../src';
 
-async function configureEnvironment(func) {
+async function configureEnvironment(func:Function) {
     await func();
 }
 
 describe('Registry test', () => {
     let accounts :Array<string>= [],
         ganacheServer:any,
-        addressRegistry,
-        abiJSON,
-        registryWrapper:BaseContractType,
-        deployedStorage ,
-        abiJSONStorage,
+        registryWrapper:any,
+        deployedStorage:any ,
         web3,
         testArtifacts;
-    let buildDir = join(__dirname,"contracts");
+    let buildDir:string = join(__dirname,"contracts");
 
     before(function (done) {
         configureEnvironment(async() => {

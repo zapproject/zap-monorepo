@@ -5,19 +5,16 @@
   "main": "./lib/src/index.js",
   "types": "./lib/src/index.d.ts",
   "scripts": {
-    "watch_without_deps": "yarn pre_build && tsc -w",
-    "build": "yarn tsc",
-    "test": "mocha  lib/test/*.js --serial",
-    "rebuild_and_test": "run-s build test",
-    "run_mocha": "mocha 'lib/test/**/*.js' --timeout 100000 --bail --exit",
-    "compile": "sol-compiler --contracts-dir src",
-    "clean": "shx rm -rf lib generated_contract_wrappers",
-    "run_lint": "./node_modules/.bin/tslint --project . --exclude **/contracts/**/* --exclude **/lib/**/*"
+    "build": "tsc",
+    "test": "mocha  -r ts-node/register test/*.ts --serial",
+    "run_test": "run-s build test"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/chai": "^4.1.4",
+    "@types/mocha": "^5.2.4",
     "@types/node": "^10.5.1",
     "@zap/curve": "^1.0.0",
     "chai": "^4.1.2",

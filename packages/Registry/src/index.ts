@@ -1,13 +1,12 @@
-import {toHex,utf8ToHex,toBN, hexToUtf8} from "web3-utils";
+const {toHex,utf8ToHex,toBN, hexToUtf8} = require("web3-utils");
 import {BaseContract,BaseContractType} from "@zap/basecontract";
 import {Curve,CurveType} from "@zap/curve";
 import {DEFAULT_GAS} from "@zap/utils"
 import {InitProvider, InitCurve, NextEndpoint, EndpointParams} from "./types"
-console.log(BaseContract)
-export class ZapRegistry extends BaseContract {
 
-    constructor({artifactsDir=null,networkId=null,networkProvider=null}:BaseContractType){
-        console.log("in registry constructor : ", artifactsDir, networkId,networkProvider)
+export class ZapRegistry extends BaseContract {
+    contract:any;
+    constructor({artifactsDir=undefined,networkId=undefined,networkProvider=undefined}:BaseContractType){
         super({artifactsDir,artifactName:"Registry",networkId,networkProvider});
     }
 
@@ -27,13 +26,13 @@ export class ZapRegistry extends BaseContract {
 
     async initiateProviderCurve({endpoint, curve, from, gas=DEFAULT_GAS}:InitCurve) {
         try {
-            let convertedConstants = curve.constants.map(item => {
+            let convertedConstants = curve.constants.map((item:number) => {
                 return toHex(item);
             });
-            let convertedParts = curve.parts.map(item => {
+            let convertedParts = curve.parts.map((item:number)=> {
                 return toHex(item);
             });
-            let convertedDividers = curve.dividers.map(item => {
+            let convertedDividers = curve.dividers.map((item:number) => {
                 return toHex(item);
             });
             return await this.contract.methods.initiateProviderCurve(
@@ -50,17 +49,16 @@ export class ZapRegistry extends BaseContract {
     async setEndpointParams({endpoint, endpoint_params, from, gas=DEFAULT_GAS}:EndpointParams) {
         try {
           let params = endpoint_params ? endpoint_params.map(el =>{return utf8ToHex(el)}) : [];
-            let result =  await this.contract.methods.setEndpointParams(
+            return await this.contract.methods.setEndpointParams(
                 utf8ToHex(endpoint),
                 params).send({from, gas});
-            return result
         } catch (err) {
             throw err;
         }
     }
 
-    async getProviderPublicKey(provider:string):Promise<string>{
-        let pubKey =  await this.contract.methods.getProviderPublicKey(provider).call();
+    async getProviderPublicKey(provider:string):Promise<number>{
+        let pubKey:string =  await this.contract.methods.getProviderPublicKey(provider).call();
         return Number(pubKey.valueOf());
     }
 
@@ -75,13 +73,12 @@ export class ZapRegistry extends BaseContract {
      * @param {string} endpoint
      * @returns {Promise<Curve>}
      */
-    async getProviderCurve(provider:string,endpoint:string):Promise<Curve>{
+    async getProviderCurve(provider:string,endpoint:string):Promise<CurveType>{
         let curve =  await this.contract.methods.getProviderCurve(
             provider,
             utf8ToHex(endpoint)
         ).call();
-        console.log(curve)
-        return new Curve(curve['0'].map(i=>parseInt(i)),curve['1'].map(i=>parseInt(i)),curve['2'].map(i=>parseInt(i)))
+        return new Curve(curve['0'].map((i:string)=>parseInt(i)),curve['1'].map((i:string)=>parseInt(i)),curve['2'].map((i:string)=>parseInt(i)))
     }
 
     /**
@@ -103,11 +100,11 @@ export class ZapRegistry extends BaseContract {
     async getNextEndpointParams({provider, endpoint, index}:NextEndpoint){
         let params = await  this.contract.methods.getNextEndpointParam(
             provider,
-            this.web3.utils.utf8ToHex(endpoint),
-            this.web3.utils.toBN(index)
+            utf8ToHex(endpoint),
+            toBN(index)
         ).call();
-        let endpointParams = params.endpointParam
-        console.log(hexToUtf8(endpointParams))
+        let endpointParams = params.endpointParam;
+        console.log(hexToUtf8(endpointParams));
         return hexToUtf8(endpointParams)
     }
 

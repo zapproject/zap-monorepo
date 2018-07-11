@@ -1,7 +1,7 @@
 
-import {readdirSync,readFileSync,writeFileSync,unlinkSync, existsSync,mkdirSync} from 'fs'
+const {readdirSync,readFileSync,writeFileSync,unlinkSync, existsSync,mkdirSync} =require('fs');
 import {join,basename} from 'path'
-import { provider, server } from 'ganache-core';
+const { provider, server } = require('ganache-core');
 import { promisify } from 'util';
 import {ganacheServerOptions,DEFAULT_GAS,GAS_PRICE,buildOptions} from './constants';
 import {serverOptionsType,buildOptionsType} from "../types";
@@ -13,7 +13,7 @@ export function startGanacheServer(_serverOptions ?: any){
   return new Promise((resolve,reject)=>{
     let serverOptions = _serverOptions || ganacheServerOptions;
     const ganacheServer = server(serverOptions);
-    ganacheServer.listen(serverOptions.port, (err, blockchain) => {
+    ganacheServer.listen(serverOptions.port, (err:any, blockchain:any) => {
     if (err) {
       console.log("server might already is created from other tests");
     }
@@ -53,8 +53,8 @@ export function  clearBuild(onlyRemoveNetworks = true, buildDir:string) {
 }
 
 export function getArtifacts(buildDir:string){
-    let artifacts = {}
-    readdirSync(buildDir).forEach(function (file) {
+    let artifacts:any = {};
+    readdirSync(buildDir).forEach(function (file:string) {
 
         /* If its the current file ignore it */
         if (!file.endsWith('.json')) return;
@@ -75,7 +75,7 @@ export function getArtifacts(buildDir:string){
     try {
       clearBuild(false, buildDir);
       console.log("running all");
-      await asyncMigrate(options)
+      await asyncMigrate(options);
       return true;
     } catch (err) {
       return true;

@@ -24,13 +24,11 @@ class Subscriber extends EventEmitter {
 
 
     async bond({provider, endpoint, zapNum}:BondType){
-        assert(provider && endpoint && zapNum,
-            'missing args, require: provider,endpoint,zapNum');
-        assert(this.hasEnoughZap(zapNum), 'Insufficient Balance');
+       // assert.ok(this.hasEnoughZap(zapNum), 'Insufficient Balance');
         let approve = await ZapToken.approve({
             address: ZapBondage.contract._address,
             amount: zapNum, from: this.owner});
-        assert(approve, 'fail to approve to Bondage');
+        //assert.ok(approve, 'fail to approve to Bondage');
         let bonded = await ZapBondage.bond({provider, endpoint, zapNum, from: this.owner});
         return bonded;
     }

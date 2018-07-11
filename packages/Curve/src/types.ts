@@ -1,4 +1,4 @@
-export type Curve = {
+export type CurveType = {
   constants:number[],
   parts : number[],
   dividers: number[]
