@@ -5,8 +5,8 @@
   "main": "lib/src/index.js",
   "type": "lib/src/types.d.ts",
   "scripts": {
-    "build": "tsc",
-    "test": "mocha  -r ts-node/register test/*.ts --serial",
+    "build": "./node_modules/typescript/bin/tsc",
+    "test": "./node_modules/mocha/bin/mocha -r ts-node/register test/*.ts --serial",
     "run_test": "run-s build test"
   },
   "keywords": [],
@@ -35,6 +35,7 @@
   "devDependencies": {
     "@types/node": "^10.5.1",
     "mocha": "^5.2.0",
+    "ts-node": "^7.0.0",
     "tsc": "^1.20150623.0",
     "tslint": "^5.10.0",
     "typescript": "^2.9.2"

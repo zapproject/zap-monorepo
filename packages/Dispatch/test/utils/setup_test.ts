@@ -12,16 +12,18 @@ import {normalizeProvider,ZapProviderType,DEFAULT_GAS,toZapBase} from "@zap/util
  * @returns {Promise<void>}
  */
 export async function bootstrap(zapProvider:ZapProviderType,accounts:Array<string>,deployedRegistry:any, deployedBondage:any,deployedToken:any){
-  let normalizedP = normalizeProvider(zapProvider);
-  const dots = 10;
-  let defaultTx = {from:accounts[0],gas:DEFAULT_GAS}
-  await deployedRegistry.methods.initiateProvider(normalizedP).send(defaultTx);
-  await deployedRegistry.methods.initiateProviderCurve(accounts[0],zapProvider.curve.convertToBNArrays()).send(defaultTx);
-  for(let account of accounts) {
-      await deployedToken.methods.allocate(account,1000).send({from:deployedToken.owner.call(),gas:DEFAULT_GAS});
-  }
-  await deployedToken.methods.approve(deployedBondage._address,100).send({from:accounts[2],gas:DEFAULT_GAS});
-  let zapRequired = await deployedBondage.methods.calcZapForDots(normalizedP.endpoint,toBN(dots)).call().valueOf();
-  await deployedBondage.bond(accounts[0],normalizedP.endpoint,zapRequired).send({from:accounts[2],gas:DEFAULT_GAS});
-  return "done";
+    let normalizedP = normalizeProvider(zapProvider);
+    let defaultTx = {from:accounts[0],gas:DEFAULT_GAS}
+    await deployedRegistry.contract.methods.initiateProvider(normalizedP.pubkey,normalizedP.title, normalizedP.endpoint, normalizedP.endpoint_params).send(defaultTx);
+    let convertedCurve = zapProvider.curve.convertToBNArrays();
+    let tokenOwner = await deployedToken.contract.methods.owner().call()
+    await deployedRegistry.contract.methods.initiateProviderCurve(normalizedP.endpoint,convertedCurve[0], convertedCurve[1],convertedCurve[2]).send(defaultTx);
+    let providerCurve = await deployedRegistry.contract.methods.getProviderCurve(accounts[0],normalizedP.endpoint).call();
+    for(let account of accounts) {
+        await deployedToken.contract.methods.allocate(account,1000).send({from: tokenOwner,gas:DEFAULT_GAS});
+    }
+    await deployedToken.contract.methods.approve(deployedBondage.contract._address,100).send({from:accounts[2],gas:DEFAULT_GAS});
+    let requiredZap = await deployedBondage.contract.methods.calcZapForDots(accounts[0],normalizedP.endpoint,10).call();
+    await deployedBondage.contract.methods.bond(accounts[0],normalizedP.endpoint,requiredZap).send({from:accounts[2], gas:DEFAULT_GAS});
+    return "done";
 }

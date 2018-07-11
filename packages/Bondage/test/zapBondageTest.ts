@@ -41,7 +41,7 @@ describe('Zap Bondage Test"', () => {
             web3 =new Web3(ganacheProvider);
             accounts = await web3.eth.getAccounts();
             //delete require.cache[require.resolve('/contracts')];
-            await migrateContracts(join(__dirname,"contracts"));
+            await migrateContracts(buildDir);
             done();
         });
     });
@@ -58,24 +58,39 @@ describe('Zap Bondage Test"', () => {
                 deployedBondage = new BaseContract(Object.assign(options, {artifactName: "Bondage"}));
                 deployedRegistry = new BaseContract(Object.assign(options, {artifactName: "Registry"}));
                 deployedToken = new BaseContract(Object.assign(options, {artifactName: "ZapToken"}));
+                done();
             })
         });
-        it("Should have all pre conditions set up for dispatch to work", async () => {
-            await bootstrap(testZapProvider, accounts, deployedRegistry, deployedToken);
+        it("Should have all pre conditions set up for bondage to work", async () => {
+            await bootstrap(testZapProvider, accounts, deployedRegistry,deployedBondage, deployedToken);
         })
         it("should initiate Bondage Wrapper", async () => {
-            bondageWrapper = new ZapDispatch(Object.assign(options, {artifactName: "Dispatch"}));
+            bondageWrapper = new ZapBondage(Object.assign(options, {artifactName: "Dispatch"}));
         });
-        it('Should call query function in Dispatch smart contract', async () => {
+        it("should have no bound dots for new provider", async()=>{
+            let boundDots = await bondageWrapper.getBoundDots({subscriber:accounts[2],provider:accounts[0],endpoint:testZapProvider.endpoint});
+            expect(boundDots).to.equal(0);
+        });
+        it('Should get required Zap for 5 dots', async () => {
+            let requiredZap = await bondageWrapper.calcZapForDots({
+                provider:accounts[0],
+                endpoint : testZapProvider.endpoint,
+                dots:5
+            });
+            expect(requiredZap).to.equal(110)
+        });
+        it('Should bond required Zap', async () => {
 
         });
-
-        it('Should call respond function in Dispatch smart contract', async () => {
-
-        });
-        it("Should emit Respond events for offchain subscribers",async()=>{
+        it("should unbond 1 dots",async()=>{
 
         });
+        it("Should calculate correct current cost of Dots",async ()=>{
+
+        });
+        it("Should calculate correct bond rate", async ()=>{
+
+        })
 
     });
 });

@@ -27,10 +27,10 @@ export let  buildOptions ={
 export const testZapProvider:any = {
   pubkey: 111,
   title :"testProvider",
-  params:  ["p1", "p2"],
+  endpoint_params:  ["p1", "p2"],
   endpoint: "testEndpoint",
   query : "btcPrice",
-  curve : new Curve([2, 2, 0, 1, 1, 1, 10, 0, 0], [0, 5, 5, 10], [1, 3])
+  curve : new Curve([2, 2, 0, 1, 1, 1, 10, 0, 0], [0, 5, 5, 1000], [1, 3])
 
 }
 

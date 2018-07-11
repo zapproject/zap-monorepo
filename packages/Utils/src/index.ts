@@ -39,13 +39,14 @@ export function fromZapBase(num:number) {
     return web3.utils.toBN(num).div(web3.utils.toBN(10).pow(web3.utils.toBN(18))).toNumber();
 }
 
-export function normalizeProvider(provider:ZapProviderType):any{
-    let normalize = provider;
+export function normalizeProvider(provider:ZapProviderType):ZapProviderType{
+    let normalize:any = {};
     normalize.title = utf8ToHex(provider.title);
     normalize.pubkey= toBN(provider.pubkey);
     normalize.endpoint = utf8ToHex(provider.endpoint);
+    normalize.endpoint_params = [];
     for(let i in provider.endpoint_params){
-        normalize.endpoint_params[i] = utf8ToHex(provider.endpoint_params);
+        normalize.endpoint_params[i] = utf8ToHex(provider.endpoint_params[i]);
     }
     return normalize;
 }
@@ -59,3 +60,4 @@ return instance;
 
 
 export * from "./migrations"
+export * from "./types"

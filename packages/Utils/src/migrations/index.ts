@@ -75,7 +75,7 @@ export function getArtifacts(buildDir:string){
     try {
       clearBuild(false, buildDir);
       console.log("running all");
-      await asyncMigrate(options)
+      await asyncMigrate(options);
       return true;
     } catch (err) {
       return true;
