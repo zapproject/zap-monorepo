@@ -1,5 +1,5 @@
 export interface BaseContractType  {
-  artifactsDir ?:string|null,
+  	artifactsDir ?:string|null,
     artifactName: string,
     networkId?: number|null,
     networkProvider?: any|null

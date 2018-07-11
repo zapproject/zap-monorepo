@@ -1,4 +1,4 @@
-const expect = require('chai')
+/*const expect = require('chai')
     .use(require('chai-as-promised'))
     .use(require('chai-bignumber'))
     .expect;
@@ -93,3 +93,4 @@ describe('ZapToken, path to "/src/api/contracts/ZapToken"', () => {
         });
     });
 });
+*/

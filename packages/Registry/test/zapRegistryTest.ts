@@ -59,7 +59,8 @@ describe('Registry test', () => {
             registryWrapper = new ZapRegistry({
                 artifactsDir : buildDir,
                 networkId: ganacheServerOptions.network_id,
-                networkProvider: ganacheProvider
+                networkProvider: ganacheProvider,
+                artifactName: "Registry"
             })
         })
 

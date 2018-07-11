@@ -1,13 +1,14 @@
-import  {BaseContract,BaseContractTypes} from '@zap/basecontract';
+import  {BaseContract,BaseContractType} from '@zap/basecontract';
 import {SubscriptionInit,SubscriptionEnd,Filter} from "./types"
-import {toBN,utf8ToHex} from 'web3-utils';
+//import {toBN,utf8ToHex} from 'web3-utils';
 import {DEFAULT_GAS} from "@zap/utils"
 class ZapArbiter extends BaseContract {
 
-    constructor({artifactsDir, networkId,networkProvider}:BaseContractTypes){
+    constructor({artifactsDir, networkId,networkProvider}:BaseContractType){
         super({artifactsDir,artifactName:'Arbiter',networkId,networkProvider});
     }
 
+/*
     async initiateSubscription(
         {provider, endpoint, endpointParams, blocks, publicKey, from, gas=DEFAULT_GAS} : SubscriptionInit) {
         try {
@@ -35,7 +36,7 @@ class ZapArbiter extends BaseContract {
         } catch (err) {
             throw err;
         }
-    }
+    }*/
 
     /**
      *
@@ -80,7 +81,6 @@ class ZapArbiter extends BaseContract {
     listen(callback:Function){
         this.contract.events.allEvents({fromBlock: 0, toBlock: 'latest'},callback);
     }
-
 
 }
 export default ZapArbiter;

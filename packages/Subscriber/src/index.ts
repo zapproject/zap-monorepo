@@ -1,10 +1,10 @@
 const EventEmitter = require('events');
 const assert = require('assert');
-import {ZapDispatch} from "@zap/dispatch;
+import {ZapDispatch} from "@zap/dispatch";
 import{ZapToken} from '@zap/zaptoken';
-import {ZapBondage} from "@zap/bondage;
+import {ZapBondage} from "@zap/bondage";
 import{ZapArbiter} from '@zap/arbiter';
-import {ZapRegistry} from "@zap/registry"
+import {ZapRegistry} from "@zap/registry";
 import {BondType,UnbondType,SubscribeType} from "./types";
 
 

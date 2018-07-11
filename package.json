@@ -18,6 +18,7 @@
     "test": "wsrun test $PKG --fast-exit --serial --exclude-missing"
   },
   "dependencies": {
+    "web3-utils": "^1.0.0-beta.34",
     "zap_contracts": "git+https://github.com/zapproject/zap-ethereum-api.git#master"
   }
 }

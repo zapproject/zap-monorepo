@@ -1,10 +1,10 @@
 import * as assert from "assert"
-import {Curve,CurveTypes} from "@zap/curve"
+import {Curve,CurveType} from "@zap/curve"
 import {ZapDispatch,DispatchTypes} from "@zap/dispatch";
 import {ZapRegistry,RegistryTypes} from "@zap/registry";
 import {ZapBondage} from "@zap/bondage";
-import {ZapArbiter} from "@zap/arbiter"
-import {InitProvider, InitCurve, UnsubscribeListen, ListenQuery,Respond} from "./types"
+import {ZapArbiter} from "@zap/arbiter";
+import {InitProvider, InitCurve, UnsubscribeListen, ListenQuery,Respond} from "./types";
 import * as Web3 from 'web3';
 const web3 = new Web3();
 
