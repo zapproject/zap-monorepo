@@ -24,15 +24,14 @@ This monorepo repository includes packages that are published to NPM (todo) and 
 [@zap/utils](/packages/Utils): dev tools
 
 ##### Development setup with Lerna
-- clone 
-- npm install
+- clone the project 
+- npm i
 - lerna bootstrap (npm install for all packages)
-- lerna exec tsc (run tsc through all packages)
-- lerna run <script name>
+- lerna run build (run tsc through all packages)
+- lerna exec npm run run_test (--scope=@zap/package)
 
-#####Single Package development
-- cd packages/<package>
-- lerna bootstrap --scope=<package>
+##### Single Package development
+- cd packages/package
 - npm run run_test (tsc and mocha tests)
 
 ##### Note : 

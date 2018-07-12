@@ -7,7 +7,7 @@ const assert = require("assert");
 
 export class ZapBondage extends BaseContract {
 
-
+    
     constructor({artifactsDir=undefined,artifactName=undefined,networkId=undefined,networkProvider=undefined}:BaseContractType){
         super({artifactsDir,artifactName:"Bondage",networkId,networkProvider});
     }

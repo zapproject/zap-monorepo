@@ -1,4 +1,8 @@
-import {CurveTypes} from "@zap/curve"
+import {CurveType} from "@zap/curve"
+import {ZapDispatch} from "@zap/dispatch";
+import {ZapRegistry} from "@zap/registry";
+import {ZapBondage} from "@zap/bondage";
+import {ZapArbiter} from "@zap/arbiter";
 export type InitProvider = {
     public_key : string,
     title :string,
@@ -31,4 +35,19 @@ export type Respond = {
     queryId:string,
     responseParams : string[],
     dynamic:boolean
+}
+
+export type ProviderConstructorType = {
+    owner:string,
+    zapDispatch:ZapDispatch,
+    zapBondage: ZapBondage,
+    zapArbiter: ZapArbiter,
+    zapRegistry: ZapRegistry,
+    handler : ProviderHandler
+}
+
+export interface ProviderHandler{
+    handleIncoming : Function,
+    handleUnsubscription ?: Function,
+    handleSubscription ?: Function
 }

@@ -5,8 +5,8 @@
   "main": "lib/src/index.js",
   "type": "lib/src/types.d.ts",
   "scripts": {
-    "build": "tsc",
-    "test": "mocha  -r ts-node/register test/*.ts --serial",
+    "build": "./node_modules/typescript/bin/tsc",
+    "test": "./node_modules/mocha/bin/mocha  -r ts-node/register test/*.ts --serial",
     "run_test": "run-s build test"
   },
   "keywords": [],
@@ -16,7 +16,6 @@
     "@types/chai": "^4.1.4",
     "@types/mocha": "^5.2.4",
     "@types/node": "^10.5.1",
-    "@zap/utils": "^1.0.0",
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
     "chai-bignumber": "^2.0.2",

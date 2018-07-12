@@ -2,7 +2,7 @@ import {BaseContract,BaseContractType} from "@zap/basecontract";
 import {toZapBase, fromZapBase,DEFAULT_GAS} from "@zap/utils";
 import {TransferType} from "./types";
 
-class ZapToken extends BaseContract {
+export class ZapToken extends BaseContract {
 
     constructor({artifactsDir=undefined,artifactName=undefined,networkId=undefined,networkProvider=undefined}:BaseContractType){
         super({artifactsDir,artifactName:"ZapToken",networkId,networkProvider});
@@ -32,5 +32,3 @@ class ZapToken extends BaseContract {
         return success;
     }
 }
-
-module.exports = ZapToken;

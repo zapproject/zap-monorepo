@@ -15,7 +15,9 @@
   },
   "scripts": {
     "ganache": "ganache-cli -p 8545 --networkId 5777",
-    "test": "wsrun test $PKG --fast-exit --serial --exclude-missing"
+    "build": "./node_modules/typescript/bin/tsc",
+    "test": "./node_modules/mocha/bin/mocha  -r ts-node/register test/*.ts --serial",
+    "run_test": "run-s build test"
   },
   "dependencies": {
     "web3-utils": "^1.0.0-beta.34",

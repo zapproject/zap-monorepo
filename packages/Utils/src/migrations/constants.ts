@@ -12,7 +12,7 @@ export const ganacheServerOptions={
      port: 7545,
      total_accounts: 10,
      ws: true,
-    gas: 6721900 ,
+    gas: 6700000 ,
     gasPrice: 20000000,
     network: "ganache-gui"
 };

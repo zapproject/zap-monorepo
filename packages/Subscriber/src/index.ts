@@ -1,72 +1,61 @@
 const EventEmitter = require('events');
 const assert = require('assert');
-import {ZapDispatch} from "@zap/dispatch";
-import{ZapToken} from '@zap/zaptoken';
-import {ZapBondage} from "@zap/bondage";
-import{ZapArbiter} from '@zap/arbiter';
-import {ZapRegistry} from "@zap/registry";
-import {BondType,UnbondType,SubscribeType} from "./types";
+import {BondType,UnbondType,SubscribeType,SubscriberConstructorType,SubscriberHandler} from "./types";
 
 
-class Subscriber extends EventEmitter {
+export class Subscriber extends EventEmitter {
 
-    constructor({owner, handler}:{owner:string,handler:any}) {
+    constructor({owner,handler,zapToken,zapRegistry,zapDispatch,zapBondage,zapArbiter}:SubscriberConstructorType) {
         super();
         assert(owner, 'owner address is required');
-        this.owner = owner;
+        this.subscriberOwner = owner;
         this.handler = handler || {};
-    }
-
-    // Add a endpoint handler
-    addHandler(type:string, handler:any) {
-        this.handlers[type] = handler;
+        this.zapToken = zapToken;
+        this.zapDispatch = zapDispatch;
+        this.zapBondage = zapBondage;
+        this.zapArbiter = zapArbiter;
+        this.zapRegistry = zapRegistry;
     }
 
 
     async bond({provider, endpoint, zapNum}:BondType){
        // assert.ok(this.hasEnoughZap(zapNum), 'Insufficient Balance');
-        let approve = await ZapToken.approve({
-            address: ZapBondage.contract._address,
-            amount: zapNum, from: this.owner});
+        let approve = await this.zapToken.approve({
+            address: this.zapBondage.contract._address,
+            amount: zapNum, from: this.subscriberOwner});
         //assert.ok(approve, 'fail to approve to Bondage');
-        let bonded = await ZapBondage.bond({provider, endpoint, zapNum, from: this.owner});
+        let bonded = await this.zapBondage.bond({provider, endpoint, zapNum, from: this.subscriberOwner});
         return bonded;
     }
 
     async unBond({provider, endpoint, dots}:UnbondType){
-        let boundDots = await ZapBondage.getBoundDots({subscriber: this.owner, provider, endpoint});
+        let boundDots = await this.zapBondage.getBoundDots({subscriber: this.subscriberOwner, provider, endpoint});
         assert(boundDots >= dots, 'dots to unbond is less than requested');
-        let unBounded = await ZapBondage.unbond({provider, endpoint, dots, from: this.owner});
+        let unBounded = await this.zapBondage.unbond({provider, endpoint, dots, from: this.subscriberOwner});
         return unBounded;
     }
 
 
-    async subscribe({provider, endpoint, endpointParams, dots}:SubscribeType):void {
-        try {
-            let providerPubkey = await ZapRegistry.getProviderPublicKey({provider});
-            let zapRequired = await ZapBondage.calcZapForDots({provider, endpoint, dots});
-            let zapBalance = await ZapToken.balanceOf(this.owner);
-            if (zapBalance < zapRequired)
-                throw new Error(`Insufficient balance, require ${zapRequired} Zap for ${dots} dots`);
-            let boundDots = await ZapBondage.bond({provider, endpoint, numZap: zapRequired, from: this.owner});
-            assert.isEqual(boundDots, dots, 'Bound dots is different to dots requests.');
-            let blocks = dots;
-            let sub = await ZapArbiter.initiateSubscription(
-                {provider, endpoint, endpointParams,
-                    blocks: blocks, publicKey: providerPubkey, from: this.owner});
-            return sub;
-        } catch (e){
-            console.error(e);
-            return null;
-        }
+    async subscribe({provider, endpoint, endpointParams, dots}:SubscribeType):Promise<any> {
+        let providerPubkey = await this.zapRegistry.getProviderPublicKey({provider});
+        let zapRequired = await this.zapBondage.calcZapForDots({provider, endpoint, dots});
+        let zapBalance = await this.zapToken.balanceOf(this.subscriberOwner);
+        if (zapBalance < zapRequired)
+            throw new Error(`Insufficient balance, require ${zapRequired} Zap for ${dots} dots`);
+        let boundDots = await this.zapBondage.bond({provider, endpoint, numZap: zapRequired, from: this.subscriberOwner});
+        assert.isEqual(boundDots, dots, 'Bound dots is different to dots requests.');
+        let blocks = dots;
+        let sub = await this.zapArbiter.initiateSubscription(
+            {provider, endpoint, endpointParams,
+                blocks: blocks, publicKey: providerPubkey, from: this.subscriberOwner});
+        return sub;
     }
 
     // === Helpers ===//
-    async hasEnoughZap(zapRequired:number):boolean{
-        let balance = await ZapToken.balanceOf(this.owner);
+    async hasEnoughZap(zapRequired:number):Promise<boolean>{
+        let balance = await this.zapToken.balanceOf(this.subscriberOwner);
         return balance > zapRequired;
     }
 
 }
 
-module.exports = Subscriber;
