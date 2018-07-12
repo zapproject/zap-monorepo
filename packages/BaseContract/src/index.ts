@@ -3,8 +3,7 @@ const Web3 =require('web3');
 import {Artifacts} from "@zap/artifacts";
 import {BaseContractType} from "./types";
 import {getArtifacts} from "@zap/utils"
-
-export class BaseContract {
+export class BaseContract{
     provider : any;
     web3:any;
     contract:any;
@@ -33,4 +32,3 @@ export class BaseContract {
 }
 
 export * from "./types"
-

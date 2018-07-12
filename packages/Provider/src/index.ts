@@ -1,37 +1,22 @@
-import * as assert from "assert"
+const assert = require("assert");
 import {Curve,CurveType} from "@zap/curve"
-import {ZapDispatch,DispatchTypes} from "@zap/dispatch";
-import {ZapRegistry,RegistryTypes} from "@zap/registry";
-import {ZapBondage} from "@zap/bondage";
-import {ZapArbiter} from "@zap/arbiter";
-import {InitProvider, InitCurve, UnsubscribeListen, ListenQuery,Respond} from "./types";
-import * as Web3 from 'web3';
-const web3 = new Web3();
+import {InitProvider, InitCurve, UnsubscribeListen, ListenQuery, Respond, ProviderConstructorType,ProviderHandler} from "./types";
+const {hexToUtf8} = require("web3-utils");
+const EventEmitter = require('events');
 
-class Provider {
 
-    /**
-     *
-     * @param {any} string
-     * @param {any} any
-     */
-    constructor({owner :{owner:string}, handler:any}) {
-        this.owner = owner;
+export class Provider extends EventEmitter {
+    constructor({owner,handler,zapRegistry,zapDispatch,zapBondage,zapArbiter}:ProviderConstructorType) {
+        super();
+        assert(owner, 'owner address is required');
+        this.providerOwner = owner;
         this.handler = handler;
-        this.pubkey = this.title = this.curve = null;
+        this.zapDispatch = zapDispatch;
+        this.zapBondage = zapBondage;
+        this.zapArbiter = zapArbiter;
+        this.zapRegistry = zapRegistry;
     }
 
-    get owner(): string{
-        return this.owner;
-    }
-
-    get handler(): object {
-        return this.handler;
-    }
-
-    set handler(handler:object) :void {
-        this.handler = handler;
-    }
 
     /**
      *
@@ -42,18 +27,13 @@ class Provider {
      * @returns {Promise<any>}
      */
     async initiate({public_key, title, endpoint, endpoint_params}:InitProvider) {
-        try {
-            assert(Array.isArray(endpoint_params), 'params need to be an array');
-            let provider = await ZapRegistry.initiateProvider(
-                {public_key, title, endpoint, endpoint_params, from:this.owner});
-            assert(provider, 'fail to create provider');
-            this.pubkey = public_key;
-            this.title = title;
-            return provider;
-        } catch (err) {
-            console.error(err);
-            return null;
-        }
+        assert(Array.isArray(endpoint_params), 'params need to be an array');
+        let provider = await this.zapRegistry.initiateProvider(
+            {public_key, title, endpoint, endpoint_params, from:this.providerOwner});
+        assert(provider, 'fail to create provider');
+        this.pubkey = public_key;
+        this.title = title;
+        return provider;
     }
 
     /**
@@ -65,26 +45,22 @@ class Provider {
      * @returns {boolean}
      */
     async initCurve({endpoint, constants, parts, dividers}: InitCurve) :Promise<boolean>{
-        try {
-            assert((constants instanceof Array
-                && parts instanceof Array
-                && dividers instanceof Array),
-                "curve's arguments need to be array");
-            assert(endpoint && constants.length > 0
-                && parts.length > 0
-                && dividers.length > 0,
-                'cant init empty curve args');
-            let curve = {constants, parts, dividers};
-            // console.log("converted : ", convertedConstants);
-            let success = await ZapRegistry.initiateProviderCurve({endpoint, curve, from: this.owner});
+        assert((constants instanceof Array
+            && parts instanceof Array
+            && dividers instanceof Array),
+            "curve's arguments need to be array");
+        assert(endpoint && constants.length > 0
+            && parts.length > 0
+            && dividers.length > 0,
+            'cant init empty curve args');
+        let curve = {constants, parts, dividers};
+        // console.log("converted : ", convertedConstants);
+        let success = await this.zapRegistry.initiateProviderCurve({endpoint, curve, from: this.providerOwner});
 
-            assert(success, 'fail to init curve ');
-            this.curve = new Curve(constants, parts, dividers);
-            return success;
-        } catch (err) {
-            console.error(err);
-            return null;
-        }
+        assert(success, 'fail to init curve ');
+        this.curve = new Curve(constants, parts, dividers);
+        return success;
+
     }
 
 
@@ -93,50 +69,27 @@ class Provider {
      * @returns {Promise<string>}
      */
     async getProviderTitle():Promise<string> {
-        try {
-            if (this.title) return this.title;
-            let title = await ZapRegistry.getProviderTitle(this.owner);
-            this.title = title;
-            return web3.utils.hexToUtf8(title);
-        } catch (e){
-            console.error(e);
-            return null;
+        if (this.title) return this.title;
+        let title = await this.zapRegistry.getProviderTitle(this.providerOwner);
+        this.title = title;
+        return hexToUtf8(title);
         }
 
-    }
 
-    /**
-     *
-     * @returns {Promise<string>}
-     */
     async getProviderPubkey():Promise<string> {
-        try {
             if (this.pubkey) return this.pubkey;
-            let pubkey = await ZapRegistry.getProviderPubkey(this.owner);
+            let pubkey = await this.zapRegistry.getProviderPubkey(this.providerOwner);
             this.pubkey = pubkey;
-            return web3.utils.hexToUtf8(pubkey);
-        } catch (e){
-            console.error('Provider is not initiated');
-            return null;
-        }
+            return hexToUtf8(pubkey);
+
     }
 
 
-    /**
-     *
-     * @param {string} endpoint
-     * @returns {CurveTypes.Curve}
-     */
-    async getProviderCurve({endpoint}: {endpoint:string}):Promise<CurveTypes.Curve> {
+    async getProviderCurve({endpoint}: {endpoint:string}):Promise<CurveType> {
         if (this.curve) return this.curve;
-        try {
-            let curve = await ZapRegistry.getProviderCurve(this.owner, endpoint);
-            this.curve = curve;
-            return curve;
-        } catch (err) {
-            console.error(err);
-            return null;
-        }
+        let curve = await this.zapRegistry.getProviderCurve(this.providerOwner, endpoint);
+        this.curve = curve;
+        return curve;
     }
 
 
@@ -147,7 +100,7 @@ class Provider {
      */
     async getZapBound({endpoint} : {endpoint:string}):Promise<number> {
         assert(endpoint, 'endpoint required');
-        let zapBound = await ZapBondage.getZapBound(this.owner, endpoint);
+        let zapBound = await this.zapBondage.getZapBound(this.providerOwner, endpoint);
         return zapBound;
     }
 
@@ -158,7 +111,7 @@ class Provider {
      * @returns {Promise<number>}
      */
     async getZapRequired({endpoint, dots}:{endpoint:string,dots:number}):Promise<number> {
-        let zapRequired = await ZapBondage.calcZapForDots({provider: this.owner, endpoint, dots});
+        let zapRequired = await this.zapBondage.calcZapForDots({provider: this.providerOwner, endpoint, dots});
         return parseInt(zapRequired);
     }
 
@@ -169,8 +122,8 @@ class Provider {
      * @returns {number}
      */
     async calcDotsForZap({endpoint, zapNum}:{endpoint:string, zapNum:number}): Promise<number> {
-        let res = await ZapBondage.calcBondRate({
-            provider: this.owner,
+        let res = await this.zapBondage.calcBondRate({
+            provider: this.providerOwner,
             endpoint,
             zapNum});
         return res;
@@ -183,7 +136,7 @@ class Provider {
      * @param {number} fromBlock
      */
     async listenSubscribes({subscriber, fromBlock}:{subscriber:string, fromBlock: number}):Promise<void> {
-        let callback = (error, result) => {
+        let callback = (error:any, result:string) => {
             if (error) {
                 console.log(error);
             } else {
@@ -195,8 +148,8 @@ class Provider {
             }
         };
 
-        ZapArbiter.listenSubscriptionStart(
-            {provider: this.owner, subscriber},
+        this.zapArbiter.listenSubscriptionStart(
+            {provider: this.providerOwner, subscriber},
             callback);
     }
 
@@ -220,8 +173,8 @@ class Provider {
             }
         };
 
-        ZapArbiter.listenSubscriptionEnd(
-            {provider: this.owner, subscriber, terminator, fromBlock},
+        this.zapArbiter.listenSubscriptionEnd(
+            {provider: this.providerOwner, subscriber, terminator, fromBlock},
             callback);
     }
 
@@ -234,7 +187,7 @@ class Provider {
      * @returns {Promise<void>}
      */
     async listenQueries({queryId, subscriber, fromBlock}:ListenQuery) :Promise<void> {
-        let callback = (error, result) => {
+        let callback = (error:any, result:string) => {
             if (error) {
                 console.error(error);
             } else {
@@ -246,8 +199,8 @@ class Provider {
             }
         };
 
-        ZapDispatch.listen('Incoming',
-            {queryId, provider: this.owner, subscriber, fromBlock},
+        this.zapDispatch.listen('Incoming',
+            {queryId, provider: this.providerOwner, subscriber, fromBlock},
             callback);
     }
 
@@ -260,7 +213,7 @@ class Provider {
      */
     async respond({queryId, responseParams, dynamic}:Respond){
         try {
-            let res = await ZapDispatch.respond({queryId, responseParams, dynamic, from: this.owner});
+            let res = await this.zapDispatch.respond({queryId, responseParams, dynamic, from: this.providerOwner});
             return res;
         } catch (e){
             console.error(e);
@@ -269,4 +222,3 @@ class Provider {
     }
 
 }
-export default Provider;

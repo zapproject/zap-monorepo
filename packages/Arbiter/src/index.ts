@@ -2,7 +2,7 @@ import  {BaseContract,BaseContractType} from '@zap/basecontract';
 import {SubscriptionInit,SubscriptionEnd,Filter} from "./types"
 //import {toBN,utf8ToHex} from 'web3-utils';
 import {DEFAULT_GAS} from "@zap/utils"
-class ZapArbiter extends BaseContract {
+export class ZapArbiter extends BaseContract {
 
     constructor({artifactsDir, networkId,networkProvider}:BaseContractType){
         super({artifactsDir,artifactName:'Arbiter',networkId,networkProvider});
@@ -83,4 +83,3 @@ class ZapArbiter extends BaseContract {
     }
 
 }
-export default ZapArbiter;
