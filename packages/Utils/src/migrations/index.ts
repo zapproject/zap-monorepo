@@ -78,6 +78,7 @@ export function getArtifacts(buildDir:string){
       await asyncMigrate(options);
       return true;
     } catch (err) {
+      console.error(err)
       return true;
     }
   }
