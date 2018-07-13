@@ -34,6 +34,7 @@ describe('Arbiter Test', () => {
       web3:any,
       options:any,
       buildDir = join(__dirname,"contracts")
+
   before(function(done) {
     configureEnvironment(async() => {
         ganacheServer = await startGanacheServer();
@@ -46,11 +47,12 @@ describe('Arbiter Test', () => {
   });
 
   describe.only('Arbiter', function() {
-      options = {
-          artifactsDir: buildDir,
-          networkId: ganacheServerOptions.network_id,
-          networkProvider: ganacheProvider
-      };
+    options = {
+        artifactsDir: buildDir,
+        networkId: ganacheServerOptions.network_id,
+        networkProvider: ganacheProvider
+    };
+
     before(function(done){
       configureEnvironment(async() => {
           testArtifacts = getArtifacts(buildDir);
@@ -61,23 +63,27 @@ describe('Arbiter Test', () => {
       });
 
     });
+
     it("Should bootstrap conditions for Zap Arbiter",async ()=>{
-       await bootstrap(testZapProvider,accounts,deployedRegistry,deployedToken,deployedBondage);
+       await bootstrap(testZapProvider, accounts, deployedRegistry, deployedToken, deployedBondage);
     });
+
     it('Should initiate zapArbiter wrapper', function() {
-      arbiterWrapper = new ZapArbiter(Object.assign(options,{artifactName:"Arbiter"}));
+      arbiterWrapper = new ZapArbiter(Object.assign(options, {artifactName:"Arbiter"}));
     });
+
     it('Should initiate subscription', async function() {
-        await arbiterWrapper.initiateSubscription({
-            provider: accounts[0],
-            endpoint: testZapProvider.endpoint,
-            endpoint_params: testZapProvider.params,
-            blocks: 4,
-            pubkey: testZapProvider.pubkey,
-            from: accounts[2],
-            gas: DEFAULT_GAS,
+      await arbiterWrapper.initiateSubscription({
+          provider: accounts[0],
+          endpoint: testZapProvider.endpoint,
+          endpoint_params: testZapProvider.endpoint_params,
+          blocks: 4,
+          pubkey: testZapProvider.pubkey,
+          from: accounts[2],
+          gas: DEFAULT_GAS,
       });
     });
+
     it('Should listen to Data purchase in zapArbiter', async function() {
       arbiterWrapper.listen((err:any, res:any) => {
          console.log("event listen : ", err,res)
@@ -86,5 +92,6 @@ describe('Arbiter Test', () => {
         return;
       });
     });
+
   });
 });
