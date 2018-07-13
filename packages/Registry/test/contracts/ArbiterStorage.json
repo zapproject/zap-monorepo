@@ -1,0 +1,3499 @@
+{
+  "contractName": "ArbiterStorage",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "previousOwner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnershipTransferred",
+      "type": "event"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "providerAddress",
+          "type": "address"
+        },
+        {
+          "name": "subscriberAddress",
+          "type": "address"
+        },
+        {
+          "name": "endpoint",
+          "type": "bytes32"
+        }
+      ],
+      "name": "getDots",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint64"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "providerAddress",
+          "type": "address"
+        },
+        {
+          "name": "subscriberAddress",
+          "type": "address"
+        },
+        {
+          "name": "endpoint",
+          "type": "bytes32"
+        }
+      ],
+      "name": "getBlockStart",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint96"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "providerAddress",
+          "type": "address"
+        },
+        {
+          "name": "subscriberAddress",
+          "type": "address"
+        },
+        {
+          "name": "endpoint",
+          "type": "bytes32"
+        }
+      ],
+      "name": "getPreBlockEnd",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint96"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "providerAddress",
+          "type": "address"
+        },
+        {
+          "name": "subscriberAddress",
+          "type": "address"
+        },
+        {
+          "name": "endpoint",
+          "type": "bytes32"
+        },
+        {
+          "name": "dots",
+          "type": "uint64"
+        },
+        {
+          "name": "blockStart",
+          "type": "uint96"
+        },
+        {
+          "name": "preBlockEnd",
+          "type": "uint96"
+        }
+      ],
+      "name": "setSubscription",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "providerAddress",
+          "type": "address"
+        },
+        {
+          "name": "subscriberAddress",
+          "type": "address"
+        },
+        {
+          "name": "endpoint",
+          "type": "bytes32"
+        }
+      ],
+      "name": "deleteSubscription",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x6080604052336000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550610a6e806100536000396000f300608060405260043610610083576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680633e24a696146100885780638da5cb5b14610129578063dbe7436414610180578063e87e69fe14610219578063eb609e96146102ba578063f2fde38b1461032b578063fc633fd71461036e575b600080fd5b34801561009457600080fd5b506100f7600480360381019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190803573ffffffffffffffffffffffffffffffffffffffff1690602001909291908035600019169060200190929190505050610423565b60405180826bffffffffffffffffffffffff166bffffffffffffffffffffffff16815260200191505060405180910390f35b34801561013557600080fd5b5061013e6104df565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34801561018c57600080fd5b506101ef600480360381019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190803573ffffffffffffffffffffffffffffffffffffffff1690602001909291908035600019169060200190929190505050610504565b604051808267ffffffffffffffff1667ffffffffffffffff16815260200191505060405180910390f35b34801561022557600080fd5b50610288600480360381019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190803573ffffffffffffffffffffffffffffffffffffffff16906020019092919080356000191690602001909291905050506105bc565b60405180826bffffffffffffffffffffffff166bffffffffffffffffffffffff16815260200191505060405180910390f35b3480156102c657600080fd5b50610329600480360381019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190803573ffffffffffffffffffffffffffffffffffffffff1690602001909291908035600019169060200190929190505050610678565b005b34801561033757600080fd5b5061036c600480360381019080803573ffffffffffffffffffffffffffffffffffffffff16906020019092919050505061076e565b005b34801561037a57600080fd5b50610421600480360381019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190803573ffffffffffffffffffffffffffffffffffffffff1690602001909291908035600019169060200190929190803567ffffffffffffffff16906020019092919080356bffffffffffffffffffffffff16906020019092919080356bffffffffffffffffffffffff1690602001909291905050506108c3565b005b6000600160008573ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060008473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019081526020016000206000836000191660001916815260200190815260200160002060000160089054906101000a90046bffffffffffffffffffffffff1690509392505050565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b6000600160008573ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060008473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019081526020016000206000836000191660001916815260200190815260200160002060000160009054906101000a900467ffffffffffffffff1690509392505050565b6000600160008573ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060008473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019081526020016000206000836000191660001916815260200190815260200160002060000160149054906101000a90046bffffffffffffffffffffffff1690509392505050565b600160008473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060008373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060008260001916600019168152602001908152602001600020600080820160006101000a81549067ffffffffffffffff02191690556000820160086101000a8154906bffffffffffffffffffffffff02191690556000820160146101000a8154906bffffffffffffffffffffffff02191690555050505050565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff161415156107c957600080fd5b600073ffffffffffffffffffffffffffffffffffffffff168173ffffffffffffffffffffffffffffffffffffffff161415151561080557600080fd5b8073ffffffffffffffffffffffffffffffffffffffff166000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e060405160405180910390a3806000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555050565b6060604051908101604052808467ffffffffffffffff168152602001836bffffffffffffffffffffffff168152602001826bffffffffffffffffffffffff16815250600160008873ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060008773ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019081526020016000206000866000191660001916815260200190815260200160002060008201518160000160006101000a81548167ffffffffffffffff021916908367ffffffffffffffff16021790555060208201518160000160086101000a8154816bffffffffffffffffffffffff02191690836bffffffffffffffffffffffff16021790555060408201518160000160146101000a8154816bffffffffffffffffffffffff02191690836bffffffffffffffffffffffff1602179055509050505050505050505600a165627a7a723058203994d149fdd930e4e5d09871230c4b88e58cb028d8227f710b577d5bc52ac2510029",
+  "deployedBytecode": "0x608060405260043610610083576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680633e24a696146100885780638da5cb5b14610129578063dbe7436414610180578063e87e69fe14610219578063eb609e96146102ba578063f2fde38b1461032b578063fc633fd71461036e575b600080fd5b34801561009457600080fd5b506100f7600480360381019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190803573ffffffffffffffffffffffffffffffffffffffff1690602001909291908035600019169060200190929190505050610423565b60405180826bffffffffffffffffffffffff166bffffffffffffffffffffffff16815260200191505060405180910390f35b34801561013557600080fd5b5061013e6104df565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34801561018c57600080fd5b506101ef600480360381019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190803573ffffffffffffffffffffffffffffffffffffffff1690602001909291908035600019169060200190929190505050610504565b604051808267ffffffffffffffff1667ffffffffffffffff16815260200191505060405180910390f35b34801561022557600080fd5b50610288600480360381019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190803573ffffffffffffffffffffffffffffffffffffffff16906020019092919080356000191690602001909291905050506105bc565b60405180826bffffffffffffffffffffffff166bffffffffffffffffffffffff16815260200191505060405180910390f35b3480156102c657600080fd5b50610329600480360381019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190803573ffffffffffffffffffffffffffffffffffffffff1690602001909291908035600019169060200190929190505050610678565b005b34801561033757600080fd5b5061036c600480360381019080803573ffffffffffffffffffffffffffffffffffffffff16906020019092919050505061076e565b005b34801561037a57600080fd5b50610421600480360381019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190803573ffffffffffffffffffffffffffffffffffffffff1690602001909291908035600019169060200190929190803567ffffffffffffffff16906020019092919080356bffffffffffffffffffffffff16906020019092919080356bffffffffffffffffffffffff1690602001909291905050506108c3565b005b6000600160008573ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060008473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019081526020016000206000836000191660001916815260200190815260200160002060000160089054906101000a90046bffffffffffffffffffffffff1690509392505050565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b6000600160008573ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060008473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019081526020016000206000836000191660001916815260200190815260200160002060000160009054906101000a900467ffffffffffffffff1690509392505050565b6000600160008573ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060008473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019081526020016000206000836000191660001916815260200190815260200160002060000160149054906101000a90046bffffffffffffffffffffffff1690509392505050565b600160008473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060008373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060008260001916600019168152602001908152602001600020600080820160006101000a81549067ffffffffffffffff02191690556000820160086101000a8154906bffffffffffffffffffffffff02191690556000820160146101000a8154906bffffffffffffffffffffffff02191690555050505050565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff161415156107c957600080fd5b600073ffffffffffffffffffffffffffffffffffffffff168173ffffffffffffffffffffffffffffffffffffffff161415151561080557600080fd5b8073ffffffffffffffffffffffffffffffffffffffff166000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e060405160405180910390a3806000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555050565b6060604051908101604052808467ffffffffffffffff168152602001836bffffffffffffffffffffffff168152602001826bffffffffffffffffffffffff16815250600160008873ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060008773ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019081526020016000206000866000191660001916815260200190815260200160002060008201518160000160006101000a81548167ffffffffffffffff021916908367ffffffffffffffff16021790555060208201518160000160086101000a8154816bffffffffffffffffffffffff02191690836bffffffffffffffffffffffff16021790555060408201518160000160146101000a8154816bffffffffffffffffffffffff02191690836bffffffffffffffffffffffff1602179055509050505050505050505600a165627a7a723058203994d149fdd930e4e5d09871230c4b88e58cb028d8227f710b577d5bc52ac2510029",
+  "sourceMap": "73:2364:11:-;;;304:10:3;296:5;;:18;;;;;;;;;;;;;;;;;;73:2364:11;;;;;;",
+  "deployedSourceMap": "73:2364:11:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1009:286;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1009:286:11;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;52:20:3;;8:9:-1;5:2;;;30:1;27;20:12;5:2;52:20:3;;;;;;;;;;;;;;;;;;;;;;;;;;;677:274:11;;8:9:-1;5:2;;;30:1;27;20:12;5:2;677:274:11;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1352:288;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1352:288:11;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;2194:240;;8:9:-1;5:2;;;30:1;27;20:12;5:2;2194:240:11;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;649:189:3;;8:9:-1;5:2;;;30:1;27;20:12;5:2;649:189:3;;;;;;;;;;;;;;;;;;;;;;;;;;;;1713:405:11;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1713:405:11;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1009:286;1186:6;1217:13;:30;1231:15;1217:30;;;;;;;;;;;;;;;:49;1248:17;1217:49;;;;;;;;;;;;;;;:59;1267:8;1217:59;;;;;;;;;;;;;;;;;:70;;;;;;;;;;;;1210:77;;1009:286;;;;;:::o;52:20:3:-;;;;;;;;;;;;;:::o;677:274:11:-;848:6;879:13;:30;893:15;879:30;;;;;;;;;;;;;;;:49;910:17;879:49;;;;;;;;;;;;;;;:59;929:8;879:59;;;;;;;;;;;;;;;;;:64;;;;;;;;;;;;872:71;;677:274;;;;;:::o;1352:288::-;1530:6;1561:13;:30;1575:15;1561:30;;;;;;;;;;;;;;;:49;1592:17;1561:49;;;;;;;;;;;;;;;:59;1611:8;1561:59;;;;;;;;;;;;;;;;;:71;;;;;;;;;;;;1554:78;;1352:288;;;;;:::o;2194:240::-;2367:13;:30;2381:15;2367:30;;;;;;;;;;;;;;;:49;2398:17;2367:49;;;;;;;;;;;;;;;:59;2417:8;2367:59;;;;;;;;;;;;;;;;;;2360:66;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;2194:240;;;:::o;649:189:3:-;462:5;;;;;;;;;;;448:19;;:10;:19;;;440:28;;;;;;;;749:1;729:22;;:8;:22;;;;721:31;;;;;;;;795:8;767:37;;788:5;;;;;;;;;;;767:37;;;;;;;;;;;;822:8;814:5;;:16;;;;;;;;;;;;;;;;;;649:189;:::o;1713:405:11:-;2017:93;;;;;;;;;2044:4;2017:93;;;;;;2063:10;2017:93;;;;;;2088:11;2017:93;;;;;1955:13;:30;1969:15;1955:30;;;;;;;;;;;;;;;:49;1986:17;1955:49;;;;;;;;;;;;;;;:59;2005:8;1955:59;;;;;;;;;;;;;;;;;:155;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1713:405;;;;;;:::o",
+  "source": "pragma solidity ^0.4.24;\r\n\r\nimport \"../../lib/ownership/Ownable.sol\";\r\n\r\ncontract ArbiterStorage is Ownable {\r\n\r\n    // Each subscription is represented as the following\r\n    struct Subscription {\r\n        uint64 dots;          // Cost in dots\r\n        uint96 blockStart;    // Block number subscription was initiated\r\n        uint96 preBlockEnd;   // Precalculated block end\r\n    }\r\n    \r\n    // providerAddress => subscriberAddress => endpoint => Subscription\r\n    mapping(address => mapping(address => mapping(bytes32 => Subscription))) private subscriptions;\r\n\r\n    /**** Get Methods ****/\r\n\r\n    /// @dev get subscriber dots remaining for specified provider endpoint\r\n    function getDots(\r\n        address providerAddress,\r\n        address subscriberAddress,\r\n        bytes32 endpoint\r\n    )\r\n        external\r\n        view\r\n        returns (uint64)\r\n    {\r\n        return subscriptions[providerAddress][subscriberAddress][endpoint].dots;\r\n    }\r\n\r\n    /// @dev get first subscription block number\r\n    function getBlockStart(\r\n        address providerAddress,\r\n        address subscriberAddress,\r\n        bytes32 endpoint\r\n    )\r\n        external\r\n        view\r\n        returns (uint96)\r\n    {\r\n        return subscriptions[providerAddress][subscriberAddress][endpoint].blockStart;\r\n    }\r\n\r\n    /// @dev get last subscription block number\r\n    function getPreBlockEnd(\r\n        address providerAddress,\r\n        address subscriberAddress,\r\n        bytes32 endpoint\r\n    )\r\n        external\r\n        view\r\n        returns (uint96)\r\n    {\r\n        return subscriptions[providerAddress][subscriberAddress][endpoint].preBlockEnd;\r\n    }\r\n\r\n\t/**** Set Methods ****/\r\n\r\n    /// @dev store new subscription\r\n    function setSubscription(\r\n        address providerAddress,\r\n        address subscriberAddress,\r\n        bytes32 endpoint,\r\n        uint64 dots,\r\n        uint96 blockStart,\r\n        uint96 preBlockEnd\r\n    )\r\n        external\r\n    {\r\n        subscriptions[providerAddress][subscriberAddress][endpoint] = Subscription(\r\n            dots,\r\n            blockStart,\r\n            preBlockEnd\r\n        );\r\n    }\r\n\r\n    /**** Delete Methods ****/\r\n\r\n    /// @dev remove subscription\r\n    function deleteSubscription(\r\n        address providerAddress,\r\n        address subscriberAddress,\r\n        bytes32 endpoint\r\n    )\r\n        external\r\n    {\r\n        delete subscriptions[providerAddress][subscriberAddress][endpoint];\r\n    }\r\n}\r\n",
+  "sourcePath": "C:\\Assets\\Zap-monorepo\\packages\\Utils\\node_modules\\zap_contracts\\contracts\\platform\\arbiter\\ArbiterStorage.sol",
+  "ast": {
+    "absolutePath": "/C/Assets/Zap-monorepo/packages/Utils/node_modules/zap_contracts/contracts/platform/arbiter/ArbiterStorage.sol",
+    "exportedSymbols": {
+      "ArbiterStorage": [
+        1900
+      ]
+    },
+    "id": 1901,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 1769,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".24"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:11"
+      },
+      {
+        "absolutePath": "/C/Assets/Zap-monorepo/packages/Utils/node_modules/zap_contracts/contracts/lib/ownership/Ownable.sol",
+        "file": "../../lib/ownership/Ownable.sol",
+        "id": 1770,
+        "nodeType": "ImportDirective",
+        "scope": 1901,
+        "sourceUnit": 204,
+        "src": "28:41:11",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 1771,
+              "name": "Ownable",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 203,
+              "src": "100:7:11",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_Ownable_$203",
+                "typeString": "contract Ownable"
+              }
+            },
+            "id": 1772,
+            "nodeType": "InheritanceSpecifier",
+            "src": "100:7:11"
+          }
+        ],
+        "contractDependencies": [
+          203
+        ],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 1900,
+        "linearizedBaseContracts": [
+          1900,
+          203
+        ],
+        "name": "ArbiterStorage",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "canonicalName": "ArbiterStorage.Subscription",
+            "id": 1779,
+            "members": [
+              {
+                "constant": false,
+                "id": 1774,
+                "name": "dots",
+                "nodeType": "VariableDeclaration",
+                "scope": 1779,
+                "src": "206:11:11",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint64",
+                  "typeString": "uint64"
+                },
+                "typeName": {
+                  "id": 1773,
+                  "name": "uint64",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "206:6:11",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint64",
+                    "typeString": "uint64"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 1776,
+                "name": "blockStart",
+                "nodeType": "VariableDeclaration",
+                "scope": 1779,
+                "src": "253:17:11",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint96",
+                  "typeString": "uint96"
+                },
+                "typeName": {
+                  "id": 1775,
+                  "name": "uint96",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "253:6:11",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint96",
+                    "typeString": "uint96"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 1778,
+                "name": "preBlockEnd",
+                "nodeType": "VariableDeclaration",
+                "scope": 1779,
+                "src": "327:18:11",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint96",
+                  "typeString": "uint96"
+                },
+                "typeName": {
+                  "id": 1777,
+                  "name": "uint96",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "327:6:11",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint96",
+                    "typeString": "uint96"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "Subscription",
+            "nodeType": "StructDefinition",
+            "scope": 1900,
+            "src": "175:207:11",
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 1787,
+            "name": "subscriptions",
+            "nodeType": "VariableDeclaration",
+            "scope": 1900,
+            "src": "467:94:11",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_address_$_t_mapping$_t_bytes32_$_t_struct$_Subscription_$1779_storage_$_$_$",
+              "typeString": "mapping(address => mapping(address => mapping(bytes32 => struct ArbiterStorage.Subscription)))"
+            },
+            "typeName": {
+              "id": 1786,
+              "keyType": {
+                "id": 1780,
+                "name": "address",
+                "nodeType": "ElementaryTypeName",
+                "src": "475:7:11",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "467:72:11",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_address_$_t_mapping$_t_bytes32_$_t_struct$_Subscription_$1779_storage_$_$_$",
+                "typeString": "mapping(address => mapping(address => mapping(bytes32 => struct ArbiterStorage.Subscription)))"
+              },
+              "valueType": {
+                "id": 1785,
+                "keyType": {
+                  "id": 1781,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "494:7:11",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "nodeType": "Mapping",
+                "src": "486:52:11",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_bytes32_$_t_struct$_Subscription_$1779_storage_$_$",
+                  "typeString": "mapping(address => mapping(bytes32 => struct ArbiterStorage.Subscription))"
+                },
+                "valueType": {
+                  "id": 1784,
+                  "keyType": {
+                    "id": 1782,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "513:7:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "nodeType": "Mapping",
+                  "src": "505:32:11",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Subscription_$1779_storage_$",
+                    "typeString": "mapping(bytes32 => struct ArbiterStorage.Subscription)"
+                  },
+                  "valueType": {
+                    "contractScope": null,
+                    "id": 1783,
+                    "name": "Subscription",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 1779,
+                    "src": "524:12:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Subscription_$1779_storage_ptr",
+                      "typeString": "struct ArbiterStorage.Subscription"
+                    }
+                  }
+                }
+              }
+            },
+            "value": null,
+            "visibility": "private"
+          },
+          {
+            "body": {
+              "id": 1807,
+              "nodeType": "Block",
+              "src": "861:90:11",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "expression": {
+                      "argumentTypes": null,
+                      "baseExpression": {
+                        "argumentTypes": null,
+                        "baseExpression": {
+                          "argumentTypes": null,
+                          "baseExpression": {
+                            "argumentTypes": null,
+                            "id": 1798,
+                            "name": "subscriptions",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 1787,
+                            "src": "879:13:11",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_address_$_t_mapping$_t_bytes32_$_t_struct$_Subscription_$1779_storage_$_$_$",
+                              "typeString": "mapping(address => mapping(address => mapping(bytes32 => struct ArbiterStorage.Subscription storage ref)))"
+                            }
+                          },
+                          "id": 1800,
+                          "indexExpression": {
+                            "argumentTypes": null,
+                            "id": 1799,
+                            "name": "providerAddress",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 1789,
+                            "src": "893:15:11",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_address",
+                              "typeString": "address"
+                            }
+                          },
+                          "isConstant": false,
+                          "isLValue": true,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "nodeType": "IndexAccess",
+                          "src": "879:30:11",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_bytes32_$_t_struct$_Subscription_$1779_storage_$_$",
+                            "typeString": "mapping(address => mapping(bytes32 => struct ArbiterStorage.Subscription storage ref))"
+                          }
+                        },
+                        "id": 1802,
+                        "indexExpression": {
+                          "argumentTypes": null,
+                          "id": 1801,
+                          "name": "subscriberAddress",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 1791,
+                          "src": "910:17:11",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "IndexAccess",
+                        "src": "879:49:11",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Subscription_$1779_storage_$",
+                          "typeString": "mapping(bytes32 => struct ArbiterStorage.Subscription storage ref)"
+                        }
+                      },
+                      "id": 1804,
+                      "indexExpression": {
+                        "argumentTypes": null,
+                        "id": 1803,
+                        "name": "endpoint",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 1793,
+                        "src": "929:8:11",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes32",
+                          "typeString": "bytes32"
+                        }
+                      },
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "nodeType": "IndexAccess",
+                      "src": "879:59:11",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_Subscription_$1779_storage",
+                        "typeString": "struct ArbiterStorage.Subscription storage ref"
+                      }
+                    },
+                    "id": 1805,
+                    "isConstant": false,
+                    "isLValue": true,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "memberName": "dots",
+                    "nodeType": "MemberAccess",
+                    "referencedDeclaration": 1774,
+                    "src": "879:64:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint64",
+                      "typeString": "uint64"
+                    }
+                  },
+                  "functionReturnParameters": 1797,
+                  "id": 1806,
+                  "nodeType": "Return",
+                  "src": "872:71:11"
+                }
+              ]
+            },
+            "documentation": "@dev get subscriber dots remaining for specified provider endpoint\r",
+            "id": 1808,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": true,
+            "modifiers": [],
+            "name": "getDots",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1794,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1789,
+                  "name": "providerAddress",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1808,
+                  "src": "704:23:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1788,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "704:7:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 1791,
+                  "name": "subscriberAddress",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1808,
+                  "src": "738:25:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1790,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "738:7:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 1793,
+                  "name": "endpoint",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1808,
+                  "src": "774:16:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 1792,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "774:7:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "693:104:11"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 1797,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1796,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1808,
+                  "src": "848:6:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint64",
+                    "typeString": "uint64"
+                  },
+                  "typeName": {
+                    "id": 1795,
+                    "name": "uint64",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "848:6:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint64",
+                      "typeString": "uint64"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "847:8:11"
+            },
+            "scope": 1900,
+            "src": "677:274:11",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": {
+              "id": 1828,
+              "nodeType": "Block",
+              "src": "1199:96:11",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "expression": {
+                      "argumentTypes": null,
+                      "baseExpression": {
+                        "argumentTypes": null,
+                        "baseExpression": {
+                          "argumentTypes": null,
+                          "baseExpression": {
+                            "argumentTypes": null,
+                            "id": 1819,
+                            "name": "subscriptions",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 1787,
+                            "src": "1217:13:11",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_address_$_t_mapping$_t_bytes32_$_t_struct$_Subscription_$1779_storage_$_$_$",
+                              "typeString": "mapping(address => mapping(address => mapping(bytes32 => struct ArbiterStorage.Subscription storage ref)))"
+                            }
+                          },
+                          "id": 1821,
+                          "indexExpression": {
+                            "argumentTypes": null,
+                            "id": 1820,
+                            "name": "providerAddress",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 1810,
+                            "src": "1231:15:11",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_address",
+                              "typeString": "address"
+                            }
+                          },
+                          "isConstant": false,
+                          "isLValue": true,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "nodeType": "IndexAccess",
+                          "src": "1217:30:11",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_bytes32_$_t_struct$_Subscription_$1779_storage_$_$",
+                            "typeString": "mapping(address => mapping(bytes32 => struct ArbiterStorage.Subscription storage ref))"
+                          }
+                        },
+                        "id": 1823,
+                        "indexExpression": {
+                          "argumentTypes": null,
+                          "id": 1822,
+                          "name": "subscriberAddress",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 1812,
+                          "src": "1248:17:11",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "IndexAccess",
+                        "src": "1217:49:11",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Subscription_$1779_storage_$",
+                          "typeString": "mapping(bytes32 => struct ArbiterStorage.Subscription storage ref)"
+                        }
+                      },
+                      "id": 1825,
+                      "indexExpression": {
+                        "argumentTypes": null,
+                        "id": 1824,
+                        "name": "endpoint",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 1814,
+                        "src": "1267:8:11",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes32",
+                          "typeString": "bytes32"
+                        }
+                      },
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "nodeType": "IndexAccess",
+                      "src": "1217:59:11",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_Subscription_$1779_storage",
+                        "typeString": "struct ArbiterStorage.Subscription storage ref"
+                      }
+                    },
+                    "id": 1826,
+                    "isConstant": false,
+                    "isLValue": true,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "memberName": "blockStart",
+                    "nodeType": "MemberAccess",
+                    "referencedDeclaration": 1776,
+                    "src": "1217:70:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint96",
+                      "typeString": "uint96"
+                    }
+                  },
+                  "functionReturnParameters": 1818,
+                  "id": 1827,
+                  "nodeType": "Return",
+                  "src": "1210:77:11"
+                }
+              ]
+            },
+            "documentation": "@dev get first subscription block number\r",
+            "id": 1829,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": true,
+            "modifiers": [],
+            "name": "getBlockStart",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1815,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1810,
+                  "name": "providerAddress",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1829,
+                  "src": "1042:23:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1809,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1042:7:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 1812,
+                  "name": "subscriberAddress",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1829,
+                  "src": "1076:25:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1811,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1076:7:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 1814,
+                  "name": "endpoint",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1829,
+                  "src": "1112:16:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 1813,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1112:7:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1031:104:11"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 1818,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1817,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1829,
+                  "src": "1186:6:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint96",
+                    "typeString": "uint96"
+                  },
+                  "typeName": {
+                    "id": 1816,
+                    "name": "uint96",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1186:6:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint96",
+                      "typeString": "uint96"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1185:8:11"
+            },
+            "scope": 1900,
+            "src": "1009:286:11",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": {
+              "id": 1849,
+              "nodeType": "Block",
+              "src": "1543:97:11",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "expression": {
+                      "argumentTypes": null,
+                      "baseExpression": {
+                        "argumentTypes": null,
+                        "baseExpression": {
+                          "argumentTypes": null,
+                          "baseExpression": {
+                            "argumentTypes": null,
+                            "id": 1840,
+                            "name": "subscriptions",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 1787,
+                            "src": "1561:13:11",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_address_$_t_mapping$_t_bytes32_$_t_struct$_Subscription_$1779_storage_$_$_$",
+                              "typeString": "mapping(address => mapping(address => mapping(bytes32 => struct ArbiterStorage.Subscription storage ref)))"
+                            }
+                          },
+                          "id": 1842,
+                          "indexExpression": {
+                            "argumentTypes": null,
+                            "id": 1841,
+                            "name": "providerAddress",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 1831,
+                            "src": "1575:15:11",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_address",
+                              "typeString": "address"
+                            }
+                          },
+                          "isConstant": false,
+                          "isLValue": true,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "nodeType": "IndexAccess",
+                          "src": "1561:30:11",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_bytes32_$_t_struct$_Subscription_$1779_storage_$_$",
+                            "typeString": "mapping(address => mapping(bytes32 => struct ArbiterStorage.Subscription storage ref))"
+                          }
+                        },
+                        "id": 1844,
+                        "indexExpression": {
+                          "argumentTypes": null,
+                          "id": 1843,
+                          "name": "subscriberAddress",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 1833,
+                          "src": "1592:17:11",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "IndexAccess",
+                        "src": "1561:49:11",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Subscription_$1779_storage_$",
+                          "typeString": "mapping(bytes32 => struct ArbiterStorage.Subscription storage ref)"
+                        }
+                      },
+                      "id": 1846,
+                      "indexExpression": {
+                        "argumentTypes": null,
+                        "id": 1845,
+                        "name": "endpoint",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 1835,
+                        "src": "1611:8:11",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes32",
+                          "typeString": "bytes32"
+                        }
+                      },
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "nodeType": "IndexAccess",
+                      "src": "1561:59:11",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_Subscription_$1779_storage",
+                        "typeString": "struct ArbiterStorage.Subscription storage ref"
+                      }
+                    },
+                    "id": 1847,
+                    "isConstant": false,
+                    "isLValue": true,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "memberName": "preBlockEnd",
+                    "nodeType": "MemberAccess",
+                    "referencedDeclaration": 1778,
+                    "src": "1561:71:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint96",
+                      "typeString": "uint96"
+                    }
+                  },
+                  "functionReturnParameters": 1839,
+                  "id": 1848,
+                  "nodeType": "Return",
+                  "src": "1554:78:11"
+                }
+              ]
+            },
+            "documentation": "@dev get last subscription block number\r",
+            "id": 1850,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": true,
+            "modifiers": [],
+            "name": "getPreBlockEnd",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1836,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1831,
+                  "name": "providerAddress",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1850,
+                  "src": "1386:23:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1830,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1386:7:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 1833,
+                  "name": "subscriberAddress",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1850,
+                  "src": "1420:25:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1832,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1420:7:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 1835,
+                  "name": "endpoint",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1850,
+                  "src": "1456:16:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 1834,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1456:7:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1375:104:11"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 1839,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1838,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1850,
+                  "src": "1530:6:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint96",
+                    "typeString": "uint96"
+                  },
+                  "typeName": {
+                    "id": 1837,
+                    "name": "uint96",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1530:6:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint96",
+                      "typeString": "uint96"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1529:8:11"
+            },
+            "scope": 1900,
+            "src": "1352:288:11",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": {
+              "id": 1879,
+              "nodeType": "Block",
+              "src": "1944:174:11",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 1877,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "baseExpression": {
+                        "argumentTypes": null,
+                        "baseExpression": {
+                          "argumentTypes": null,
+                          "baseExpression": {
+                            "argumentTypes": null,
+                            "id": 1865,
+                            "name": "subscriptions",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 1787,
+                            "src": "1955:13:11",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_address_$_t_mapping$_t_bytes32_$_t_struct$_Subscription_$1779_storage_$_$_$",
+                              "typeString": "mapping(address => mapping(address => mapping(bytes32 => struct ArbiterStorage.Subscription storage ref)))"
+                            }
+                          },
+                          "id": 1869,
+                          "indexExpression": {
+                            "argumentTypes": null,
+                            "id": 1866,
+                            "name": "providerAddress",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 1852,
+                            "src": "1969:15:11",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_address",
+                              "typeString": "address"
+                            }
+                          },
+                          "isConstant": false,
+                          "isLValue": true,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "nodeType": "IndexAccess",
+                          "src": "1955:30:11",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_bytes32_$_t_struct$_Subscription_$1779_storage_$_$",
+                            "typeString": "mapping(address => mapping(bytes32 => struct ArbiterStorage.Subscription storage ref))"
+                          }
+                        },
+                        "id": 1870,
+                        "indexExpression": {
+                          "argumentTypes": null,
+                          "id": 1867,
+                          "name": "subscriberAddress",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 1854,
+                          "src": "1986:17:11",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "IndexAccess",
+                        "src": "1955:49:11",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Subscription_$1779_storage_$",
+                          "typeString": "mapping(bytes32 => struct ArbiterStorage.Subscription storage ref)"
+                        }
+                      },
+                      "id": 1871,
+                      "indexExpression": {
+                        "argumentTypes": null,
+                        "id": 1868,
+                        "name": "endpoint",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 1856,
+                        "src": "2005:8:11",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes32",
+                          "typeString": "bytes32"
+                        }
+                      },
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "nodeType": "IndexAccess",
+                      "src": "1955:59:11",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_Subscription_$1779_storage",
+                        "typeString": "struct ArbiterStorage.Subscription storage ref"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "arguments": [
+                        {
+                          "argumentTypes": null,
+                          "id": 1873,
+                          "name": "dots",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 1858,
+                          "src": "2044:4:11",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_uint64",
+                            "typeString": "uint64"
+                          }
+                        },
+                        {
+                          "argumentTypes": null,
+                          "id": 1874,
+                          "name": "blockStart",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 1860,
+                          "src": "2063:10:11",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_uint96",
+                            "typeString": "uint96"
+                          }
+                        },
+                        {
+                          "argumentTypes": null,
+                          "id": 1875,
+                          "name": "preBlockEnd",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 1862,
+                          "src": "2088:11:11",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_uint96",
+                            "typeString": "uint96"
+                          }
+                        }
+                      ],
+                      "expression": {
+                        "argumentTypes": [
+                          {
+                            "typeIdentifier": "t_uint64",
+                            "typeString": "uint64"
+                          },
+                          {
+                            "typeIdentifier": "t_uint96",
+                            "typeString": "uint96"
+                          },
+                          {
+                            "typeIdentifier": "t_uint96",
+                            "typeString": "uint96"
+                          }
+                        ],
+                        "id": 1872,
+                        "name": "Subscription",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 1779,
+                        "src": "2017:12:11",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_struct$_Subscription_$1779_storage_ptr_$",
+                          "typeString": "type(struct ArbiterStorage.Subscription storage pointer)"
+                        }
+                      },
+                      "id": 1876,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "kind": "structConstructorCall",
+                      "lValueRequested": false,
+                      "names": [],
+                      "nodeType": "FunctionCall",
+                      "src": "2017:93:11",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_Subscription_$1779_memory",
+                        "typeString": "struct ArbiterStorage.Subscription memory"
+                      }
+                    },
+                    "src": "1955:155:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Subscription_$1779_storage",
+                      "typeString": "struct ArbiterStorage.Subscription storage ref"
+                    }
+                  },
+                  "id": 1878,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1955:155:11"
+                }
+              ]
+            },
+            "documentation": "@dev store new subscription\r",
+            "id": 1880,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "setSubscription",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1863,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1852,
+                  "name": "providerAddress",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1880,
+                  "src": "1748:23:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1851,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1748:7:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 1854,
+                  "name": "subscriberAddress",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1880,
+                  "src": "1782:25:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1853,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1782:7:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 1856,
+                  "name": "endpoint",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1880,
+                  "src": "1818:16:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 1855,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1818:7:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 1858,
+                  "name": "dots",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1880,
+                  "src": "1845:11:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint64",
+                    "typeString": "uint64"
+                  },
+                  "typeName": {
+                    "id": 1857,
+                    "name": "uint64",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1845:6:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint64",
+                      "typeString": "uint64"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 1860,
+                  "name": "blockStart",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1880,
+                  "src": "1867:17:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint96",
+                    "typeString": "uint96"
+                  },
+                  "typeName": {
+                    "id": 1859,
+                    "name": "uint96",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1867:6:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint96",
+                      "typeString": "uint96"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 1862,
+                  "name": "preBlockEnd",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1880,
+                  "src": "1895:18:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint96",
+                    "typeString": "uint96"
+                  },
+                  "typeName": {
+                    "id": 1861,
+                    "name": "uint96",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1895:6:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint96",
+                      "typeString": "uint96"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1737:183:11"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 1864,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1944:0:11"
+            },
+            "scope": 1900,
+            "src": "1713:405:11",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": {
+              "id": 1898,
+              "nodeType": "Block",
+              "src": "2349:85:11",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 1896,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "nodeType": "UnaryOperation",
+                    "operator": "delete",
+                    "prefix": true,
+                    "src": "2360:66:11",
+                    "subExpression": {
+                      "argumentTypes": null,
+                      "baseExpression": {
+                        "argumentTypes": null,
+                        "baseExpression": {
+                          "argumentTypes": null,
+                          "baseExpression": {
+                            "argumentTypes": null,
+                            "id": 1889,
+                            "name": "subscriptions",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 1787,
+                            "src": "2367:13:11",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_address_$_t_mapping$_t_bytes32_$_t_struct$_Subscription_$1779_storage_$_$_$",
+                              "typeString": "mapping(address => mapping(address => mapping(bytes32 => struct ArbiterStorage.Subscription storage ref)))"
+                            }
+                          },
+                          "id": 1891,
+                          "indexExpression": {
+                            "argumentTypes": null,
+                            "id": 1890,
+                            "name": "providerAddress",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 1882,
+                            "src": "2381:15:11",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_address",
+                              "typeString": "address"
+                            }
+                          },
+                          "isConstant": false,
+                          "isLValue": true,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "nodeType": "IndexAccess",
+                          "src": "2367:30:11",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_bytes32_$_t_struct$_Subscription_$1779_storage_$_$",
+                            "typeString": "mapping(address => mapping(bytes32 => struct ArbiterStorage.Subscription storage ref))"
+                          }
+                        },
+                        "id": 1893,
+                        "indexExpression": {
+                          "argumentTypes": null,
+                          "id": 1892,
+                          "name": "subscriberAddress",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 1884,
+                          "src": "2398:17:11",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "IndexAccess",
+                        "src": "2367:49:11",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Subscription_$1779_storage_$",
+                          "typeString": "mapping(bytes32 => struct ArbiterStorage.Subscription storage ref)"
+                        }
+                      },
+                      "id": 1895,
+                      "indexExpression": {
+                        "argumentTypes": null,
+                        "id": 1894,
+                        "name": "endpoint",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 1886,
+                        "src": "2417:8:11",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes32",
+                          "typeString": "bytes32"
+                        }
+                      },
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "nodeType": "IndexAccess",
+                      "src": "2367:59:11",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_Subscription_$1779_storage",
+                        "typeString": "struct ArbiterStorage.Subscription storage ref"
+                      }
+                    },
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 1897,
+                  "nodeType": "ExpressionStatement",
+                  "src": "2360:66:11"
+                }
+              ]
+            },
+            "documentation": "@dev remove subscription\r",
+            "id": 1899,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "deleteSubscription",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1887,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1882,
+                  "name": "providerAddress",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1899,
+                  "src": "2232:23:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1881,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2232:7:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 1884,
+                  "name": "subscriberAddress",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1899,
+                  "src": "2266:25:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1883,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2266:7:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 1886,
+                  "name": "endpoint",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1899,
+                  "src": "2302:16:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 1885,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2302:7:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2221:104:11"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 1888,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2349:0:11"
+            },
+            "scope": 1900,
+            "src": "2194:240:11",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "external"
+          }
+        ],
+        "scope": 1901,
+        "src": "73:2364:11"
+      }
+    ],
+    "src": "0:2439:11"
+  },
+  "legacyAST": {
+    "absolutePath": "/C/Assets/Zap-monorepo/packages/Utils/node_modules/zap_contracts/contracts/platform/arbiter/ArbiterStorage.sol",
+    "exportedSymbols": {
+      "ArbiterStorage": [
+        1900
+      ]
+    },
+    "id": 1901,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 1769,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".24"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:11"
+      },
+      {
+        "absolutePath": "/C/Assets/Zap-monorepo/packages/Utils/node_modules/zap_contracts/contracts/lib/ownership/Ownable.sol",
+        "file": "../../lib/ownership/Ownable.sol",
+        "id": 1770,
+        "nodeType": "ImportDirective",
+        "scope": 1901,
+        "sourceUnit": 204,
+        "src": "28:41:11",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 1771,
+              "name": "Ownable",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 203,
+              "src": "100:7:11",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_Ownable_$203",
+                "typeString": "contract Ownable"
+              }
+            },
+            "id": 1772,
+            "nodeType": "InheritanceSpecifier",
+            "src": "100:7:11"
+          }
+        ],
+        "contractDependencies": [
+          203
+        ],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 1900,
+        "linearizedBaseContracts": [
+          1900,
+          203
+        ],
+        "name": "ArbiterStorage",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "canonicalName": "ArbiterStorage.Subscription",
+            "id": 1779,
+            "members": [
+              {
+                "constant": false,
+                "id": 1774,
+                "name": "dots",
+                "nodeType": "VariableDeclaration",
+                "scope": 1779,
+                "src": "206:11:11",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint64",
+                  "typeString": "uint64"
+                },
+                "typeName": {
+                  "id": 1773,
+                  "name": "uint64",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "206:6:11",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint64",
+                    "typeString": "uint64"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 1776,
+                "name": "blockStart",
+                "nodeType": "VariableDeclaration",
+                "scope": 1779,
+                "src": "253:17:11",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint96",
+                  "typeString": "uint96"
+                },
+                "typeName": {
+                  "id": 1775,
+                  "name": "uint96",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "253:6:11",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint96",
+                    "typeString": "uint96"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 1778,
+                "name": "preBlockEnd",
+                "nodeType": "VariableDeclaration",
+                "scope": 1779,
+                "src": "327:18:11",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint96",
+                  "typeString": "uint96"
+                },
+                "typeName": {
+                  "id": 1777,
+                  "name": "uint96",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "327:6:11",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint96",
+                    "typeString": "uint96"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "Subscription",
+            "nodeType": "StructDefinition",
+            "scope": 1900,
+            "src": "175:207:11",
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 1787,
+            "name": "subscriptions",
+            "nodeType": "VariableDeclaration",
+            "scope": 1900,
+            "src": "467:94:11",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_address_$_t_mapping$_t_bytes32_$_t_struct$_Subscription_$1779_storage_$_$_$",
+              "typeString": "mapping(address => mapping(address => mapping(bytes32 => struct ArbiterStorage.Subscription)))"
+            },
+            "typeName": {
+              "id": 1786,
+              "keyType": {
+                "id": 1780,
+                "name": "address",
+                "nodeType": "ElementaryTypeName",
+                "src": "475:7:11",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "467:72:11",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_address_$_t_mapping$_t_bytes32_$_t_struct$_Subscription_$1779_storage_$_$_$",
+                "typeString": "mapping(address => mapping(address => mapping(bytes32 => struct ArbiterStorage.Subscription)))"
+              },
+              "valueType": {
+                "id": 1785,
+                "keyType": {
+                  "id": 1781,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "494:7:11",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "nodeType": "Mapping",
+                "src": "486:52:11",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_bytes32_$_t_struct$_Subscription_$1779_storage_$_$",
+                  "typeString": "mapping(address => mapping(bytes32 => struct ArbiterStorage.Subscription))"
+                },
+                "valueType": {
+                  "id": 1784,
+                  "keyType": {
+                    "id": 1782,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "513:7:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "nodeType": "Mapping",
+                  "src": "505:32:11",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Subscription_$1779_storage_$",
+                    "typeString": "mapping(bytes32 => struct ArbiterStorage.Subscription)"
+                  },
+                  "valueType": {
+                    "contractScope": null,
+                    "id": 1783,
+                    "name": "Subscription",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 1779,
+                    "src": "524:12:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Subscription_$1779_storage_ptr",
+                      "typeString": "struct ArbiterStorage.Subscription"
+                    }
+                  }
+                }
+              }
+            },
+            "value": null,
+            "visibility": "private"
+          },
+          {
+            "body": {
+              "id": 1807,
+              "nodeType": "Block",
+              "src": "861:90:11",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "expression": {
+                      "argumentTypes": null,
+                      "baseExpression": {
+                        "argumentTypes": null,
+                        "baseExpression": {
+                          "argumentTypes": null,
+                          "baseExpression": {
+                            "argumentTypes": null,
+                            "id": 1798,
+                            "name": "subscriptions",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 1787,
+                            "src": "879:13:11",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_address_$_t_mapping$_t_bytes32_$_t_struct$_Subscription_$1779_storage_$_$_$",
+                              "typeString": "mapping(address => mapping(address => mapping(bytes32 => struct ArbiterStorage.Subscription storage ref)))"
+                            }
+                          },
+                          "id": 1800,
+                          "indexExpression": {
+                            "argumentTypes": null,
+                            "id": 1799,
+                            "name": "providerAddress",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 1789,
+                            "src": "893:15:11",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_address",
+                              "typeString": "address"
+                            }
+                          },
+                          "isConstant": false,
+                          "isLValue": true,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "nodeType": "IndexAccess",
+                          "src": "879:30:11",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_bytes32_$_t_struct$_Subscription_$1779_storage_$_$",
+                            "typeString": "mapping(address => mapping(bytes32 => struct ArbiterStorage.Subscription storage ref))"
+                          }
+                        },
+                        "id": 1802,
+                        "indexExpression": {
+                          "argumentTypes": null,
+                          "id": 1801,
+                          "name": "subscriberAddress",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 1791,
+                          "src": "910:17:11",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "IndexAccess",
+                        "src": "879:49:11",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Subscription_$1779_storage_$",
+                          "typeString": "mapping(bytes32 => struct ArbiterStorage.Subscription storage ref)"
+                        }
+                      },
+                      "id": 1804,
+                      "indexExpression": {
+                        "argumentTypes": null,
+                        "id": 1803,
+                        "name": "endpoint",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 1793,
+                        "src": "929:8:11",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes32",
+                          "typeString": "bytes32"
+                        }
+                      },
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "nodeType": "IndexAccess",
+                      "src": "879:59:11",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_Subscription_$1779_storage",
+                        "typeString": "struct ArbiterStorage.Subscription storage ref"
+                      }
+                    },
+                    "id": 1805,
+                    "isConstant": false,
+                    "isLValue": true,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "memberName": "dots",
+                    "nodeType": "MemberAccess",
+                    "referencedDeclaration": 1774,
+                    "src": "879:64:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint64",
+                      "typeString": "uint64"
+                    }
+                  },
+                  "functionReturnParameters": 1797,
+                  "id": 1806,
+                  "nodeType": "Return",
+                  "src": "872:71:11"
+                }
+              ]
+            },
+            "documentation": "@dev get subscriber dots remaining for specified provider endpoint\r",
+            "id": 1808,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": true,
+            "modifiers": [],
+            "name": "getDots",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1794,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1789,
+                  "name": "providerAddress",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1808,
+                  "src": "704:23:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1788,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "704:7:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 1791,
+                  "name": "subscriberAddress",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1808,
+                  "src": "738:25:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1790,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "738:7:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 1793,
+                  "name": "endpoint",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1808,
+                  "src": "774:16:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 1792,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "774:7:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "693:104:11"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 1797,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1796,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1808,
+                  "src": "848:6:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint64",
+                    "typeString": "uint64"
+                  },
+                  "typeName": {
+                    "id": 1795,
+                    "name": "uint64",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "848:6:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint64",
+                      "typeString": "uint64"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "847:8:11"
+            },
+            "scope": 1900,
+            "src": "677:274:11",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": {
+              "id": 1828,
+              "nodeType": "Block",
+              "src": "1199:96:11",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "expression": {
+                      "argumentTypes": null,
+                      "baseExpression": {
+                        "argumentTypes": null,
+                        "baseExpression": {
+                          "argumentTypes": null,
+                          "baseExpression": {
+                            "argumentTypes": null,
+                            "id": 1819,
+                            "name": "subscriptions",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 1787,
+                            "src": "1217:13:11",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_address_$_t_mapping$_t_bytes32_$_t_struct$_Subscription_$1779_storage_$_$_$",
+                              "typeString": "mapping(address => mapping(address => mapping(bytes32 => struct ArbiterStorage.Subscription storage ref)))"
+                            }
+                          },
+                          "id": 1821,
+                          "indexExpression": {
+                            "argumentTypes": null,
+                            "id": 1820,
+                            "name": "providerAddress",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 1810,
+                            "src": "1231:15:11",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_address",
+                              "typeString": "address"
+                            }
+                          },
+                          "isConstant": false,
+                          "isLValue": true,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "nodeType": "IndexAccess",
+                          "src": "1217:30:11",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_bytes32_$_t_struct$_Subscription_$1779_storage_$_$",
+                            "typeString": "mapping(address => mapping(bytes32 => struct ArbiterStorage.Subscription storage ref))"
+                          }
+                        },
+                        "id": 1823,
+                        "indexExpression": {
+                          "argumentTypes": null,
+                          "id": 1822,
+                          "name": "subscriberAddress",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 1812,
+                          "src": "1248:17:11",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "IndexAccess",
+                        "src": "1217:49:11",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Subscription_$1779_storage_$",
+                          "typeString": "mapping(bytes32 => struct ArbiterStorage.Subscription storage ref)"
+                        }
+                      },
+                      "id": 1825,
+                      "indexExpression": {
+                        "argumentTypes": null,
+                        "id": 1824,
+                        "name": "endpoint",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 1814,
+                        "src": "1267:8:11",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes32",
+                          "typeString": "bytes32"
+                        }
+                      },
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "nodeType": "IndexAccess",
+                      "src": "1217:59:11",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_Subscription_$1779_storage",
+                        "typeString": "struct ArbiterStorage.Subscription storage ref"
+                      }
+                    },
+                    "id": 1826,
+                    "isConstant": false,
+                    "isLValue": true,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "memberName": "blockStart",
+                    "nodeType": "MemberAccess",
+                    "referencedDeclaration": 1776,
+                    "src": "1217:70:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint96",
+                      "typeString": "uint96"
+                    }
+                  },
+                  "functionReturnParameters": 1818,
+                  "id": 1827,
+                  "nodeType": "Return",
+                  "src": "1210:77:11"
+                }
+              ]
+            },
+            "documentation": "@dev get first subscription block number\r",
+            "id": 1829,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": true,
+            "modifiers": [],
+            "name": "getBlockStart",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1815,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1810,
+                  "name": "providerAddress",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1829,
+                  "src": "1042:23:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1809,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1042:7:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 1812,
+                  "name": "subscriberAddress",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1829,
+                  "src": "1076:25:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1811,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1076:7:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 1814,
+                  "name": "endpoint",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1829,
+                  "src": "1112:16:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 1813,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1112:7:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1031:104:11"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 1818,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1817,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1829,
+                  "src": "1186:6:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint96",
+                    "typeString": "uint96"
+                  },
+                  "typeName": {
+                    "id": 1816,
+                    "name": "uint96",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1186:6:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint96",
+                      "typeString": "uint96"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1185:8:11"
+            },
+            "scope": 1900,
+            "src": "1009:286:11",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": {
+              "id": 1849,
+              "nodeType": "Block",
+              "src": "1543:97:11",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "expression": {
+                      "argumentTypes": null,
+                      "baseExpression": {
+                        "argumentTypes": null,
+                        "baseExpression": {
+                          "argumentTypes": null,
+                          "baseExpression": {
+                            "argumentTypes": null,
+                            "id": 1840,
+                            "name": "subscriptions",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 1787,
+                            "src": "1561:13:11",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_address_$_t_mapping$_t_bytes32_$_t_struct$_Subscription_$1779_storage_$_$_$",
+                              "typeString": "mapping(address => mapping(address => mapping(bytes32 => struct ArbiterStorage.Subscription storage ref)))"
+                            }
+                          },
+                          "id": 1842,
+                          "indexExpression": {
+                            "argumentTypes": null,
+                            "id": 1841,
+                            "name": "providerAddress",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 1831,
+                            "src": "1575:15:11",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_address",
+                              "typeString": "address"
+                            }
+                          },
+                          "isConstant": false,
+                          "isLValue": true,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "nodeType": "IndexAccess",
+                          "src": "1561:30:11",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_bytes32_$_t_struct$_Subscription_$1779_storage_$_$",
+                            "typeString": "mapping(address => mapping(bytes32 => struct ArbiterStorage.Subscription storage ref))"
+                          }
+                        },
+                        "id": 1844,
+                        "indexExpression": {
+                          "argumentTypes": null,
+                          "id": 1843,
+                          "name": "subscriberAddress",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 1833,
+                          "src": "1592:17:11",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "IndexAccess",
+                        "src": "1561:49:11",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Subscription_$1779_storage_$",
+                          "typeString": "mapping(bytes32 => struct ArbiterStorage.Subscription storage ref)"
+                        }
+                      },
+                      "id": 1846,
+                      "indexExpression": {
+                        "argumentTypes": null,
+                        "id": 1845,
+                        "name": "endpoint",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 1835,
+                        "src": "1611:8:11",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes32",
+                          "typeString": "bytes32"
+                        }
+                      },
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "nodeType": "IndexAccess",
+                      "src": "1561:59:11",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_Subscription_$1779_storage",
+                        "typeString": "struct ArbiterStorage.Subscription storage ref"
+                      }
+                    },
+                    "id": 1847,
+                    "isConstant": false,
+                    "isLValue": true,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "memberName": "preBlockEnd",
+                    "nodeType": "MemberAccess",
+                    "referencedDeclaration": 1778,
+                    "src": "1561:71:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint96",
+                      "typeString": "uint96"
+                    }
+                  },
+                  "functionReturnParameters": 1839,
+                  "id": 1848,
+                  "nodeType": "Return",
+                  "src": "1554:78:11"
+                }
+              ]
+            },
+            "documentation": "@dev get last subscription block number\r",
+            "id": 1850,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": true,
+            "modifiers": [],
+            "name": "getPreBlockEnd",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1836,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1831,
+                  "name": "providerAddress",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1850,
+                  "src": "1386:23:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1830,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1386:7:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 1833,
+                  "name": "subscriberAddress",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1850,
+                  "src": "1420:25:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1832,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1420:7:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 1835,
+                  "name": "endpoint",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1850,
+                  "src": "1456:16:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 1834,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1456:7:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1375:104:11"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 1839,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1838,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1850,
+                  "src": "1530:6:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint96",
+                    "typeString": "uint96"
+                  },
+                  "typeName": {
+                    "id": 1837,
+                    "name": "uint96",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1530:6:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint96",
+                      "typeString": "uint96"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1529:8:11"
+            },
+            "scope": 1900,
+            "src": "1352:288:11",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": {
+              "id": 1879,
+              "nodeType": "Block",
+              "src": "1944:174:11",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 1877,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "baseExpression": {
+                        "argumentTypes": null,
+                        "baseExpression": {
+                          "argumentTypes": null,
+                          "baseExpression": {
+                            "argumentTypes": null,
+                            "id": 1865,
+                            "name": "subscriptions",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 1787,
+                            "src": "1955:13:11",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_address_$_t_mapping$_t_bytes32_$_t_struct$_Subscription_$1779_storage_$_$_$",
+                              "typeString": "mapping(address => mapping(address => mapping(bytes32 => struct ArbiterStorage.Subscription storage ref)))"
+                            }
+                          },
+                          "id": 1869,
+                          "indexExpression": {
+                            "argumentTypes": null,
+                            "id": 1866,
+                            "name": "providerAddress",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 1852,
+                            "src": "1969:15:11",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_address",
+                              "typeString": "address"
+                            }
+                          },
+                          "isConstant": false,
+                          "isLValue": true,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "nodeType": "IndexAccess",
+                          "src": "1955:30:11",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_bytes32_$_t_struct$_Subscription_$1779_storage_$_$",
+                            "typeString": "mapping(address => mapping(bytes32 => struct ArbiterStorage.Subscription storage ref))"
+                          }
+                        },
+                        "id": 1870,
+                        "indexExpression": {
+                          "argumentTypes": null,
+                          "id": 1867,
+                          "name": "subscriberAddress",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 1854,
+                          "src": "1986:17:11",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "IndexAccess",
+                        "src": "1955:49:11",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Subscription_$1779_storage_$",
+                          "typeString": "mapping(bytes32 => struct ArbiterStorage.Subscription storage ref)"
+                        }
+                      },
+                      "id": 1871,
+                      "indexExpression": {
+                        "argumentTypes": null,
+                        "id": 1868,
+                        "name": "endpoint",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 1856,
+                        "src": "2005:8:11",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes32",
+                          "typeString": "bytes32"
+                        }
+                      },
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "nodeType": "IndexAccess",
+                      "src": "1955:59:11",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_Subscription_$1779_storage",
+                        "typeString": "struct ArbiterStorage.Subscription storage ref"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "arguments": [
+                        {
+                          "argumentTypes": null,
+                          "id": 1873,
+                          "name": "dots",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 1858,
+                          "src": "2044:4:11",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_uint64",
+                            "typeString": "uint64"
+                          }
+                        },
+                        {
+                          "argumentTypes": null,
+                          "id": 1874,
+                          "name": "blockStart",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 1860,
+                          "src": "2063:10:11",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_uint96",
+                            "typeString": "uint96"
+                          }
+                        },
+                        {
+                          "argumentTypes": null,
+                          "id": 1875,
+                          "name": "preBlockEnd",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 1862,
+                          "src": "2088:11:11",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_uint96",
+                            "typeString": "uint96"
+                          }
+                        }
+                      ],
+                      "expression": {
+                        "argumentTypes": [
+                          {
+                            "typeIdentifier": "t_uint64",
+                            "typeString": "uint64"
+                          },
+                          {
+                            "typeIdentifier": "t_uint96",
+                            "typeString": "uint96"
+                          },
+                          {
+                            "typeIdentifier": "t_uint96",
+                            "typeString": "uint96"
+                          }
+                        ],
+                        "id": 1872,
+                        "name": "Subscription",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 1779,
+                        "src": "2017:12:11",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_struct$_Subscription_$1779_storage_ptr_$",
+                          "typeString": "type(struct ArbiterStorage.Subscription storage pointer)"
+                        }
+                      },
+                      "id": 1876,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "kind": "structConstructorCall",
+                      "lValueRequested": false,
+                      "names": [],
+                      "nodeType": "FunctionCall",
+                      "src": "2017:93:11",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_Subscription_$1779_memory",
+                        "typeString": "struct ArbiterStorage.Subscription memory"
+                      }
+                    },
+                    "src": "1955:155:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Subscription_$1779_storage",
+                      "typeString": "struct ArbiterStorage.Subscription storage ref"
+                    }
+                  },
+                  "id": 1878,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1955:155:11"
+                }
+              ]
+            },
+            "documentation": "@dev store new subscription\r",
+            "id": 1880,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "setSubscription",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1863,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1852,
+                  "name": "providerAddress",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1880,
+                  "src": "1748:23:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1851,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1748:7:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 1854,
+                  "name": "subscriberAddress",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1880,
+                  "src": "1782:25:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1853,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1782:7:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 1856,
+                  "name": "endpoint",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1880,
+                  "src": "1818:16:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 1855,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1818:7:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 1858,
+                  "name": "dots",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1880,
+                  "src": "1845:11:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint64",
+                    "typeString": "uint64"
+                  },
+                  "typeName": {
+                    "id": 1857,
+                    "name": "uint64",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1845:6:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint64",
+                      "typeString": "uint64"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 1860,
+                  "name": "blockStart",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1880,
+                  "src": "1867:17:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint96",
+                    "typeString": "uint96"
+                  },
+                  "typeName": {
+                    "id": 1859,
+                    "name": "uint96",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1867:6:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint96",
+                      "typeString": "uint96"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 1862,
+                  "name": "preBlockEnd",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1880,
+                  "src": "1895:18:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint96",
+                    "typeString": "uint96"
+                  },
+                  "typeName": {
+                    "id": 1861,
+                    "name": "uint96",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1895:6:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint96",
+                      "typeString": "uint96"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1737:183:11"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 1864,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1944:0:11"
+            },
+            "scope": 1900,
+            "src": "1713:405:11",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": {
+              "id": 1898,
+              "nodeType": "Block",
+              "src": "2349:85:11",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 1896,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "nodeType": "UnaryOperation",
+                    "operator": "delete",
+                    "prefix": true,
+                    "src": "2360:66:11",
+                    "subExpression": {
+                      "argumentTypes": null,
+                      "baseExpression": {
+                        "argumentTypes": null,
+                        "baseExpression": {
+                          "argumentTypes": null,
+                          "baseExpression": {
+                            "argumentTypes": null,
+                            "id": 1889,
+                            "name": "subscriptions",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 1787,
+                            "src": "2367:13:11",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_address_$_t_mapping$_t_bytes32_$_t_struct$_Subscription_$1779_storage_$_$_$",
+                              "typeString": "mapping(address => mapping(address => mapping(bytes32 => struct ArbiterStorage.Subscription storage ref)))"
+                            }
+                          },
+                          "id": 1891,
+                          "indexExpression": {
+                            "argumentTypes": null,
+                            "id": 1890,
+                            "name": "providerAddress",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 1882,
+                            "src": "2381:15:11",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_address",
+                              "typeString": "address"
+                            }
+                          },
+                          "isConstant": false,
+                          "isLValue": true,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "nodeType": "IndexAccess",
+                          "src": "2367:30:11",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_bytes32_$_t_struct$_Subscription_$1779_storage_$_$",
+                            "typeString": "mapping(address => mapping(bytes32 => struct ArbiterStorage.Subscription storage ref))"
+                          }
+                        },
+                        "id": 1893,
+                        "indexExpression": {
+                          "argumentTypes": null,
+                          "id": 1892,
+                          "name": "subscriberAddress",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 1884,
+                          "src": "2398:17:11",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "IndexAccess",
+                        "src": "2367:49:11",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Subscription_$1779_storage_$",
+                          "typeString": "mapping(bytes32 => struct ArbiterStorage.Subscription storage ref)"
+                        }
+                      },
+                      "id": 1895,
+                      "indexExpression": {
+                        "argumentTypes": null,
+                        "id": 1894,
+                        "name": "endpoint",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 1886,
+                        "src": "2417:8:11",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes32",
+                          "typeString": "bytes32"
+                        }
+                      },
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "nodeType": "IndexAccess",
+                      "src": "2367:59:11",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_Subscription_$1779_storage",
+                        "typeString": "struct ArbiterStorage.Subscription storage ref"
+                      }
+                    },
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 1897,
+                  "nodeType": "ExpressionStatement",
+                  "src": "2360:66:11"
+                }
+              ]
+            },
+            "documentation": "@dev remove subscription\r",
+            "id": 1899,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "deleteSubscription",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1887,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1882,
+                  "name": "providerAddress",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1899,
+                  "src": "2232:23:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1881,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2232:7:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 1884,
+                  "name": "subscriberAddress",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1899,
+                  "src": "2266:25:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1883,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2266:7:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 1886,
+                  "name": "endpoint",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1899,
+                  "src": "2302:16:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 1885,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2302:7:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2221:104:11"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 1888,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2349:0:11"
+            },
+            "scope": 1900,
+            "src": "2194:240:11",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "external"
+          }
+        ],
+        "scope": 1901,
+        "src": "73:2364:11"
+      }
+    ],
+    "src": "0:2439:11"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.24+commit.e67f0147.Emscripten.clang"
+  },
+  "networks": {
+    "5777": {
+      "events": {
+        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "previousOwner",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "name": "newOwner",
+              "type": "address"
+            }
+          ],
+          "name": "OwnershipTransferred",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0x1c99e8ea54ebc17b2434954070c7df790eb15033",
+      "transactionHash": "0xb925eb1e1c5dfc67cc1fbb3ec8eb32094ac0608a4f0851d81e4eed4eab026268"
+    }
+  },
+  "schemaVersion": "2.0.1",
+  "updatedAt": "2018-07-13T11:24:33.843Z"
+}
