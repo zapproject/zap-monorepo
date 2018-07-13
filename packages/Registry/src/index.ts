@@ -12,7 +12,7 @@ export class ZapRegistry extends BaseContract {
 
     async initiateProvider({public_key, title, endpoint, endpoint_params, from, gas=DEFAULT_GAS}:InitProvider) {
         try {
-            let params = endpoint_params? endpoint_params.map((item:string) =>{return utf8ToHex(item)}) : [];
+            let params = endpoint_params ? endpoint_params.map((item:string) =>{return utf8ToHex(item)}) : [];
             return await this.contract.methods.initiateProvider(
                 toBN(public_key),
                 utf8ToHex(title),

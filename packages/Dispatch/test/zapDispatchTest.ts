@@ -12,7 +12,8 @@ import {
     testZapProvider,
     ganacheProvider ,
     ganacheServerOptions,
-    getArtifacts
+    getArtifacts,
+    DEFAULT_GAS
 } from "@zap/utils";
 import {BaseContract,BaseContractType} from "@zap/basecontract"
 import {ZapDispatch} from '../src';
@@ -34,15 +35,19 @@ describe('Zap Dispatch Test"', () => {
         options:any,
         query="TestQuery",
         responses =["TestReponse_1","TestResponse_2"],
+        queryData: any,
         buildDir:string = join(__dirname,"contracts");
 
     before(function (done) {
         configureEnvironment(async() => {
             ganacheServer = await startGanacheServer();
-            web3 =new Web3(ganacheProvider);
+            web3 = new Web3(ganacheProvider);
             accounts = await web3.eth.getAccounts();
             //delete require.cache[require.resolve('/contracts')];
+
+            // TODO: fix that migration continue to save artifacts in separate thread
             await migrateContracts(buildDir);
+            console.log("Migration complete. ");
             done();
         });
     });
@@ -53,6 +58,7 @@ describe('Zap Dispatch Test"', () => {
             networkId: ganacheServerOptions.network_id,
             networkProvider: ganacheProvider
         };
+
         before(function (done) {
             configureEnvironment(async () => {
                 testArtifacts = getArtifacts(buildDir);
@@ -63,22 +69,55 @@ describe('Zap Dispatch Test"', () => {
                 done()
             })
         });
-        it("Should have all pre conditions set up for dispatch to work", async () => {
-            await bootstrap(testZapProvider, accounts, deployedRegistry, deployedToken, deployedBondage);
-        })
-        it("should initiate Dispatch Wrapper", async () => {
-            dispatchWrapper = new ZapDispatch(Object.assign(options, {artifactName: "Dispatch"}));
-        });
-        it('Should call query function in Dispatch smart contract', async () => {
 
+        it("Should have all pre conditions set up for dispatch to work", async () => {
+           const res = await bootstrap(testZapProvider, accounts, deployedRegistry, deployedToken, deployedBondage);
+           await expect(res).to.be.equal("done");
+        })
+
+        it("Should initiate Dispatch Wrapper", async () => {
+            dispatchWrapper = new ZapDispatch(Object.assign(options, {artifactName: "Dispatch"}));
+            await expect(true).to.be.equal(true);
+        });
+
+        it("Should call query function in Dispatch smart contract", async () => {
+            queryData = await dispatchWrapper.queryData({
+                provider: accounts[0], // account that used as oracle in booststrap function
+                query: query,
+                endpoint: testZapProvider.endpoint,
+                params: ['a'],
+                onchainProvider: false,
+                onchainSubscriber: false,
+                from: accounts[2], // account that used for bond in booststrap function 
+                gas: DEFAULT_GAS 
+            });
+            queryData = queryData.events.Incoming.returnValues;
         });
 
         it('Should call respond function in Dispatch smart contract', async () => {
-
+            try {
+                await dispatchWrapper.respond({
+                    queryId: queryData.id, 
+                    responseParams: responses, 
+                    dynamic: false,
+                    from: accounts[2]
+                });
+            } catch(e) {
+                await expect(e.toString()).to.include('revert');
+            }
         });
-        it("Should emit Respond events for offchain subscribers",async()=>{
 
+        it("Should emit Respond events for offchain subscribers", async () => {
+            try {
+                await dispatchWrapper.respond({
+                    queryId: queryData.id, 
+                    responseParams: responses, 
+                    dynamic: false,
+                    from: accounts[2]
+                });
+            } catch(e) {
+                await expect(e.toString()).to.include('revert');
+            }
         });
-
     });
 });
