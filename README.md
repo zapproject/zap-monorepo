@@ -26,16 +26,14 @@ This monorepo repository includes packages that are published to NPM (todo) and 
 ##### Development setup with Lerna
 - clone the project 
 - npm i
-- lerna bootstrap (npm install for all packages)
+- lerna bootstrap --hoist (npm install for all packages)
 - lerna run build (run tsc through all packages)
-- lerna exec npm run run_test (--scope=@zap/package)
+- lerna run test
 
 ##### Single Package development
 - cd packages/package
-- npm run run_test (tsc and mocha tests)
-
-##### Note : 
-- Migrate issue : Since we use Truffle command for migrations directly to the truffle-core module, we cant do fixed Lerna (which normally provide faster development env, but only for development env). So we will always use independent mode, which make `lerna bootstrap` slower.
+- npm run build
+- npm run test (tsc and mocha tests)
 
   
 

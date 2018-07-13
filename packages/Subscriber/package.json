@@ -5,8 +5,8 @@
   "main": "lib/src/index.js",
   "type": "lib/src/types.d.ts",
   "scripts": {
-    "build": "./node_modules/typescript/bin/tsc",
-    "test": "./node_modules/mocha/bin/mocha  -r ts-node/register test/*.ts --serial",
+    "build": "tsc",
+    "test": "mocha  -r ts-node/register test/*.ts --serial",
     "run_test": "run-s build test"
   },
   "keywords": [],
@@ -15,7 +15,7 @@
   "dependencies": {
     "@types/chai": "^4.1.4",
     "@types/mocha": "^5.2.4",
-    "@types/node": "^10.5.1",
+    "@types/node": "^10.5.2",
     "@zap/arbiter": "^1.0.0",
     "@zap/bondage": "^1.0.0",
     "@zap/curve": "^1.0.0",
@@ -38,10 +38,7 @@
     "zap_contracts": "git+https://github.com/zapproject/zap-ethereum-api.git"
   },
   "devDependencies": {
-    "@types/node": "^10.5.1",
     "mocha": "^5.2.0",
-    "tsc": "^1.20150623.0",
-    "tslint": "^5.10.0",
-    "typescript": "^2.9.2"
+    "tslint": "^5.10.0"
   }
 }
