@@ -1,1 +1,1 @@
-import * as Web3 from 'web3'
+const Web3 = require('web3')

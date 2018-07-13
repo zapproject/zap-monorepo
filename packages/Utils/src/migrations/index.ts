@@ -3,9 +3,8 @@ const {readdirSync,readFileSync,writeFileSync,unlinkSync, existsSync,mkdirSync} 
 import {join,basename} from 'path'
 const { provider, server } = require('ganache-core');
 import { promisify } from 'util';
-import {ganacheServerOptions,DEFAULT_GAS,GAS_PRICE,buildOptions} from './constants';
+import {ganacheServerOptions,DEFAULT_GAS,GAS_PRICE,buildOptions,migrate} from '../constants';
 import {serverOptionsType,buildOptionsType} from "../types";
-const migrate = require(join(__dirname,'./../../../node_modules/truffle-core/lib/commands/migrate.js'));
 const asyncMigrate = promisify(migrate.run);
 
 
@@ -83,4 +82,4 @@ export function getArtifacts(buildDir:string){
     }
   }
 
-  export * from "./constants"
+  export * from "../constants"

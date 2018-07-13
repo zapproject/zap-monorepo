@@ -1,11 +1,15 @@
 import {Curve} from "@zap/curve"
 const Web3  = require('web3');
-import {join} from "path";
-import {serverOptionsType} from "./../types"
+import {join,dirname} from "path";
+import {serverOptionsType} from "./types"
+const requireAll = require("require-all")
  Web3.providers.HttpProvider.prototype.sendAsync = Web3.providers.HttpProvider.prototype.send;
-const  migrationDir = join(__dirname,'./../../../node_modules/zap_contracts/migrations')
-const contractsDir = join(__dirname,'./../../../node_modules/zap_contracts/contracts')
-const workingDir = join(__dirname,'./../../../node_modules/zap_contracts')
+const zapContractDirName = dirname(require.resolve("zap_contracts/truffle-config.js"))
+const  migrationDir = join(zapContractDirName,"migrations")
+const contractsDir = join(zapContractDirName,"contracts")
+const workingDir = zapContractDirName
+console.log("working dir : ", workingDir)
+export const  migrate = require("truffle-core/lib/commands/migrate.js");
 export const ganacheServerOptions={
      hostname: 'localhost',
      network_id: 5777,

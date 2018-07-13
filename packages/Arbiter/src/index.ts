@@ -1,6 +1,6 @@
 import  {BaseContract,BaseContractType} from '@zap/basecontract';
 import {SubscriptionInit,SubscriptionEnd,Filter} from "./types"
-//import {toBN,utf8ToHex} from 'web3-utils';
+const {toBN,utf8ToHex} = require ('web3-utils');
 import {DEFAULT_GAS} from "@zap/utils"
 export class ZapArbiter extends BaseContract {
 
@@ -8,19 +8,19 @@ export class ZapArbiter extends BaseContract {
         super({artifactsDir,artifactName:'Arbiter',networkId,networkProvider});
     }
 
-/*
+
     async initiateSubscription(
-        {provider, endpoint, endpointParams, blocks, publicKey, from, gas=DEFAULT_GAS} : SubscriptionInit) {
+        {provider, endpoint, endpoint_params, blocks, pubkey, from, gas=DEFAULT_GAS} : SubscriptionInit) {
         try {
-            for (let i in endpointParams){
-                endpointParams[i] = utf8ToHex(endpointParams[i]);
+            for (let i in endpoint_params){
+                endpoint_params[i] = utf8ToHex(endpoint_params[i]);
             }
 
             return await this.contract.methods.initiateSubscription(
                 provider,
                 utf8ToHex(endpoint),
-                endpointParams,
-                toBN(publicKey),
+                endpoint_params,
+                toBN(pubkey),
                 toBN(blocks)).send({from, gas});
         } catch (err) {
             throw err;
@@ -36,7 +36,7 @@ export class ZapArbiter extends BaseContract {
         } catch (err) {
             throw err;
         }
-    }*/
+    }
 
     /**
      *
