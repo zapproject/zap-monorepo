@@ -9,7 +9,7 @@ export class ZapDispatch extends BaseContract {
     }
 
     async queryData({provider, query, endpoint, params, onchainProvider, onchainSubscriber,from,gas=DEFAULT_GAS}:QueryArgs){
-        if(params.length>0) {
+        if(params.length > 0) {
             for (let i in params) {
                 params[i] = utf8ToHex(params[i]);
             }

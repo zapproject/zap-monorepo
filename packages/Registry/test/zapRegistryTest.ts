@@ -33,7 +33,7 @@ describe('Registry test', () => {
     before(function (done) {
         configureEnvironment(async() => {
             ganacheServer = await startGanacheServer();
-            web3 =new Web3(ganacheProvider);
+            web3 = new Web3(ganacheProvider);
             accounts = await web3.eth.getAccounts();
             //delete require.cache[require.resolve('/contracts')];
             await migrateContracts(join(__dirname,"contracts"));
@@ -69,7 +69,7 @@ describe('Registry test', () => {
                 public_key: testZapProvider.pubkey,
                 title: testZapProvider.title,
                 endpoint: testZapProvider.endpoint,
-                endpoint_params: testZapProvider.params,
+                endpoint_params: testZapProvider.endpoint_params,
                 from: accounts[0],
                 gas: 600000
             });
@@ -81,12 +81,12 @@ describe('Registry test', () => {
                 provider:accounts[0],
                 endpoint:testZapProvider.endpoint,
                 index:0})
-            await expect(param1).to.be.equal(testZapProvider.params[0]);
+            await expect(param1).to.be.equal(testZapProvider.endpoint_params[0]);
             const param2 = await registryWrapper.getNextEndpointParams({
                 provider:accounts[0],
                 endpoint:testZapProvider.endpoint,
                 index:1})
-            await expect(param2).to.be.equal(testZapProvider.params[1]);
+            await expect(param2).to.be.equal(testZapProvider.endpoint_params[1]);
         });
 
         it('Should initiate Provider curve in zap registry contract', async () => {
@@ -107,12 +107,12 @@ describe('Registry test', () => {
         it('Should set endpoint params in zap registry contract', async () => {
             let result = await registryWrapper.setEndpointParams({
                 endpoint: testZapProvider.endpoint,
-                endpoint_params: testZapProvider.params,
+                endpoint_params: testZapProvider.endpoint_params,
                 from: accounts[0],
                 gas: 600000
             });
             const endpointsSize = await deployedStorage.contract.methods.getEndpointIndexSize(accounts[0], utf8ToHex(testZapProvider.endpoint)).call();
-            await expect(parseInt(endpointsSize.valueOf())).to.be.equal(testZapProvider.params.length);
+            await expect(parseInt(endpointsSize.valueOf())).to.be.equal(testZapProvider.endpoint_params.length);
         });
 
 

@@ -23,7 +23,7 @@ export function startGanacheServer(_serverOptions ?: any){
   })
 }
 
-export function  clearBuild(onlyRemoveNetworks = true, buildDir:string) {
+export function clearBuild(onlyRemoveNetworks = true, buildDir:string) {
     if(!existsSync(buildDir)){
         mkdirSync(buildDir)
     }
