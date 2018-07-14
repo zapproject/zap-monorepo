@@ -2,12 +2,8 @@
   "extends": "../../tsconfig",
   "compilerOptions": {
     "outDir": "lib",
-    "baseUrl":"./",
-    "paths":{
-      "@truffle": ["node_modules/truffle-core/lib/commands*"]
-    }
   },
-  "include": ["./src/**/**/*", "./test/**/**/*"],
+  "include": ["./src/**/*", "./test/**/*"],
   "exclude":[
     "node_modules"
   ]

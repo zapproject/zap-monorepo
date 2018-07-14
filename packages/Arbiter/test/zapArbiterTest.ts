@@ -73,7 +73,7 @@ describe('Arbiter Test', () => {
     });
 
     it('Should initiate subscription', async function() {
-      await arbiterWrapper.initiateSubscription({
+      let subscription = await arbiterWrapper.initiateSubscription({
           provider: accounts[0],
           endpoint: testZapProvider.endpoint,
           endpoint_params: testZapProvider.endpoint_params,
@@ -83,15 +83,52 @@ describe('Arbiter Test', () => {
           gas: DEFAULT_GAS,
       });
     });
+    it("Should get subscription", async()=>{
+        let subscription = await arbiterWrapper.getSubscription({
+            provider:accounts[0],
+            subscriber:accounts[2],
+            endpoint: testZapProvider.endpoint
+        })
+        expect(subscription).to.have.keys("0","1","2","dots","blockStart","preBlockEnd")
+        expect(subscription.dots).to.equal('4')
 
-    it('Should listen to Data purchase in zapArbiter', async function() {
-      arbiterWrapper.listen((err:any, res:any) => {
-         console.log("event listen : ", err,res)
-         expect(err).to.be.null;
-         expect(res.event).to.be.equal("DataPurchase")
-        return;
-      });
-    });
+    })
+
+      //TODO when websocket issue fixed
+    // it('Should listen to Data purchase in zapArbiter', async function() {
+    //   arbiterWrapper.listen((err:any, res:any) => {
+    //      console.log("event listen : ", err,res)
+    //      expect(err).to.be.null;
+    //      expect(res.event).to.be.equal("DataPurchase")
+    //     return;
+    //   });
+    // });
+      it("Should allow unscubscription from provider", async ()=>{
+          let unsubscription = await arbiterWrapper.endSubscriptionProvider({
+                subscriber:accounts[2],
+              endpoint : testZapProvider.endpoint,
+              from:accounts[0]
+          })
+          let event = unsubscription.events;
+
+      })
+      it("Shoudl allow unsubscription from subscriber", async()=>{
+          await arbiterWrapper.initiateSubscription({
+              provider: accounts[0],
+              endpoint: testZapProvider.endpoint,
+              endpoint_params: testZapProvider.endpoint_params,
+              blocks: 4,
+              pubkey: testZapProvider.pubkey,
+              from: accounts[2],
+              gas: DEFAULT_GAS,
+          });
+          await arbiterWrapper.endSubscriptionSubscriber({
+              provider: accounts[0],
+              endpoint: testZapProvider.endpoint,
+              from:accounts[2]
+          })
+
+      })
 
   });
 });
