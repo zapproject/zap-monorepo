@@ -14,14 +14,17 @@ export function startGanacheServer(_serverOptions ?: any){
     const ganacheServer = server(serverOptions);
     ganacheServer.listen(serverOptions.port, (err:any, blockchain:any) => {
     if (err) {
+        console.error(err)
       console.log("server might already is created from other tests");
+        ganacheServer.close()
+        return reject(err)
     }
-    return resolve(ganacheServer)
+        console.log('server started on port: ' + serverOptions.port);
+        return resolve(ganacheServer)
     });
-   console.log('server started on port: ' + serverOptions.port);
-   return resolve(ganacheServer)
   })
 }
+
 
 export function clearBuild(onlyRemoveNetworks = true, buildDir:string) {
     if(!existsSync(buildDir)){

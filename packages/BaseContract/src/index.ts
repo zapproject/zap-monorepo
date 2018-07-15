@@ -29,6 +29,9 @@ export class BaseContract{
             throw err;
         }
     }
+    async getContractOwner(){
+        return await this.contract.methods.owner().call().valueOf()
+    }
 }
 
 export * from "./types"

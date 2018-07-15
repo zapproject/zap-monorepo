@@ -1,5 +1,5 @@
 import  {BaseContract,BaseContractType} from '@zap/basecontract';
-import {SubscriptionInit,SubscriptionEnd,Filter} from "./types"
+import {SubscriptionInit,SubscriptionEnd,Filter,SubscriptionType} from "./types"
 const {toBN,utf8ToHex} = require ('web3-utils');
 import {DEFAULT_GAS} from "@zap/utils"
 export class ZapArbiter extends BaseContract {
@@ -27,12 +27,34 @@ export class ZapArbiter extends BaseContract {
         }
     }
 
-    async endSubscription({provider, endpoint, from, gas=DEFAULT_GAS}:SubscriptionEnd) {
+    async getSubscription({provider,subscriber,endpoint}:SubscriptionType){
+        let subscription = await this.contract.methods.getSubscription(provider,subscriber,utf8ToHex(endpoint)).call();
+        console.log("subscription result : ",subscription)
+         return subscription
+
+    }
+
+    async endSubscriptionSubscriber({provider, endpoint, from, gas=DEFAULT_GAS}:SubscriptionEnd) {
+        let unSubscription:any
         try {
-            return await this.contract.methods.endSubscriptionSubscriber(
+            unSubscription =  await this.contract.methods.endSubscriptionSubscriber(
                 provider,
                 utf8ToHex(endpoint))
                 .send({from, gas});
+            return unSubscription
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    async endSubscriptionProvider({subscriber, endpoint, from, gas=DEFAULT_GAS}:SubscriptionEnd) {
+        let unSubscription:any;
+        try {
+            unSubscription= await this.contract.methods.endSubscriptionProvider(
+                subscriber,
+                utf8ToHex(endpoint))
+                .send({from, gas});
+            return unSubscription;
         } catch (err) {
             throw err;
         }

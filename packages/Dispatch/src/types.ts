@@ -3,7 +3,7 @@ export type QueryArgs = {
   provider:string,
   endpoint: string,
   query: string,
-  params : Array<string>,
+  endpointParams : Array<string>,
   onchainProvider : boolean,
   onchainSubscriber : boolean,
     from:string,

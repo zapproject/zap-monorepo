@@ -9,8 +9,8 @@
   ],
   "scripts": {
     "ganache": "ganache-cli -p 8545 --networkId 5777",
-    "build": "node_modules/tsc/bin/tsc",
-    "test": "mocha  -r ts-node/register test/*.ts --serial",
+    "build": "./node_modules/.bin/tsc",
+    "test": "./noode_modules/.bin/mocha  -r ts-node/register test/*.ts --serial",
     "run_test": "run-s build test"
   },
   "dependencies": {

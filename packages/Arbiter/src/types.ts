@@ -10,7 +10,8 @@ export type SubscriptionInit = {
 }
 
 export type SubscriptionEnd = {
-    provider:string,
+    provider?:string,
+    subscriber ?:string,
     endpoint : string,
     from: string,
     gas?:number
@@ -20,5 +21,11 @@ export type Filter = {
     fromBlock ?: number,
     toBlock ?: number,
     provider ?: string
+}
+
+export type SubscriptionType = {
+    provider:string,
+    subscriber:string,
+    endpoint:string
 }
 

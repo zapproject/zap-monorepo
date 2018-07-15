@@ -5,7 +5,7 @@ const {hexToUtf8} = require("web3-utils");
 const EventEmitter = require('events');
 
 
-export class Provider extends EventEmitter {
+export class ZapProvider extends EventEmitter {
     constructor({owner,handler,zapRegistry,zapDispatch,zapBondage,zapArbiter}:ProviderConstructorType) {
         super();
         assert(owner, 'owner address is required');
@@ -26,8 +26,8 @@ export class Provider extends EventEmitter {
      * @param {Array<string>} endpoint_params
      * @returns {Promise<any>}
      */
-    async initiate({public_key, title, endpoint, endpoint_params}:InitProvider) {
-        assert(Array.isArray(endpoint_params), 'params need to be an array');
+    async initiateProvider({public_key, title, endpoint, endpoint_params}:InitProvider) {
+        assert(Array.isArray(endpoint_params), 'endpointParams need to be an array');
         let provider = await this.zapRegistry.initiateProvider(
             {public_key, title, endpoint, endpoint_params, from:this.providerOwner});
         assert(provider, 'fail to create provider');
@@ -44,19 +44,10 @@ export class Provider extends EventEmitter {
      * @param {number[]} dividers
      * @returns {boolean}
      */
-    async initCurve({endpoint, constants, parts, dividers}: InitCurve) :Promise<boolean>{
-        assert((constants instanceof Array
-            && parts instanceof Array
-            && dividers instanceof Array),
-            "curve's arguments need to be array");
-        assert(endpoint && constants.length > 0
-            && parts.length > 0
-            && dividers.length > 0,
-            'cant init empty curve args');
-        let curve = {constants, parts, dividers};
+    async initiateProviderCurve({endpoint, constants, parts, dividers}: InitCurve) :Promise<boolean>{
+        let curve = new Curve(constants, parts, dividers)
         // console.log("converted : ", convertedConstants);
         let success = await this.zapRegistry.initiateProviderCurve({endpoint, curve, from: this.providerOwner});
-
         assert(success, 'fail to init curve ');
         this.curve = new Curve(constants, parts, dividers);
         return success;
@@ -85,7 +76,7 @@ export class Provider extends EventEmitter {
     }
 
 
-    async getProviderCurve({endpoint}: {endpoint:string}):Promise<CurveType> {
+    async getProviderCurve(endpoint:string):Promise<CurveType> {
         if (this.curve) return this.curve;
         let curve = await this.zapRegistry.getProviderCurve(this.providerOwner, endpoint);
         this.curve = curve;
