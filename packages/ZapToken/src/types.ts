@@ -1,6 +1,9 @@
 export type TransferType = {
-    to:string,
+    to:address,
     amount:number,
-    from:string,
+    from:address,
     gas ?: number
 }
+
+export type address=string;
+export type txid= string|object

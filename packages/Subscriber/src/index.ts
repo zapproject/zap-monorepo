@@ -3,7 +3,16 @@ const assert = require('assert');
 import {BondType,UnbondType,SubscribeType,SubscriberConstructorType,SubscriberHandler} from "./types";
 import { DEFAULT_GAS } from "../node_modules/@zap/utils";
 
-
+/**
+ * Subscriber class, Provides methods for subscribers
+ * @param {string} owner
+ * @param {any} handler
+ * @param {} zapToken
+ * @param {} zapRegistry
+ * @param {} zapDispatch
+ * @param {} zapBondage
+ * @param {} zapArbiter
+ */
 export class Subscriber extends EventEmitter {
 
     constructor({owner,handler,zapToken,zapRegistry,zapDispatch,zapBondage,zapArbiter}:SubscriberConstructorType) {

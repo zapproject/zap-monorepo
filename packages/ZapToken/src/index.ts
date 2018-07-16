@@ -1,29 +1,67 @@
 import {BaseContract,BaseContractType} from "@zap/basecontract";
 import {toZapBase, fromZapBase,DEFAULT_GAS} from "@zap/utils";
-import {TransferType} from "./types";
+import {TransferType,address,txid} from "./types";
 
+/**
+ * ERC20 Tokens methods for Zap Tokens
+ * @param {?string} artifactsDir
+ * @param {string} artifactName
+ * @param {?string} networkId
+ * @param {?string} networkProvider
+
+ */
 export class ZapToken extends BaseContract {
+
 
     constructor({artifactsDir=undefined,artifactName=undefined,networkId=undefined,networkProvider=undefined}:BaseContractType){
         super({artifactsDir,artifactName:"ZapToken",networkId,networkProvider});
     }
 
-    async balanceOf(address:string) {
+    /**
+     * Get Zap Token balance of address
+     * @param {address} address
+     * @returns {Promise<number>} Zap balance
+     */
+    async balanceOf(address:address) :Promise<number>{
         let balance = await this.contract.methods.balanceOf(address).call();
         return fromZapBase(balance);
     }
 
-    async send({to, amount, from,gas=DEFAULT_GAS}:TransferType) {
+    /**
+     * Transfer Zap Token
+     * @param {address} to
+     * @param {number} amount
+     * @param {address} from
+     * @param {number} gas
+     * @returns {Promise<txid>}
+     */
+    async send({to, amount, from,gas=DEFAULT_GAS}:TransferType) :Promise<txid>{
         let bigAmount = toZapBase(amount);
         return await this.contract.methods.transfer(to, bigAmount).send({from,gas});
     }
 
-    async allocate({to, amount, from,gas=DEFAULT_GAS}:TransferType) {
+    /**
+     * Allocate Zap Token from Zap contract owner to an address
+     * @param {address} to
+     * @param {number} amount
+     * @param {address} from
+     * @param {number} gas
+     * @returns {Promise<txid>}
+     */
+    async allocate({to, amount, from,gas=DEFAULT_GAS}:TransferType):Promise<txid> {
         let bigAmount = toZapBase(amount)
         return await this.contract.methods.allocate(to, bigAmount).send({from,gas});
     }
 
-    async approve({to, amount, from, gas=DEFAULT_GAS}:TransferType) {
+    /**
+     * Approve Zap Token to an address
+     * @param {address} to
+     * @param {number} amount
+     * @param {address} from
+     * @param {number} gas
+     * @returns {Promise<txid>}
+     */
+    async approve({to, amount, from, gas=DEFAULT_GAS}:TransferType):Promise<txid> {
         const success = await this.contract.methods.approve(to, amount).send({from,gas});
         if (!success) {
             throw new Error('Failed to approve Bondage transfer');

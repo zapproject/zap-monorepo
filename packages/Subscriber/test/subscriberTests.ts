@@ -16,12 +16,12 @@ import {
     DEFAULT_GAS
 } from "@zap/utils";
 import { Subscriber } from '../src';
-import { ZapBondage } from "../node_modules/@zap/bondage";
-import { ZapRegistry } from "../node_modules/@zap/registry";
-import { ZapToken } from "../node_modules/@zap/zaptoken";
-import { ZapDispatch } from "../node_modules/@zap/dispatch";
-import { ZapArbiter } from "../node_modules/@zap/arbiter";
-import { BaseContract } from "../node_modules/@zap/basecontract";
+import { ZapBondage } from '@zap/bondage';
+import { ZapRegistry } from "@zap/registry";
+import { ZapToken } from "@zap/zaptoken";
+import { ZapDispatch } from "@zap/dispatch";
+import { ZapArbiter } from "@zap/arbiter";
+import { BaseContract } from "@zap/basecontract";
 
 async function configureEnvironment(func: Function) {
     await func();

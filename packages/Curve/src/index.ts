@@ -1,6 +1,12 @@
-export {CurveType} from "./types";
+import {CurveType, CurveTerm} from "./types";
 const {toHex}  = require("web3-utils");
-
+import {BigNumber} from 'bignumber.js'
+/**
+ * This Class manage Curve definition for Provider's endpoint
+ * @params {Array<number>} constants
+ * @params {Array<number>} parts
+ * @params {Array<number>} dividers
+ */
 export class Curve {
     constants : Array<number>;
     parts: Array<number>;
@@ -14,8 +20,10 @@ export class Curve {
         this.structurize();
     }
 
-    // should be called if fields were updated
-    structurize() {
+    /**
+     * Turn constants, parts, dividers into curve's coef, power, fn, pieces
+     */
+    structurize() :void{
         let pStart = 0;
 
         for (let i = 0; i < this.dividers.length; i++) {
@@ -38,8 +46,13 @@ export class Curve {
         }
     }
 
-    // Get the price of a dot at a given totalBound
-    getPrice(total:number) {
+
+    /**
+     * Get the price of a dot at a given totalBound
+     * @param {number} total bound dots
+     * @returns {number}
+     */
+    getPrice(total:number):number {
         if (total < 0) {
             return 0;
         }
@@ -57,7 +70,14 @@ export class Curve {
         return 0;
     }
 
-    _calculateTerm(term:any, x:number) {
+    /**
+     * Calculate a curve's term
+     * @param {CurveTerm} term
+     * @param {number} x
+     * @returns {number}
+     * @private
+     */
+    _calculateTerm(term:CurveTerm, x:number) :number{
         let val = 1;
 
         if (term.fn === 0) {
@@ -77,7 +97,11 @@ export class Curve {
         return val * term.coef;
     }
 
-    convertToBNArrays() {
+    /**
+     * Convert this curve constants, parts, dividers into Array of Bignumbers
+     * @returns {Array<Array<BigNumber>>}
+     */
+    convertToBNArrays():Array<Array<BigNumber>> {
         let convertedConstants = this.constants.map((item: number) => {
             return toHex(item);
         });
@@ -90,7 +114,15 @@ export class Curve {
         return [convertedConstants, convertedParts, convertedDividers];
 
     }
-    _calculatePolynomial(terms:any, x:number) {
+
+    /**
+     * Calculate total of terms
+     * @param terms
+     * @param {number} x
+     * @returns {number}
+     * @private
+     */
+    _calculatePolynomial(terms:any, x:number):number {
         let sum = 0;
 
         for (let i = 0; i < terms.length; i++ ) {

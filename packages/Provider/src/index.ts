@@ -1,11 +1,24 @@
+import {Provider} from "web3/types";
+
 const assert = require("assert");
 import {Curve,CurveType} from "@zap/curve"
-import {InitProvider, InitCurve, UnsubscribeListen, ListenQuery, Respond, ProviderConstructorType,ProviderHandler} from "./types";
+import {InitProvider, InitCurve, UnsubscribeListen, ListenQuery, Respond, ProviderConstructorType,ProviderHandler,address,txid} from "./types";
 const {hexToUtf8} = require("web3-utils");
 const EventEmitter = require('events');
 
-
+/**
+ * @class ZapProvider
+ * Includes all provider's available methods
+ * @param {address} owner
+ * @param {ProviderHandler} handler
+ * @param {} zapRegistry
+ * @param {} zapDispatch
+ * @param {} zapBondage
+ * @param {} zapArbiter
+ *
+ */
 export class ZapProvider extends EventEmitter {
+
     constructor({owner,handler,zapRegistry,zapDispatch,zapBondage,zapArbiter}:ProviderConstructorType) {
         super();
         assert(owner, 'owner address is required');
@@ -19,64 +32,68 @@ export class ZapProvider extends EventEmitter {
 
 
     /**
-     *
+     *Call ZapRegistry to create a new provider in Registry contract
      * @param {string} public_key
      * @param {string} title
      * @param {string} endpoint
      * @param {Array<string>} endpoint_params
-     * @returns {Promise<any>}
+     * @returns {Promise<txid>}
      */
-    async initiateProvider({public_key, title, endpoint, endpoint_params}:InitProvider) {
+    async initiateProvider({public_key, title, endpoint, endpoint_params}:InitProvider):Promise<txid> {
         assert(Array.isArray(endpoint_params), 'endpointParams need to be an array');
-        let provider = await this.zapRegistry.initiateProvider(
+        return await this.zapRegistry.initiateProvider(
             {public_key, title, endpoint, endpoint_params, from:this.providerOwner});
-        assert(provider, 'fail to create provider');
-        this.pubkey = public_key;
-        this.title = title;
-        return provider;
     }
 
     /**
-     *
+     * Initiate Curve for an endpoint
      * @param {string} endpoint
      * @param {number[]} constants
      * @param {number[]} parts
      * @param {number[]} dividers
-     * @returns {boolean}
+     * @returns {Promise<txid>}
      */
-    async initiateProviderCurve({endpoint, constants, parts, dividers}: InitCurve) :Promise<boolean>{
+    async initiateProviderCurve({endpoint, constants, parts, dividers}: InitCurve) :Promise<txid>{
         let curve = new Curve(constants, parts, dividers)
         // console.log("converted : ", convertedConstants);
-        let success = await this.zapRegistry.initiateProviderCurve({endpoint, curve, from: this.providerOwner});
-        assert(success, 'fail to init curve ');
+        let txid = await this.zapRegistry.initiateProviderCurve({endpoint, curve, from: this.providerOwner});
+        assert(txid, 'fail to init curve ');
         this.curve = new Curve(constants, parts, dividers);
-        return success;
+        return txid;
 
     }
 
-
     /**
-     *
+     * Get title of this provider from Registry contract
      * @returns {Promise<string>}
      */
-    async getProviderTitle():Promise<string> {
+    async getTitle():Promise<string> {
+        let title:string;
         if (this.title) return this.title;
-        let title = await this.zapRegistry.getProviderTitle(this.providerOwner);
+        title = await this.zapRegistry.getProviderTitle(this.providerOwner);
         this.title = title;
         return hexToUtf8(title);
         }
 
 
-    async getProviderPubkey():Promise<string> {
+    /**
+     * Get public key of this provider from Registry contract
+     * @returns {Promise<string>}
+     */
+    async getPubkey():Promise<string> {
             if (this.pubkey) return this.pubkey;
-            let pubkey = await this.zapRegistry.getProviderPubkey(this.providerOwner);
+            let pubkey = await this.zapRegistry.getPubkey(this.providerOwner);
             this.pubkey = pubkey;
             return hexToUtf8(pubkey);
-
     }
 
 
-    async getProviderCurve(endpoint:string):Promise<CurveType> {
+    /**
+     * Get Curve of an owned endpoint
+     * @param {string} endpoint
+     * @returns {Promise<CurveType>}
+     */
+    async getCurve(endpoint:string):Promise<CurveType> {
         if (this.curve) return this.curve;
         let curve = await this.zapRegistry.getProviderCurve(this.providerOwner, endpoint);
         this.curve = curve;
@@ -85,14 +102,13 @@ export class ZapProvider extends EventEmitter {
 
 
     /**
-     *
+     * Get amount Zap bound to an owned endpoint
      * @param {string} endpoint
-     * @returns {number}
+     * @returns {Promise<number>} number of Zap Token bound
      */
-    async getZapBound({endpoint} : {endpoint:string}):Promise<number> {
+    async getZapBound(endpoint:string):Promise<number> {
         assert(endpoint, 'endpoint required');
-        let zapBound = await this.zapBondage.getZapBound(this.providerOwner, endpoint);
-        return zapBound;
+        return await this.zapBondage.getZapBound(this.providerOwner, endpoint);
     }
 
     /**
@@ -106,11 +122,12 @@ export class ZapProvider extends EventEmitter {
         return parseInt(zapRequired);
     }
 
+
     /**
-     *
+     * Calculate number of dots that subscriber can use for inquired number of Zap Tokens
      * @param {string} endpoint
      * @param {number} zapNum
-     * @returns {number}
+     * @returns {Promise<number>} number of dots subscriber can get
      */
     async calcDotsForZap({endpoint, zapNum}:{endpoint:string, zapNum:number}): Promise<number> {
         let res = await this.zapBondage.calcBondRate({
@@ -122,9 +139,10 @@ export class ZapProvider extends EventEmitter {
 
 
     /**
-     *
+     * listen to new subscription events to this provider, managed by Arbiter contract
      * @param {string} subscriber
      * @param {number} fromBlock
+     * @returns {Promise<void>}
      */
     async listenSubscribes({subscriber, fromBlock}:{subscriber:string, fromBlock: number}):Promise<void> {
         let callback = (error:any, result:string) => {
@@ -145,13 +163,13 @@ export class ZapProvider extends EventEmitter {
     }
 
     /**
-     *
+     *Listen to unsubscription events to this provider, managed by Arbiter contract
      * @param {string} subscriber
-     * @param {string} terminator
+     * @param {string} terminator : address that call unsubscribe, this can be subscriber or provider
      * @param {number} fromBlock
      * @returns {Promise<void>}
      */
-    async listenUnsubscribes({subscriber, terminator, fromBlock}:UnsubscribeListen) {
+    async listenUnsubscribes({subscriber, terminator, fromBlock}:UnsubscribeListen) :Promise<void>{
         let callback = (error:Error, result:string) => {
             if (error) {
                 console.log(error);
@@ -170,11 +188,10 @@ export class ZapProvider extends EventEmitter {
     }
 
     /**
-     *Listen to Queries
-     * @param id
-     * @param subscriber
-     * @param fromBlock
-     * @param from
+     * Listen to Queries events, managed by Dispatch contract
+     * @param {string} queryId
+     * @param {address} subscriber
+     * @param {number} fromBlock
      * @returns {Promise<void>}
      */
     async listenQueries({queryId, subscriber, fromBlock}:ListenQuery) :Promise<void> {
@@ -196,20 +213,14 @@ export class ZapProvider extends EventEmitter {
     }
 
     /**
-     *
+     * Respond to a query
      * @param {string} queryId
      * @param {string[]} responseParams
-     * @param {boolean} dynamic
+     * @param {boolean} dynamic number of responses or not
      * @returns {Promise<any>}
      */
-    async respond({queryId, responseParams, dynamic}:Respond){
-        try {
-            let res = await this.zapDispatch.respond({queryId, responseParams, dynamic, from: this.providerOwner});
-            return res;
-        } catch (e){
-            console.error(e);
-            return null;
-        }
+    async respond({queryId, responseParams, dynamic}:Respond):Promise<void>{
+        return await this.zapDispatch.respond({queryId, responseParams, dynamic, from: this.providerOwner});
     }
 
 }

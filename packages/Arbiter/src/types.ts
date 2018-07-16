@@ -1,31 +1,33 @@
 const DEFAULT_GAS = 400000
+export type address = string
+export type txid = string
 export type SubscriptionInit = {
-    provider:string,
+    provider:address,
     endpoint :string,
     endpoint_params: Array<string>,
     blocks : number,
     pubkey:number,
-    from: string,
+    from: address,
     gas?: number
 }
 
 export type SubscriptionEnd = {
-    provider?:string,
-    subscriber ?:string,
+    provider?:address,
+    subscriber ?:address,
     endpoint : string,
-    from: string,
+    from: address,
     gas?:number
 }
 
 export type Filter = {
     fromBlock ?: number,
     toBlock ?: number,
-    provider ?: string
+    provider ?: address
 }
 
 export type SubscriptionType = {
-    provider:string,
-    subscriber:string,
+    provider:address,
+    subscriber:address,
     endpoint:string
 }
 
