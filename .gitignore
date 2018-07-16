@@ -35,11 +35,11 @@ packages/Registry/lib/
 
 lerna-debug\.log
 
-packages/Arbiter/test/contracts
-packages/Curve/test/contracts
-packages/Bondage/test/contracts
-packages/Provider/test/contracts
-packages/Dispatch/test/contracts
-packages/Subscriber/test/contracts
-packages/ZapToken/test/contracts
-packages/Registry/test/contracts
+packages/Arbiter/test/contracts/
+packages/Curve/test/contracts/
+packages/Bondage/test/contracts/
+packages/Provider/test/contracts/
+packages/Dispatch/test/contracts/
+packages/Subscriber/test/contracts/
+packages/ZapToken/test/contracts/
+packages/Registry/test/contracts/
