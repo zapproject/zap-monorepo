@@ -94,6 +94,54 @@ describe('Zap Dispatch Test"', () => {
             queryData = queryData.events.Incoming.returnValues;
         });
 
+        it("Should call query function in Dispatch smart contract for onchain provider", async () => {
+            try {
+                await dispatchWrapper.queryData({
+                    provider: accounts[0], // account that used as oracle in booststrap function
+                    query: query,
+                    endpoint: testZapProvider.endpoint,
+                    params: ['a'],
+                    onchainProvider: true,
+                    onchainSubscriber: false,
+                    from: accounts[2], // account that used for bond in booststrap function 
+                    gas: DEFAULT_GAS
+                });
+            } catch (e) {
+                await expect(e.toString()).to.include('revert');
+            }
+        });
+
+        it("Should call query function in Dispatch smart contract for onchain subscriber", async () => {
+            queryData = await dispatchWrapper.queryData({
+                provider: accounts[0], // account that used as oracle in booststrap function
+                query: query,
+                endpoint: testZapProvider.endpoint,
+                params: ['a'],
+                onchainProvider: false,
+                onchainSubscriber: true,
+                from: accounts[2], // account that used for bond in booststrap function 
+                gas: DEFAULT_GAS 
+            });
+            queryData = queryData.events.Incoming.returnValues;
+        });
+
+        it("Should call query function in Dispatch smart contract for onchain subscriber and provider", async () => {
+            try {
+                await dispatchWrapper.queryData({
+                    provider: accounts[0], // account that used as oracle in booststrap function
+                    query: query,
+                    endpoint: testZapProvider.endpoint,
+                    params: ['a'],
+                    onchainProvider: true,
+                    onchainSubscriber: true,
+                    from: accounts[2], // account that used for bond in booststrap function 
+                    gas: DEFAULT_GAS
+                });
+            } catch (e) {
+                await expect(e.toString()).to.include('revert');
+            }
+        });
+
         it('Should call respond function in Dispatch smart contract', async () => {
             try {
                 await dispatchWrapper.respond({
@@ -119,5 +167,12 @@ describe('Zap Dispatch Test"', () => {
                 await expect(e.toString()).to.include('revert');
             }
         });
+    });
+
+    after(() => {
+        ganacheServer.close();
+
+        // Hotfix for infinity running migration
+        process.exit();
     });
 });

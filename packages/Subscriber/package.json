@@ -23,6 +23,7 @@
     "@zap/registry": "^1.0.0",
     "@zap/utils": "^1.0.0",
     "@zap/zaptoken": "^1.0.0",
+    "@zap/basecontract": "^1.0.0",
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
     "chai-bignumber": "^2.0.2",
