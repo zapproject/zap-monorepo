@@ -43,9 +43,6 @@ describe('Zap Dispatch Test"', () => {
             ganacheServer = await startGanacheServer();
             web3 = new Web3(ganacheProvider);
             accounts = await web3.eth.getAccounts();
-            //delete require.cache[require.resolve('/contracts')];
-
-            // TODO: fix that migration continue to save artifacts in separate thread
             await migrateContracts(buildDir);
             console.log("Migration complete. ");
             done();
@@ -77,7 +74,7 @@ describe('Zap Dispatch Test"', () => {
 
         it("Should initiate Dispatch Wrapper", async () => {
             dispatchWrapper = new ZapDispatch(Object.assign(options, {artifactName: "Dispatch"}));
-            await expect(true).to.be.equal(true);
+            expect(dispatchWrapper).to.be.ok;
         });
 
         it("Should call query function in Dispatch smart contract", async () => {
@@ -85,7 +82,7 @@ describe('Zap Dispatch Test"', () => {
                 provider: accounts[0], // account that used as oracle in booststrap function
                 query: query,
                 endpoint: testZapProvider.endpoint,
-                params: ['a'],
+                endpointParams: ['a'],
                 onchainProvider: false,
                 onchainSubscriber: false,
                 from: accounts[2], // account that used for bond in booststrap function 

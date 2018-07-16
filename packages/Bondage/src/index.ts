@@ -42,7 +42,6 @@ export class ZapBondage extends BaseContract {
     }
 
     async calcZapForDots({provider, endpoint, dots}:BondageArgs){
-        console.log("get zxap required ", provider,endpoint,dots)
         let zapRequired =  await this.contract.methods.calcZapForDots(
             provider,
             utf8ToHex(endpoint),
