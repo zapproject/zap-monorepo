@@ -18,7 +18,7 @@ export class ZapBondage extends BaseContract {
         return await this.contract.methods.bond(
             provider,
             utf8ToHex(endpoint),
-            toHex(zapNum))
+            toBN(zapNum))
             .send({from,gas});
 
     }

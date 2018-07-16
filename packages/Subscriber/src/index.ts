@@ -1,6 +1,7 @@
 const EventEmitter = require('events');
 const assert = require('assert');
 import {BondType,UnbondType,SubscribeType,SubscriberConstructorType,SubscriberHandler} from "./types";
+import { DEFAULT_GAS } from "../node_modules/@zap/utils";
 
 
 export class Subscriber extends EventEmitter {
@@ -21,10 +22,20 @@ export class Subscriber extends EventEmitter {
     async bond({provider, endpoint, zapNum}:BondType){
        // assert.ok(this.hasEnoughZap(zapNum), 'Insufficient Balance');
         let approve = await this.zapToken.approve({
-            address: this.zapBondage.contract._address,
-            amount: zapNum, from: this.subscriberOwner});
+            to: this.zapBondage.contract._address,
+            amount: zapNum, 
+            from: this.subscriberOwner
+        });
+
         //assert.ok(approve, 'fail to approve to Bondage');
-        let bonded = await this.zapBondage.bond({provider, endpoint, zapNum, from: this.subscriberOwner});
+        const bonded = await this.zapBondage.bond({
+            provider: provider,
+            endpoint: endpoint,
+            zapNum: zapNum,
+            from: this.subscriberOwner
+        });
+    
+        // return bonded;
         return bonded;
     }
 
