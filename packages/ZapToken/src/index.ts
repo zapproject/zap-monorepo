@@ -23,9 +23,8 @@ export class ZapToken extends BaseContract {
         return await this.contract.methods.allocate(to, bigAmount).send({from,gas});
     }
 
-    async approve({to, amount, from,gas=DEFAULT_GAS}:TransferType) {
-        let bigAmount = toZapBase(amount);
-        const success = await this.contract.methods.approve(to, bigAmount).send({from,gas});
+    async approve({to, amount, from, gas=DEFAULT_GAS}:TransferType) {
+        const success = await this.contract.methods.approve(to, amount).send({from,gas});
         if (!success) {
             throw new Error('Failed to approve Bondage transfer');
         }
