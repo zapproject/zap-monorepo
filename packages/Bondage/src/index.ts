@@ -6,14 +6,14 @@ import {DEFAULT_GAS} from "@zap/utils";
 const assert = require("assert");
 
 /**
- * @class  Manage bondage activities
+ * Manage bondage activities
+ * @extends BaseContract
  * @param {any} artifactsDir
  * @param {any} artifactName
  * @param {any} networkId
  * @param {any} networkProvider
  */
 export class ZapBondage extends BaseContract {
-
 
     constructor({artifactsDir=undefined,artifactName=undefined,networkId=undefined,networkProvider=undefined}:BaseContractType){
         super({artifactsDir,artifactName:"Bondage",networkId,networkProvider});

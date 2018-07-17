@@ -3,24 +3,26 @@ import {Provider} from "web3/types";
 const assert = require("assert");
 import {Curve,CurveType} from "@zap/curve"
 import {InitProvider, InitCurve, UnsubscribeListen, ListenQuery, Respond, ProviderConstructorType,ProviderHandler,address,txid} from "./types";
+import {ZapDispatch} from "@zap/dispatch";
+import {ZapRegistry} from "@zap/registry";
+import {ZapBondage} from "@zap/bondage";
+import {ZapArbiter} from "@zap/arbiter";
 const {hexToUtf8} = require("web3-utils");
 const EventEmitter = require('events');
 
-/**
- * @class ZapProvider
- * Includes all provider's available methods
- * @param {address} owner
- * @param {ProviderHandler} handler
- * @param {} zapRegistry
- * @param {} zapDispatch
- * @param {} zapBondage
- * @param {} zapArbiter
- *
- */
-export class ZapProvider extends EventEmitter {
+
+export class ZapProvider  {
+    providerOwner:string;
+    handler : ProviderHandler;
+    zapDispatch : ZapDispatch;
+    zapBondage : ZapBondage;
+    zapArbiter : ZapArbiter;
+    zapRegistry:  ZapRegistry;
+    curve : CurveType | undefined;
+    title:string;
+    pubkey:number|string
 
     constructor({owner,handler,zapRegistry,zapDispatch,zapBondage,zapArbiter}:ProviderConstructorType) {
-        super();
         assert(owner, 'owner address is required');
         this.providerOwner = owner;
         this.handler = handler;
@@ -28,6 +30,10 @@ export class ZapProvider extends EventEmitter {
         this.zapBondage = zapBondage;
         this.zapArbiter = zapArbiter;
         this.zapRegistry = zapRegistry;
+        this.curve = undefined;
+        this.title = "";
+        this.pubkey = '';
+
     }
 
 
@@ -80,9 +86,9 @@ export class ZapProvider extends EventEmitter {
      * Get public key of this provider from Registry contract
      * @returns {Promise<string>}
      */
-    async getPubkey():Promise<string> {
+    async getPubkey():Promise<string|number> {
             if (this.pubkey) return this.pubkey;
-            let pubkey = await this.zapRegistry.getPubkey(this.providerOwner);
+            let pubkey = await this.zapRegistry.getProviderPublicKey(this.providerOwner);
             this.pubkey = pubkey;
             return hexToUtf8(pubkey);
     }
@@ -108,7 +114,8 @@ export class ZapProvider extends EventEmitter {
      */
     async getZapBound(endpoint:string):Promise<number> {
         assert(endpoint, 'endpoint required');
-        return await this.zapBondage.getZapBound(this.providerOwner, endpoint);
+        return await this.zapBondage.getZapBound({
+            provider: this.providerOwner, endpoint:endpoint});
     }
 
     /**
@@ -118,8 +125,7 @@ export class ZapProvider extends EventEmitter {
      * @returns {Promise<number>}
      */
     async getZapRequired({endpoint, dots}:{endpoint:string,dots:number}):Promise<number> {
-        let zapRequired = await this.zapBondage.calcZapForDots({provider: this.providerOwner, endpoint, dots});
-        return parseInt(zapRequired);
+        return await this.zapBondage.calcZapForDots({provider: this.providerOwner, endpoint, dots});
     }
 
 
@@ -147,13 +153,9 @@ export class ZapProvider extends EventEmitter {
     async listenSubscribes({subscriber, fromBlock}:{subscriber:string, fromBlock: number}):Promise<void> {
         let callback = (error:any, result:string) => {
             if (error) {
-                console.log(error);
+                console.error(error);
             } else {
-                try {
-                    return this.handler.handleSubscription(result);
-                } catch (e) {
-                    console.error(e);
-                }
+                return this.handler.handleSubscription(result);
             }
         };
 
@@ -174,11 +176,7 @@ export class ZapProvider extends EventEmitter {
             if (error) {
                 console.log(error);
             } else {
-                try {
-                    return this.handler.handleUnsubscription(result);
-                } catch (e) {
-                    console.error(e);
-                }
+                return this.handler.handleUnsubscription(result);
             }
         };
 
@@ -199,16 +197,11 @@ export class ZapProvider extends EventEmitter {
             if (error) {
                 console.error(error);
             } else {
-                try {
-                    return this.handler.handleIncoming(result);
-                } catch (e) {
-                    console.error(e);
-                }
+                return this.handler.handleIncoming(result);
             }
         };
 
-        this.zapDispatch.listen('Incoming',
-            {queryId, provider: this.providerOwner, subscriber, fromBlock},
+        this.zapDispatch.listenIncoming({queryId, provider: this.providerOwner, subscriber, fromBlock},
             callback);
     }
 
@@ -219,7 +212,7 @@ export class ZapProvider extends EventEmitter {
      * @param {boolean} dynamic number of responses or not
      * @returns {Promise<any>}
      */
-    async respond({queryId, responseParams, dynamic}:Respond):Promise<void>{
+    async respond({queryId, responseParams, dynamic}:Respond):Promise<string>{
         return await this.zapDispatch.respond({queryId, responseParams, dynamic, from: this.providerOwner});
     }
 

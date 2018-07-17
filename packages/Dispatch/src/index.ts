@@ -5,6 +5,7 @@ const {toBN,utf8ToHex} = require ("web3-utils");
 
 /**
  * Provides interface to Dispatch contract
+ * @extends BaseContract
  * @param {string} artifactsDir
  * @param {number} networkId
  * @param networkProvider : Ethereum provider instance

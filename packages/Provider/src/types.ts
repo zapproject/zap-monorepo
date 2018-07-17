@@ -50,6 +50,6 @@ export type ProviderConstructorType = {
 
 export interface ProviderHandler{
     handleIncoming : Function,
-    handleUnsubscription ?: Function,
-    handleSubscription ?: Function
+    handleUnsubscription : Function,
+    handleSubscription : Function
 }

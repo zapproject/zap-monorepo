@@ -6,6 +6,7 @@ import {InitProvider, InitCurve, NextEndpoint, EndpointParams,txid,address,Filte
 
 /**
  * Manage Providers and Curves registration
+ * @extends BaseContract
  * @param {any} artifactsDir
  * @param {any} networkId
  * @param {any} networkProvider

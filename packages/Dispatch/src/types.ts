@@ -12,12 +12,12 @@ export type QueryArgs = {
     gas: BigNumber
 }
 
-export type ResponseArgs = {
+export interface ResponseArgs {
   queryId : string,
   responseParams: Array<string>,
   dynamic : boolean,
   from: address,
-    gas:BigNumber
+    gas?:BigNumber
 }
 
 export interface Filter{

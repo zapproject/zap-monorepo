@@ -19,10 +19,12 @@ export type SubscriptionEnd = {
     gas?:number
 }
 
-export type Filter = {
+export interface Filter {
     fromBlock ?: number,
     toBlock ?: number,
-    provider ?: address
+    provider ?: address,
+    subscriber ?:address,
+    terminator ?:address
 }
 
 export type SubscriptionType = {

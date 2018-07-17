@@ -3,13 +3,13 @@ import BigNumber from 'bignumber.js';
 
 export type address = string;
 export type txid = string;
-export type InitProvider = {
+export interface InitProvider  {
   public_key : string,
   title :string,
   endpoint: string,
   endpoint_params ?: Array<string>,
   from: address,
-  gas : BigNumber
+  gas ?: BigNumber
 }
 
 
@@ -17,7 +17,7 @@ export type InitCurve = {
   endpoint:string,
   curve:CurveType,
   from: address,
-  gas : BigNumber
+  gas ?: BigNumber
 }
 
 
@@ -31,7 +31,7 @@ export type EndpointParams = {
   endpoint:string,
   endpoint_params: string[],
   from: address,
-  gas : BigNumber
+  gas ?: BigNumber
 }
 export interface Filter  {
   fromBlock ?: number,

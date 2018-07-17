@@ -21,7 +21,6 @@ import { ZapRegistry } from "@zap/registry";
 import { ZapToken } from "@zap/zaptoken";
 import { ZapDispatch } from "@zap/dispatch";
 import { ZapArbiter } from "@zap/arbiter";
-import { BaseContract } from "@zap/basecontract";
 
 async function configureEnvironment(func: Function) {
     await func();
@@ -69,8 +68,6 @@ describe('Zap Subscriber Test"', () => {
         before(function (done) {
             configureEnvironment(async () => {
                 testArtifacts = getArtifacts(buildDir);
-                deployedRegistry = new BaseContract(Object.assign(options, {artifactName: "Registry"}));
-                deployedToken = new BaseContract(Object.assign(options, {artifactName: "ZapToken"}));
                 bondageWrapper = new ZapBondage({
                     artifactsDir: buildDir,
                     networkId: ganacheServerOptions.network_id,

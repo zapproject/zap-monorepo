@@ -1,17 +1,14 @@
 import {CurveType, CurveTerm} from "./types";
 const {toHex}  = require("web3-utils");
 import {BigNumber} from 'bignumber.js'
-/**
- * This Class manage Curve definition for Provider's endpoint
- * @params {Array<number>} constants
- * @params {Array<number>} parts
- * @params {Array<number>} dividers
- */
 export class Curve {
+
     constants : Array<number>;
     parts: Array<number>;
     dividers : Array<number>;
     pieces:Array<any>;
+
+
     constructor(constants:Array<number>, parts: Array<number>, dividers: Array<number>) {
         this.constants = constants;
         this.parts = parts;

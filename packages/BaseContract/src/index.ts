@@ -4,14 +4,6 @@ import {Artifacts} from "@zap/artifacts";
 import {BaseContractType} from "./types";
 import {getArtifacts} from "@zap/utils"
 
-/**
- * Parent Class to Dispatch, Bondage, Arbiter, Token, Registry class
- * Provide access to contract instance and web3 provider instance
- * @param {string | null} artifactsDir
- * @param {string} artifactName
- * @param {number | null} networkId
- * @param {any | null} networkProvider : Ethereum network provider
- */
 export class BaseContract{
     provider : any;
     web3:any;

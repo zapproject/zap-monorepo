@@ -3,14 +3,19 @@ import {SubscriptionInit,SubscriptionEnd,Filter,SubscriptionType,txid} from "./t
 const {toBN,utf8ToHex} = require ('web3-utils');
 import {DEFAULT_GAS} from "@zap/utils"
 
-/**
- * Provides interface to  Arbiter contract for managing subscriptions activities
- * @param {string} artifactsDir
- * @param {string} networkId
- * @param  networkProvider : Ethereum network provider
- */
+
 export class ZapArbiter extends BaseContract {
 
+    /**
+     * Provides interface to  Arbiter contract for managing subscriptions activities
+     * @classdesc
+     * @constructs
+     *
+     * @augments BaseContract
+     * @param {string} artifactsDir
+     * @param {string} networkId
+     * @param  networkProvider : Ethereum network provider
+     */
     constructor({artifactsDir, networkId,networkProvider}:BaseContractType){
         super({artifactsDir,artifactName:'Arbiter',networkId,networkProvider});
     }

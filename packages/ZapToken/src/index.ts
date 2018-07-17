@@ -4,6 +4,7 @@ import {TransferType,address,txid} from "./types";
 
 /**
  * ERC20 Tokens methods for Zap Tokens
+ * @extends BaseContract
  * @param {?string} artifactsDir
  * @param {string} artifactName
  * @param {?string} networkId
