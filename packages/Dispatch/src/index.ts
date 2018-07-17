@@ -1,31 +1,58 @@
 import {BaseContract,BaseContractType} from '@zap/basecontract';
-import {QueryArgs,ResponseArgs,FilterType} from './types'
+import {QueryArgs,ResponseArgs,Filter,txid} from './types'
 import {DEFAULT_GAS} from "@zap/utils";
 const {toBN,utf8ToHex} = require ("web3-utils");
-export class ZapDispatch extends BaseContract {
 
+/**
+ * Provides interface to Dispatch contract
+ * @extends BaseContract
+ * @param {string} artifactsDir
+ * @param {number} networkId
+ * @param networkProvider : Ethereum provider instance
+ */
+export class ZapDispatch extends BaseContract {
     constructor({artifactsDir=undefined,networkId=undefined,networkProvider=undefined}:BaseContractType){
         super({artifactsDir,artifactName:"Dispatch",networkId,networkProvider});
     }
 
-    async queryData({provider, query, endpoint, endpointParams, onchainProvider, onchainSubscriber,from,gas=DEFAULT_GAS}:QueryArgs){
+    /**
+     * Subscriber query data to a provider's endpoint
+     * @param {address} provider
+     * @param {string} query
+     * @param {string} endpoint
+     * @param {Array<string>} endpointParams
+     * @param {boolean} onchainProvider
+     * @param {boolean} onchainSubscriber
+     * @param {address} from
+     * @param {BigNumber} gas
+     * @returns {Promise<txid>} txid of query transaction
+     */
+    async queryData({provider, query, endpoint, endpointParams, onchainProvider, onchainSubscriber,from,gas=DEFAULT_GAS}:QueryArgs):Promise<txid>{
         if(endpointParams.length > 0) {
             for (let i in endpointParams) {
                 endpointParams[i] = utf8ToHex(endpointParams[i]);
             }
         }
-        let resultQuery = await this.contract.methods.query(
+        return  await this.contract.methods.query(
             provider,
             query,
             utf8ToHex(endpoint),
             endpointParams, // endpoint-specific endpointParams
             onchainProvider,
             onchainSubscriber).send({from, gas});
-        return resultQuery;
     }
 
 
-    async respond({queryId, responseParams, dynamic, from,gas=DEFAULT_GAS}:ResponseArgs) {
+    /**
+     * Provider responds to a query it received
+     * @param {string} queryId
+     * @param {Array<string>} responseParams
+     * @param {boolean} dynamic number of responses string
+     * @param {address} from : provider
+     * @param {BigNumber} gas
+     * @returns {Promise<txid>} txid of respond method
+     */
+    async respond({queryId, responseParams, dynamic, from,gas=DEFAULT_GAS}:ResponseArgs) :Promise<txid>{
         if (dynamic){
             return this.contract.methods.respondBytes32Array(
                 queryId,
@@ -65,27 +92,43 @@ export class ZapDispatch extends BaseContract {
     }
 
     // === Events ===//
+
     /**
-     * Listen for oracle queries
-     *
-     * @param filters event filters
-     * @param callback callback function that will be called after event received
+     * Listen for all events with filters
+     * @param {Filter} filters
+     * @param {Function} callback
      */
-    listen(filters :FilterType, callback:Function) {
+    listen(filters :Filter, callback:Function):void {
         this.contract.events.allEvents(
             filters,
             { fromBlock: filters.fromBlock ? filters.fromBlock : 0, toBlock: 'latest' },
             callback);
     }
-    listenIncoming(filters:object ={}, callback:Function){
+
+    /**
+     * Listen to Query Incoming events with filters
+     * @param {object} filters
+     * @param {Function} callback
+     */
+    listenIncoming(filters:object ={}, callback:Function):void{
         this.contract.events.Incoming(filters, callback);
     }
 
-    listenFulfillQuery(filters:object={}, callback:Function){
+    /**
+     * Listen to FUlFill Query when providers respond
+     * @param {object} filters
+     * @param {Function} callback
+     */
+    listenFulfillQuery(filters:object={}, callback:Function):void{
         this.contract.events.FulfillQuery(filters, callback);
     }
 
-    listenOffchainResponse(filters:object={}, callback:Function){
+    /**
+     * Listen to Offchain responses from providers
+     * @param {object} filters
+     * @param {Function} callback
+     */
+    listenOffchainResponse(filters:object={}, callback:Function):void{
         this.contract.events.OffchainResponse(filters, callback);
     }
 

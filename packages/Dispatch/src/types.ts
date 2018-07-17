@@ -1,26 +1,28 @@
 import BigNumber from 'bignumber.js';
+export type address = string;
+export type txid = string;
 export type QueryArgs = {
-  provider:string,
+  provider:address,
   endpoint: string,
   query: string,
   endpointParams : Array<string>,
   onchainProvider : boolean,
   onchainSubscriber : boolean,
-    from:string,
+    from:address,
     gas: BigNumber
 }
 
-export type ResponseArgs = {
+export interface ResponseArgs {
   queryId : string,
   responseParams: Array<string>,
   dynamic : boolean,
-  from: string,
-    gas:BigNumber
+  from: address,
+    gas?:BigNumber
 }
 
-export interface FilterType{
+export interface Filter{
   fromBlock ?: number,
     toBlock ?: number,
-    provider ?: string
+    provider ?: address
 
 }

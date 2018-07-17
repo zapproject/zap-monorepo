@@ -4,3 +4,8 @@ export type CurveType = {
   dividers: number[]
 }
 
+export type CurveTerm = {
+  fn :  number,
+    power : number,
+    coef : number
+}

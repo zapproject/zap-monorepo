@@ -3,6 +3,7 @@ import {ZapProviderType} from "./types";
 const {utf8ToHex,toBN} = require("web3-utils");
 const Web3 = require('web3');
 const web3 = new Web3();
+
 export const toHex = (str:string) => {
     let hex = '';
     for (let i = 0; i < str.length; i++) {

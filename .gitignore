@@ -43,3 +43,5 @@ packages/Dispatch/test/contracts/
 packages/Subscriber/test/contracts/
 packages/ZapToken/test/contracts/
 packages/Registry/test/contracts/
+
+docs/
