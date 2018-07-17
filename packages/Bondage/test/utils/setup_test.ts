@@ -22,7 +22,6 @@ export async function bootstrap(zapProvider:ZapProviderType,accounts:Array<strin
     for(let account of accounts) {
         await deployedToken.contract.methods.allocate(account,toZapBase(1000)).send({from: tokenOwner,gas:DEFAULT_GAS});
     }
-    await deployedToken.contract.methods.approve(deployedBondage.contract._address,toZapBase(1000)).send({from:accounts[2],gas:DEFAULT_GAS});
-    console.log("allowance : ", await deployedToken.contract.methods.allowance(accounts[2],deployedBondage.contract._address).call().valueOf())
+    
     return "done";
 }

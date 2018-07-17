@@ -25,10 +25,11 @@ export class ZapBondage extends BaseContract {
 
 
     async unbond({provider, endpoint, dots, from, gas=DEFAULT_GAS}:UnbondArgs) {
+        assert(dots && dots>0,"Dots to unbond must be greater than 0");
         return await this.contract.methods.unbond(
             provider,
             utf8ToHex(endpoint),
-            toBN(dots))
+            toHex(dots))
             .send({from,gas});
     }
 
@@ -75,10 +76,11 @@ export class ZapBondage extends BaseContract {
     }
 
     async getZapBound({provider, endpoint} :BondageArgs ){
-        return this.contract.methods.getZapBound(
+        let zapBound = await this.contract.methods.getZapBound(
             provider,
             utf8ToHex(endpoint)
         ).call();
+        return toBN(zapBound);
     }
 
     listen(filters:any = {}, callback:Function){
