@@ -45,6 +45,7 @@ describe('Zap Provider Test', () => {
         options:any,
         thisHandler:any,
         buildDir = join(__dirname,"contracts"),
+        listenSubsRes:any,
         providerAddress:string,subscriberAddress:string;
 
         options = {
@@ -159,37 +160,97 @@ describe('Zap Provider Test', () => {
                 from:subscriberAddress} )
         });
         it("Should have subscription data in arbiter", async ()=>{
-
+            let res = await zapArbiter.getSubscription({
+                provider: providerAddress, 
+                subscriber: subscriberAddress,
+                endpoint: testZapProvider.endpoint,
+            });
+            await expect(res.dots).to.be.equal('10');
         });
-        it("Should be able to end subscription", async()=>{
-
+        it("Should be able to end subscription", async ()=>{
+            await zapArbiter.endSubscriptionProvider({
+                subscriber: subscriberAddress,
+                endpoint: testZapProvider.endpoint,
+                from: providerAddress
+            });
         });
         it("Should allow subscriber to end subscription", async ()=>{
-
+            let tx = await zapArbiter.initiateSubscription( {
+                provider:providerAddress,
+                endpoint:testZapProvider.endpoint,
+                endpoint_params:testZapProvider.endpoint_params,
+                blocks:10,
+                pubkey:testZapProvider.pubkey,
+                from:subscriberAddress} )
+            await zapArbiter.endSubscriptionSubscriber({
+                subscriber: providerAddress,
+                endpoint: testZapProvider.endpoint,
+                from: subscriberAddress
+            });
         });
-        it("Should receive query from subscriber and Emit event for offchain provider",async()=>{
-
+        it("Should receive query from subscriber and Emit event for offchain provider",async ()=>{ 
+            let tx = await zapArbiter.initiateSubscription({
+                provider: providerAddress,
+                endpoint: testZapProvider.endpoint,
+                endpoint_params: testZapProvider.endpoint_params,
+                blocks: 10,
+                pubkey: testZapProvider.pubkey,
+                from: subscriberAddress
+            })
+            await zapDispatch.queryData({
+                provider: providerAddress,
+                query: "query",
+                endpoint: testZapProvider.endpoint,
+                endpoint_params: testZapProvider.endpoint_params,
+                onchainProvider: true,
+                onchainSubscriber: false
+            });
         });
         it("should receive query and revert for onchain provider without contract implemented", async ()=>{
-
+            listenSubsRes = await zapProvider.listenSubscribes({subscriber: subscriberAddress,fromBlock:  0});
         });
         it("Should respond to onchain subscriber and result in revert for non-implemented contract", async()=>{
-
+            console.log(listenSubsRes);
+            await zapDispatch.respond({
+                queryId: listenSubsRes.id,
+                responseParams: ['p1'],
+                dynamic: false
+            });
         });
         it("Should respond to offchain subscriber with respond1",async()=>{
-
+            await zapDispatch.respond({
+                queryId: listenSubsRes.id,
+                responseParams: ['p1'],
+                dynamic: false
+            });
         });
         it("Should respond to offchain subscriber with respond2",async()=>{
-
+            await zapDispatch.respond({
+                queryId: listenSubsRes.id,
+                responseParams: ['p1', 'p2'],
+                dynamic: false
+            });
         });
         it("Should respond to offchain subscriber with respond3",async()=>{
-
+            await zapDispatch.respond({
+                queryId: listenSubsRes.id,
+                responseParams: ['p1', 'p2', 'p3'],
+                dynamic: false
+            });
         });
         it("Should respond to offchain subscriber with respond4",async()=>{
-
+            await zapDispatch.respond({
+                queryId: listenSubsRes.id,
+                responseParams: ['p1', 'p2', 'p3', 'p4'],
+                dynamic: false
+            });
         });
         it("Should respond to offchain subscriber with dynamic responses",async()=>{
-
+            await zapDispatch.respond({
+                queryId: listenSubsRes.id,
+                responseParams: 'p1',
+                dynamic: true
+            });
         });
 
 });
