@@ -27,35 +27,27 @@ describe('Arbiter Test', () => {
       options:any,
       buildDir = join(__dirname,"contracts"),
       testZapProvider = Utils.Constants.testZapProvider;
-
-  before(function(done) {
-    configureEnvironment(async() => {
-        ganacheServer = await Utils.startGanacheServer();
-        web3 = new Web3(Utils.Constants.ganacheProvider);
-        accounts = await web3.eth.getAccounts();
-        //delete require.cache[require.resolve('/contracts')];
-        await Utils.migrateContracts(buildDir);
-        done();
-    });
-  });
-
-  describe.only('Arbiter', function() {
     options = {
         artifactsDir: buildDir,
         networkId: Utils.Constants.ganacheServerOptions.network_id,
         networkProvider: Utils.Constants.ganacheProvider
     };
 
-    before(function(done){
-      configureEnvironment(async() => {
-          testArtifacts = Utils.getArtifacts(buildDir);
-          deployedBondage = new BaseContract(Object.assign(options, {artifactName: "Bondage"}));
-          deployedRegistry = new BaseContract(Object.assign(options, {artifactName: "Registry"}));
-          deployedToken = new BaseContract(Object.assign(options, {artifactName: "ZapToken"}));
-          done()
-      });
 
+    before(function(done) {
+    configureEnvironment(async() => {
+        ganacheServer = await Utils.startGanacheServer();
+        web3 = new Web3(Utils.Constants.ganacheProvider);
+        accounts = await web3.eth.getAccounts();
+        //delete require.cache[require.resolve('/contracts')];
+        await Utils.migrateContracts(buildDir);
+        testArtifacts = Utils.getArtifacts(buildDir);
+        deployedBondage = new BaseContract(Object.assign(options, {artifactName: "Bondage"}));
+        deployedRegistry = new BaseContract(Object.assign(options, {artifactName: "Registry"}));
+        deployedToken = new BaseContract(Object.assign(options, {artifactName: "ZapToken"}));
+        done()
     });
+  });
 
     it("Should bootstrap conditions for Zap Arbiter",async ()=>{
        await bootstrap(Utils.Constants.testZapProvider, accounts, deployedRegistry, deployedToken, deployedBondage);
@@ -96,32 +88,29 @@ describe('Arbiter Test', () => {
     //     return;
     //   });
     // });
-      it("Should allow unscubscription from provider", async ()=>{
-          let unsubscription = await arbiterWrapper.endSubscriptionProvider({
-                subscriber:accounts[2],
-              endpoint : testZapProvider.endpoint,
-              from:accounts[0]
-          })
-          let event = unsubscription.events;
-
+  it("Should allow unscubscription from provider", async ()=>{
+      let unsubscription = await arbiterWrapper.endSubscriptionProvider({
+            subscriber:accounts[2],
+          endpoint : testZapProvider.endpoint,
+          from:accounts[0]
       })
-      it("Shoudl allow unsubscription from subscriber", async()=>{
-          await arbiterWrapper.initiateSubscription({
-              provider: accounts[0],
-              endpoint: testZapProvider.endpoint,
-              endpoint_params: testZapProvider.endpoint_params,
-              blocks: 4,
-              pubkey: testZapProvider.pubkey,
-              from: accounts[2],
-              gas: Utils.Constants.DEFAULT_GAS,
-          });
-          await arbiterWrapper.endSubscriptionSubscriber({
-              provider: accounts[0],
-              endpoint: testZapProvider.endpoint,
-              from:accounts[2]
-          })
+      let event = unsubscription.events;
 
+  })
+  it("Shoudl allow unsubscription from subscriber", async()=>{
+      await arbiterWrapper.initiateSubscription({
+          provider: accounts[0],
+          endpoint: testZapProvider.endpoint,
+          endpoint_params: testZapProvider.endpoint_params,
+          blocks: 4,
+          pubkey: testZapProvider.pubkey,
+          from: accounts[2],
+          gas: Utils.Constants.DEFAULT_GAS,
+      });
+      await arbiterWrapper.endSubscriptionSubscriber({
+          provider: accounts[0],
+          endpoint: testZapProvider.endpoint,
+          from:accounts[2]
       })
-
-  });
+  })
 });

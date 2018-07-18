@@ -31,25 +31,17 @@ describe('Registry test', () => {
             accounts = await web3.eth.getAccounts();
             //delete require.cache[require.resolve('/contracts')];
             await Utils.migrateContracts(join(__dirname,"contracts"));
+            testArtifacts = Utils.getArtifacts(join(__dirname,"contracts"));
+            deployedStorage = new BaseContract({
+                artifactsDir : buildDir,
+                artifactName:"RegistryStorage",
+                networkId: Utils.Constants.ganacheServerOptions.network_id,
+                networkProvider: Utils.Constants.ganacheProvider
+            });
             done();
         });
     });
-
-    describe('Registry', function () {
-        before(function(done){
-            configureEnvironment(async ()=>{
-                //delete require.cache[require.resolve(join(__dirname,'contracts'))];
-                testArtifacts = Utils.getArtifacts(join(__dirname,"contracts"));
-                deployedStorage = new BaseContract({
-                        artifactsDir : buildDir,
-                        artifactName:"RegistryStorage",
-                        networkId: Utils.Constants.ganacheServerOptions.network_id,
-                        networkProvider: Utils.Constants.ganacheProvider
-                });
-                done();
-            })
-        })
-        it("should be able to create registryWrapper", async ()=>{
+    it("should be able to create registryWrapper", async ()=>{
             registryWrapper = new ZapRegistry({
                 artifactsDir : buildDir,
                 networkId: Utils.Constants.ganacheServerOptions.network_id,
@@ -133,6 +125,5 @@ describe('Registry test', () => {
             // clearBuild(false);
             console.log('Server stopped!');
         })
-    });
 });
 

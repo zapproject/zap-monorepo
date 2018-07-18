@@ -78,7 +78,7 @@ export class ZapProvider  {
         if (this.title) return this.title;
         title = await this.zapRegistry.getProviderTitle(this.providerOwner);
         this.title = title;
-        return hexToUtf8(title);
+        return title;
         }
 
 
@@ -90,7 +90,7 @@ export class ZapProvider  {
             if (this.pubkey) return this.pubkey;
             let pubkey = await this.zapRegistry.getProviderPublicKey(this.providerOwner);
             this.pubkey = pubkey;
-            return hexToUtf8(pubkey);
+            return pubkey;
     }
 
 

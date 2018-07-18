@@ -1,4 +1,4 @@
-import { ZapToken } from "../../ZapToken/lib/src";
+import { ZapToken } from "@zap/zaptoken";
 
 const expect = require('chai')
     .use(require('chai-as-promised'))
@@ -32,13 +32,12 @@ describe('Zap Provider Test', () => {
         testArtifacts:any,
         ganacheServer:any,
         web3:any,
-        options:any,
         thisHandler:any,
         buildDir = join(__dirname,"contracts"),
         providerAddress:string,subscriberAddress:string,
         testZapProvider = Utils.Constants.testZapProvider;
 
-        options = {
+    const options:any = {
             artifactsDir: buildDir,
             networkId: Utils.Constants.ganacheServerOptions.network_id,
             networkProvider: Utils.Constants.ganacheProvider
@@ -99,11 +98,11 @@ describe('Zap Provider Test', () => {
 
     });
     it("Should get provider title", async () => {
-        let returnedTitle = await zapProvider.getProviderTitle();
+        let returnedTitle = await zapProvider.getTitle();
         expect(returnedTitle).to.equal(testZapProvider.title)
     });
     it("Should get provider pubkey", async () => {
-        let returnedPubkey = await zapProvider.getProviderPubkey()
+        let returnedPubkey = await zapProvider.getPubkey()
         expect(returnedPubkey).to.equal(testZapProvider.pubkey)
     })
     it('Should initiate provider curve', async () => {
@@ -126,7 +125,7 @@ describe('Zap Provider Test', () => {
         expect(returnValues.dividers).to.deep.equal(testZapProvider.curve.dividers.map((i: number) => { return '' + i }))
     });
     it("Should get provider Curve", async () => {
-        let returnedCurve = await zapProvider.getProviderCurve(testZapProvider.endpoint)
+        let returnedCurve = await zapProvider.getCurve(testZapProvider.endpoint)
         expect(returnedCurve).to.deep.equal(testZapProvider.curve)
     })
     it("Should allow and bond subscriber to provider", async () => {
