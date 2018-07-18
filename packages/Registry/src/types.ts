@@ -1,27 +1,28 @@
 import {CurveType} from "@zap/curve"
 import BigNumber from 'bignumber.js';
 
-
-export type InitProvider = {
+export type address = string;
+export type txid = string;
+export interface InitProvider  {
   public_key : string,
   title :string,
   endpoint: string,
   endpoint_params ?: Array<string>,
-  from: string,
-  gas : BigNumber
+  from: address,
+  gas ?: BigNumber
 }
 
 
 export type InitCurve = {
   endpoint:string,
   curve:CurveType,
-  from: string,
-  gas : BigNumber
+  from: address,
+  gas ?: BigNumber
 }
 
 
 export type NextEndpoint = {
-  provider:string,
+  provider:address,
   endpoint: string,
   index:number
 }
@@ -29,6 +30,12 @@ export type NextEndpoint = {
 export type EndpointParams = {
   endpoint:string,
   endpoint_params: string[],
-  from: string,
-  gas : BigNumber
+  from: address,
+  gas ?: BigNumber
+}
+export interface Filter  {
+  fromBlock ?: number,
+    toBlock ?: number,
+    provider ?: address
+
 }

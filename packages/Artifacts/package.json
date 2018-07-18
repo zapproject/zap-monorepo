@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "lib/src/index.js",
+  "typings": "lib/src",
   "scripts": {
     "build": "./node_modules/.bin/tsc",
     "test": "mocha  -r ts-node/register test/*.ts --serial",

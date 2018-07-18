@@ -1,5 +1,10 @@
 import {join,basename} from "path";
 import {readdirSync} from "fs";
+
+/**
+ * Get Artifacts in this package
+ * @returns Artifacts
+ */
 function getArtifacts(){
     let Artifacts:any = {};
         readdirSync(join(__dirname,'../../','contracts')).forEach(function (file) {

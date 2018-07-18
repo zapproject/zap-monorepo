@@ -4,6 +4,7 @@
 	"description": "",
 	"main": "lib/src/index.js",
 	"type": "lib/src/types.d.ts",
+	"typings": "lib/src",
 	"scripts": {
 		"build": "tsc",
 		"test": "mocha  -r ts-node/register test/*.ts --serial",

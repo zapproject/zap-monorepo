@@ -1,28 +1,30 @@
+export type address = string;
+export type txid = string;
 export type BondArgs = {
-    provider :string,
+    provider :address,
     endpoint : string,
     zapNum :number,
-    from : string,
+    from : address,
     gas ?: number
 }
 
 export type UnbondArgs = {
-	provider :string,
+	provider :address,
     endpoint : string,
     dots :number,
-    from : string,
+    from : address,
     gas ?: number
 }
 
 export type BondageArgs = {
-	subscriber ?: string,
-	provider: string,
+	subscriber ?: address,
+	provider: address,
 	endpoint: string,
 	dots ?: number ,
 	zapNum ?: number
 }
 export type CalcBondRateType = {
-    provider: string,
+    provider: address,
     endpoint: string,
     zapNum :number
 }
@@ -30,8 +32,12 @@ export type CalcBondRateType = {
 
 
 
-
+export interface Filter {
+    provider ?: address,
+    fromBlock ?: number,
+    toBlock ?: number
+}
 export type listenEvent = {
-    filter ?: any,
+    filter ?: Filter,
     callback: Function
 }

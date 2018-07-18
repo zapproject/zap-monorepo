@@ -19,6 +19,7 @@
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
     "chai-bignumber": "^2.0.2",
+    "documentation": "^8.0.1",
     "ganache-core": "^2.1.5",
     "mocha": "^5.2.0",
     "npm-run-all": "^4.1.3",

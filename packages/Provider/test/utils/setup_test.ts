@@ -9,4 +9,11 @@ export class providerHandler implements ProviderHandler {
     handleSubscription(res:any) {
         console.log(res)
     }
+
+    handleUnsubscription (res:string){
+        console.log(res)
+    }
+    handleSubscription (res:string){
+        console.log(res)
+    }
 }

@@ -3,6 +3,8 @@ import {ZapDispatch} from "@zap/dispatch";
 import {ZapRegistry} from "@zap/registry";
 import {ZapBondage} from "@zap/bondage";
 import {ZapArbiter} from "@zap/arbiter";
+export type address = string;
+export type txid = string|object;
 export type InitProvider = {
     public_key : string,
     title :string,
@@ -20,14 +22,14 @@ export type InitCurve = {
 }
 
 export type UnsubscribeListen = {
-    subscriber:string,
-    terminator : string,
+    subscriber:address,
+    terminator : address,
     fromBlock : number
 }
 
 export type ListenQuery = {
     queryId: string,
-    subscriber :string,
+    subscriber :address,
     fromBlock : number
 }
 
@@ -38,7 +40,7 @@ export type Respond = {
 }
 
 export type ProviderConstructorType = {
-    owner:string,
+    owner:address,
     zapDispatch:ZapDispatch,
     zapBondage: ZapBondage,
     zapArbiter: ZapArbiter,
@@ -48,6 +50,6 @@ export type ProviderConstructorType = {
 
 export interface ProviderHandler{
     handleIncoming : Function,
-    handleUnsubscription ?: Function,
-    handleSubscription ?: Function
+    handleUnsubscription : Function,
+    handleSubscription : Function
 }
