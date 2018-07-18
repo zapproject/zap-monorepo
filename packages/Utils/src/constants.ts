@@ -54,11 +54,8 @@ export const testZapProvider:any = {
 }
 
 //export const ganacheProvider = new Web3.providers.WebsocketProvider('ws://127.0.0.1:7550');
-/**
- *
- * @type {HttpProvider}
- */
-export const ganacheProvider = new Web3.providers.HttpProvider('http://127.0.0.1:7545');
+export const ganacheProvider = new Web3.providers.WebsocketProvider('ws://127.0.0.1:7545');
+
 
 /**
  *

@@ -103,13 +103,19 @@ export class ZapArbiter extends BaseContract {
      * @param {Filter} filters object
      * @param {Function} callback
      */
-    listenSubscriptionEnd(filters:Filter={}, callback:Function):void{
-        // Specify filters and watch Incoming event
-        let filter = this.contract.events
-            .DataSubscriptionEnd(
-                filters,
-                { fromBlock: filters.fromBlock ? filters.fromBlock : 0, toBlock: 'latest' });
-        filter.watch(callback);
+    listenSubscriptionEnd(filters:Filter={}, callback:Function){
+        try {
+            // Specify filters and watch Incoming event
+            let filter = this.contract.events
+                .DataSubscriptionEnd(
+                    filters,
+                    { fromBlock: filters.fromBlock ? filters.fromBlock : 0, toBlock: 'latest' },
+                    callback);
+
+            return filter;
+        } catch (err) {
+            throw err;
+        }
     }
 
     /**
@@ -117,12 +123,18 @@ export class ZapArbiter extends BaseContract {
      * @param {Filter} filters
      * @param {Function} callback
      */
-    listenSubscriptionStart(filters:Filter ={}, callback:Function):void{
-        // Specify filters and watch Incoming event
-        let filter = this.contract.events.DataPurchase(
-            filters,
-            { fromBlock: filters.fromBlock || 0, toBlock: 'latest' });
-        filter.watch(callback);
+    listenSubscriptionStart(filters:Filter ={}, callback:Function){
+        try {
+            // Specify filters and watch Incoming event
+            let filter = this.contract.events.DataPurchase(
+                filters,
+                { fromBlock: filters.fromBlock ? filters.fromBlock : 0, toBlock: 'latest' }, 
+                callback);
+
+            return filter;
+        } catch (err) {
+            throw err;
+        }
     }
 
 
@@ -131,8 +143,8 @@ export class ZapArbiter extends BaseContract {
      * @param {Filter} filter
      * @param {Function} callback
      */
-    listen(filter:Filter = {},callback:Function) : void{
-        this.contract.events.allEvents({fromBlock: filter.fromBlock|| 0, toBlock: 'latest'},callback);
+    listen(callback:Function){
+        return this.contract.events.allEvents({fromBlock: 0, toBlock: 'latest'}, callback);
     }
 
 }

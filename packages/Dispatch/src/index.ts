@@ -30,9 +30,12 @@ export class ZapDispatch extends BaseContract {
     async queryData({provider, query, endpoint, endpointParams, onchainProvider, onchainSubscriber,from,gas=Utils.Constants.DEFAULT_GAS}:QueryArgs):Promise<txid>{
         if(endpointParams.length > 0) {
             for (let i in endpointParams) {
-                endpointParams[i] = utf8ToHex(endpointParams[i]);
+                if (!endpointParams[i].startsWith('0x')) {
+                    endpointParams[i] = utf8ToHex(endpointParams[i]);
+                }
             }
         }
+      
         return  await this.contract.methods.query(
             provider,
             query,
@@ -131,8 +134,6 @@ export class ZapDispatch extends BaseContract {
     listenOffchainResponse(filters:object={}, callback:Function):void{
         this.contract.events.OffchainResponse(filters, callback);
     }
-
-
 
 }
 
