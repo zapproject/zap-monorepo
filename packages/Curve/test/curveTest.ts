@@ -101,7 +101,7 @@ describe('Zap Curve Test"', () => {
 		var bad = function(){ new Curve(constants, parts, dividers); };
 		expect(bad).to.throw(/Unknown function encoding/);
 
-		constants = [2,2,0,3,3,0]; 
+		constants = [2,2,0,3,3,0];
 		parts = [1,10, 9, 20]; // overlapping ranges
 		dividers = [1, 2];
 		var bad = function(){ new Curve(constants, parts, dividers); };

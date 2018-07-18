@@ -2,15 +2,11 @@ import * as assert from "assert";
 const Web3 =require('web3');
 import {Artifacts} from "@zap/artifacts";
 import {BaseContractType} from "./types";
-import {getArtifacts} from "@zap/utils"
+import {Utils} from "@zap/utils"
 
 /**
  * Parent Class to Dispatch, Bondage, Arbiter, Token, Registry class
  * Provide access to contract instance and web3 provider instance
- * @param {string | null} artifactsDir
- * @param {string} artifactName
- * @param {number | null} networkId
- * @param {any | null} networkProvider : Ethereum network provider
  */
 export class BaseContract{
     provider : any;
@@ -18,15 +14,20 @@ export class BaseContract{
     contract:any;
     networkId:number;
 
-
-    constructor({artifactsDir=undefined,artifactName,networkId=undefined,networkProvider=undefined}:BaseContractType) {
+    /**
+     * @param {string | null} artifactsDir
+     * @param {string} artifactName : contract's name
+     * @param {number | null} networkId
+     * @param {any | null} networkProvider
+     */
+    constructor({artifactsDir,artifactName,networkId,networkProvider}:BaseContractType) {
         let artifact:any = undefined;
         try {
           if(!artifactsDir){
             artifact = Artifacts[artifactName];
           }
           else{
-            let artifacts:any = getArtifacts(artifactsDir);
+            let artifacts:any = Utils.getArtifacts(artifactsDir);
             artifact = artifacts[artifactName];
           }
           this.provider = networkProvider ||

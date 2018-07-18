@@ -1,6 +1,6 @@
 import {BaseContract,BaseContractType} from '@zap/basecontract';
 import {QueryArgs,ResponseArgs,Filter,txid} from './types'
-import {DEFAULT_GAS} from "@zap/utils";
+import {Utils} from "@zap/utils";
 const {toBN,utf8ToHex} = require ("web3-utils");
 
 /**
@@ -27,7 +27,7 @@ export class ZapDispatch extends BaseContract {
      * @param {BigNumber} gas
      * @returns {Promise<txid>} txid of query transaction
      */
-    async queryData({provider, query, endpoint, endpointParams, onchainProvider, onchainSubscriber,from,gas=DEFAULT_GAS}:QueryArgs):Promise<txid>{
+    async queryData({provider, query, endpoint, endpointParams, onchainProvider, onchainSubscriber,from,gas=Utils.Constants.DEFAULT_GAS}:QueryArgs):Promise<txid>{
         if(endpointParams.length > 0) {
             for (let i in endpointParams) {
                 if (!endpointParams[i].startsWith('0x')) {
@@ -55,7 +55,7 @@ export class ZapDispatch extends BaseContract {
      * @param {BigNumber} gas
      * @returns {Promise<txid>} txid of respond method
      */
-    async respond({queryId, responseParams, dynamic, from,gas=DEFAULT_GAS}:ResponseArgs) :Promise<txid>{
+    async respond({queryId, responseParams, dynamic, from,gas=Utils.Constants.DEFAULT_GAS}:ResponseArgs) :Promise<txid>{
         if (dynamic){
             return this.contract.methods.respondBytes32Array(
                 queryId,

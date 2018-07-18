@@ -8,6 +8,11 @@ import {serverOptionsType,buildOptionsType} from "../types";
 const asyncMigrate = promisify(migrate.run);
 
 
+/**
+ * @ignore
+ * @param _serverOptions
+ * @returns {Promise<any>}
+ */
 export function startGanacheServer(_serverOptions ?: any){
   return new Promise((resolve,reject)=>{
     let serverOptions = _serverOptions || ganacheServerOptions;
@@ -25,7 +30,11 @@ export function startGanacheServer(_serverOptions ?: any){
   })
 }
 
-
+/**
+ * @ignore
+ * @param {boolean} onlyRemoveNetworks
+ * @param {string} buildDir
+ */
 export function clearBuild(onlyRemoveNetworks = true, buildDir:string) {
     if(!existsSync(buildDir)){
         mkdirSync(buildDir)
@@ -54,6 +63,11 @@ export function clearBuild(onlyRemoveNetworks = true, buildDir:string) {
     }
 }
 
+/**
+ * @ignore
+ * @param {string} buildDir
+ * @returns {any}
+ */
 export function getArtifacts(buildDir:string){
     let artifacts:any = {};
     readdirSync(buildDir).forEach(function (file:string) {
@@ -68,6 +82,12 @@ export function getArtifacts(buildDir:string){
 
 }
 
+/**
+ * @ignore
+ * @param {string} buildDir
+ * @param {serverOptionsType} _serverOptions
+ * @returns {Promise<boolean>}
+ */
   export async function migrateContracts(buildDir:string,_serverOptions ?:serverOptionsType) {
     console.log("start migrating")
     let serverOpts = _serverOptions || ganacheServerOptions;

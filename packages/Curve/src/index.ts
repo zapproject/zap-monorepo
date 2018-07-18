@@ -1,15 +1,24 @@
 import {CurveType, CurveTerm} from "./types";
 const {toHex}  = require("web3-utils");
-const BigNumber = require('big-number');
+import {BigNumber} from 'bignumber.js'
 
+
+/**
+ * Calculate Curve functions
+ */
 export class Curve {
-
+    /**@member */
     constants : Array<number>;
     parts: Array<number>;
     dividers : Array<number>;
     pieces:Array<any>;
 
-
+    /**
+     * @constructor
+     * @param {Array<number>} constants
+     * @param {Array<number>} parts
+     * @param {Array<number>} dividers
+     */
     constructor(constants:Array<number>, parts: Array<number>, dividers: Array<number>) {
         this.constants = constants;
         this.parts = parts;
@@ -19,7 +28,7 @@ export class Curve {
         this.structurize();
     }
 
-    /* 
+    /*
      * Checks that the piecewise curve encoding is valid. Throws an error if not
      */
      checkValidity():void {
@@ -47,10 +56,11 @@ export class Curve {
         prev = this.dividers[0];
         for(var i=0;i<this.dividers.length; i++){
             if(this.dividers[i] <= prev && i!=0) throw new Error("Dividers must be ascending integers");
-            if(this.dividers[i] > this.constants.length/3) throw new Error("Dividers refer to a non-existent piecewise term");    
+            if(this.dividers[i] > this.constants.length/3) throw new Error("Dividers refer to a non-existent piecewise term");
         }
 
 }
+
 
     /**
      * Turn constants, parts, dividers into curve's coef, power, fn, pieces
@@ -133,8 +143,7 @@ export class Curve {
      * Convert this curve constants, parts, dividers into Array of Bignumbers
      * @returns {Array<Array<BigNumber>>}
      */
-     /*
-    convertToBNArrays():Array<Array<BigNumber>> {
+     convertToBNArrays():Array<Array<BigNumber>> {
         let convertedConstants = this.constants.map((item: number) => {
             return toHex(item);
         });
@@ -146,7 +155,7 @@ export class Curve {
         });
         return [convertedConstants, convertedParts, convertedDividers];
 
-    }*/
+    }
 
     /**
      * Calculate total of terms

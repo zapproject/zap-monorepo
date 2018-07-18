@@ -14,16 +14,7 @@ const Web3 = require('web3');
 const { hexToUtf8 } = require("web3-utils");
 import { join } from 'path';
 
-import {
-    migrateContracts,
-    startGanacheServer,
-    testZapProvider,
-    ganacheProvider,
-    ganacheServerOptions,
-    getArtifacts,
-    DEFAULT_GAS,
-    toZapBase
-} from "@zap/utils";
+import {Utils} from "@zap/utils";
 
 async function configureEnvironment(func: Function) {
     await func();
@@ -31,79 +22,80 @@ async function configureEnvironment(func: Function) {
 
 
 describe('Zap Provider Test', () => {
-    let accounts: Array<string> = [],
-        zapToken: any,
-        zapRegistry: any,
-        zapBondage: any,
-        zapDispatch: any,
-        zapArbiter: any,
-        zapProvider: any,
-        testArtifacts: any,
-        ganacheServer: any,
-        web3: any,
-        options: any,
-        thisHandler: any,
-        buildDir = join(__dirname, "contracts"),
-        providerAddress: string, subscriberAddress: string;
+    let accounts :Array<string> = [],
+        zapToken:any,
+        zapRegistry:any,
+        zapBondage:any,
+        zapDispatch:any,
+        zapArbiter:any,
+        zapProvider:any,
+        testArtifacts:any,
+        ganacheServer:any,
+        web3:any,
+        options:any,
+        thisHandler:any,
+        buildDir = join(__dirname,"contracts"),
+        providerAddress:string,subscriberAddress:string,
+        testZapProvider = Utils.Constants.testZapProvider;
 
-    options = {
-        artifactsDir: buildDir,
-        networkId: ganacheServerOptions.network_id,
-        networkProvider: ganacheProvider
-    };
+        options = {
+            artifactsDir: buildDir,
+            networkId: Utils.Constants.ganacheServerOptions.network_id,
+            networkProvider: Utils.Constants.ganacheProvider
+        };
 
-    before(function (done) {
-        configureEnvironment(async () => {
-            ganacheServer = await startGanacheServer();
-            web3 = new Web3(ganacheProvider);
-            accounts = await web3.eth.getAccounts();
-            providerAddress = accounts[2];
-            subscriberAddress = accounts[3]
-            //delete require.cache[require.resolve('/contracts')];
-            await migrateContracts(buildDir);
-            done();
+        before(function(done) {
+            configureEnvironment(async () => {
+                ganacheServer = await Utils.startGanacheServer();
+                web3 = new Web3(Utils.Constants.ganacheProvider);
+                accounts = await web3.eth.getAccounts();
+                providerAddress = accounts[2];
+                subscriberAddress = accounts[3]
+                //delete require.cache[require.resolve('/contracts')];
+                await Utils.migrateContracts(buildDir);
+                done();
 
+            });
         });
-    });
-    it("Should initiate all the required contracts", async () => {
-        zapToken = new ZapToken(options);
-        zapRegistry = new ZapRegistry(options);
-        zapBondage = new ZapBondage(options);
-        zapDispatch = new ZapDispatch(options);
-        zapArbiter = new ZapArbiter(options);
-        thisHandler = new providerHandler();
-    });
-    it("Should allocate ZapToken to accounts", async () => {
-        let zapTokenOwner = await zapToken.getContractOwner()
-        for (let account of accounts) {
-            await zapToken.allocate({ to: account, amount: 1000000, from: zapTokenOwner })
-        }
-    });
-    it("Should init zapProvider class", async () => {
-        zapProvider = new ZapProvider({
-            owner: providerAddress,
-            handler: thisHandler,
-            zapRegistry: zapRegistry,
-            zapDispatch: zapDispatch,
-            zapBondage: zapBondage,
-            zapArbiter: zapArbiter
+        it("Should initiate all the required contracts",async ()=>{
+           zapToken = new ZapToken(options);
+           zapRegistry = new ZapRegistry(options);
+           zapBondage = new ZapBondage(options);
+           zapDispatch = new ZapDispatch(options);
+           zapArbiter = new ZapArbiter(options);
+           thisHandler = new providerHandler();
+        });
+        it("Should allocate ZapToken to accounts",async ()=>{
+            let zapTokenOwner = await zapToken.getContractOwner()
+            for(let account of accounts){
+                await zapToken.allocate({to:account,amount:Utils.toZapBase(1000),from:zapTokenOwner})
+            }
+        });
+        it("Should init zapProvider class",async ()=>{
+            zapProvider = new ZapProvider({
+                owner:providerAddress,
+                handler:thisHandler,
+                zapRegistry:zapRegistry,
+                zapDispatch:zapDispatch,
+                zapBondage:zapBondage,
+                zapArbiter:zapArbiter
+            })
         })
-    })
-    it('Should initiate provider', async () => {
-        let tx = await zapProvider.initiateProvider({
-            public_key: testZapProvider.pubkey,
-            endpoint: testZapProvider.endpoint,
-            title: testZapProvider.title,
-            endpoint_params: testZapProvider.endpoint_params
-        })
-        expect(tx).to.include.keys("events")
-        expect(tx.events).to.include.keys("NewProvider")
-        expect(tx.events.NewProvider).to.include.keys("returnValues");
-        let returnValues = tx.events.NewProvider.returnValues;
-        expect(returnValues).to.include.keys("provider", "title", "endpoint")
-        expect(testZapProvider.title).to.equal(hexToUtf8(returnValues.title))
-        expect(returnValues.provider).to.equal(providerAddress);
-        expect(testZapProvider.endpoint).to.equal(hexToUtf8(returnValues.endpoint));
+        it('Should initiate provider', async()=> {
+             let tx = await zapProvider.initiateProvider({
+                public_key:testZapProvider.pubkey,
+                endpoint: testZapProvider.endpoint,
+                title: testZapProvider.title,
+                endpoint_params:testZapProvider.endpoint_params
+             })
+             expect(tx).to.include.keys("events")
+             expect(tx.events).to.include.keys("NewProvider")
+            expect(tx.events.NewProvider).to.include.keys("returnValues");
+             let returnValues = tx.events.NewProvider.returnValues;
+            expect(returnValues).to.include.keys("provider","title","endpoint")
+            expect(testZapProvider.title).to.equal(hexToUtf8(returnValues.title))
+            expect(returnValues.provider).to.equal(providerAddress);
+            expect(testZapProvider.endpoint).to.equal(hexToUtf8(returnValues.endpoint));
 
     });
     it("Should get provider title", async () => {
@@ -141,8 +133,8 @@ describe('Zap Provider Test', () => {
         let zapRequired = await zapProvider.getZapRequired({ endpoint: testZapProvider.endpoint, dots: 10 })
         let approve = await zapToken.approve({ to: zapBondage.contract._address, amount: zapRequired, from: subscriberAddress })
         let bond = await zapBondage.bond({
-            provider: providerAddress, 
-            endpoint: testZapProvider.endpoint, 
+            provider: providerAddress,
+            endpoint: testZapProvider.endpoint,
             zapNum: zapRequired,
             from: subscriberAddress
         });
@@ -191,8 +183,8 @@ describe('Zap Provider Test', () => {
         let zapRequired = await zapProvider.getZapRequired({ endpoint: testZapProvider.endpoint, dots: 10 })
         let approve = await zapToken.approve({ to: zapBondage.contract._address, amount: zapRequired, from: subscriberAddress })
         let bond = await zapBondage.bond({
-            provider: providerAddress, 
-            endpoint: testZapProvider.endpoint, 
+            provider: providerAddress,
+            endpoint: testZapProvider.endpoint,
             zapNum: zapRequired,
             from: subscriberAddress
         });

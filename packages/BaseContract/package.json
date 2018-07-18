@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "lib/src/index.js",
-  "types" :"lib/src/types.d.ts",
+  "types": "lib/src/types.d.ts",
   "typings": "lib/src/index.js",
   "scripts": {
     "build": "tsc",
@@ -19,6 +19,7 @@
     "@types/node": "^10.5.2",
     "@zap/artifacts": "^1.0.0",
     "@zap/utils": "^1.0.0",
+    "bignumber.js": "^7.2.1",
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
     "chai-bignumber": "^2.0.2",

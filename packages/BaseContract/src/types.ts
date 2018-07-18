@@ -1,12 +1,12 @@
 export interface BaseContractType  {
-  	artifactsDir ?:string|null,
+  	artifactsDir ?:string|undefined,
     artifactName: string,
-    networkId?: number|null,
-    networkProvider?: any|null,
+    networkId?: number|undefined,
+    networkProvider?: any|undefined,
     contract ?: any
 }
  export interface ContractType {
-     artifactsDir ?:string|null,
-     networkId?: number|null,
-     networkProvider?: any|null
+     artifactsDir ?:string|undefined,
+     networkId?: number|undefined,
+     networkProvider?: any|undefined
  }

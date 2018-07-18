@@ -11,6 +11,11 @@ const contractsDir = join(zapContractDirName,"contracts")
 const workingDir = zapContractDirName
 console.log("working dir : ", workingDir)
 export const  migrate = require("truffle-core/lib/commands/migrate.js");
+/**
+ * @ignore
+ * Local ganache server options
+ * @type {{hostname: string; network_id: number; port: number; total_accounts: number; ws: boolean; gas: number; gasPrice: number; network: string}}
+ */
 export const ganacheServerOptions={
      hostname: 'localhost',
      network_id: 5777,
@@ -21,6 +26,10 @@ export const ganacheServerOptions={
     gasPrice: 20000000,
     network: "ganache-gui"
 };
+/**
+ *@ignore
+ * @type {{logger: Console; contracts_build_directory: string; contracts_directory: string; working_directory: string; migrations_directory: string}}
+ */
 export let  buildOptions ={
     logger: console,
     contracts_build_directory: __dirname,
@@ -29,6 +38,11 @@ export let  buildOptions ={
     migrations_directory: migrationDir
 } ;
 
+/**
+ * @ignore
+ * Local test Zap provider information
+ * @type {{pubkey: number; title: string; endpoint_params: string[]; endpoint: string; query: string; curve: Curve}}
+ */
 export const testZapProvider:any = {
   pubkey: 111,
   title :"testProvider",
@@ -42,6 +56,19 @@ export const testZapProvider:any = {
 //export const ganacheProvider = new Web3.providers.WebsocketProvider('ws://127.0.0.1:7550');
 export const ganacheProvider = new Web3.providers.WebsocketProvider('ws://127.0.0.1:7545');
 
+
+/**
+ *
+ * @type {number}
+ */
 export const DEFAULT_GAS = 6000000
+/**
+ *
+ * @type {number}
+ */
 export const GAS_PRICE = 40000000
+/**
+ *
+ * @type {string}
+ */
 export const NETWORK = "ganache-gui"

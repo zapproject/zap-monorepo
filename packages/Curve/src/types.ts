@@ -1,10 +1,10 @@
-export type CurveType = {
+export interface CurveType {
   constants:number[],
   parts : number[],
   dividers: number[]
 }
 
-export type CurveTerm = {
+export interface CurveTerm {
   fn :  number,
     power : number,
     coef : number
