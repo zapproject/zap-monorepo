@@ -11,9 +11,12 @@ export class ZapDispatch extends BaseContract {
     async queryData({provider, query, endpoint, endpointParams, onchainProvider, onchainSubscriber,from,gas=DEFAULT_GAS}:QueryArgs){
         if(endpointParams.length > 0) {
             for (let i in endpointParams) {
-                endpointParams[i] = utf8ToHex(endpointParams[i]);
+                if (!endpointParams[i].startsWith('0x')) {
+                    endpointParams[i] = utf8ToHex(endpointParams[i]);
+                }
             }
         }
+        console.log('query: ', provider, query, endpoint, endpointParams);
         let resultQuery = await this.contract.methods.query(
             provider,
             query,
@@ -72,24 +75,23 @@ export class ZapDispatch extends BaseContract {
      * @param callback callback function that will be called after event received
      */
     listen(filters :FilterType, callback:Function) {
-        this.contract.events.allEvents(
+        return this.contract.events.allEvents(
             filters,
             { fromBlock: filters.fromBlock ? filters.fromBlock : 0, toBlock: 'latest' },
             callback);
     }
+
     listenIncoming(filters:object ={}, callback:Function){
-        this.contract.events.Incoming(filters, callback);
+        return this.contract.events.Incoming(filters, callback);
     }
 
     listenFulfillQuery(filters:object={}, callback:Function){
-        this.contract.events.FulfillQuery(filters, callback);
+        return this.contract.events.FulfillQuery(filters, callback);
     }
 
     listenOffchainResponse(filters:object={}, callback:Function){
-        this.contract.events.OffchainResponse(filters, callback);
+        return this.contract.events.OffchainResponse(filters, callback);
     }
-
-
 
 }
 

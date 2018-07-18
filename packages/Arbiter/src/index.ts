@@ -71,8 +71,10 @@ export class ZapArbiter extends BaseContract {
             let filter = this.contract.events
                 .DataSubscriptionEnd(
                     filters,
-                    { fromBlock: filters.fromBlock ? filters.fromBlock : 0, toBlock: 'latest' });
-            filter.watch(callback);
+                    { fromBlock: filters.fromBlock ? filters.fromBlock : 0, toBlock: 'latest' },
+                    callback);
+
+            return filter;
         } catch (err) {
             throw err;
         }
@@ -88,8 +90,10 @@ export class ZapArbiter extends BaseContract {
             // Specify filters and watch Incoming event
             let filter = this.contract.events.DataPurchase(
                 filters,
-                { fromBlock: filters.fromBlock ? filters.fromBlock : 0, toBlock: 'latest' });
-            filter.watch(callback);
+                { fromBlock: filters.fromBlock ? filters.fromBlock : 0, toBlock: 'latest' }, 
+                callback);
+
+            return filter;
         } catch (err) {
             throw err;
         }
@@ -101,7 +105,7 @@ export class ZapArbiter extends BaseContract {
      * @param callback
      */
     listen(callback:Function){
-        this.contract.events.allEvents({fromBlock: 0, toBlock: 'latest'},callback);
+        return this.contract.events.allEvents({fromBlock: 0, toBlock: 'latest'}, callback);
     }
 
 }

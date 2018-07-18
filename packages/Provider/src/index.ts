@@ -139,7 +139,7 @@ export class ZapProvider extends EventEmitter {
             }
         };
 
-        this.zapArbiter.listenSubscriptionStart(
+        return this.zapArbiter.listenSubscriptionStart(
             {provider: this.providerOwner, subscriber},
             callback);
     }
@@ -164,7 +164,7 @@ export class ZapProvider extends EventEmitter {
             }
         };
 
-        this.zapArbiter.listenSubscriptionEnd(
+        return this.zapArbiter.listenSubscriptionEnd(
             {provider: this.providerOwner, subscriber, terminator, fromBlock},
             callback);
     }
@@ -177,7 +177,7 @@ export class ZapProvider extends EventEmitter {
      * @param from
      * @returns {Promise<void>}
      */
-    async listenQueries({queryId, subscriber, fromBlock}:ListenQuery) :Promise<void> {
+    async listenQueries({fromBlock}:ListenQuery) :Promise<void> {
         let callback = (error:any, result:string) => {
             if (error) {
                 console.error(error);
@@ -190,8 +190,8 @@ export class ZapProvider extends EventEmitter {
             }
         };
 
-        this.zapDispatch.listen('Incoming',
-            {queryId, provider: this.providerOwner, subscriber, fromBlock},
+        return this.zapDispatch.listenIncoming(
+            {provider: this.providerOwner, fromBlock},
             callback);
     }
 
