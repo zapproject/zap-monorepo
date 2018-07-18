@@ -121,6 +121,15 @@
                         <a href="interfaces/BaseContractType.html" data-type="entity-link">BaseContractType</a>
                     </li>
                     <li class="link">
+                        <a href="interfaces/BondArgs.html" data-type="entity-link">BondArgs</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/BondageArgs.html" data-type="entity-link">BondageArgs</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/CalcBondRateType.html" data-type="entity-link">CalcBondRateType</a>
+                    </li>
+                    <li class="link">
                         <a href="interfaces/ContractType.html" data-type="entity-link">ContractType</a>
                     </li>
                     <li class="link">
@@ -163,7 +172,13 @@
                         <a href="interfaces/SubscriptionType.html" data-type="entity-link">SubscriptionType</a>
                     </li>
                     <li class="link">
+                        <a href="interfaces/UnbondArgs.html" data-type="entity-link">UnbondArgs</a>
+                    </li>
+                    <li class="link">
                         <a href="interfaces/ZapProviderType.html" data-type="entity-link">ZapProviderType</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/listenEvent.html" data-type="entity-link">listenEvent</a>
                     </li>
             </ul>
         </li>
@@ -306,6 +321,15 @@
                         <a href="interfaces/BaseContractType.html" data-type="entity-link">BaseContractType</a>
                     </li>
                     <li class="link">
+                        <a href="interfaces/BondArgs.html" data-type="entity-link">BondArgs</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/BondageArgs.html" data-type="entity-link">BondageArgs</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/CalcBondRateType.html" data-type="entity-link">CalcBondRateType</a>
+                    </li>
+                    <li class="link">
                         <a href="interfaces/ContractType.html" data-type="entity-link">ContractType</a>
                     </li>
                     <li class="link">
@@ -348,7 +372,13 @@
                         <a href="interfaces/SubscriptionType.html" data-type="entity-link">SubscriptionType</a>
                     </li>
                     <li class="link">
+                        <a href="interfaces/UnbondArgs.html" data-type="entity-link">UnbondArgs</a>
+                    </li>
+                    <li class="link">
                         <a href="interfaces/ZapProviderType.html" data-type="entity-link">ZapProviderType</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/listenEvent.html" data-type="entity-link">listenEvent</a>
                     </li>
             </ul>
         </li>
@@ -755,7 +785,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="101" class="link-to-prism">packages/Dispatch/src/index.ts:101</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="104" class="link-to-prism">packages/Dispatch/src/index.ts:104</a></div>
                             </td>
                         </tr>
 
@@ -838,7 +868,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="122" class="link-to-prism">packages/Dispatch/src/index.ts:122</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="125" class="link-to-prism">packages/Dispatch/src/index.ts:125</a></div>
                             </td>
                         </tr>
 
@@ -927,7 +957,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="113" class="link-to-prism">packages/Dispatch/src/index.ts:113</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="116" class="link-to-prism">packages/Dispatch/src/index.ts:116</a></div>
                             </td>
                         </tr>
 
@@ -1016,7 +1046,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="131" class="link-to-prism">packages/Dispatch/src/index.ts:131</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="134" class="link-to-prism">packages/Dispatch/src/index.ts:134</a></div>
                             </td>
                         </tr>
 
@@ -1180,7 +1210,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="55" class="link-to-prism">packages/Dispatch/src/index.ts:55</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">packages/Dispatch/src/index.ts:58</a></div>
                             </td>
                         </tr>
 
@@ -1326,9 +1356,12 @@ export class ZapDispatch extends BaseContract {
     async queryData({provider, query, endpoint, endpointParams, onchainProvider, onchainSubscriber,from,gas&#x3D;Utils.Constants.DEFAULT_GAS}:QueryArgs):Promise&lt;txid&gt;{
         if(endpointParams.length &gt; 0) {
             for (let i in endpointParams) {
-                endpointParams[i] &#x3D; utf8ToHex(endpointParams[i]);
+                if (!endpointParams[i].startsWith(&#x27;0x&#x27;)) {
+                    endpointParams[i] &#x3D; utf8ToHex(endpointParams[i]);
+                }
             }
         }
+      
         return  await this.contract.methods.query(
             provider,
             query,
@@ -1427,8 +1460,6 @@ export class ZapDispatch extends BaseContract {
     listenOffchainResponse(filters:object&#x3D;{}, callback:Function):void{
         this.contract.events.OffchainResponse(filters, callback);
     }
-
-
 
 }
 

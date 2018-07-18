@@ -121,6 +121,15 @@
                         <a href="interfaces/BaseContractType.html" data-type="entity-link">BaseContractType</a>
                     </li>
                     <li class="link">
+                        <a href="interfaces/BondArgs.html" data-type="entity-link">BondArgs</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/BondageArgs.html" data-type="entity-link">BondageArgs</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/CalcBondRateType.html" data-type="entity-link">CalcBondRateType</a>
+                    </li>
+                    <li class="link">
                         <a href="interfaces/ContractType.html" data-type="entity-link">ContractType</a>
                     </li>
                     <li class="link">
@@ -163,7 +172,13 @@
                         <a href="interfaces/SubscriptionType.html" data-type="entity-link">SubscriptionType</a>
                     </li>
                     <li class="link">
+                        <a href="interfaces/UnbondArgs.html" data-type="entity-link">UnbondArgs</a>
+                    </li>
+                    <li class="link">
                         <a href="interfaces/ZapProviderType.html" data-type="entity-link">ZapProviderType</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/listenEvent.html" data-type="entity-link">listenEvent</a>
                     </li>
             </ul>
         </li>
@@ -306,6 +321,15 @@
                         <a href="interfaces/BaseContractType.html" data-type="entity-link">BaseContractType</a>
                     </li>
                     <li class="link">
+                        <a href="interfaces/BondArgs.html" data-type="entity-link">BondArgs</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/BondageArgs.html" data-type="entity-link">BondageArgs</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/CalcBondRateType.html" data-type="entity-link">CalcBondRateType</a>
+                    </li>
+                    <li class="link">
                         <a href="interfaces/ContractType.html" data-type="entity-link">ContractType</a>
                     </li>
                     <li class="link">
@@ -348,7 +372,13 @@
                         <a href="interfaces/SubscriptionType.html" data-type="entity-link">SubscriptionType</a>
                     </li>
                     <li class="link">
+                        <a href="interfaces/UnbondArgs.html" data-type="entity-link">UnbondArgs</a>
+                    </li>
+                    <li class="link">
                         <a href="interfaces/ZapProviderType.html" data-type="entity-link">ZapProviderType</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/listenEvent.html" data-type="entity-link">listenEvent</a>
                     </li>
             </ul>
         </li>
@@ -1668,7 +1698,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="215" class="link-to-prism">packages/Provider/src/index.ts:215</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="216" class="link-to-prism">packages/Provider/src/index.ts:216</a></div>
                             </td>
                         </tr>
 
@@ -1807,7 +1837,7 @@ export class ZapProvider  {
         if (this.title) return this.title;
         title &#x3D; await this.zapRegistry.getProviderTitle(this.providerOwner);
         this.title &#x3D; title;
-        return hexToUtf8(title);
+        return title;
         }
 
 
@@ -1819,7 +1849,7 @@ export class ZapProvider  {
             if (this.pubkey) return this.pubkey;
             let pubkey &#x3D; await this.zapRegistry.getProviderPublicKey(this.providerOwner);
             this.pubkey &#x3D; pubkey;
-            return hexToUtf8(pubkey);
+            return pubkey;
     }
 
 
@@ -1888,7 +1918,7 @@ export class ZapProvider  {
             }
         };
 
-        this.zapArbiter.listenSubscriptionStart(
+        return this.zapArbiter.listenSubscriptionStart(
             {provider: this.providerOwner, subscriber},
             callback);
     }
@@ -1909,7 +1939,7 @@ export class ZapProvider  {
             }
         };
 
-        this.zapArbiter.listenSubscriptionEnd(
+        return this.zapArbiter.listenSubscriptionEnd(
             {provider: this.providerOwner, subscriber, terminator, fromBlock},
             callback);
     }
@@ -1921,7 +1951,7 @@ export class ZapProvider  {
      * @param {number} fromBlock
      * @returns {Promise&lt;void&gt;}
      */
-    async listenQueries({queryId, subscriber, fromBlock}:ListenQuery) :Promise&lt;void&gt; {
+    async listenQueries({fromBlock}:ListenQuery) :Promise&lt;void&gt; {
         let callback &#x3D; (error:any, result:string) &#x3D;&gt; {
             if (error) {
                 console.error(error);
@@ -1930,7 +1960,8 @@ export class ZapProvider  {
             }
         };
 
-        this.zapDispatch.listenIncoming({queryId, provider: this.providerOwner, subscriber, fromBlock},
+        return this.zapDispatch.listenIncoming(
+            {provider: this.providerOwner, fromBlock},
             callback);
     }
 

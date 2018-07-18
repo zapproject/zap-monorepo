@@ -121,6 +121,15 @@
                         <a href="interfaces/BaseContractType.html" data-type="entity-link">BaseContractType</a>
                     </li>
                     <li class="link">
+                        <a href="interfaces/BondArgs.html" data-type="entity-link">BondArgs</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/BondageArgs.html" data-type="entity-link">BondageArgs</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/CalcBondRateType.html" data-type="entity-link">CalcBondRateType</a>
+                    </li>
+                    <li class="link">
                         <a href="interfaces/ContractType.html" data-type="entity-link">ContractType</a>
                     </li>
                     <li class="link">
@@ -163,7 +172,13 @@
                         <a href="interfaces/SubscriptionType.html" data-type="entity-link">SubscriptionType</a>
                     </li>
                     <li class="link">
+                        <a href="interfaces/UnbondArgs.html" data-type="entity-link">UnbondArgs</a>
+                    </li>
+                    <li class="link">
                         <a href="interfaces/ZapProviderType.html" data-type="entity-link">ZapProviderType</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/listenEvent.html" data-type="entity-link">listenEvent</a>
                     </li>
             </ul>
         </li>
@@ -306,6 +321,15 @@
                         <a href="interfaces/BaseContractType.html" data-type="entity-link">BaseContractType</a>
                     </li>
                     <li class="link">
+                        <a href="interfaces/BondArgs.html" data-type="entity-link">BondArgs</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/BondageArgs.html" data-type="entity-link">BondageArgs</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/CalcBondRateType.html" data-type="entity-link">CalcBondRateType</a>
+                    </li>
+                    <li class="link">
                         <a href="interfaces/ContractType.html" data-type="entity-link">ContractType</a>
                     </li>
                     <li class="link">
@@ -348,7 +372,13 @@
                         <a href="interfaces/SubscriptionType.html" data-type="entity-link">SubscriptionType</a>
                     </li>
                     <li class="link">
+                        <a href="interfaces/UnbondArgs.html" data-type="entity-link">UnbondArgs</a>
+                    </li>
+                    <li class="link">
                         <a href="interfaces/ZapProviderType.html" data-type="entity-link">ZapProviderType</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/listenEvent.html" data-type="entity-link">listenEvent</a>
                     </li>
             </ul>
         </li>
@@ -443,15 +473,19 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#constants">constants</a>
                             </li>
                             <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#dividers">dividers</a>
                             </li>
                             <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#parts">parts</a>
                             </li>
                             <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#pieces">pieces</a>
                             </li>
                         </ul>
@@ -467,21 +501,27 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#_calculatePolynomial">_calculatePolynomial</a>
                             </li>
                             <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#_calculateTerm">_calculateTerm</a>
                             </li>
                             <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#checkValidity">checkValidity</a>
                             </li>
                             <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#convertToBNArrays">convertToBNArrays</a>
                             </li>
                             <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#getPrice">getPrice</a>
                             </li>
                             <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#structurize">structurize</a>
                             </li>
                         </ul>
@@ -502,12 +542,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(constants: Array<number>, parts: Array<number>, dividers: Array<number>)</code>
+<code>constructor(constants: number[], parts: number[], dividers: number[])</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">packages/Curve/src/index.ts:14</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">packages/Curve/src/index.ts:13</a></div>
                             </td>
                         </tr>
 
@@ -528,7 +568,7 @@
                                                         <td>constants</td>
                                                   
                                                         <td>
-                                                                    <code>Array&lt;number&gt;</code>
+                                                                    <code>number[]</code>
                                                         </td>
                                                   
                                                     <td>
@@ -540,7 +580,7 @@
                                                         <td>parts</td>
                                                   
                                                         <td>
-                                                                    <code>Array&lt;number&gt;</code>
+                                                                    <code>number[]</code>
                                                         </td>
                                                   
                                                     <td>
@@ -552,7 +592,7 @@
                                                         <td>dividers</td>
                                                   
                                                         <td>
-                                                                    <code>Array&lt;number&gt;</code>
+                                                                    <code>number[]</code>
                                                         </td>
                                                   
                                                     <td>
@@ -581,6 +621,7 @@
                         <a name="constants"></a>
                         <span class="name">
                             <b>
+                                <span class="modifier">Public</span>
                             constants
                             </b>
                             <a href="#constants"><span class="fa fa-link"></span></a>
@@ -589,19 +630,19 @@
                 </tr>
                 <tr>
                     <td class="col-md-4">
-                        <code>constants:     <code>Array&lt;number&gt;</code>
+                        <span class="modifier-icon fa fa-reset"></span><code>constants:     <code>number[]</code>
 </code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Type : </i>    <code>Array&lt;number&gt;</code>
+                            <i>Type : </i>    <code>number[]</code>
 
                         </td>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">packages/Curve/src/index.ts:11</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">packages/Curve/src/index.ts:10</a></div>
                             </td>
                         </tr>
 
@@ -615,6 +656,7 @@
                         <a name="dividers"></a>
                         <span class="name">
                             <b>
+                                <span class="modifier">Public</span>
                             dividers
                             </b>
                             <a href="#dividers"><span class="fa fa-link"></span></a>
@@ -623,47 +665,13 @@
                 </tr>
                 <tr>
                     <td class="col-md-4">
-                        <code>dividers:     <code>Array&lt;number&gt;</code>
+                        <span class="modifier-icon fa fa-reset"></span><code>dividers:     <code>number[]</code>
 </code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Type : </i>    <code>Array&lt;number&gt;</code>
-
-                        </td>
-                    </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">packages/Curve/src/index.ts:13</a></div>
-                            </td>
-                        </tr>
-
-
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="parts"></a>
-                        <span class="name">
-                            <b>
-                            parts
-                            </b>
-                            <a href="#parts"><span class="fa fa-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <code>parts:     <code>Array&lt;number&gt;</code>
-</code>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <i>Type : </i>    <code>Array&lt;number&gt;</code>
+                            <i>Type : </i>    <code>number[]</code>
 
                         </td>
                     </tr>
@@ -680,9 +688,45 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
+                        <a name="parts"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            parts
+                            </b>
+                            <a href="#parts"><span class="fa fa-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <span class="modifier-icon fa fa-reset"></span><code>parts:     <code>number[]</code>
+</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>number[]</code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">packages/Curve/src/index.ts:11</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
                         <a name="pieces"></a>
                         <span class="name">
                             <b>
+                                <span class="modifier">Public</span>
                             pieces
                             </b>
                             <a href="#pieces"><span class="fa fa-link"></span></a>
@@ -691,19 +735,19 @@
                 </tr>
                 <tr>
                     <td class="col-md-4">
-                        <code>pieces:     <code>Array&lt;any&gt;</code>
+                        <span class="modifier-icon fa fa-reset"></span><code>pieces:     <code>any[]</code>
 </code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Type : </i>    <code>Array&lt;any&gt;</code>
+                            <i>Type : </i>    <code>any[]</code>
 
                         </td>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">packages/Curve/src/index.ts:14</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">packages/Curve/src/index.ts:13</a></div>
                             </td>
                         </tr>
 
@@ -724,6 +768,7 @@
                         <a name="_calculatePolynomial"></a>
                         <span class="name">
                             <b>
+                                <span class="modifier">Public</span>
                             _calculatePolynomial
                             </b>
                             <a href="#_calculatePolynomial"><span class="fa fa-link"></span></a>
@@ -732,14 +777,15 @@
                 </tr>
                 <tr>
                     <td class="col-md-4">
-<code>_calculatePolynomial(terms: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, x: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                            <span class="modifier-icon fa fa-reset"></span>
+                        <code>_calculatePolynomial(terms: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, x: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
                     </td>
                 </tr>
 
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="167" class="link-to-prism">packages/Curve/src/index.ts:167</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="164" class="link-to-prism">packages/Curve/src/index.ts:164</a></div>
                             </td>
                         </tr>
 
@@ -807,6 +853,7 @@
                         <a name="_calculateTerm"></a>
                         <span class="name">
                             <b>
+                                <span class="modifier">Public</span>
                             _calculateTerm
                             </b>
                             <a href="#_calculateTerm"><span class="fa fa-link"></span></a>
@@ -815,14 +862,15 @@
                 </tr>
                 <tr>
                     <td class="col-md-4">
-<code>_calculateTerm(term: <a href="../interfaces/CurveTerm.html">CurveTerm</a>, x: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                            <span class="modifier-icon fa fa-reset"></span>
+                        <code>_calculateTerm(term: <a href="../interfaces/CurveTerm.html">CurveTerm</a>, x: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
                     </td>
                 </tr>
 
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="122" class="link-to-prism">packages/Curve/src/index.ts:122</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="119" class="link-to-prism">packages/Curve/src/index.ts:119</a></div>
                             </td>
                         </tr>
 
@@ -890,6 +938,7 @@
                         <a name="checkValidity"></a>
                         <span class="name">
                             <b>
+                                <span class="modifier">Public</span>
                             checkValidity
                             </b>
                             <a href="#checkValidity"><span class="fa fa-link"></span></a>
@@ -898,14 +947,15 @@
                 </tr>
                 <tr>
                     <td class="col-md-4">
-<code>checkValidity()</code>
+                            <span class="modifier-icon fa fa-reset"></span>
+                        <code>checkValidity()</code>
                     </td>
                 </tr>
 
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">packages/Curve/src/index.ts:34</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">packages/Curve/src/index.ts:33</a></div>
                             </td>
                         </tr>
 
@@ -928,6 +978,7 @@
                         <a name="convertToBNArrays"></a>
                         <span class="name">
                             <b>
+                                <span class="modifier">Public</span>
                             convertToBNArrays
                             </b>
                             <a href="#convertToBNArrays"><span class="fa fa-link"></span></a>
@@ -936,14 +987,15 @@
                 </tr>
                 <tr>
                     <td class="col-md-4">
-<code>convertToBNArrays()</code>
+                            <span class="modifier-icon fa fa-reset"></span>
+                        <code>convertToBNArrays()</code>
                     </td>
                 </tr>
 
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="146" class="link-to-prism">packages/Curve/src/index.ts:146</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="143" class="link-to-prism">packages/Curve/src/index.ts:143</a></div>
                             </td>
                         </tr>
 
@@ -956,7 +1008,7 @@
                             <div>
                             </div>
                             <div class="io-description">
-                                <b>Returns : </b>    <code>Array&lt;Array&lt;BigNumber&gt;&gt;</code>
+                                <b>Returns : </b>    <code>[][]</code>
 
                             </div>
                                 <div class="io-description">
@@ -973,6 +1025,7 @@
                         <a name="getPrice"></a>
                         <span class="name">
                             <b>
+                                <span class="modifier">Public</span>
                             getPrice
                             </b>
                             <a href="#getPrice"><span class="fa fa-link"></span></a>
@@ -981,14 +1034,15 @@
                 </tr>
                 <tr>
                     <td class="col-md-4">
-<code>getPrice(total: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                            <span class="modifier-icon fa fa-reset"></span>
+                        <code>getPrice(total: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
                     </td>
                 </tr>
 
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="97" class="link-to-prism">packages/Curve/src/index.ts:97</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="94" class="link-to-prism">packages/Curve/src/index.ts:94</a></div>
                             </td>
                         </tr>
 
@@ -1049,6 +1103,7 @@
                         <a name="structurize"></a>
                         <span class="name">
                             <b>
+                                <span class="modifier">Public</span>
                             structurize
                             </b>
                             <a href="#structurize"><span class="fa fa-link"></span></a>
@@ -1057,14 +1112,15 @@
                 </tr>
                 <tr>
                     <td class="col-md-4">
-<code>structurize()</code>
+                            <span class="modifier-icon fa fa-reset"></span>
+                        <code>structurize()</code>
                     </td>
                 </tr>
 
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="68" class="link-to-prism">packages/Curve/src/index.ts:68</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="66" class="link-to-prism">packages/Curve/src/index.ts:66</a></div>
                             </td>
                         </tr>
 
@@ -1093,20 +1149,19 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {CurveType, CurveTerm} from &quot;./types&quot;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {CurveTerm, CurveType} from &quot;./types&quot;;
 const {toHex}  &#x3D; require(&quot;web3-utils&quot;);
-import {BigNumber} from &#x27;bignumber.js&#x27;
-
+import {BigNumber} from &quot;bignumber.js&quot;;
 
 /**
  * Calculate Curve functions
  */
 export class Curve {
     /**@member */
-    constants : Array&lt;number&gt;;
-    parts: Array&lt;number&gt;;
-    dividers : Array&lt;number&gt;;
-    pieces:Array&lt;any&gt;;
+    public constants: number[];
+    public parts: number[];
+    public dividers: number[];
+    public pieces: any[];
 
     /**
      * @constructor
@@ -1114,7 +1169,7 @@ export class Curve {
      * @param {Array&lt;number&gt;} parts
      * @param {Array&lt;number&gt;} dividers
      */
-    constructor(constants:Array&lt;number&gt;, parts: Array&lt;number&gt;, dividers: Array&lt;number&gt;) {
+    constructor(constants: number[], parts: number[], dividers: number[]) {
         this.constants &#x3D; constants;
         this.parts &#x3D; parts;
         this.dividers &#x3D; dividers;
@@ -1126,52 +1181,51 @@ export class Curve {
     /*
      * Checks that the piecewise curve encoding is valid. Throws an error if not
      */
-     checkValidity():void {
-        if(this.constants.length % 3 !&#x3D; 0) throw new Error(&quot;Invalid number of constants arguments&quot;);
-        for(var i&#x3D;0; i&lt;this.constants.length; i++){
-            let c &#x3D; this.constants[i];
-            if(!Number.isInteger(+c)) throw new Error(&quot;Constants must be integers&quot;);
-            if(i % 3 &#x3D;&#x3D; 1 &amp;&amp; c &lt; 0) throw new Error(&quot;Cannot have a negative power&quot;);
-            if(i % 3 &#x3D;&#x3D; 2 &amp;&amp; (c &lt; 0 || c &gt; 1)) throw new Error(&quot;Unknown function encoding&quot;);
+     public checkValidity(): void {
+        if (this.constants.length % 3 !&#x3D; 0) { throw new Error(&quot;Invalid number of constants arguments&quot;); }
+        for (let i &#x3D; 0; i &lt; this.constants.length; i++) {
+            const c &#x3D; this.constants[i];
+            if (!Number.isInteger(+c)) { throw new Error(&quot;Constants must be integers&quot;); }
+            if (i % 3 &#x3D;&#x3D; 1 &amp;&amp; c &lt; 0) { throw new Error(&quot;Cannot have a negative power&quot;); }
+            if (i % 3 &#x3D;&#x3D; 2 &amp;&amp; (c &lt; 0 || c &gt; 1)) { throw new Error(&quot;Unknown function encoding&quot;); }
         }
-        if(this.parts.length / 2 !&#x3D; this.dividers.length) throw new Error(&quot;A range must be defined for each constants triplet&quot;);
+        if (this.parts.length / 2 !&#x3D; this.dividers.length) { throw new Error(&quot;A range must be defined for each constants triplet&quot;); }
 
-        var prev &#x3D; 0;
-        for(var i&#x3D;0; i&lt;this.parts.length; i++){
-            var p &#x3D; this.parts[i];
-            if(i%2 &#x3D;&#x3D; 0){
-                if(i!&#x3D; 0 &amp;&amp; p !&#x3D; prev) throw new Error(&quot;Parts ranges must be continuous&quot;);
+        let prev &#x3D; 0;
+        for (let i &#x3D; 0; i &lt; this.parts.length; i++) {
+            const p &#x3D; this.parts[i];
+            if (i % 2 &#x3D;&#x3D; 0) {
+                if (i !&#x3D; 0 &amp;&amp; p !&#x3D; prev) { throw new Error(&quot;Parts ranges must be continuous&quot;); }
             } else {
-                if(p &lt;&#x3D; prev) throw new Error(&quot;Parts ranges must have a positive size&quot;);
+                if (p &lt;&#x3D; prev) { throw new Error(&quot;Parts ranges must have a positive size&quot;); }
             }
-            if(p &lt; 0 || !Number.isInteger(p)) throw new Error(&quot;Parts must be unsigned integers&quot;);
+            if (p &lt; 0 || !Number.isInteger(p)) { throw new Error(&quot;Parts must be unsigned integers&quot;); }
             prev &#x3D; p;
         }
 
         prev &#x3D; this.dividers[0];
-        for(var i&#x3D;0;i&lt;this.dividers.length; i++){
-            if(this.dividers[i] &lt;&#x3D; prev &amp;&amp; i!&#x3D;0) throw new Error(&quot;Dividers must be ascending integers&quot;);
-            if(this.dividers[i] &gt; this.constants.length/3) throw new Error(&quot;Dividers refer to a non-existent piecewise term&quot;);
+        for (let i &#x3D; 0; i &lt; this.dividers.length; i++) {
+            if (this.dividers[i] &lt;&#x3D; prev &amp;&amp; i !&#x3D; 0) { throw new Error(&quot;Dividers must be ascending integers&quot;); }
+            if (this.dividers[i] &gt; this.constants.length / 3) { throw new Error(&quot;Dividers refer to a non-existent piecewise term&quot;); }
         }
 
 }
 
-
     /**
      * Turn constants, parts, dividers into curve&#x27;s coef, power, fn, pieces
      */
-     structurize() :void{
+     public structurize(): void {
         let pStart &#x3D; 0;
 
         for (let i &#x3D; 0; i &lt; this.dividers.length; i++) {
-            let piece &#x3D; Object();
+            const piece &#x3D; Object();
             piece.start &#x3D; this.parts[2 * i];
             piece.end &#x3D;  this.parts[(2 * i) + 1];
             piece.terms &#x3D; Array();
             this.pieces.push(piece);
 
             for (let j &#x3D; pStart; j &lt; this.dividers[i]; j++) {
-                let term &#x3D; Object();
+                const term &#x3D; Object();
                 term.coef &#x3D; this.constants[(3 * j)];
                 term.power &#x3D; this.constants[(3 * j) + 1];
                 term.fn &#x3D; this.constants[(3 * j) + 2];
@@ -1183,13 +1237,12 @@ export class Curve {
         }
     }
 
-
     /**
      * Get the price of a dot at a given totalBound
      * @param {number} total bound dots
      * @returns {number}
      */
-     getPrice(total:number):number {
+     public getPrice(total: number): number {
         if (total &lt; 0) {
             return 0;
         }
@@ -1214,11 +1267,11 @@ export class Curve {
      * @returns {number}
      * @private
      */
-     _calculateTerm(term:CurveTerm, x:number) :number{
+     public _calculateTerm(term: CurveTerm, x: number): number {
         let val &#x3D; 1;
 
         if (term.fn &#x3D;&#x3D;&#x3D; 0) { // absolute value
-            if (x &lt; 0) x &#x3D; -x;
+            if (x &lt; 0) { x &#x3D; -x; }
         }  else if (term.fn &#x3D;&#x3D;&#x3D; 1) { // log
             if (x &lt; 0) {
                 x &#x3D; 0;
@@ -1238,14 +1291,14 @@ export class Curve {
      * Convert this curve constants, parts, dividers into Array of Bignumbers
      * @returns {Array&lt;Array&lt;BigNumber&gt;&gt;}
      */
-     convertToBNArrays():Array&lt;Array&lt;BigNumber&gt;&gt; {
-        let convertedConstants &#x3D; this.constants.map((item: number) &#x3D;&gt; {
+     public convertToBNArrays(): BigNumber[][] {
+        const convertedConstants &#x3D; this.constants.map((item: number) &#x3D;&gt; {
             return toHex(item);
         });
-        let convertedParts &#x3D; this.parts.map((item: number) &#x3D;&gt; {
+        const convertedParts &#x3D; this.parts.map((item: number) &#x3D;&gt; {
             return toHex(item);
         });
-        let convertedDividers &#x3D; this.dividers.map((item: number) &#x3D;&gt; {
+        const convertedDividers &#x3D; this.dividers.map((item: number) &#x3D;&gt; {
             return toHex(item);
         });
         return [convertedConstants, convertedParts, convertedDividers];
@@ -1259,7 +1312,7 @@ export class Curve {
      * @returns {number}
      * @private
      */
-     _calculatePolynomial(terms:any, x:number):number {
+     public _calculatePolynomial(terms: any, x: number): number {
         let sum &#x3D; 0;
 
         for (let i &#x3D; 0; i &lt; terms.length; i++ ) {
