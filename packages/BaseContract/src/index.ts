@@ -15,10 +15,11 @@ export class BaseContract{
     networkId:number;
 
     /**
-     * @param {string | null} artifactsDir
-     * @param {string} artifactName : contract's name
-     * @param {number | null} networkId
-     * @param {any | null} networkProvider
+     * Creates a contract class wrapper for a given contract.
+     * @param {string | null} artifactsDir Directory where contract ABIs are located
+     * @param {string} artifactName Contract name for this contract object
+     * @param {number | null} networkId Select which network the contract is located on (mainnet, testnet, private)
+     * @param {any | null} networkProvider Ethereum network provider (e.g. Infura)
      */
     constructor({artifactsDir,artifactName,networkId,networkProvider}:BaseContractType) {
         let artifact:any = undefined;
@@ -43,8 +44,8 @@ export class BaseContract{
     }
 
     /**
-     * Get Contract owner address
-     * @returns {Promise<string>} owner's address of this contract instance
+     * Gets the address of the owner of this contract.
+     * @returns {Promise<string>} Returns a Promise that will eventually resolve into the address of this contract's owner.
      */
     async getContractOwner():Promise<string>{
         return await this.contract.methods.owner().call().valueOf()
