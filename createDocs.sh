@@ -1,3 +1,5 @@
-sudo rm -r docs
-lerna run build
-./node_modules/documentation/bin/documentation.js build packages/**/lib/src/index.js -f md README.md
+#npm install @compodoc/compodoc
+rm -fr documentation
+#./node_modules/documentation/bin/documentation.js build packages/**/lib/src/*.js -f html -o docs
+../node_modules/.bin/compodoc -p docstsconfig.json --hideGenerator --disableCoverage
+

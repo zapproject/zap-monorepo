@@ -1,8 +1,7 @@
 import {BaseContract,BaseContractType} from '@zap/basecontract'
 import {BondArgs,UnbondArgs,BondageArgs, CalcBondRateType,txid,Filter} from "./types";
-import {toZapBase} from '@zap/utils';
+import {Utils} from '@zap/utils';
 const {toBN, utf8ToHex,toHex} = require("web3-utils");
-import {DEFAULT_GAS} from "@zap/utils";
 const assert = require("assert");
 
 /**
@@ -29,7 +28,7 @@ export class ZapBondage extends BaseContract {
      * @param {number} gas
      * @returns {Promise<txid>}
      */
-    async bond({provider, endpoint, zapNum, from, gas=DEFAULT_GAS}:BondArgs): Promise<txid> {
+    async bond({provider, endpoint, zapNum, from, gas=Utils.Constants.DEFAULT_GAS}:BondArgs): Promise<txid> {
         console.log("args : ", provider, endpoint, zapNum, from)
         assert(zapNum && zapNum>0,"Zap to Bond must be greater than 0");
         return await this.contract.methods.bond(
@@ -50,7 +49,7 @@ export class ZapBondage extends BaseContract {
      * @param {number} gas
      * @returns {Promise<txid>}
      */
-    async unbond({provider, endpoint, dots, from, gas=DEFAULT_GAS}:UnbondArgs):Promise<txid> {
+    async unbond({provider, endpoint, dots, from, gas=Utils.Constants.DEFAULT_GAS}:UnbondArgs):Promise<txid> {
         return await this.contract.methods.unbond(
             provider,
             utf8ToHex(endpoint),

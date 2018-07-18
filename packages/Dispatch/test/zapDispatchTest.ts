@@ -6,15 +6,7 @@ const expect = require('chai')
 const Web3 = require('web3');
 import {bootstrap} from "./utils/setup_test";
 
-import {
-    migrateContracts,
-    startGanacheServer,
-    testZapProvider,
-    ganacheProvider ,
-    ganacheServerOptions,
-    getArtifacts,
-    DEFAULT_GAS
-} from "@zap/utils";
+import {Utils} from "@zap/utils";
 import {BaseContract,BaseContractType} from "@zap/basecontract"
 import {ZapDispatch} from '../src';
 
@@ -36,14 +28,15 @@ describe('Zap Dispatch Test"', () => {
         query="TestQuery",
         responses =["TestReponse_1","TestResponse_2"],
         queryData: any,
-        buildDir:string = join(__dirname,"contracts");
+        buildDir:string = join(__dirname,"contracts"),
+        testZapProvider = Utils.Constants.testZapProvider;
 
     before(function (done) {
         configureEnvironment(async() => {
-            ganacheServer = await startGanacheServer();
-            web3 = new Web3(ganacheProvider);
+            ganacheServer = await Utils.startGanacheServer();
+            web3 = new Web3(Utils.Constants.ganacheProvider);
             accounts = await web3.eth.getAccounts();
-            await migrateContracts(buildDir);
+            await Utils.migrateContracts(buildDir);
             console.log("Migration complete. ");
             done();
         });
@@ -52,13 +45,13 @@ describe('Zap Dispatch Test"', () => {
     describe('Dispatch Test', () => {
         options = {
             artifactsDir: buildDir,
-            networkId: ganacheServerOptions.network_id,
-            networkProvider: ganacheProvider
+            networkId: Utils.Constants.ganacheServerOptions.network_id,
+            networkProvider: Utils.Constants.ganacheProvider
         };
 
         before(function (done) {
             configureEnvironment(async () => {
-                testArtifacts = getArtifacts(buildDir);
+                testArtifacts = Utils.getArtifacts(buildDir);
                 deployedBondage = new BaseContract(Object.assign(options, {artifactName: "Bondage"}));
                 deployedRegistry = new BaseContract(Object.assign(options, {artifactName: "Registry"}));
                 deployedToken = new BaseContract(Object.assign(options, {artifactName: "ZapToken"}));
@@ -86,7 +79,7 @@ describe('Zap Dispatch Test"', () => {
                 onchainProvider: false,
                 onchainSubscriber: false,
                 from: accounts[2], // account that used for bond in booststrap function 
-                gas: DEFAULT_GAS 
+                gas: Utils.Constants.DEFAULT_GAS
             });
             queryData = queryData.events.Incoming.returnValues;
         });
@@ -101,7 +94,7 @@ describe('Zap Dispatch Test"', () => {
                     onchainProvider: true,
                     onchainSubscriber: false,
                     from: accounts[2], // account that used for bond in booststrap function 
-                    gas: DEFAULT_GAS
+                    gas: Utils.Constants.DEFAULT_GAS
                 });
             } catch (e) {
                 await expect(e.toString()).to.include('revert');
@@ -117,7 +110,7 @@ describe('Zap Dispatch Test"', () => {
                 onchainProvider: false,
                 onchainSubscriber: true,
                 from: accounts[2], // account that used for bond in booststrap function 
-                gas: DEFAULT_GAS 
+                gas: Utils.Constants.DEFAULT_GAS
             });
             queryData = queryData.events.Incoming.returnValues;
         });
@@ -132,7 +125,7 @@ describe('Zap Dispatch Test"', () => {
                     onchainProvider: true,
                     onchainSubscriber: true,
                     from: accounts[2], // account that used for bond in booststrap function 
-                    gas: DEFAULT_GAS
+                    gas: Utils.Constants.DEFAULT_GAS
                 });
             } catch (e) {
                 await expect(e.toString()).to.include('revert');

@@ -6,14 +6,7 @@ const expect = require('chai')
     .use(require('chai-bignumber'))
     .expect;
 
-import {
-    migrateContracts,
-    startGanacheServer,
-    testZapProvider,
-    ganacheProvider ,
-    ganacheServerOptions,
-    getArtifacts
-} from "@zap/utils";
+import {Utils} from "@zap/utils";
 import {BaseContract,BaseContractType} from "@zap/basecontract"
 import {ZapRegistry} from '../src';
 
@@ -27,16 +20,17 @@ describe('Registry test', () => {
         registryWrapper:any,
         deployedStorage:any ,
         web3,
-        testArtifacts;
+        testArtifacts,
+        testZapProvider = Utils.Constants.testZapProvider;
     let buildDir:string = join(__dirname,"contracts");
 
     before(function (done) {
         configureEnvironment(async() => {
-            ganacheServer = await startGanacheServer();
-            web3 = new Web3(ganacheProvider);
+            ganacheServer = await Utils.startGanacheServer();
+            web3 = new Web3(Utils.Constants.ganacheProvider);
             accounts = await web3.eth.getAccounts();
             //delete require.cache[require.resolve('/contracts')];
-            await migrateContracts(join(__dirname,"contracts"));
+            await Utils.migrateContracts(join(__dirname,"contracts"));
             done();
         });
     });
@@ -45,12 +39,12 @@ describe('Registry test', () => {
         before(function(done){
             configureEnvironment(async ()=>{
                 //delete require.cache[require.resolve(join(__dirname,'contracts'))];
-                testArtifacts = getArtifacts(join(__dirname,"contracts"));
+                testArtifacts = Utils.getArtifacts(join(__dirname,"contracts"));
                 deployedStorage = new BaseContract({
                         artifactsDir : buildDir,
                         artifactName:"RegistryStorage",
-                        networkId: ganacheServerOptions.network_id,
-                        networkProvider: ganacheProvider
+                        networkId: Utils.Constants.ganacheServerOptions.network_id,
+                        networkProvider: Utils.Constants.ganacheProvider
                 });
                 done();
             })
@@ -58,8 +52,8 @@ describe('Registry test', () => {
         it("should be able to create registryWrapper", async ()=>{
             registryWrapper = new ZapRegistry({
                 artifactsDir : buildDir,
-                networkId: ganacheServerOptions.network_id,
-                networkProvider: ganacheProvider,
+                networkId: Utils.Constants.ganacheServerOptions.network_id,
+                networkProvider: Utils.Constants.ganacheProvider,
                 artifactName: "Registry"
             })
         })

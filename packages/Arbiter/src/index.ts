@@ -1,16 +1,16 @@
 import  {BaseContract,BaseContractType} from '@zap/basecontract';
 import {SubscriptionInit,SubscriptionEnd,Filter,SubscriptionType,txid} from "./types"
 const {toBN,utf8ToHex} = require ('web3-utils');
-import {DEFAULT_GAS} from "@zap/utils"
+import {Utils} from "@zap/utils"
 
-
+/**
+ * @class
+ * Provides interface to  Arbiter contract for managing subscriptions activities
+ */
 export class ZapArbiter extends BaseContract {
 
     /**
-     * Provides interface to  Arbiter contract for managing subscriptions activities
-     * @classdesc
-     * @constructs
-     *
+     * @constructor
      * @augments BaseContract
      * @param {string} artifactsDir
      * @param {string} networkId
@@ -23,7 +23,6 @@ export class ZapArbiter extends BaseContract {
 
     /**
      *Start subscription with a provider's endpoint
-     * @method
      * @param {address} provider
      * @param {string} endpoint
      * @param {Array<string>} endpoint_params
@@ -31,10 +30,10 @@ export class ZapArbiter extends BaseContract {
      * @param {number} provider's public key
      * @param {address} from: subscriber
      * @param {number} gas (optional)
-     * @returns {Promise<txid>} txid of init transaction
+     * @returns {Promise<txid>} txid of initiate transaction
      */
     async initiateSubscription(
-        {provider, endpoint, endpoint_params, blocks, pubkey, from, gas=DEFAULT_GAS} : SubscriptionInit):Promise<txid> {
+        {provider, endpoint, endpoint_params, blocks, pubkey, from, gas=Utils.Constants.DEFAULT_GAS} : SubscriptionInit):Promise<txid> {
         try {
             for (let i in endpoint_params){
                 endpoint_params[i] = utf8ToHex(endpoint_params[i]);
@@ -73,7 +72,7 @@ export class ZapArbiter extends BaseContract {
      * @param {number} gas
      * @returns {Promise<txid>} unsubscribe txid
      */
-    async endSubscriptionSubscriber({provider, endpoint, from, gas=DEFAULT_GAS}:SubscriptionEnd) :Promise<txid>{
+    async endSubscriptionSubscriber({provider, endpoint, from, gas=Utils.Constants.DEFAULT_GAS}:SubscriptionEnd) :Promise<txid>{
         let unSubscription:any
         unSubscription =  await this.contract.methods.endSubscriptionSubscriber(
             provider,
@@ -90,7 +89,7 @@ export class ZapArbiter extends BaseContract {
      * @param {number} gas
      * @returns {Promise<txid>}
      */
-    async endSubscriptionProvider({subscriber, endpoint, from, gas=DEFAULT_GAS}:SubscriptionEnd) :Promise<txid>{
+    async endSubscriptionProvider({subscriber, endpoint, from, gas=Utils.Constants.DEFAULT_GAS}:SubscriptionEnd) :Promise<txid>{
         let unSubscription:any;
         unSubscription= await this.contract.methods.endSubscriptionProvider(
             subscriber,

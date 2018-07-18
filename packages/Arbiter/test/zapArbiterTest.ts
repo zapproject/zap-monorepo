@@ -8,15 +8,7 @@ import {ZapArbiter} from "../src";
 const Web3  = require('web3');
 import {join} from 'path';
 
-import {
-    migrateContracts,
-    startGanacheServer,
-    testZapProvider,
-    ganacheProvider ,
-    ganacheServerOptions,
-    getArtifacts,
-    DEFAULT_GAS
-} from "@zap/utils";
+import {Utils} from "@zap/utils";
 
 async function configureEnvironment(func:Function) {
   await func();
@@ -33,15 +25,16 @@ describe('Arbiter Test', () => {
       ganacheServer:any,
       web3:any,
       options:any,
-      buildDir = join(__dirname,"contracts")
+      buildDir = join(__dirname,"contracts"),
+      testZapProvider = Utils.Constants.testZapProvider;
 
   before(function(done) {
     configureEnvironment(async() => {
-        ganacheServer = await startGanacheServer();
-        web3 = new Web3(ganacheProvider);
+        ganacheServer = await Utils.startGanacheServer();
+        web3 = new Web3(Utils.Constants.ganacheProvider);
         accounts = await web3.eth.getAccounts();
         //delete require.cache[require.resolve('/contracts')];
-        await migrateContracts(buildDir);
+        await Utils.migrateContracts(buildDir);
         done();
     });
   });
@@ -49,13 +42,13 @@ describe('Arbiter Test', () => {
   describe.only('Arbiter', function() {
     options = {
         artifactsDir: buildDir,
-        networkId: ganacheServerOptions.network_id,
-        networkProvider: ganacheProvider
+        networkId: Utils.Constants.ganacheServerOptions.network_id,
+        networkProvider: Utils.Constants.ganacheProvider
     };
 
     before(function(done){
       configureEnvironment(async() => {
-          testArtifacts = getArtifacts(buildDir);
+          testArtifacts = Utils.getArtifacts(buildDir);
           deployedBondage = new BaseContract(Object.assign(options, {artifactName: "Bondage"}));
           deployedRegistry = new BaseContract(Object.assign(options, {artifactName: "Registry"}));
           deployedToken = new BaseContract(Object.assign(options, {artifactName: "ZapToken"}));
@@ -65,7 +58,7 @@ describe('Arbiter Test', () => {
     });
 
     it("Should bootstrap conditions for Zap Arbiter",async ()=>{
-       await bootstrap(testZapProvider, accounts, deployedRegistry, deployedToken, deployedBondage);
+       await bootstrap(Utils.Constants.testZapProvider, accounts, deployedRegistry, deployedToken, deployedBondage);
     });
 
     it('Should initiate zapArbiter wrapper', function() {
@@ -78,16 +71,16 @@ describe('Arbiter Test', () => {
           endpoint: testZapProvider.endpoint,
           endpoint_params: testZapProvider.endpoint_params,
           blocks: 4,
-          pubkey: testZapProvider.pubkey,
+          pubkey: Utils.Constants.testZapProvider.pubkey,
           from: accounts[2],
-          gas: DEFAULT_GAS,
+          gas: Utils.Constants.DEFAULT_GAS,
       });
     });
     it("Should get subscription", async()=>{
         let subscription = await arbiterWrapper.getSubscription({
             provider:accounts[0],
             subscriber:accounts[2],
-            endpoint: testZapProvider.endpoint
+            endpoint: Utils.Constants.testZapProvider.endpoint
         })
         expect(subscription).to.have.keys("0","1","2","dots","blockStart","preBlockEnd")
         expect(subscription.dots).to.equal('4')
@@ -120,7 +113,7 @@ describe('Arbiter Test', () => {
               blocks: 4,
               pubkey: testZapProvider.pubkey,
               from: accounts[2],
-              gas: DEFAULT_GAS,
+              gas: Utils.Constants.DEFAULT_GAS,
           });
           await arbiterWrapper.endSubscriptionSubscriber({
               provider: accounts[0],

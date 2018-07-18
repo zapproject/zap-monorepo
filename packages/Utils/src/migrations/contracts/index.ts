@@ -1,5 +1,10 @@
 const {join,basename} =require("path");
 import {readdirSync} from 'fs'
+
+/**
+ * @ignore
+ * @returns {any}
+ */
 export function contracts(){
   let artifacts:any = {}
   readdirSync(__dirname).forEach(function (file) {

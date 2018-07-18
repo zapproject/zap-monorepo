@@ -1,7 +1,7 @@
 const {toHex,utf8ToHex,toBN, hexToUtf8} = require("web3-utils");
 import {BaseContract,BaseContractType} from "@zap/basecontract";
 import {Curve,CurveType} from "@zap/curve";
-import {DEFAULT_GAS} from "@zap/utils"
+import {Utils} from "@zap/utils"
 import {InitProvider, InitCurve, NextEndpoint, EndpointParams,txid,address,Filter} from "./types"
 
 /**
@@ -28,7 +28,7 @@ export class ZapRegistry extends BaseContract {
      * @param {BigNumber} gas
      * @returns {Promise<txid>}
      */
-    async initiateProvider({public_key, title, endpoint, endpoint_params, from, gas=DEFAULT_GAS}:InitProvider): Promise<txid>{
+    async initiateProvider({public_key, title, endpoint, endpoint_params, from, gas=Utils.Constants.DEFAULT_GAS}:InitProvider): Promise<txid>{
         let params:Array<string>;
         if(!endpoint_params) params = []
         else params = endpoint_params.map((item:string) =>{return utf8ToHex(item)});
@@ -49,7 +49,7 @@ export class ZapRegistry extends BaseContract {
      * @param {BigNumber} gas
      * @returns {Promise<txid>}
      */
-    async initiateProviderCurve({endpoint, curve, from, gas=DEFAULT_GAS}:InitCurve):Promise<txid> {
+    async initiateProviderCurve({endpoint, curve, from, gas=Utils.Constants.DEFAULT_GAS}:InitCurve):Promise<txid> {
         let convertedConstants = curve.constants.map((item:number) => {
             return toHex(item);
         });
@@ -75,7 +75,7 @@ export class ZapRegistry extends BaseContract {
      * @param {BigNumber} gas
      * @returns {Promise<txid>}
      */
-    async setEndpointParams({endpoint, endpoint_params, from, gas=DEFAULT_GAS}:EndpointParams) :Promise<txid>{
+    async setEndpointParams({endpoint, endpoint_params, from, gas=Utils.Constants.DEFAULT_GAS}:EndpointParams) :Promise<txid>{
       let params = endpoint_params ? endpoint_params.map(el =>{return utf8ToHex(el)}) : [];
         return await this.contract.methods.setEndpointParams(
             utf8ToHex(endpoint),

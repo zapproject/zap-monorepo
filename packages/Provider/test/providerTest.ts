@@ -15,16 +15,7 @@ const Web3  = require('web3');
 const {hexToUtf8} = require("web3-utils");
 import {join} from 'path';
 
-import {
-    migrateContracts,
-    startGanacheServer,
-    testZapProvider,
-    ganacheProvider ,
-    ganacheServerOptions,
-    getArtifacts,
-    DEFAULT_GAS,
-    toZapBase
-} from "@zap/utils";
+import {Utils} from "@zap/utils";
 
 async function configureEnvironment(func:Function) {
     await func();
@@ -45,23 +36,24 @@ describe('Zap Provider Test', () => {
         options:any,
         thisHandler:any,
         buildDir = join(__dirname,"contracts"),
-        providerAddress:string,subscriberAddress:string;
+        providerAddress:string,subscriberAddress:string,
+        testZapProvider = Utils.Constants.testZapProvider;
 
         options = {
             artifactsDir: buildDir,
-            networkId: ganacheServerOptions.network_id,
-            networkProvider: ganacheProvider
+            networkId: Utils.Constants.ganacheServerOptions.network_id,
+            networkProvider: Utils.Constants.ganacheProvider
         };
 
         before(function(done) {
             configureEnvironment(async () => {
-                ganacheServer = await startGanacheServer();
-                web3 = new Web3(ganacheProvider);
+                ganacheServer = await Utils.startGanacheServer();
+                web3 = new Web3(Utils.Constants.ganacheProvider);
                 accounts = await web3.eth.getAccounts();
                 providerAddress = accounts[2];
                 subscriberAddress = accounts[3]
                 //delete require.cache[require.resolve('/contracts')];
-                await migrateContracts(buildDir);
+                await Utils.migrateContracts(buildDir);
                 done();
 
             });
@@ -77,7 +69,7 @@ describe('Zap Provider Test', () => {
         it("Should allocate ZapToken to accounts",async ()=>{
             let zapTokenOwner = await zapToken.getContractOwner()
             for(let account of accounts){
-                await zapToken.allocate({to:account,amount:toZapBase(1000),from:zapTokenOwner})
+                await zapToken.allocate({to:account,amount:Utils.toZapBase(1000),from:zapTokenOwner})
             }
         });
         it("Should init zapProvider class",async ()=>{

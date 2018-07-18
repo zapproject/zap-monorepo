@@ -1,5 +1,4 @@
 import {join} from "path";
-import {DEFAULT_GAS} from "@zap/utils";
 
 const expect = require('chai')
 .use(require('chai-as-promised'))
@@ -10,14 +9,7 @@ const BigNumber = require('big-number');
 
 import {bootstrap} from "./utils/setup_test";
 
-import {
-    migrateContracts,
-    startGanacheServer,
-    testZapProvider,
-    ganacheProvider ,
-    ganacheServerOptions,
-    getArtifacts
-} from "@zap/utils";
+import {Utils} from "@zap/utils";
 import {BaseContract,BaseContractType} from "@zap/basecontract"
 import {ZapBondage} from '../src';
 
@@ -37,15 +29,16 @@ describe('Zap Bondage Test"', () => {
     testArtifacts,
     options:any,
     buildDir:string = join(__dirname,"contracts"),
-    requiredZap:number;
+    requiredZap:number,
+        testZapProvider = Utils.Constants.testZapProvider;
 
     before(function (done) {
         configureEnvironment(async() => {
-            ganacheServer = await startGanacheServer();
-            web3 =new Web3(ganacheProvider);
+            ganacheServer = await Utils.startGanacheServer();
+            web3 =new Web3(Utils.Constants.ganacheProvider);
             accounts = await web3.eth.getAccounts();
             //delete require.cache[require.resolve('/contracts')];
-            await migrateContracts(buildDir);
+            await Utils.migrateContracts(buildDir);
             done();
         });
     });
@@ -53,12 +46,12 @@ describe('Zap Bondage Test"', () => {
     describe('Bondage Test', () => {
         options = {
             artifactsDir: buildDir,
-            networkId: ganacheServerOptions.network_id,
-            networkProvider: ganacheProvider
+            networkId: Utils.Constants.ganacheServerOptions.network_id,
+            networkProvider: Utils.Constants.ganacheProvider
         };
         before(function (done) {
             configureEnvironment(async () => {
-                testArtifacts = getArtifacts(buildDir);
+                testArtifacts = Utils.getArtifacts(buildDir);
                 deployedBondage = new BaseContract(Object.assign(options, {artifactName: "Bondage"}));
                 deployedRegistry = new BaseContract(Object.assign(options, {artifactName: "Registry"}));
                 deployedToken = new BaseContract(Object.assign(options, {artifactName: "ZapToken"}));
@@ -102,7 +95,7 @@ describe('Zap Bondage Test"', () => {
             let approval = await deployedToken.contract.methods.allowance(accounts[2],deployedBondage.contract._address).call().valueOf();
 
             // approve
-            await deployedToken.contract.methods.approve(deployedBondage.contract._address,requiredZap).send({from:accounts[2],gas:DEFAULT_GAS});
+            await deployedToken.contract.methods.approve(deployedBondage.contract._address,requiredZap).send({from:accounts[2],gas:Utils.Constants.DEFAULT_GAS});
             
             let bonded = await bondageWrapper.bond({
                 provider:accounts[0],
@@ -146,7 +139,7 @@ describe('Zap Bondage Test"', () => {
         it("10) Check that issued dots will increase with every bond", async() => {
             let startDots = await bondageWrapper.getBoundDots({subscriber:accounts[2],provider:accounts[0],endpoint:testZapProvider.endpoint});
 
-            await deployedToken.contract.methods.approve(deployedBondage.contract._address,50).send({from:accounts[2],gas:DEFAULT_GAS});
+            await deployedToken.contract.methods.approve(deployedBondage.contract._address,50).send({from:accounts[2],gas:Utils.Constants.DEFAULT_GAS});
             let bonded = await bondageWrapper.bond({
                 provider:accounts[0],
                 endpoint:testZapProvider.endpoint,

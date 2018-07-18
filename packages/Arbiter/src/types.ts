@@ -1,7 +1,8 @@
 const DEFAULT_GAS = 400000
+/** ethereum address */
 export type address = string
 export type txid = string
-export type SubscriptionInit = {
+export interface SubscriptionInit {
     provider:address,
     endpoint :string,
     endpoint_params: Array<string>,
@@ -11,7 +12,7 @@ export type SubscriptionInit = {
     gas?: number
 }
 
-export type SubscriptionEnd = {
+export interface SubscriptionEnd {
     provider?:address,
     subscriber ?:address,
     endpoint : string,
@@ -27,7 +28,7 @@ export interface Filter {
     terminator ?:address
 }
 
-export type SubscriptionType = {
+export interface SubscriptionType {
     provider:address,
     subscriber:address,
     endpoint:string

@@ -1,5 +1,5 @@
 import {BaseContract,BaseContractType} from "@zap/basecontract";
-import {toZapBase, fromZapBase,DEFAULT_GAS} from "@zap/utils";
+import {Utils} from "@zap/utils";
 import {TransferType,address,txid} from "./types";
 
 /**
@@ -25,7 +25,7 @@ export class ZapToken extends BaseContract {
      */
     async balanceOf(address:address) :Promise<number>{
         let balance = await this.contract.methods.balanceOf(address).call();
-        return fromZapBase(balance);
+        return Utils.fromZapBase(balance);
     }
 
     /**
@@ -36,8 +36,8 @@ export class ZapToken extends BaseContract {
      * @param {number} gas
      * @returns {Promise<txid>}
      */
-    async send({to, amount, from,gas=DEFAULT_GAS}:TransferType) :Promise<txid>{
-        let bigAmount = toZapBase(amount);
+    async send({to, amount, from,gas=Utils.Constants.DEFAULT_GAS}:TransferType) :Promise<txid>{
+        let bigAmount = Utils.toZapBase(amount);
         return await this.contract.methods.transfer(to, bigAmount).send({from,gas});
     }
 
@@ -49,8 +49,8 @@ export class ZapToken extends BaseContract {
      * @param {number} gas
      * @returns {Promise<txid>}
      */
-    async allocate({to, amount, from,gas=DEFAULT_GAS}:TransferType):Promise<txid> {
-        let bigAmount = toZapBase(amount)
+    async allocate({to, amount, from,gas=Utils.Constants.DEFAULT_GAS}:TransferType):Promise<txid> {
+        let bigAmount = Utils.toZapBase(amount)
         return await this.contract.methods.allocate(to, bigAmount).send({from,gas});
     }
 
@@ -62,7 +62,7 @@ export class ZapToken extends BaseContract {
      * @param {number} gas
      * @returns {Promise<txid>}
      */
-    async approve({to, amount, from, gas=DEFAULT_GAS}:TransferType):Promise<txid> {
+    async approve({to, amount, from, gas=Utils.Constants.DEFAULT_GAS}:TransferType):Promise<txid> {
         const success = await this.contract.methods.approve(to, amount).send({from,gas});
         if (!success) {
             throw new Error('Failed to approve Bondage transfer');

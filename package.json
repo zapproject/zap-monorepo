@@ -14,8 +14,10 @@
     "run_test": "run-s build test"
   },
   "dependencies": {
+    "@compodoc/compodoc": "^1.1.3",
     "@types/chai": "^4.1.4",
     "@types/mocha": "^5.2.4",
+    "bignumber.js": "^7.2.1",
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
     "chai-bignumber": "^2.0.2",
@@ -30,7 +32,12 @@
     "truffle-resolver": "^4.0.4",
     "ts-node": "^7.0.0",
     "tslint": "^5.10.0",
+    "type2docfx": "^0.9.100",
+    "typedoc": "^0.11.1",
+    "typedoc-clarity-theme": "^1.1.0",
+    "typedoc-markdown-theme": "0.0.4",
     "typescript": "^2.9.2",
+    "typescript-docs": "^1.0.1",
     "web3": "^1.0.0-beta.34",
     "web3-utils": "^1.0.0-beta.34",
     "zap_contracts": "git+https://github.com/zapproject/zap-ethereum-api.git"
