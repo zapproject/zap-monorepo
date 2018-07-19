@@ -4,28 +4,28 @@ import {Utils} from "@zap/utils";
 const {toBN,utf8ToHex} = require ("web3-utils");
 
 /**
- * Provides interface to Dispatch contract
+ * Provides an interface to the Dispatch contract for enabling data queries and responses.
  * @extends BaseContract
- * @param {string} artifactsDir
- * @param {number} networkId
- * @param networkProvider : Ethereum provider instance
+ * @param {string} artifactsDir Directory where contract ABIs are located
+ * @param {number} networkId Select which network the contract is located on (mainnet, testnet, private)
+ * @param networkProvider Ethereum network provider (e.g. Infura)
  */
 export class ZapDispatch extends BaseContract {
     constructor({artifactsDir=undefined,networkId=undefined,networkProvider=undefined}:BaseContractType){
         super({artifactsDir,artifactName:"Dispatch",networkId,networkProvider});
     }
 
-    /**
-     * Subscriber query data to a provider's endpoint
-     * @param {address} provider
-     * @param {string} query
-     * @param {string} endpoint
-     * @param {Array<string>} endpointParams
-     * @param {boolean} onchainProvider
-     * @param {boolean} onchainSubscriber
-     * @param {address} from
-     * @param {BigNumber} gas
-     * @returns {Promise<txid>} txid of query transaction
+   /**
+     * Queries data from a subscriber to a given provider's endpoint, passing in a query string and endpoint parameters that will be processed by the oracle.
+     * @param {address} provider Address of the data provider
+     * @param {string} query Subscriber given query string to be handled by provider
+     * @param {string} endpoint Data endpoint of provider, meant to determine how query is handled
+     * @param {Array<string>} endpointParams Parameters passed to data provider's endpoint
+     * @param {boolean} onchainProvider True if provider is a smart contract
+     * @param {boolean} onchainSubscriber True if subscriber is a smart contract
+     * @param {address} from Address of the subscriber
+     * @param {BigNumber} gas Set the gas limit for this transaction (optional)
+     * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
     async queryData({provider, query, endpoint, endpointParams, onchainProvider, onchainSubscriber,from,gas=Utils.Constants.DEFAULT_GAS}:QueryArgs):Promise<txid>{
         if(endpointParams.length > 0) {
@@ -48,12 +48,12 @@ export class ZapDispatch extends BaseContract {
 
     /**
      * Provider responds to a query it received
-     * @param {string} queryId
-     * @param {Array<string>} responseParams
-     * @param {boolean} dynamic number of responses string
-     * @param {address} from : provider
-     * @param {BigNumber} gas
-     * @returns {Promise<txid>} txid of respond method
+     * @param {string} queryId A unique identifier for the query
+     * @param {Array<string>} responseParams List of responses returned by provider. Length determines which dispatch response is called
+     * @param {boolean} dynamic Determines if the Bytes32Array dispatch response should be used
+     * @param {address} from Address of the provider calling the respond function
+     * @param {BigNumber} gas Set the gas limit for this transaction (optional)
+     * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
     async respond({queryId, responseParams, dynamic, from,gas=Utils.Constants.DEFAULT_GAS}:ResponseArgs) :Promise<txid>{
         if (dynamic){
@@ -97,9 +97,9 @@ export class ZapDispatch extends BaseContract {
     // === Events ===//
 
     /**
-     * Listen for all events with filters
-     * @param {Filter} filters
-     * @param {Function} callback
+     * Listen for all Dispatch contract events based on an optional filter, executing a callback function when it matches the filter.
+     * @param {Filter} filters Filters events based on certain key parameters
+     * @param {Function} callback Callback function that is called whenever an event is emitted
      */
     listen(filters :Filter, callback:Function):void {
         this.contract.events.allEvents(
@@ -109,27 +109,27 @@ export class ZapDispatch extends BaseContract {
     }
 
     /**
-     * Listen to Query Incoming events with filters
-     * @param {object} filters
-     * @param {Function} callback
+     * Listen for "Incoming" Dispatch contract events based on an optional filter, executing a callback function when it matches the filter.
+     * @param {object} filters Filters events based on certain key parameters
+     * @param {Function} callback Callback function that is called whenever an event is emitted
      */
     listenIncoming(filters:object ={}, callback:Function):void{
         this.contract.events.Incoming(filters, callback);
     }
 
     /**
-     * Listen to FUlFill Query when providers respond
-     * @param {object} filters
-     * @param {Function} callback
+     * Listen for "FulfillQuery" Dispatch contract events based on an optional filter, executing a callback function when it matches the filter.
+     * @param {object} filters Filters events based on certain key parameters
+     * @param {Function} callback Callback function that is called whenever an event is emitted
      */
     listenFulfillQuery(filters:object={}, callback:Function):void{
         this.contract.events.FulfillQuery(filters, callback);
     }
 
     /**
-     * Listen to Offchain responses from providers
-     * @param {object} filters
-     * @param {Function} callback
+     * Listen for "OffchainResponse" Dispatch contract events based on an optional filter, executing a callback function when it matches the filter.
+     * @param {object} filters Filters events based on certain key parameters
+     * @param {Function} callback Callback function that is called whenever an event is emitted
      */
     listenOffchainResponse(filters:object={}, callback:Function):void{
         this.contract.events.OffchainResponse(filters, callback);
