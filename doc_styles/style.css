@@ -1,0 +1,37 @@
+@import "./reset.css";
+@import "./bootstrap.min.css";
+@import "./bootstrap-card.css";
+@import "./font-awesome.min.css";
+@import "./compodoc.css";
+@import "./prism.css";
+@import "./tablesort.css";
+
+.simple {
+    color: #0078FE;
+    font-weight: bold;
+}
+
+.menu ul.list li a.active {
+    color: #61CFFF;
+}
+
+code {
+    background: white;
+}
+
+
+/* CODE STYLING */
+.tab-source-code pre {
+    background: white;
+}
+
+.hljs-line-numbers {
+    color: #0078FE;
+    padding-right: 5px;
+    margin-right: 5px;
+}
+
+.hljs-comment {
+    color: #61CFFF;
+}
+

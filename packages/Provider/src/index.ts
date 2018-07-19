@@ -10,8 +10,11 @@ import {ZapArbiter} from "@zap/arbiter";
 const {hexToUtf8} = require("web3-utils");
 const EventEmitter = require('events');
 
-
-export class ZapProvider  {
+/**
+ * @class
+ * Represents an offchain Provider and provides an interface to the appropriate smart contracts.
+ */
+ export class ZapProvider  {
     providerOwner:string;
     handler : ProviderHandler;
     zapDispatch : ZapDispatch;
@@ -33,124 +36,125 @@ export class ZapProvider  {
         this.curve = undefined;
         this.title = "";
         this.pubkey = '';
-
     }
 
-
     /**
-     *Call ZapRegistry to create a new provider in Registry contract
-     * @param {string} public_key
-     * @param {string} title
-     * @param {string} endpoint
-     * @param {Array<string>} endpoint_params
-     * @returns {Promise<txid>}
+     * Calls the Registry contract to initialize a new provider endpoint. This needs to be called for each endpoint. 
+     * @param {string} public_key A public identifier for this oracle
+     * @param {string} title A descriptor describing what data this oracle provides
+     * @param {string} endpoint The endpoint identifier
+     * @param {Array<string>} endpoint_params The parameters that this endpoint accepts as query arguments
+     * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-    async initiateProvider({public_key, title, endpoint, endpoint_params}:InitProvider):Promise<txid> {
+     async initiateProvider({public_key, title, endpoint, endpoint_params}:InitProvider):Promise<txid> {
         assert(Array.isArray(endpoint_params), 'endpointParams need to be an array');
         return await this.zapRegistry.initiateProvider(
             {public_key, title, endpoint, endpoint_params, from:this.providerOwner});
     }
 
     /**
-     * Initiate Curve for an endpoint
-     * @param {string} endpoint
-     * @param {number[]} constants
-     * @param {number[]} parts
-     * @param {number[]} dividers
-     * @returns {Promise<txid>}
+     * Calls the Registry contract to initialize a new Curve for a given endpoint. See Curve for more information on encoding.
+     * @param {string} endpoint The endpoint identifier matching the created endpoint
+     * @param {number[]} constants The constants array for this curve, setting the coefficients, powers, and functions for each term.
+     * @param {number[]} parts The parts array that defines the ranges that each piece applies to.
+     * @param {number[]} dividers The dividers array that demarcates each piecewise piece
+     * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-    async initiateProviderCurve({endpoint, constants, parts, dividers}: InitCurve) :Promise<txid>{
+     async initiateProviderCurve({endpoint, constants, parts, dividers}: InitCurve) :Promise<txid>{
         let curve = new Curve(constants, parts, dividers)
-        // console.log("converted : ", convertedConstants);
         let txid = await this.zapRegistry.initiateProviderCurve({endpoint, curve, from: this.providerOwner});
-        assert(txid, 'fail to init curve ');
+        assert(txid, 'Failed to init curve.');
         this.curve = new Curve(constants, parts, dividers);
         return txid;
-
     }
 
     /**
-     * Get title of this provider from Registry contract
-     * @returns {Promise<string>}
+     * Gets the title of this provider from the Registry contract.
+     * @returns {Promise<string>} Returns a Promise that will eventually resolve into the title of this provider.
      */
-    async getTitle():Promise<string> {
+     async getTitle():Promise<string> {
         let title:string;
         if (this.title) return this.title;
         title = await this.zapRegistry.getProviderTitle(this.providerOwner);
         this.title = title;
         return title;
-        }
-
-
-    /**
-     * Get public key of this provider from Registry contract
-     * @returns {Promise<string>}
-     */
-    async getPubkey():Promise<string|number> {
-            if (this.pubkey) return this.pubkey;
-            let pubkey = await this.zapRegistry.getProviderPublicKey(this.providerOwner);
-            this.pubkey = pubkey;
-            return pubkey;
     }
 
+    /**
+     * Gets the public key of this provider from the Registry contract.
+     * @returns {Promise<string>} Returns a Promise that will eventually resolve into the public key of this provider.
+     */
+     async getPubkey():Promise<string|number> {
+        if (this.pubkey) return this.pubkey;
+        let pubkey = await this.zapRegistry.getProviderPublicKey(this.providerOwner);
+        this.pubkey = pubkey;
+        return pubkey;
+    }
 
     /**
-     * Get Curve of an owned endpoint
-     * @param {string} endpoint
-     * @returns {Promise<CurveType>}
+     * Gets the Curve of a defined endpoint from the Registry contract.
+     * @param {string} endpoint The endpoint identifier matching the desired endpoint
+     * @returns {Promise<CurveType>} Returns a Promise that will eventually resolve into the Curve of this provider's endpoint.
      */
-    async getCurve(endpoint:string):Promise<CurveType> {
+     async getCurve(endpoint:string):Promise<CurveType> {
         if (this.curve) return this.curve;
         let curve = await this.zapRegistry.getProviderCurve(this.providerOwner, endpoint);
         this.curve = curve;
         return curve;
     }
 
-
     /**
-     * Get amount Zap bound to an owned endpoint
-     * @param {string} endpoint
-     * @returns {Promise<number>} number of Zap Token bound
+     * Gets the total amount of Zap bound to a given endpoint.
+     * @param {string} endpoint The endpoint identifier matching the desired endpoint
+     * @returns {Promise<number>} Returns a Promise that will eventually resolve into an integer amount of Zap (wei). 
      */
-    async getZapBound(endpoint:string):Promise<number> {
+     async getZapBound(endpoint:string):Promise<number> {
         assert(endpoint, 'endpoint required');
         return await this.zapBondage.getZapBound({
             provider: this.providerOwner, endpoint:endpoint});
     }
 
     /**
-     *
-     * @param endpoint
-     * @param dots
-     * @returns {Promise<number>}
+     * Gets the total amount of Zap required to bond x dots.
+     * @param endpoint The endpoint identifier matching the desired endpoint
+     * @param dots Number of dots that is desired.
+     * @returns {Promise<number>} Returns a Promise that will eventually resolve into an integer amount of Zap (wei). 
      */
-    async getZapRequired({endpoint, dots}:{endpoint:string,dots:number}):Promise<number> {
+     async getZapRequired({endpoint, dots}:{endpoint:string,dots:number}):Promise<number> {
         return await this.zapBondage.calcZapForDots({provider: this.providerOwner, endpoint, dots});
     }
 
-
     /**
-     * Calculate number of dots that subscriber can use for inquired number of Zap Tokens
-     * @param {string} endpoint
-     * @param {number} zapNum
-     * @returns {Promise<number>} number of dots subscriber can get
+     * Calculate the total number of dots that the subscriber can receive for a given amount of Zap.
+     * @param {string} endpoint The endpoint identifier matching the desired endpoint 
+     * @param {number} zapNum Amount of Zap (wei) to calculate dots for
+     * @returns {Promise<number>} Returns a Promise that will eventually resolve into an integer number of dots.
      */
-    async calcDotsForZap({endpoint, zapNum}:{endpoint:string, zapNum:number}): Promise<number> {
-        let res = await this.zapBondage.calcBondRate({
+     async calcDotsForZap({endpoint, zapNum}:{endpoint:string, zapNum:number}): Promise<number> {
+        return await this.zapBondage.calcBondRate({
             provider: this.providerOwner,
             endpoint,
             zapNum});
-        return res;
     }
 
+    /**
+     * Responds to a specific query from the subscriber by identifying a 
+     * @param {string} queryId The query identifier to send this response to
+     * @param {string[]} responseParams List of responses returned by provider. Length determines which dispatch response is called
+     * @param {boolean} dynamic True if the response contains a dynamic bytes32 array
+     * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
+     */
+     async respond({queryId, responseParams, dynamic}:Respond):Promise<string>{
+        return await this.zapDispatch.respond({queryId, responseParams, dynamic, from: this.providerOwner});
+    }
 
     /**
-     * listen to new subscription events to this provider, managed by Arbiter contract
-     * @param {string} subscriber
+     * Listen for start subscription events from the Arbiter contract.
+     * @param {string} subscriber 
      * @param {number} fromBlock
-     * @returns {Promise<void>}
+     * @returns {Promise<void>} 
      */
-    async listenSubscribes({subscriber, fromBlock}:{subscriber:string, fromBlock: number}):Promise<void> {
+     async listenSubscribes({subscriber, fromBlock}:{subscriber:string, fromBlock: number}):Promise<void> {
         let callback = (error:any, result:string) => {
             if (error) {
                 console.error(error);
@@ -168,10 +172,10 @@ export class ZapProvider  {
      *Listen to unsubscription events to this provider, managed by Arbiter contract
      * @param {string} subscriber
      * @param {string} terminator : address that call unsubscribe, this can be subscriber or provider
-     * @param {number} fromBlock
+     * @param {number} fromBlock 
      * @returns {Promise<void>}
      */
-    async listenUnsubscribes({subscriber, terminator, fromBlock}:UnsubscribeListen) :Promise<void>{
+     async listenUnsubscribes({subscriber, terminator, fromBlock}:UnsubscribeListen) :Promise<void>{
         let callback = (error:Error, result:string) => {
             if (error) {
                 console.log(error);
@@ -187,12 +191,12 @@ export class ZapProvider  {
 
     /**
      * Listen to Queries events, managed by Dispatch contract
-     * @param {string} queryId
+     * @param {string} queryId The query ID 
      * @param {address} subscriber
      * @param {number} fromBlock
      * @returns {Promise<void>}
      */
-    async listenQueries({fromBlock}:ListenQuery) :Promise<void> {
+     async listenQueries({fromBlock}:ListenQuery) :Promise<void> {
         let callback = (error:any, result:string) => {
             if (error) {
                 console.error(error);
@@ -204,17 +208,6 @@ export class ZapProvider  {
         return this.zapDispatch.listenIncoming(
             {provider: this.providerOwner, fromBlock},
             callback);
-    }
-
-    /**
-     * Respond to a query
-     * @param {string} queryId
-     * @param {string[]} responseParams
-     * @param {boolean} dynamic number of responses or not
-     * @returns {Promise<any>}
-     */
-    async respond({queryId, responseParams, dynamic}:Respond):Promise<string>{
-        return await this.zapDispatch.respond({queryId, responseParams, dynamic, from: this.providerOwner});
     }
 
 }

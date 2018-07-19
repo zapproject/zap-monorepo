@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "zapSdk",
+  "name": "Zap Node SDK",
   "engines": {
     "node": ">=6.12"
   },

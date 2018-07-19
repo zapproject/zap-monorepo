@@ -32,7 +32,7 @@ export class ZapBondage extends BaseContract {
      * @param {string} endpoint Data endpoint of the provider
      * @param {number} zapNum Number of zap to bond to this provider (Units: 1 wei Zap = 10^-18 Zap)
      * @param {address} from Address of the data subscriber
-     * @param {number} gas Set the gas limit for this transaction (optional)
+     * @param {number} gas Sets the gas limit for this transaction (optional)
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
     public async bond({provider, endpoint, zapNum, from, gas= Utils.Constants.DEFAULT_GAS}: BondArgs): Promise<txid> {
@@ -50,9 +50,9 @@ export class ZapBondage extends BaseContract {
      * Unbonds a given number of dots from a provider's endpoint and transfers the appropriate amount of Zap to the subscriber.
      * @param {address} provider Address of the data provider
      * @param {string} endpoint Data endpoint of the provider
-     * @param {number} dots
+     * @param {number} dots The number of dots to unbond from the contract
      * @param {address} from Address of the data subscriber
-     * @param {number} gas Set the gas limit for this transaction (optional)
+     * @param {number} gas Sets the gas limit for this transaction (optional)
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
     public async unbond({provider, endpoint, dots, from, gas= Utils.Constants.DEFAULT_GAS}: UnbondArgs): Promise<txid> {
@@ -116,7 +116,7 @@ export class ZapBondage extends BaseContract {
      * @param {address} provider Address of the data provider
      * @param {string} endpoint Data endpoint of the provider
      * @param {number} dots : dots that subscriber want to use
-     * @returns {Promise<number>} : Price of inquired dots
+     * @returns {Promise<number>} Returns a Promise that will eventually resolve into a price (in Zap wei)
      */
     public async currentCostOfDot({provider, endpoint, dots}: BondageArgs): Promise<number> {
         return this.contract.methods.currentCostOfDot(
@@ -130,7 +130,7 @@ export class ZapBondage extends BaseContract {
      * Gets the total number of dots that have been issued by a provider's endpoint.
      * @param {address} provider Address of the data provider
      * @param {string} endpoint Data endpoint of the provider
-     * @returns {Promise<number>} : number of issued dots
+     * @returns {Promise<number>} Returns a Promise that will eventually resolve into an integer number of dots
      */
     public async getDotsIssued({provider, endpoint}: BondageArgs): Promise<number> {
         const issuedDots = await  this.contract.methods.getDotsIssued(
@@ -145,7 +145,7 @@ export class ZapBondage extends BaseContract {
      * @function
      * @param {address} provider Address of the data provider
      * @param {string} endpoint Data endpoint of the provider
-     * @returns {Promise<number>} number of bound Zap tokens
+     * @returns {Promise<number>} Returns a Promise that will eventually resolve into an integer amount of Zap (wei)
      */
     public async getZapBound({provider, endpoint}: BondageArgs ): Promise<number> {
         const zapBound =  this.contract.methods.getZapBound(

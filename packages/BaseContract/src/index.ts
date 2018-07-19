@@ -5,8 +5,8 @@ import {BaseContractType} from "./types";
 import {Utils} from "@zap/utils"
 
 /**
- * Parent Class to Dispatch, Bondage, Arbiter, Token, Registry class
- * Provide access to contract instance and web3 provider instance
+ * Parent Class to Dispatch, Bondage, Arbiter, Token, Registry classes
+ * Provides access to contract instances and the Web3 provider instance
  */
 export class BaseContract{
     provider : any;
