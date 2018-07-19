@@ -48,3 +48,6 @@ docs/
 packages/**/*.js
 packages/**/*.d.ts
 packages/**/*.map
+example/**/*.js
+example/**/*.d.ts
+example/**/*.map
