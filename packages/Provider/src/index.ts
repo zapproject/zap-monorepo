@@ -163,7 +163,7 @@ const EventEmitter = require('events');
         };
 
         return this.zapArbiter.listenSubscriptionStart(
-            {provider: this.providerOwner, subscriber},
+            {provider: this.providerOwner},
             callback);
     }
 
