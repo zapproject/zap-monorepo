@@ -72,6 +72,8 @@ npm run run_test
 npm install `@zap/provider`
 ```
 ```
+import {ZapProvider, ProviderHandler} from '@zap/provider';
+
 class myHandler implements ProviderHander{
     handleIncoming(res:any){
     }
@@ -84,8 +86,6 @@ class myHandler implements ProviderHander{
 }
 ```
 ```
-import {ZapProvider, ProviderHandler} from '@zap/provider';
-
 let myZapProvider = new ZapProvider({owner:address,handler:new myHandler()})
 
 
@@ -111,13 +111,13 @@ await myZapProvider.initiateProviderCurve({
 ```
 
 ### See more Usages of each packages :
-* [Provider] ()
-* [Subscriber] ()
-* [Register] ()
-* [Bondage] ()
-* [Dispatch] ()
-* [Arbiter] ()
-* [ZapToken] ()
+* [Provider]()
+* [Subscriber]()
+* [Register]()
+* [Bondage]()
+* [Dispatch]()
+* [Arbiter]()
+* [ZapToken]()
 
 
 ## Built With
@@ -126,7 +126,7 @@ await myZapProvider.initiateProviderCurve({
 * [Typescript](https://www.typescriptlang.org/) 
 * [Mocha](https://mochajs.org/) 
 * [Truffle](https://truffleframework.com/)
-* [Ganache] (https://truffleframework.com/ganache)
+* [Ganache](https://truffleframework.com/ganache)
 
 ## Contributing
 
