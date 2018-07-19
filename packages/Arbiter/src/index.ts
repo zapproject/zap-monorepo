@@ -5,32 +5,32 @@ import {Utils} from "@zap/utils"
 
 /**
  * @class
- * Provides interface to  Arbiter contract for managing subscriptions activities
+ * Provides an interface to the Arbiter contract for managing temporal subscriptions to oracles.
  */
 export class ZapArbiter extends BaseContract {
 
     /**
+     * Initializes a subclass of BaseContract that can access the methods of the Arbiter contract.
      * @constructor
      * @augments BaseContract
-     * @param {string} artifactsDir
-     * @param {string} networkId
-     * @param  networkProvider : Ethereum network provider
+     * @param {string} artifactsDir Directory where contract ABIs are located
+     * @param {string} networkId Select which network the contract is located on (mainnet, testnet, private)
+     * @param  networkProvider Ethereum network provider (e.g. Infura)
      */
     constructor({artifactsDir, networkId,networkProvider}:BaseContractType){
         super({artifactsDir,artifactName:'Arbiter',networkId,networkProvider});
     }
 
-
     /**
-     *Start subscription with a provider's endpoint
-     * @param {address} provider
-     * @param {string} endpoint
-     * @param {Array<string>} endpoint_params
-     * @param {number} blocks that subscription will last
-     * @param {number} provider's public key
-     * @param {address} from: subscriber
-     * @param {number} gas (optional)
-     * @returns {Promise<txid>} txid of initiate transaction
+     * Initializes a subscription with a given provider, endpoint, and endpoint parameters.
+     * @param {address} provider Address of the data provider
+     * @param {string} endpoint Data endpoint of the provider
+     * @param {Array<string>} endpoint_params Params passed to endpoint
+     * @param {number} blocks Number of blocks that the subscription will last for
+     * @param {number} provider Public key of provider
+     * @param {address} from Subscriber's address
+     * @param {number} gas Set the gas limit for this transaction (optional)
+     * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
     async initiateSubscription(
         {provider, endpoint, endpoint_params, blocks, pubkey, from, gas=Utils.Constants.DEFAULT_GAS} : SubscriptionInit):Promise<txid> {
@@ -51,26 +51,26 @@ export class ZapArbiter extends BaseContract {
     }
 
     /**
-     * @func Get Subscription of a subscriber for a provider's endpoint
-     * @param {address} provider
-     * @param {address} subscriber
-     * @param {string} endpoint
-     * @returns {Promise<string>} Subscription Information
+     * Gets the subscription status for a given provider, subscriber, and endpoint.
+     * @func getSubscription 
+     * @param {address} provider Address of the data provider
+     * @param {address} subscriber Address of the subscriber
+     * @param {string} endpoint Data endpoint of the provider
+     * @returns {Promise<string>} Returns a Promise that will eventually resolve into information on the currently active subscription
      */
     async getSubscription({provider,subscriber,endpoint}:SubscriptionType){
         let subscription = await this.contract.methods.getSubscription(provider,subscriber,utf8ToHex(endpoint)).call();
-        console.log("subscription result : ",subscription)
-         return subscription
-
+        //console.log("Subscription result : ",subscription)
+        return subscription
     }
 
     /**
-     * @func Subscriber ends subscription for a provider's endpoint
-     * @param {address} provider
-     * @param {string} endpoint
-     * @param {address} from : subscriber
-     * @param {number} gas
-     * @returns {Promise<txid>} unsubscribe txid
+     * Ends a currently active subscription for a given subscriber and endpoint from the subscriber.
+     * @param {address} provider Address of the data provider
+     * @param {string} endpoint Data endpoint of the provider
+     * @param {address} from Address of the subscriber
+     * @param {number} gas Gas limit of this transaction
+     * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
     async endSubscriptionSubscriber({provider, endpoint, from, gas=Utils.Constants.DEFAULT_GAS}:SubscriptionEnd) :Promise<txid>{
         let unSubscription:any
@@ -82,12 +82,12 @@ export class ZapArbiter extends BaseContract {
     }
 
     /**
-     * @func Provider can end subscription of a subscriber
-     * @param {address} subscriber
-     * @param {string} endpoint
-     * @param {address} from : provider
-     * @param {number} gas
-     * @returns {Promise<txid>}
+     * Ends a currently active subscription for a given subscriber and endpoint from the provider.
+     * @param {address} subscriber Address of the subscriber
+     * @param {string} endpoint Data endpoint of the provider
+     * @param {address} from Address of the provider
+     * @param {number} gas Gas limit of this transaction
+     * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
     async endSubscriptionProvider({subscriber, endpoint, from, gas=Utils.Constants.DEFAULT_GAS}:SubscriptionEnd) :Promise<txid>{
         let unSubscription:any;
@@ -99,9 +99,9 @@ export class ZapArbiter extends BaseContract {
 }
 
     /**
-     *@func  Listen to unsubscribe events , with or without filters
-     * @param {Filter} filters object
-     * @param {Function} callback
+     * Listen for "DataSubscriptionEnd" unsubscription events with an optional Filter, executing a callback function when it matches the filter.
+     * @param {Filter} filters Filters events based on certain key parameters (optional)
+     * @param {Function} callback Callback function that is called when subscription is ended
      */
     listenSubscriptionEnd(filters:Filter={}, callback:Function){
         try {
@@ -119,9 +119,9 @@ export class ZapArbiter extends BaseContract {
     }
 
     /**
-     * @func Listen to subscribe events, with or without filters
-     * @param {Filter} filters
-     * @param {Function} callback
+     * Listen for "DataPurchase" subscription events with an optional Filter, executing a callback function when it matches the filter.
+     * @param {Filter} filters Filters events based on certain key parameters (optional)
+     * @param {Function} callback Callback function that is called when subscription is started
      */
     listenSubscriptionStart(filters:Filter ={}, callback:Function){
         try {
@@ -139,9 +139,9 @@ export class ZapArbiter extends BaseContract {
 
 
     /**
-     * @func Listen to all Arbiter contract's events based on filters
-     * @param {Filter} filter
-     * @param {Function} callback
+     * Listen for all Arbiter contract events based on a given filter.
+     * @param {Filter} filter Filters events based on certain key parameters
+     * @param {Function} callback Callback function that is called whenever an event is emitted
      */
     listen(callback:Function){
         return this.contract.events.allEvents({fromBlock: 0, toBlock: 'latest'}, callback);
