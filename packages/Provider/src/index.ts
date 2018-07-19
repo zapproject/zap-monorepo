@@ -150,11 +150,10 @@ const EventEmitter = require('events');
 
     /**
      * Listen for start subscription events from the Arbiter contract.
-     * @param {string} subscriber 
-     * @param {number} fromBlock
-     * @returns {Promise<void>} 
+     * @param {number} fromBlock The block number to start listening from
+     * @returns {Promise<void>} Returns a promise that will eventually resolve when the callback as been set
      */
-     async listenSubscribes({subscriber, fromBlock}:{subscriber:string, fromBlock: number}):Promise<void> {
+     async listenSubscribes({fromBlock}:{fromBlock: number}):Promise<void> {
         let callback = (error:any, result:string) => {
             if (error) {
                 console.error(error);
@@ -169,13 +168,12 @@ const EventEmitter = require('events');
     }
 
     /**
-     *Listen to unsubscription events to this provider, managed by Arbiter contract
-     * @param {string} subscriber
-     * @param {string} terminator : address that call unsubscribe, this can be subscriber or provider
-     * @param {number} fromBlock 
-     * @returns {Promise<void>}
+     * Listen to unsubscription events emitted by the Arbiter contract.
+     * @param {string} terminator The adddress that call the unsubscribe. Can be subscriber or provider
+     * @param {number} fromBlock The block number to start listening from
+     * @returns {Promise<void>} Returns a promise that will eventually resolve when the callback as been set
      */
-     async listenUnsubscribes({subscriber, terminator, fromBlock}:UnsubscribeListen) :Promise<void>{
+     async listenUnsubscribes({terminator, fromBlock}:UnsubscribeListen) :Promise<void>{
         let callback = (error:Error, result:string) => {
             if (error) {
                 console.log(error);
@@ -185,16 +183,14 @@ const EventEmitter = require('events');
         };
 
         return this.zapArbiter.listenSubscriptionEnd(
-            {provider: this.providerOwner, subscriber, terminator, fromBlock},
+            {provider: this.providerOwner, terminator, fromBlock},
             callback);
     }
 
     /**
-     * Listen to Queries events, managed by Dispatch contract
-     * @param {string} queryId The query ID 
-     * @param {address} subscriber
-     * @param {number} fromBlock
-     * @returns {Promise<void>}
+     * Listen to Query events emitted by the Dispatch contract.
+     * @param {number} fromBlock The block number to start listening from
+     * @returns {Promise<void>} Returns a promise that will eventually resolve when the callback as been set
      */
      async listenQueries({fromBlock}:ListenQuery) :Promise<void> {
         let callback = (error:any, result:string) => {
