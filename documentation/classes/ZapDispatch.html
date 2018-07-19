@@ -1,0 +1,1517 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>zapSdk documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">zapSdk documentation</a>
+            <button type="button" class="btn btn-default btn-menu fa fa-bars" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+            <div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search">
+</div>
+            <nav>
+
+    <ul class="list">
+
+        <li class="title">
+            <a href="index.html" data-type="index-link">zapSdk documentation</a>
+        </li>
+
+        <li class="divider"></li>
+
+
+        <li class="chapter">
+            <a data-type="chapter-link" href="index.html"><span class="fa fa-home"></span>Getting started</a>
+            <ul class="links">
+                    <li class="link">
+                        <a 
+                            
+                             href="overview.html" 
+                             href="overview.html" 
+                            data-type="chapter-link">
+                            <span class="fa fa-fw fa-th"></span>Overview
+                        </a>
+                    </li>
+                    <li class="link">
+                      <a href="index.html" data-type="chapter-link"><span class="fa fa-file-text-o"></span>README</a>
+                    </li>
+                    <li class="link">
+                        <a href="dependencies.html"
+                            data-type="chapter-link">
+                            <span class="fa fa-fw fa-list"></span>Dependencies
+                        </a>
+                    </li>
+            </ul>
+        </li>
+
+
+
+
+
+        <li class="chapter">
+            <div class="simple menu-toggler" data-toggle="collapse"
+                    data-target="#xs-classes-links"
+                >
+                <span class="fa fa-fw fa-file-code-o"></span>
+                <span>Classes</span>
+                <span class="fa fa-angle-down"></span>
+            </div>
+            <ul class="links collapse"
+                    id="xs-classes-links"
+                >
+                    <li class="link">
+                        <a href="classes/BaseContract.html" data-type="entity-link">BaseContract</a>
+                    </li>
+                    <li class="link">
+                        <a href="classes/Curve.html" data-type="entity-link">Curve</a>
+                    </li>
+                    <li class="link">
+                        <a href="classes/Subscriber.html" data-type="entity-link">Subscriber</a>
+                    </li>
+                    <li class="link">
+                        <a href="classes/Utils.html" data-type="entity-link">Utils</a>
+                    </li>
+                    <li class="link">
+                        <a href="classes/ZapArbiter.html" data-type="entity-link">ZapArbiter</a>
+                    </li>
+                    <li class="link">
+                        <a href="classes/ZapBondage.html" data-type="entity-link">ZapBondage</a>
+                    </li>
+                    <li class="link">
+                        <a href="classes/ZapDispatch.html" data-type="entity-link">ZapDispatch</a>
+                    </li>
+                    <li class="link">
+                        <a href="classes/ZapProvider.html" data-type="entity-link">ZapProvider</a>
+                    </li>
+                    <li class="link">
+                        <a href="classes/ZapRegistry.html" data-type="entity-link">ZapRegistry</a>
+                    </li>
+                    <li class="link">
+                        <a href="classes/ZapToken.html" data-type="entity-link">ZapToken</a>
+                    </li>
+            </ul>
+        </li>
+
+
+
+        <li class="chapter">
+            <div class="simple menu-toggler" data-toggle="collapse"
+                    data-target="#xs-interfaces-links"
+                >
+                <span class="fa fa-fw fa-info"></span>
+                <span>Interfaces</span>
+                <span class="fa fa-angle-down"></span>
+            </div>
+            <ul class="links collapse"
+                    id="xs-interfaces-links"
+                >
+                    <li class="link">
+                        <a href="interfaces/BaseContractType.html" data-type="entity-link">BaseContractType</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/BondArgs.html" data-type="entity-link">BondArgs</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/BondageArgs.html" data-type="entity-link">BondageArgs</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/CalcBondRateType.html" data-type="entity-link">CalcBondRateType</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/ContractType.html" data-type="entity-link">ContractType</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/CurveTerm.html" data-type="entity-link">CurveTerm</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/CurveType.html" data-type="entity-link">CurveType</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/Filter.html" data-type="entity-link">Filter</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/Filter.html" data-type="entity-link">Filter</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/Filter.html" data-type="entity-link">Filter</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/Filter.html" data-type="entity-link">Filter</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/InitProvider.html" data-type="entity-link">InitProvider</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/ProviderHandler.html" data-type="entity-link">ProviderHandler</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/ResponseArgs.html" data-type="entity-link">ResponseArgs</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/SubscriberHandler.html" data-type="entity-link">SubscriberHandler</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/SubscriptionEnd.html" data-type="entity-link">SubscriptionEnd</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/SubscriptionInit.html" data-type="entity-link">SubscriptionInit</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/SubscriptionType.html" data-type="entity-link">SubscriptionType</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/UnbondArgs.html" data-type="entity-link">UnbondArgs</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/ZapProviderType.html" data-type="entity-link">ZapProviderType</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/listenEvent.html" data-type="entity-link">listenEvent</a>
+                    </li>
+            </ul>
+        </li>
+
+
+        <li class="chapter">
+            <div class="simple menu-toggler" data-toggle="collapse"
+                    data-target="#xs-miscellaneous-links"
+                >
+                <span class="fa fa-fw fa-cubes"></span>
+                <span>Miscellaneous</span>
+                <span class="fa fa-angle-down"></span>
+            </div>
+            <ul class="links collapse"
+                    id="xs-miscellaneous-links"
+                >
+                    <li class="link">
+                      <a href="miscellaneous/functions.html" data-type="entity-link">Functions</a>
+                    </li>
+                    <li class="link">
+                      <a href="miscellaneous/typealiases.html" data-type="entity-link">Type aliases</a>
+                    </li>
+                    <li class="link">
+                      <a href="miscellaneous/variables.html" data-type="entity-link">Variables</a>
+                    </li>
+            </ul>
+        </li>
+
+
+
+
+    </ul>
+
+</nav>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <nav>
+
+    <ul class="list">
+
+        <li class="title">
+            <a href="index.html" data-type="index-link">zapSdk documentation</a>
+        </li>
+
+        <li class="divider"></li>
+
+            <div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search">
+</div>
+
+        <li class="chapter">
+            <a data-type="chapter-link" href="index.html"><span class="fa fa-home"></span>Getting started</a>
+            <ul class="links">
+                    <li class="link">
+                        <a 
+                            
+                             href="overview.html" 
+                             href="overview.html" 
+                            data-type="chapter-link">
+                            <span class="fa fa-fw fa-th"></span>Overview
+                        </a>
+                    </li>
+                    <li class="link">
+                      <a href="index.html" data-type="chapter-link"><span class="fa fa-file-text-o"></span>README</a>
+                    </li>
+                    <li class="link">
+                        <a href="dependencies.html"
+                            data-type="chapter-link">
+                            <span class="fa fa-fw fa-list"></span>Dependencies
+                        </a>
+                    </li>
+            </ul>
+        </li>
+
+
+
+
+
+        <li class="chapter">
+            <div class="simple menu-toggler" data-toggle="collapse"
+                    data-target="#classes-links"
+>
+                <span class="fa fa-fw fa-file-code-o"></span>
+                <span>Classes</span>
+                <span class="fa fa-angle-down"></span>
+            </div>
+            <ul class="links collapse"
+                    id="classes-links"
+>
+                    <li class="link">
+                        <a href="classes/BaseContract.html" data-type="entity-link">BaseContract</a>
+                    </li>
+                    <li class="link">
+                        <a href="classes/Curve.html" data-type="entity-link">Curve</a>
+                    </li>
+                    <li class="link">
+                        <a href="classes/Subscriber.html" data-type="entity-link">Subscriber</a>
+                    </li>
+                    <li class="link">
+                        <a href="classes/Utils.html" data-type="entity-link">Utils</a>
+                    </li>
+                    <li class="link">
+                        <a href="classes/ZapArbiter.html" data-type="entity-link">ZapArbiter</a>
+                    </li>
+                    <li class="link">
+                        <a href="classes/ZapBondage.html" data-type="entity-link">ZapBondage</a>
+                    </li>
+                    <li class="link">
+                        <a href="classes/ZapDispatch.html" data-type="entity-link">ZapDispatch</a>
+                    </li>
+                    <li class="link">
+                        <a href="classes/ZapProvider.html" data-type="entity-link">ZapProvider</a>
+                    </li>
+                    <li class="link">
+                        <a href="classes/ZapRegistry.html" data-type="entity-link">ZapRegistry</a>
+                    </li>
+                    <li class="link">
+                        <a href="classes/ZapToken.html" data-type="entity-link">ZapToken</a>
+                    </li>
+            </ul>
+        </li>
+
+
+
+        <li class="chapter">
+            <div class="simple menu-toggler" data-toggle="collapse"
+                    data-target="#interfaces-links"
+>
+                <span class="fa fa-fw fa-info"></span>
+                <span>Interfaces</span>
+                <span class="fa fa-angle-down"></span>
+            </div>
+            <ul class="links collapse"
+                    id="interfaces-links"
+>
+                    <li class="link">
+                        <a href="interfaces/BaseContractType.html" data-type="entity-link">BaseContractType</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/BondArgs.html" data-type="entity-link">BondArgs</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/BondageArgs.html" data-type="entity-link">BondageArgs</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/CalcBondRateType.html" data-type="entity-link">CalcBondRateType</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/ContractType.html" data-type="entity-link">ContractType</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/CurveTerm.html" data-type="entity-link">CurveTerm</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/CurveType.html" data-type="entity-link">CurveType</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/Filter.html" data-type="entity-link">Filter</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/Filter.html" data-type="entity-link">Filter</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/Filter.html" data-type="entity-link">Filter</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/Filter.html" data-type="entity-link">Filter</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/InitProvider.html" data-type="entity-link">InitProvider</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/ProviderHandler.html" data-type="entity-link">ProviderHandler</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/ResponseArgs.html" data-type="entity-link">ResponseArgs</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/SubscriberHandler.html" data-type="entity-link">SubscriberHandler</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/SubscriptionEnd.html" data-type="entity-link">SubscriptionEnd</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/SubscriptionInit.html" data-type="entity-link">SubscriptionInit</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/SubscriptionType.html" data-type="entity-link">SubscriptionType</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/UnbondArgs.html" data-type="entity-link">UnbondArgs</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/ZapProviderType.html" data-type="entity-link">ZapProviderType</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/listenEvent.html" data-type="entity-link">listenEvent</a>
+                    </li>
+            </ul>
+        </li>
+
+
+        <li class="chapter">
+            <div class="simple menu-toggler" data-toggle="collapse"
+                    data-target="#miscellaneous-links"
+>
+                <span class="fa fa-fw fa-cubes"></span>
+                <span>Miscellaneous</span>
+                <span class="fa fa-angle-down"></span>
+            </div>
+            <ul class="links collapse"
+                    id="miscellaneous-links"
+>
+                    <li class="link">
+                      <a href="miscellaneous/functions.html" data-type="entity-link">Functions</a>
+                    </li>
+                    <li class="link">
+                      <a href="miscellaneous/typealiases.html" data-type="entity-link">Type aliases</a>
+                    </li>
+                    <li class="link">
+                      <a href="miscellaneous/variables.html" data-type="entity-link">Variables</a>
+                    </li>
+            </ul>
+        </li>
+
+
+
+
+    </ul>
+
+</nav>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content class">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Classes</li>
+  <li>ZapDispatch</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>packages/Dispatch/src/index.ts</code>
+        </p>
+
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Provides interface to Dispatch contract</p>
+
+            </p>
+
+            <p class="comment">
+                <h3>Extends</h3>
+            </p>
+            <p class="comment">
+                    <code><a href="../classes/BaseContract.html" target="_self" >BaseContract</a></code>
+            </p>
+
+
+            <p class="comment">
+                <h3>Example</h3>
+            </p>
+            <div class="io-description">
+            </div>
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#contract">contract</a>
+                            </li>
+                            <li>
+                                <a href="#networkId">networkId</a>
+                            </li>
+                            <li>
+                                <a href="#provider">provider</a>
+                            </li>
+                            <li>
+                                <a href="#web3">web3</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#listen">listen</a>
+                            </li>
+                            <li>
+                                <a href="#listenFulfillQuery">listenFulfillQuery</a>
+                            </li>
+                            <li>
+                                <a href="#listenIncoming">listenIncoming</a>
+                            </li>
+                            <li>
+                                <a href="#listenOffchainResponse">listenOffchainResponse</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#queryData">queryData</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#respond">respond</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#getContractOwner">getContractOwner</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(undefined: <a href="../interfaces/ContractType.html">BaseContractType</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">packages/Dispatch/src/index.ts:13</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                  
+                                                        <td>
+                                                                    <code><a href="../interfaces/ContractType.html" target="_self" >BaseContractType</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            no
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    
+        <h3 id="inputs">
+            Properties
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="contract"></a>
+                        <span class="name">
+                            <b>
+                            contract
+                            </b>
+                            <a href="#contract"><span class="fa fa-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <code>contract:     <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </td>
+                    </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Inherited from     <code><a href="../classes/BaseContract.html" target="_self" >BaseContract</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in BaseContract:14</div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="networkId"></a>
+                        <span class="name">
+                            <b>
+                            networkId
+                            </b>
+                            <a href="#networkId"><span class="fa fa-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <code>networkId:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </td>
+                    </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Inherited from     <code><a href="../classes/BaseContract.html" target="_self" >BaseContract</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in BaseContract:15</div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="provider"></a>
+                        <span class="name">
+                            <b>
+                            provider
+                            </b>
+                            <a href="#provider"><span class="fa fa-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <code>provider:     <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </td>
+                    </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Inherited from     <code><a href="../classes/BaseContract.html" target="_self" >BaseContract</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in BaseContract:12</div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="web3"></a>
+                        <span class="name">
+                            <b>
+                            web3
+                            </b>
+                            <a href="#web3"><span class="fa fa-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <code>web3:     <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </td>
+                    </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Inherited from     <code><a href="../classes/BaseContract.html" target="_self" >BaseContract</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in BaseContract:13</div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    
+        <h3 id="methods">
+            Methods
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="listen"></a>
+                        <span class="name">
+                            <b>
+                            listen
+                            </b>
+                            <a href="#listen"><span class="fa fa-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+<code>listen(filters: <a href="../interfaces/Filter.html">Filter</a>, callback: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" target="_blank">Function</a>)</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="104" class="link-to-prism">packages/Dispatch/src/index.ts:104</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Listen for all events with filters</p>
+</div>
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>filters</td>
+                                                        <td>
+                                                                    <code><a href="../interfaces/Filter.html" target="_self" >Filter</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            no
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                                <tr>
+                                                        <td>callback</td>
+                                                        <td>
+                                                                    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" target="_blank" >Function</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            no
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="listenFulfillQuery"></a>
+                        <span class="name">
+                            <b>
+                            listenFulfillQuery
+                            </b>
+                            <a href="#listenFulfillQuery"><span class="fa fa-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+<code>listenFulfillQuery(filters: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank">object</a>, callback: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" target="_blank">Function</a>)</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="125" class="link-to-prism">packages/Dispatch/src/index.ts:125</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Listen to FUlFill Query when providers respond</p>
+</div>
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                                    <td>Default value</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>filters</td>
+                                                        <td>
+                                                                    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            no
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <code>{}</code>
+                                                        </td>
+
+                                                </tr>
+                                                <tr>
+                                                        <td>callback</td>
+                                                        <td>
+                                                                    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" target="_blank" >Function</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            no
+                                                    </td>
+                                                    
+                                                        <td>
+                                                        </td>
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="listenIncoming"></a>
+                        <span class="name">
+                            <b>
+                            listenIncoming
+                            </b>
+                            <a href="#listenIncoming"><span class="fa fa-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+<code>listenIncoming(filters: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank">object</a>, callback: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" target="_blank">Function</a>)</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="116" class="link-to-prism">packages/Dispatch/src/index.ts:116</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Listen to Query Incoming events with filters</p>
+</div>
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                                    <td>Default value</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>filters</td>
+                                                        <td>
+                                                                    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            no
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <code>{}</code>
+                                                        </td>
+
+                                                </tr>
+                                                <tr>
+                                                        <td>callback</td>
+                                                        <td>
+                                                                    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" target="_blank" >Function</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            no
+                                                    </td>
+                                                    
+                                                        <td>
+                                                        </td>
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="listenOffchainResponse"></a>
+                        <span class="name">
+                            <b>
+                            listenOffchainResponse
+                            </b>
+                            <a href="#listenOffchainResponse"><span class="fa fa-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+<code>listenOffchainResponse(filters: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank">object</a>, callback: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" target="_blank">Function</a>)</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="134" class="link-to-prism">packages/Dispatch/src/index.ts:134</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Listen to Offchain responses from providers</p>
+</div>
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                                    <td>Default value</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>filters</td>
+                                                        <td>
+                                                                    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            no
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <code>{}</code>
+                                                        </td>
+
+                                                </tr>
+                                                <tr>
+                                                        <td>callback</td>
+                                                        <td>
+                                                                    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" target="_blank" >Function</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            no
+                                                    </td>
+                                                    
+                                                        <td>
+                                                        </td>
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="queryData"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Async</span>
+                            queryData
+                            </b>
+                            <a href="#queryData"><span class="fa fa-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                            <span class="modifier-icon fa fa-reset"></span>
+                        <code>queryData(undefined: <a href="../undefineds/QueryArgs.html">QueryArgs</a>)</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">packages/Dispatch/src/index.ts:30</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Subscriber query data to a provider&#39;s endpoint</p>
+</div>
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>
+                                                                    <code><a href="../miscellaneous/typealiases.html#QueryArgs" target="_self" >QueryArgs</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            no
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="../miscellaneous/typealiases.html#txid" target="_self" >Promise&lt;txid&gt;</a></code>
+
+                            </div>
+                                <div class="io-description">
+                                    <p>txid of query transaction</p>
+
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="respond"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Async</span>
+                            respond
+                            </b>
+                            <a href="#respond"><span class="fa fa-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                            <span class="modifier-icon fa fa-reset"></span>
+                        <code>respond(undefined: <a href="../interfaces/ResponseArgs.html">ResponseArgs</a>)</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">packages/Dispatch/src/index.ts:58</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Provider responds to a query it received</p>
+</div>
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>
+                                                                    <code><a href="../interfaces/ResponseArgs.html" target="_self" >ResponseArgs</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            no
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="../miscellaneous/typealiases.html#txid" target="_self" >Promise&lt;txid&gt;</a></code>
+
+                            </div>
+                                <div class="io-description">
+                                    <p>txid of respond method</p>
+
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="getContractOwner"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Async</span>
+                            getContractOwner
+                            </b>
+                            <a href="#getContractOwner"><span class="fa fa-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                            <span class="modifier-icon fa fa-reset"></span>
+                        <code>getContractOwner()</code>
+                    </td>
+                </tr>
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Inherited from     <code><a href="../classes/BaseContract.html" target="_self" >BaseContract</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in BaseContract:49</div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Get Contract owner address</p>
+</div>
+
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code>Promise&lt;string&gt;</code>
+
+                            </div>
+                                <div class="io-description">
+                                    <p>owner&#39;s address of this contract instance</p>
+
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {BaseContract,BaseContractType} from &#x27;@zap/basecontract&#x27;;
+import {QueryArgs,ResponseArgs,Filter,txid} from &#x27;./types&#x27;
+import {Utils} from &quot;@zap/utils&quot;;
+const {toBN,utf8ToHex} &#x3D; require (&quot;web3-utils&quot;);
+
+/**
+ * Provides interface to Dispatch contract
+ * @extends BaseContract
+ * @param {string} artifactsDir
+ * @param {number} networkId
+ * @param networkProvider : Ethereum provider instance
+ */
+export class ZapDispatch extends BaseContract {
+    constructor({artifactsDir&#x3D;undefined,networkId&#x3D;undefined,networkProvider&#x3D;undefined}:BaseContractType){
+        super({artifactsDir,artifactName:&quot;Dispatch&quot;,networkId,networkProvider});
+    }
+
+    /**
+     * Subscriber query data to a provider&#x27;s endpoint
+     * @param {address} provider
+     * @param {string} query
+     * @param {string} endpoint
+     * @param {Array&lt;string&gt;} endpointParams
+     * @param {boolean} onchainProvider
+     * @param {boolean} onchainSubscriber
+     * @param {address} from
+     * @param {BigNumber} gas
+     * @returns {Promise&lt;txid&gt;} txid of query transaction
+     */
+    async queryData({provider, query, endpoint, endpointParams, onchainProvider, onchainSubscriber,from,gas&#x3D;Utils.Constants.DEFAULT_GAS}:QueryArgs):Promise&lt;txid&gt;{
+        if(endpointParams.length &gt; 0) {
+            for (let i in endpointParams) {
+                if (!endpointParams[i].startsWith(&#x27;0x&#x27;)) {
+                    endpointParams[i] &#x3D; utf8ToHex(endpointParams[i]);
+                }
+            }
+        }
+      
+        return  await this.contract.methods.query(
+            provider,
+            query,
+            utf8ToHex(endpoint),
+            endpointParams, // endpoint-specific endpointParams
+            onchainProvider,
+            onchainSubscriber).send({from, gas});
+    }
+
+
+    /**
+     * Provider responds to a query it received
+     * @param {string} queryId
+     * @param {Array&lt;string&gt;} responseParams
+     * @param {boolean} dynamic number of responses string
+     * @param {address} from : provider
+     * @param {BigNumber} gas
+     * @returns {Promise&lt;txid&gt;} txid of respond method
+     */
+    async respond({queryId, responseParams, dynamic, from,gas&#x3D;Utils.Constants.DEFAULT_GAS}:ResponseArgs) :Promise&lt;txid&gt;{
+        if (dynamic){
+            return this.contract.methods.respondBytes32Array(
+                queryId,
+                responseParams).send({from,gas});
+        }
+        switch (responseParams.length) {
+            case 1: {
+                return this.contract.methods.respond1(
+                    queryId,
+                    responseParams[0]).send({ from,gas});
+            }
+            case 2: {
+                return this.contract.methods.respond2(
+                    queryId,
+                    responseParams[0],
+                    responseParams[1]).send({ from,gas });
+            }
+            case 3: {
+                return this.contract.methods.respond3(
+                    queryId,
+                    responseParams[0],
+                    responseParams[1],
+                    responseParams[2]).send({ from,gas });
+            }
+            case 4: {
+                return this.contract.methods.respond4(
+                    queryId,
+                    responseParams[0],
+                    responseParams[1],
+                    responseParams[2],
+                    responseParams[3]).send({ from,gas });
+            }
+            default: {
+                throw new Error(&#x27;Invalid number of response parameters&#x27;);
+            }
+        }
+    }
+
+    // &#x3D;&#x3D;&#x3D; Events &#x3D;&#x3D;&#x3D;//
+
+    /**
+     * Listen for all events with filters
+     * @param {Filter} filters
+     * @param {Function} callback
+     */
+    listen(filters :Filter, callback:Function):void {
+        this.contract.events.allEvents(
+            filters,
+            { fromBlock: filters.fromBlock ? filters.fromBlock : 0, toBlock: &#x27;latest&#x27; },
+            callback);
+    }
+
+    /**
+     * Listen to Query Incoming events with filters
+     * @param {object} filters
+     * @param {Function} callback
+     */
+    listenIncoming(filters:object &#x3D;{}, callback:Function):void{
+        this.contract.events.Incoming(filters, callback);
+    }
+
+    /**
+     * Listen to FUlFill Query when providers respond
+     * @param {object} filters
+     * @param {Function} callback
+     */
+    listenFulfillQuery(filters:object&#x3D;{}, callback:Function):void{
+        this.contract.events.FulfillQuery(filters, callback);
+    }
+
+    /**
+     * Listen to Offchain responses from providers
+     * @param {object} filters
+     * @param {Function} callback
+     */
+    listenOffchainResponse(filters:object&#x3D;{}, callback:Function):void{
+        this.contract.events.OffchainResponse(filters, callback);
+    }
+
+}
+
+export * from &quot;./types&quot;
+</code></pre>
+    </div>
+</div>
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+        <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
+            var COMPODOC_CURRENT_PAGE_URL = 'ZapDispatch.html';
+        </script>
+
+       <script src="../js/search/search.js"></script>
+       <script src="../js/search/lunr.min.js"></script>
+       <script src="../js/search/search-lunr.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+       <script src="../js/search/search_index.js"></script>
+
+
+    </body>
+</html>

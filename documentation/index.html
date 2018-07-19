@@ -1,0 +1,557 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>zapSdk documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
+	      <link rel="stylesheet" href="./styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="./" class="navbar-brand">zapSdk documentation</a>
+            <button type="button" class="btn btn-default btn-menu fa fa-bars" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+            <div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search">
+</div>
+            <nav>
+
+    <ul class="list">
+
+        <li class="title">
+            <a href="index.html" data-type="index-link">zapSdk documentation</a>
+        </li>
+
+        <li class="divider"></li>
+
+
+        <li class="chapter">
+            <a data-type="chapter-link" href="index.html"><span class="fa fa-home"></span>Getting started</a>
+            <ul class="links">
+                    <li class="link">
+                        <a 
+                            
+                             href="overview.html" 
+                             href="overview.html" 
+                            data-type="chapter-link">
+                            <span class="fa fa-fw fa-th"></span>Overview
+                        </a>
+                    </li>
+                    <li class="link">
+                      <a href="index.html" data-type="chapter-link"><span class="fa fa-file-text-o"></span>README</a>
+                    </li>
+                    <li class="link">
+                        <a href="dependencies.html"
+                            data-type="chapter-link">
+                            <span class="fa fa-fw fa-list"></span>Dependencies
+                        </a>
+                    </li>
+            </ul>
+        </li>
+
+
+
+
+
+        <li class="chapter">
+            <div class="simple menu-toggler" data-toggle="collapse"
+                    data-target="#xs-classes-links"
+                >
+                <span class="fa fa-fw fa-file-code-o"></span>
+                <span>Classes</span>
+                <span class="fa fa-angle-down"></span>
+            </div>
+            <ul class="links collapse"
+                    id="xs-classes-links"
+                >
+                    <li class="link">
+                        <a href="classes/BaseContract.html" data-type="entity-link">BaseContract</a>
+                    </li>
+                    <li class="link">
+                        <a href="classes/Curve.html" data-type="entity-link">Curve</a>
+                    </li>
+                    <li class="link">
+                        <a href="classes/Subscriber.html" data-type="entity-link">Subscriber</a>
+                    </li>
+                    <li class="link">
+                        <a href="classes/Utils.html" data-type="entity-link">Utils</a>
+                    </li>
+                    <li class="link">
+                        <a href="classes/ZapArbiter.html" data-type="entity-link">ZapArbiter</a>
+                    </li>
+                    <li class="link">
+                        <a href="classes/ZapBondage.html" data-type="entity-link">ZapBondage</a>
+                    </li>
+                    <li class="link">
+                        <a href="classes/ZapDispatch.html" data-type="entity-link">ZapDispatch</a>
+                    </li>
+                    <li class="link">
+                        <a href="classes/ZapProvider.html" data-type="entity-link">ZapProvider</a>
+                    </li>
+                    <li class="link">
+                        <a href="classes/ZapRegistry.html" data-type="entity-link">ZapRegistry</a>
+                    </li>
+                    <li class="link">
+                        <a href="classes/ZapToken.html" data-type="entity-link">ZapToken</a>
+                    </li>
+            </ul>
+        </li>
+
+
+
+        <li class="chapter">
+            <div class="simple menu-toggler" data-toggle="collapse"
+                    data-target="#xs-interfaces-links"
+                >
+                <span class="fa fa-fw fa-info"></span>
+                <span>Interfaces</span>
+                <span class="fa fa-angle-down"></span>
+            </div>
+            <ul class="links collapse"
+                    id="xs-interfaces-links"
+                >
+                    <li class="link">
+                        <a href="interfaces/BaseContractType.html" data-type="entity-link">BaseContractType</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/BondArgs.html" data-type="entity-link">BondArgs</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/BondageArgs.html" data-type="entity-link">BondageArgs</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/CalcBondRateType.html" data-type="entity-link">CalcBondRateType</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/ContractType.html" data-type="entity-link">ContractType</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/CurveTerm.html" data-type="entity-link">CurveTerm</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/CurveType.html" data-type="entity-link">CurveType</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/Filter.html" data-type="entity-link">Filter</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/Filter.html" data-type="entity-link">Filter</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/Filter.html" data-type="entity-link">Filter</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/Filter.html" data-type="entity-link">Filter</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/InitProvider.html" data-type="entity-link">InitProvider</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/ProviderHandler.html" data-type="entity-link">ProviderHandler</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/ResponseArgs.html" data-type="entity-link">ResponseArgs</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/SubscriberHandler.html" data-type="entity-link">SubscriberHandler</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/SubscriptionEnd.html" data-type="entity-link">SubscriptionEnd</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/SubscriptionInit.html" data-type="entity-link">SubscriptionInit</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/SubscriptionType.html" data-type="entity-link">SubscriptionType</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/UnbondArgs.html" data-type="entity-link">UnbondArgs</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/ZapProviderType.html" data-type="entity-link">ZapProviderType</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/listenEvent.html" data-type="entity-link">listenEvent</a>
+                    </li>
+            </ul>
+        </li>
+
+
+        <li class="chapter">
+            <div class="simple menu-toggler" data-toggle="collapse"
+                    data-target="#xs-miscellaneous-links"
+                >
+                <span class="fa fa-fw fa-cubes"></span>
+                <span>Miscellaneous</span>
+                <span class="fa fa-angle-down"></span>
+            </div>
+            <ul class="links collapse"
+                    id="xs-miscellaneous-links"
+                >
+                    <li class="link">
+                      <a href="miscellaneous/functions.html" data-type="entity-link">Functions</a>
+                    </li>
+                    <li class="link">
+                      <a href="miscellaneous/typealiases.html" data-type="entity-link">Type aliases</a>
+                    </li>
+                    <li class="link">
+                      <a href="miscellaneous/variables.html" data-type="entity-link">Variables</a>
+                    </li>
+            </ul>
+        </li>
+
+
+
+
+    </ul>
+
+</nav>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <nav>
+
+    <ul class="list">
+
+        <li class="title">
+            <a href="index.html" data-type="index-link">zapSdk documentation</a>
+        </li>
+
+        <li class="divider"></li>
+
+            <div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search">
+</div>
+
+        <li class="chapter">
+            <a data-type="chapter-link" href="index.html"><span class="fa fa-home"></span>Getting started</a>
+            <ul class="links">
+                    <li class="link">
+                        <a 
+                            
+                             href="overview.html" 
+                             href="overview.html" 
+                            data-type="chapter-link">
+                            <span class="fa fa-fw fa-th"></span>Overview
+                        </a>
+                    </li>
+                    <li class="link">
+                      <a href="index.html" data-type="chapter-link"><span class="fa fa-file-text-o"></span>README</a>
+                    </li>
+                    <li class="link">
+                        <a href="dependencies.html"
+                            data-type="chapter-link">
+                            <span class="fa fa-fw fa-list"></span>Dependencies
+                        </a>
+                    </li>
+            </ul>
+        </li>
+
+
+
+
+
+        <li class="chapter">
+            <div class="simple menu-toggler" data-toggle="collapse"
+                    data-target="#classes-links"
+>
+                <span class="fa fa-fw fa-file-code-o"></span>
+                <span>Classes</span>
+                <span class="fa fa-angle-down"></span>
+            </div>
+            <ul class="links collapse"
+                    id="classes-links"
+>
+                    <li class="link">
+                        <a href="classes/BaseContract.html" data-type="entity-link">BaseContract</a>
+                    </li>
+                    <li class="link">
+                        <a href="classes/Curve.html" data-type="entity-link">Curve</a>
+                    </li>
+                    <li class="link">
+                        <a href="classes/Subscriber.html" data-type="entity-link">Subscriber</a>
+                    </li>
+                    <li class="link">
+                        <a href="classes/Utils.html" data-type="entity-link">Utils</a>
+                    </li>
+                    <li class="link">
+                        <a href="classes/ZapArbiter.html" data-type="entity-link">ZapArbiter</a>
+                    </li>
+                    <li class="link">
+                        <a href="classes/ZapBondage.html" data-type="entity-link">ZapBondage</a>
+                    </li>
+                    <li class="link">
+                        <a href="classes/ZapDispatch.html" data-type="entity-link">ZapDispatch</a>
+                    </li>
+                    <li class="link">
+                        <a href="classes/ZapProvider.html" data-type="entity-link">ZapProvider</a>
+                    </li>
+                    <li class="link">
+                        <a href="classes/ZapRegistry.html" data-type="entity-link">ZapRegistry</a>
+                    </li>
+                    <li class="link">
+                        <a href="classes/ZapToken.html" data-type="entity-link">ZapToken</a>
+                    </li>
+            </ul>
+        </li>
+
+
+
+        <li class="chapter">
+            <div class="simple menu-toggler" data-toggle="collapse"
+                    data-target="#interfaces-links"
+>
+                <span class="fa fa-fw fa-info"></span>
+                <span>Interfaces</span>
+                <span class="fa fa-angle-down"></span>
+            </div>
+            <ul class="links collapse"
+                    id="interfaces-links"
+>
+                    <li class="link">
+                        <a href="interfaces/BaseContractType.html" data-type="entity-link">BaseContractType</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/BondArgs.html" data-type="entity-link">BondArgs</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/BondageArgs.html" data-type="entity-link">BondageArgs</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/CalcBondRateType.html" data-type="entity-link">CalcBondRateType</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/ContractType.html" data-type="entity-link">ContractType</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/CurveTerm.html" data-type="entity-link">CurveTerm</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/CurveType.html" data-type="entity-link">CurveType</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/Filter.html" data-type="entity-link">Filter</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/Filter.html" data-type="entity-link">Filter</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/Filter.html" data-type="entity-link">Filter</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/Filter.html" data-type="entity-link">Filter</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/InitProvider.html" data-type="entity-link">InitProvider</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/ProviderHandler.html" data-type="entity-link">ProviderHandler</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/ResponseArgs.html" data-type="entity-link">ResponseArgs</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/SubscriberHandler.html" data-type="entity-link">SubscriberHandler</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/SubscriptionEnd.html" data-type="entity-link">SubscriptionEnd</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/SubscriptionInit.html" data-type="entity-link">SubscriptionInit</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/SubscriptionType.html" data-type="entity-link">SubscriptionType</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/UnbondArgs.html" data-type="entity-link">UnbondArgs</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/ZapProviderType.html" data-type="entity-link">ZapProviderType</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/listenEvent.html" data-type="entity-link">listenEvent</a>
+                    </li>
+            </ul>
+        </li>
+
+
+        <li class="chapter">
+            <div class="simple menu-toggler" data-toggle="collapse"
+                    data-target="#miscellaneous-links"
+>
+                <span class="fa fa-fw fa-cubes"></span>
+                <span>Miscellaneous</span>
+                <span class="fa fa-angle-down"></span>
+            </div>
+            <ul class="links collapse"
+                    id="miscellaneous-links"
+>
+                    <li class="link">
+                      <a href="miscellaneous/functions.html" data-type="entity-link">Functions</a>
+                    </li>
+                    <li class="link">
+                      <a href="miscellaneous/typealiases.html" data-type="entity-link">Type aliases</a>
+                    </li>
+                    <li class="link">
+                      <a href="miscellaneous/variables.html" data-type="entity-link">Variables</a>
+                    </li>
+            </ul>
+        </li>
+
+
+
+
+    </ul>
+
+</nav>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content getting-started">
+                   <div class="content-data">
+
+<h1 id="zap">ZAP</h1>
+<p>ZAP Oracles (introduction here)</p>
+<h1 id="zap-monorepo">ZAP-Monorepo</h1>
+<p>This repository provides Interface to Zap contracts and tools to use Zap platform with Javascript projects
+Each package is a public npm module that serve developer&#39;s needs to intergrate Zap platform</p>
+<h2 id="getting-started">Getting Started</h2>
+<p>These instructions will get you a copy of the project up and running on your local machine for development and testing purposes</p>
+<h3 id="prerequisites">Prerequisites</h3>
+<p>What things you need to install the software and how to install them</p>
+<div><pre class="line-numbers"><code class="language-none">- Nodejs and npm&gt;=6.1.11
+- Lerna 
+- Typescript</code></pre></div><h3 id="installing">Installing</h3>
+<div><pre class="line-numbers"><code class="language-none">npm install -g lerna typescript
+npm i</code></pre></div><ul>
+<li>Bootstrap lerna with --hoist option</li>
+</ul>
+<div><pre class="line-numbers"><code class="language-none">lerna bootstrap --hoist</code></pre></div><h2 id="running-build-and-tests">Running build and tests</h2>
+<ul>
+<li>Running build for all packages</li>
+</ul>
+<div><pre class="line-numbers"><code class="language-none">lerna run build</code></pre></div><ul>
+<li>Running mocha unit tests for all packages</li>
+</ul>
+<div><pre class="line-numbers"><code class="language-none">lerna run test</code></pre></div><h3 id="running-build-and-tests-for-a-package">Running build and tests for a package</h3>
+<ul>
+<li>Develop in single package</li>
+</ul>
+<div><pre class="line-numbers"><code class="language-none">cd packages/{package_name}
+npm run build
+npm run test</code></pre></div><ul>
+<li>Running build and test </li>
+</ul>
+<div><pre class="line-numbers"><code class="language-none">npm run run_test</code></pre></div><h2 id="packages">Packages</h2>
+<h2 id="usage">Usage</h2>
+<h5 id="create-a-zap-provider">Create a Zap Provider</h5>
+<div><pre class="line-numbers"><code class="language-none">npm install `&#64;zap/provider`</code></pre></div><div><pre class="line-numbers"><code class="language-none">class myHandler implements ProviderHander{
+    handleIncoming(res:any){
+    }
+
+    handleSubscription(res:any) {
+    }
+
+    handleUnsubscription (res:string){
+    }
+}</code></pre></div><div><pre class="line-numbers"><code class="language-none">import {ZapProvider, ProviderHandler} from &#39;&#64;zap/provider&#39;;
+
+let myZapProvider = new ZapProvider({owner:address,handler:new myHandler()})
+
+
+await myZapProvider.initiateProvider({
+    public_key:111,
+    title: &quot;testTitle&quot;,
+    endpoint: &quot;testEndpoint&quot;,
+    endpoint_params : [&quot;p1&quot;,&quot;p2&quot;]
+})
+
+const thisConstants = []
+const thisParts = []
+const thisDividers = []
+await myZapProvider.initiateProviderCurve({
+    endpoint :&quot;testEndpoint&quot;,
+    constants : thisConstants,
+    parts : thisParts,
+    dividers : thisDividers
+})
+
+
+</code></pre></div><h2 id="built-with">Built With</h2>
+<ul>
+<li><a href="https://lernajs.io/">Lerna</a> - The tool to manage monorepo project</li>
+<li><a href="https://www.typescriptlang.org/">Typescript</a> </li>
+<li><a href="https://mochajs.org/">Mocha</a> </li>
+<li><a href="https://truffleframework.com/">Truffle</a></li>
+<li>[Ganache] (<a href="https://truffleframework.com/ganache">https://truffleframework.com/ganache</a>)</li>
+</ul>
+<h2 id="contributing">Contributing</h2>
+<p>Please read <a href="">CONTRIBUTING.md</a> for details on our code of conduct, and the process for submitting pull requests to us.</p>
+<p>See also the list of <a href="https://github.com/zapproject/Zap-monorepo/graphs/contributors">contributors</a></p>
+<h2 id="license">License</h2>
+<p>This project is licensed under the MIT License - see the <a href="LICENSE.md">LICENSE.md</a> file for details</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script src="./js/libs/bootstrap-native.js"></script>
+
+       <script src="./js/libs/es6-shim.min.js"></script>
+       <script src="./js/libs/EventDispatcher.js"></script>
+       <script src="./js/libs/promise.min.js"></script>
+       <script src="./js/libs/zepto.min.js"></script>
+
+       <script src="./js/compodoc.js"></script>
+
+        <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 0;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'getting-started';
+            var COMPODOC_CURRENT_PAGE_URL = 'index.html';
+        </script>
+
+       <script src="./js/search/search.js"></script>
+       <script src="./js/search/lunr.min.js"></script>
+       <script src="./js/search/search-lunr.js"></script>
+
+       <script src="./js/tabs.js"></script>
+       <script src="./js/menu.js"></script>
+       <script src="./js/libs/prism.js"></script>
+       <script src="./js/sourceCode.js"></script>
+       <script src="./js/search/search_index.js"></script>
+
+
+    </body>
+</html>

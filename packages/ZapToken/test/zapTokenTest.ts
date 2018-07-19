@@ -32,18 +32,11 @@ describe('ZapToken, path to "/src/api/contracts/ZapToken"', () => {
             accounts = await web3.eth.getAccounts();
             //delete require.cache[require.resolve('/contracts')];
             await Utils.migrateContracts(join(__dirname,"contracts"));
+            testArtifacts = Utils.getArtifacts(join(__dirname, "contracts"));
             done();
         });
     });
-    describe("Zap Token Test",function() {
 
-        before(function(done) {
-            configureEnvironment(async () => {
-                //delete require.cache[require.resolve(join(__dirname,'contracts'))];
-                testArtifacts = Utils.getArtifacts(join(__dirname, "contracts"));
-                done();
-            });
-        })
         it('Should initiate wrapper', async () => {
             zapTokenWrapper = new ZapToken({
                     artifactsDir : buildDir,
@@ -89,5 +82,4 @@ describe('ZapToken, path to "/src/api/contracts/ZapToken"', () => {
                 from: accounts[0]
             });
         });
-    })
 });

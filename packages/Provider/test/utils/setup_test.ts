@@ -13,7 +13,4 @@ export class providerHandler implements ProviderHandler {
     handleUnsubscription (res:string){
         console.log(res)
     }
-    handleSubscription (res:string){
-        console.log(res)
-    }
 }

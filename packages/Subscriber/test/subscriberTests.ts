@@ -31,12 +31,17 @@ describe('Zap Subscriber Test"', () => {
         deployedRegistry: any,
         web3: any,
         testArtifacts,
-        options: any,
         query = "TestQuery",
         responses = ["TestReponse_1", "TestResponse_2"],
         queryData: any,
         buildDir: string = join(__dirname, "contracts"),
         testZapProvider = Utils.Constants.testZapProvider;
+    const options:any = {
+        artifactsDir: buildDir,
+        networkId: Utils.Constants.ganacheServerOptions.network_id,
+        networkProvider: Utils.Constants.ganacheProvider
+    };
+
 
     before(function (done) {
         configureEnvironment(async () => {
@@ -47,62 +52,50 @@ describe('Zap Subscriber Test"', () => {
             // TODO: fix that migration continue to save artifacts in separate thread
             await Utils.migrateContracts(buildDir);
             console.log("Migration complete. ");
+            testArtifacts = Utils.getArtifacts(buildDir);
+            bondageWrapper = new ZapBondage({
+                artifactsDir: buildDir,
+                networkId: Utils.Constants.ganacheServerOptions.network_id,
+                networkProvider: Utils.Constants.ganacheProvider,
+                artifactName: "Bondage"
+            });
+            registryWrapper = new ZapRegistry({
+                artifactsDir: buildDir,
+                networkId:Utils.Constants. ganacheServerOptions.network_id,
+                networkProvider: Utils.Constants.ganacheProvider,
+                artifactName: "Registry"
+            });
+            tokenWrapper = new ZapToken({
+                artifactsDir: buildDir,
+                networkId: Utils.Constants.ganacheServerOptions.network_id,
+                networkProvider: Utils.Constants.ganacheProvider,
+                artifactName: "ZapToken"
+            });
+            dispatchWrapper = new ZapDispatch({
+                artifactsDir: buildDir,
+                networkId: Utils.Constants.ganacheServerOptions.network_id,
+                networkProvider: Utils.Constants.ganacheProvider,
+                artifactName: "Dispatch"
+            });
+            arbiterWrapper = new ZapArbiter({
+                artifactsDir: buildDir,
+                networkId: Utils.Constants.ganacheServerOptions.network_id,
+                networkProvider: Utils.Constants.ganacheProvider,
+                artifactName: "Arbiter"
+            });
+            subscriber = new Subscriber({
+                owner: accounts[2],
+                handler: null,
+                zapToken: tokenWrapper,
+                zapRegistry: registryWrapper,
+                zapDispatch: dispatchWrapper,
+                zapBondage: bondageWrapper,
+                zapArbiter: arbiterWrapper
+            });
             done();
         });
     });
 
-    describe('Subscriber Test', () => {
-        options = {
-            artifactsDir: buildDir,
-            networkId: Utils.Constants.ganacheServerOptions.network_id,
-            networkProvider: Utils.Constants.ganacheProvider
-        };
-
-        before(function (done) {
-            configureEnvironment(async () => {
-                testArtifacts = Utils.getArtifacts(buildDir);
-                bondageWrapper = new ZapBondage({
-                    artifactsDir: buildDir,
-                    networkId: Utils.Constants.ganacheServerOptions.network_id,
-                    networkProvider: Utils.Constants.ganacheProvider,
-                    artifactName: "Bondage"
-                });
-                registryWrapper = new ZapRegistry({
-                    artifactsDir: buildDir,
-                    networkId:Utils.Constants. ganacheServerOptions.network_id,
-                    networkProvider: Utils.Constants.ganacheProvider,
-                    artifactName: "Registry"
-                });
-                tokenWrapper = new ZapToken({
-                    artifactsDir: buildDir,
-                    networkId: Utils.Constants.ganacheServerOptions.network_id,
-                    networkProvider: Utils.Constants.ganacheProvider,
-                    artifactName: "ZapToken"
-                });
-                dispatchWrapper = new ZapDispatch({
-                    artifactsDir: buildDir,
-                    networkId: Utils.Constants.ganacheServerOptions.network_id,
-                    networkProvider: Utils.Constants.ganacheProvider,
-                    artifactName: "Dispatch"
-                });
-                arbiterWrapper = new ZapArbiter({
-                    artifactsDir: buildDir,
-                    networkId: Utils.Constants.ganacheServerOptions.network_id,
-                    networkProvider: Utils.Constants.ganacheProvider,
-                    artifactName: "Arbiter"
-                });
-                subscriber = new Subscriber({
-                    owner: accounts[2],
-                    handler: null,
-                    zapToken: tokenWrapper,
-                    zapRegistry: registryWrapper,
-                    zapDispatch: dispatchWrapper,
-                    zapBondage: bondageWrapper,
-                    zapArbiter: arbiterWrapper
-                });
-                done()
-            })
-        });
 
         it("Should have all pre conditions set up for subscriber to work", async () => {
             const res = await bootstrap(testZapProvider, accounts, deployedRegistry, deployedToken);
@@ -149,6 +142,5 @@ describe('Zap Subscriber Test"', () => {
             process.exit();
         });
 
-    });
 
 });

@@ -24,12 +24,16 @@ describe('Zap Dispatch Test"', () => {
         deployedBondage:any,
         web3:any,
         testArtifacts,
-        options:any,
         query="TestQuery",
         responses =["TestReponse_1","TestResponse_2"],
         queryData: any,
         buildDir:string = join(__dirname,"contracts"),
         testZapProvider = Utils.Constants.testZapProvider;
+    const options:any = {
+        artifactsDir: buildDir,
+        networkId: Utils.Constants.ganacheServerOptions.network_id,
+        networkProvider: Utils.Constants.ganacheProvider
+    };
 
     before(function (done) {
         configureEnvironment(async() => {
@@ -38,27 +42,15 @@ describe('Zap Dispatch Test"', () => {
             accounts = await web3.eth.getAccounts();
             await Utils.migrateContracts(buildDir);
             console.log("Migration complete. ");
+            testArtifacts = Utils.getArtifacts(buildDir);
+            deployedBondage = new BaseContract(Object.assign(options, {artifactName: "Bondage"}));
+            deployedRegistry = new BaseContract(Object.assign(options, {artifactName: "Registry"}));
+            deployedToken = new BaseContract(Object.assign(options, {artifactName: "ZapToken"}));
+            deployedDispatchStorage = new BaseContract(Object.assign(options, {artifactName: "DispatchStorage"}));
             done();
         });
     });
 
-    describe('Dispatch Test', () => {
-        options = {
-            artifactsDir: buildDir,
-            networkId: Utils.Constants.ganacheServerOptions.network_id,
-            networkProvider: Utils.Constants.ganacheProvider
-        };
-
-        before(function (done) {
-            configureEnvironment(async () => {
-                testArtifacts = Utils.getArtifacts(buildDir);
-                deployedBondage = new BaseContract(Object.assign(options, {artifactName: "Bondage"}));
-                deployedRegistry = new BaseContract(Object.assign(options, {artifactName: "Registry"}));
-                deployedToken = new BaseContract(Object.assign(options, {artifactName: "ZapToken"}));
-                deployedDispatchStorage = new BaseContract(Object.assign(options, {artifactName: "DispatchStorage"}));
-                done()
-            })
-        });
 
         it("Should have all pre conditions set up for dispatch to work", async () => {
            const res = await bootstrap(testZapProvider, accounts, deployedRegistry, deployedToken, deployedBondage);
@@ -157,7 +149,6 @@ describe('Zap Dispatch Test"', () => {
                 await expect(e.toString()).to.include('revert');
             }
         });
-    });
 
     after(() => {
         ganacheServer.close();
