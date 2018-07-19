@@ -106,12 +106,11 @@ export class Utils {
     static migrateContracts = migrateContracts
     static clearBuild = clearBuild
     static  startGanacheServer = startGanacheServer;
+    //===CONSTANTS===//
     static Constants = require("./constants")
-
 
 
 
 }
 
 
-export * from "./types"

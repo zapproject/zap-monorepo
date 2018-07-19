@@ -70,13 +70,13 @@ describe('Zap Curve Test"', function() {
 		constants = [2, 2, 0, 3, 3, 0];
 		parts = [1, 10, 10]; // wrong number of parts
 		dividers = [2];
-		let bad = function() { new Curve(constants, parts, dividers); };
+		bad = function() { new Curve(constants, parts, dividers); };
 		expect(bad).to.throw(/A range must be defined for each constants triplet/);
 
 		constants = [2, 2, 0, 3, 3, 0];
 		parts = [1, 10];
 		dividers = [1, 2];
-		const bad = function() { new Curve(constants, parts, dividers); };
+		bad = function() { new Curve(constants, parts, dividers); };
 		expect(bad).to.throw(/A range must be defined for each constants triplet/);
 	});
 
@@ -91,13 +91,13 @@ describe('Zap Curve Test"', function() {
 		constants = [2, 2, 5]; // undefined function
 		parts = [1, 10]; // wrong number of parts
 		dividers = [1];
-		let bad = function() { new Curve(constants, parts, dividers); };
+		bad = function() { new Curve(constants, parts, dividers); };
 		expect(bad).to.throw(/Unknown function encoding/);
 
 		constants = [2, 2, 0, 3, 3, 0];
 		parts = [1, 10, 9, 20]; // overlapping ranges
 		dividers = [1, 2];
-		const bad = function() { new Curve(constants, parts, dividers); };
+		bad = function() { new Curve(constants, parts, dividers); };
 		expect(bad).to.throw(/Parts ranges must be continuous/);
 	});
 });

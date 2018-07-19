@@ -71,38 +71,29 @@ TODO get next endpoint
 ```
 Get endpoint specific information
 ```
-const Curve = await 
+const Curve = await myZapProvider.getCurve(endpoint);
+const zapBound = await myZapProvider.getZapBoung(endpoint);
+const zapRequired = await myZapProvider.getZapRequired({endpoint,dots});
+const dots = await myZapProvider.calcDotsForZap({endpoint,zapAmount})
+```
+Listen to events belong to this provider
+```
+myZapProvider.listenSubscribes(filters,callback);
+myZapProvider.listenUnsubscribes(filters,callback);
+myZapProvider.listenQueries(filters,callback);
+```
+Respond to queries
+```
+await myZapProvider.respond({queryId,responseParams,dynamic}); //string, array, boolean
 ```
 
 
 
 ### See more Usages of each packages :
-* [Provider] ()
-* [Subscriber] ()
-* [Register] ()
-* [Bondage] ()
-* [Dispatch] ()
-* [Arbiter] ()
-* [ZapToken] ()
-
-
-## Built With
-
-* [Lerna](https://lernajs.io/) - The tool to manage monorepo project
-* [Typescript](https://www.typescriptlang.org/) 
-* [Mocha](https://mochajs.org/) 
-* [Truffle](https://truffleframework.com/)
-* [Ganache] (https://truffleframework.com/ganache)
-
-## Contributing
-
-Please read [CONTRIBUTING.md]() for details on our code of conduct, and the process for submitting pull requests to us.
-
-
-See also the list of [contributors](https://github.com/zapproject/Zap-monorepo/graphs/contributors)
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
+* [Subscriber]()
+* [Register]()
+* [Bondage]()
+* [Dispatch]()
+* [Arbiter]()
+* [ZapToken]()
 

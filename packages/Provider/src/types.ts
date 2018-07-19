@@ -53,3 +53,10 @@ export interface ProviderHandler{
     handleUnsubscription : Function,
     handleSubscription : Function
 }
+export interface Filter{
+    fromBlock ?: number,
+    toBlock ?: number,
+    provider ?: address,
+    subscriber ?:address,
+    terminator ?:address
+}

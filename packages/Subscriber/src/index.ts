@@ -10,7 +10,7 @@ import {ZapToken} from "@zap/zaptoken";
 
 export class Subscriber  {
     subscriberOwner:string;
-    handler : SubscriberHandler;
+    handler : SubscriberHandler | {};
     zapDispatch : ZapDispatch;
     zapBondage : ZapBondage;
     zapArbiter : ZapArbiter;

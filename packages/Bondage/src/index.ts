@@ -14,7 +14,7 @@ const assert = require("assert");
  */
 export class ZapBondage extends BaseContract {
     constructor(obj ?: ContractType){
-        super({artifactName:"Bondage",...obj});
+        super(Object.assign(obj,{artifactName:"Bondage"}));
     }
 
     /**

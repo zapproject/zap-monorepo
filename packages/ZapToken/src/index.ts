@@ -15,7 +15,7 @@ export class ZapToken extends BaseContract {
 
 
     constructor(obj ?: ContractType){
-        super({artifactName:"ZapToken",...obj});
+        super(Object.assign(obj,{artifactName:"ZapToken"}));
     }
 
 

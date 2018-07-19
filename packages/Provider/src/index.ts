@@ -2,13 +2,12 @@ import {Provider} from "web3/types";
 
 const assert = require("assert");
 import {Curve,CurveType} from "@zap/curve"
-import {InitProvider, InitCurve, UnsubscribeListen, ListenQuery, Respond, ProviderConstructorType,ProviderHandler,address,txid} from "./types";
+import {InitProvider, InitCurve, UnsubscribeListen, ListenQuery, Respond, ProviderConstructorType,ProviderHandler,address,txid,Filter} from "./types";
 import {ZapDispatch} from "@zap/dispatch";
 import {ZapRegistry} from "@zap/registry";
 import {ZapBondage} from "@zap/bondage";
 import {ZapArbiter} from "@zap/arbiter";
 const {hexToUtf8} = require("web3-utils");
-const EventEmitter = require('events');
 
 
 export class ZapProvider  {
@@ -20,7 +19,7 @@ export class ZapProvider  {
     zapRegistry:  ZapRegistry;
     curve : CurveType | undefined;
     title:string;
-    pubkey:number|string
+    pubkey:number|string;
 
     constructor({owner,handler,zapRegistry,zapDispatch,zapBondage,zapArbiter}:ProviderConstructorType) {
         assert(owner, 'owner address is required');
@@ -146,70 +145,40 @@ export class ZapProvider  {
 
     /**
      * listen to new subscription events to this provider, managed by Arbiter contract
-     * @param {string} subscriber
-     * @param {number} fromBlock
-     * @returns {Promise<void>}
+     * @param {Utils.Types.Filter} filters
+     * @param {Function} callback
      */
-    async listenSubscribes({subscriber, fromBlock}:{subscriber:string, fromBlock: number}):Promise<void> {
-        let callback = (error:any, result:string) => {
-            if (error) {
-                console.error(error);
-            } else {
-                if('handleSubscription' in this.handler)
-                    return this.handler.handleSubscription(result);
-                return result;
-            }
-        };
-
-        return this.zapArbiter.listenSubscriptionStart(
-            {provider: this.providerOwner, subscriber},
-            callback);
+    listenSubscribes(filters:Filter,callback:Function):void {
+        let thisFilters= Object.assign(filters,{
+            provider : this.providerOwner
+        })
+        return this.zapArbiter.listenSubscriptionStart(thisFilters,callback);
     }
+
 
     /**
      *Listen to unsubscription events to this provider, managed by Arbiter contract
-     * @param {string} subscriber
-     * @param {string} terminator : address that call unsubscribe, this can be subscriber or provider
-     * @param {number} fromBlock
-     * @returns {Promise<void>}
+     * @param {Utils.Types.Filter} filters
+     * @param {Function} callback
      */
-    async listenUnsubscribes({subscriber, terminator, fromBlock}:UnsubscribeListen) :Promise<void>{
-        let callback = (error:Error, result:string) => {
-            if (error) {
-                console.log(error);
-            } else {
-                if('handleUnsubscription' in this.handler)
-                    return this.handler.handleUnsubscription(result);
-                return result;
-            }
-        };
-
-        return this.zapArbiter.listenSubscriptionEnd(
-            {provider: this.providerOwner, subscriber, terminator, fromBlock},
-            callback);
+    listenUnsubscribes(filters:Filter,callback:Function) :void{
+        let thisFilters= Object.assign(filters,{
+            provider : this.providerOwner
+        })
+        return this.zapArbiter.listenSubscriptionEnd(thisFilters,callback);
     }
+
 
     /**
      * Listen to Queries events, managed by Dispatch contract
-     * @param {string} queryId
-     * @param {address} subscriber
-     * @param {number} fromBlock
-     * @returns {Promise<void>}
+     * @param {Utils.Types.Filter} filters
+     * @param {Function} callback
      */
-    async listenQueries({fromBlock}:ListenQuery) :Promise<void> {
-        let callback = (error:any, result:string) => {
-            if (error) {
-                console.error(error);
-            } else {
-                if('handleIncoming' in this.handler)
-                    return this.handler.handleIncoming(result);
-                return result;
-            }
-        };
-
-        return this.zapDispatch.listenIncoming(
-            {provider: this.providerOwner, fromBlock},
-            callback);
+    listenQueries(filters:Filter,callback:Function) :void {
+        let thisFilters= Object.assign(filters,{
+            provider : this.providerOwner
+        })
+        return this.zapDispatch.listenIncoming(thisFilters,callback);
     }
 
     /**

@@ -15,7 +15,7 @@ export class ZapRegistry extends BaseContract {
     contract:any;
 
     constructor(obj ?: ContractType){
-        super({artifactName:"Registry",...obj});
+        super(Object.assign(obj,{artifactName:"Registry"}));
     }
 
 

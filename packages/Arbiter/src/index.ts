@@ -17,7 +17,7 @@ export class ZapArbiter extends BaseContract {
      * @param  networkProvider : Ethereum network provider
      */
     constructor(obj ?: ContractType){
-        super({artifactName:"Arbiter",...obj});
+        super(Object.assign(obj,{artifactName:"Arbiter"}))
     }
 
 
@@ -38,7 +38,6 @@ export class ZapArbiter extends BaseContract {
             for (let i in endpoint_params){
                 endpoint_params[i] = utf8ToHex(endpoint_params[i]);
             }
-
             return await this.contract.methods.initiateSubscription(
                 provider,
                 utf8ToHex(endpoint),
