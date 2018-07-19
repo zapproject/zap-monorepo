@@ -45,6 +45,7 @@ packages/ZapToken/test/contracts/
 packages/Registry/test/contracts/
 
 docs/
+documentation/
 packages/**/*.js
 packages/**/*.d.ts
 packages/**/*.map

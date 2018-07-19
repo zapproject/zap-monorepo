@@ -3,7 +3,7 @@ const {toHex}  = require("web3-utils");
 import {BigNumber} from "bignumber.js";
 
 /**
- * Calculate Curve functions
+ * A class that represents a Zap piecewise curve. Provides the functionality to parse Zap's piecewise function encoding and calculate the price of dots at any given point on the curve.
  */
 export class Curve {
     /**@member */
@@ -13,10 +13,11 @@ export class Curve {
     public pieces: any[];
 
     /**
+     * Initializes a wrapper class for function and structurizes the provided curves. 
      * @constructor
-     * @param {Array<number>} constants
-     * @param {Array<number>} parts
-     * @param {Array<number>} dividers
+     * @param {Array<number>} constants An array of format [c0,p0,f0,c1,p1,f1,...], where c0,p0,f0 represent the coefficient, power, and function type (0: absolute value, 1: log base 2) of a piecewise term. 
+     * @param {Array<number>} parts An array of format [s0, e0, s1, e1, ...], where s0,e0 represent the continous range (s0, e0] where the matching piecewise piece is defined on. 
+     * @param {Array<number>} dividers An array of format [d0, d1, ...], where d0 demarcates the piecewise pieces. e.g. if d0=2, The first two piecewise terms are summed to form the first piecewise piece. 
      */
     constructor(constants: number[], parts: number[], dividers: number[]) {
         this.constants = constants;
@@ -28,9 +29,9 @@ export class Curve {
     }
 
     /*
-     * Checks that the piecewise curve encoding is valid. Throws an error if not
+     * Checks whether the piecewise curve encoding is valid and throws an error if invalid.
      */
-     public checkValidity(): void {
+     private checkValidity(): void {
         if (this.constants.length % 3 != 0) { throw new Error("Invalid number of constants arguments"); }
         for (let i = 0; i < this.constants.length; i++) {
             const c = this.constants[i];
@@ -61,9 +62,9 @@ export class Curve {
 }
 
     /**
-     * Turn constants, parts, dividers into curve's coef, power, fn, pieces
+     * Parses the curve encoding's constants, parts, dividers into an Object representation of the curve.
      */
-     public structurize(): void {
+     private structurize(): void {
         let pStart = 0;
 
         for (let i = 0; i < this.dividers.length; i++) {
@@ -87,15 +88,14 @@ export class Curve {
     }
 
     /**
-     * Get the price of a dot at a given totalBound
-     * @param {number} total bound dots
-     * @returns {number}
+     * Gets the price of the nth dot. e.g. the price of a single dot to a curve with no dots issued would be calculated at n=1. 
+     * @param {number} total n, where the new dot will be the nth dot to be bonded. 
+     * @returns {number} Returns the price (in Zap) of the nth dot.
      */
      public getPrice(total: number): number {
         if (total < 0) {
             return 0;
         }
-
         if (!this.pieces) {
             return 0;
         }
@@ -110,10 +110,10 @@ export class Curve {
     }
 
     /**
-     * Calculate a curve's term
-     * @param {CurveTerm} term
-     * @param {number} x
-     * @returns {number}
+     * Calculates an individual term of the curve. Each piece can consist of multiple terms.
+     * @param {CurveTerm} term An Object representation of this curve
+     * @param {number} x The value (supply) at which the term is computed at.
+     * @returns {number} Returns the price (in Zap) of this particular term.
      * @private
      */
      public _calculateTerm(term: CurveTerm, x: number): number {
@@ -137,7 +137,7 @@ export class Curve {
     }
 
     /**
-     * Convert this curve constants, parts, dividers into Array of Bignumbers
+     * Converts this curve constants, parts, dividers into Array of Bignumbers
      * @returns {Array<Array<BigNumber>>}
      */
      public convertToBNArrays(): BigNumber[][] {
@@ -151,14 +151,13 @@ export class Curve {
             return toHex(item);
         });
         return [convertedConstants, convertedParts, convertedDividers];
-
     }
 
     /**
-     * Calculate total of terms
-     * @param terms
-     * @param {number} x
-     * @returns {number}
+     * Calculates the sum of all terms at the appropriate curve for the nth dot.
+     * @param terms Array of term objects
+     * @param {number} x The value (supply) at which the term is computed at. 
+     * @returns {number} Returns the price (in Zap) of the nth dot.
      * @private
      */
      public _calculatePolynomial(terms: any, x: number): number {
