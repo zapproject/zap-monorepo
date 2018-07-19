@@ -56,6 +56,7 @@ export class ZapBondage extends BaseContract {
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
     public async unbond({provider, endpoint, dots, from, gas= Utils.Constants.DEFAULT_GAS}: UnbondArgs): Promise<txid> {
+        assert(dots && dots>0,"Dots to unbond must be greater than 0"); 
         return await this.contract.methods.unbond(
             provider,
             utf8ToHex(endpoint),
@@ -74,7 +75,7 @@ export class ZapBondage extends BaseContract {
         const boundDots =  await this.contract.methods.getBoundDots(
             subscriber,
             provider,
-            utf8ToHex(endpoint),
+            utf8ToHex(endpoint)
         ).call();
         return parseInt(boundDots);
     }
@@ -105,7 +106,7 @@ export class ZapBondage extends BaseContract {
         const bondRate =  await this.contract.methods.calcBondRate(
             provider,
             utf8ToHex(endpoint),
-            zapNum,
+            zapNum
         ).call();
         return parseInt(bondRate["1"]);
 
@@ -122,7 +123,7 @@ export class ZapBondage extends BaseContract {
         return this.contract.methods.currentCostOfDot(
             provider,
             utf8ToHex(endpoint),
-            toBN(dots),
+            toBN(dots)
         ).call();
     }
 
@@ -135,7 +136,7 @@ export class ZapBondage extends BaseContract {
     public async getDotsIssued({provider, endpoint}: BondageArgs): Promise<number> {
         const issuedDots = await  this.contract.methods.getDotsIssued(
             provider,
-            utf8ToHex(endpoint),
+            utf8ToHex(endpoint)
         ).call();
         return parseInt(issuedDots);
     }
@@ -150,7 +151,7 @@ export class ZapBondage extends BaseContract {
     public async getZapBound({provider, endpoint}: BondageArgs ): Promise<number> {
         const zapBound =  this.contract.methods.getZapBound(
             provider,
-            utf8ToHex(endpoint),
+            utf8ToHex(endpoint)
         ).call();
         return parseFloat(zapBound);
     }
