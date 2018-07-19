@@ -7,10 +7,10 @@ const assert = require("assert");
 /**
  * Provides an interface to the Bondage contract for enabling bonds and unbonds to Oracles.
  * @extends BaseContract
- * @param {any} artifactsDir
- * @param {any} artifactName
- * @param {any} networkId
- * @param {any} networkProvider
+ * @param {any} artifactsDir Directory where contract ABIs are located
+ * @param {any} artifactName The name of the artifact file (Bondage)
+ * @param {any} networkId Select which network the contract is located on (mainnet, testnet, private)
+ * @param {any} networkProvider Ethereum network provider (e.g. Infura)
  */
 export class ZapBondage extends BaseContract {
 
