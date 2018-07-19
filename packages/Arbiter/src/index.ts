@@ -1,4 +1,4 @@
-import  {BaseContract,BaseContractType} from '@zap/basecontract';
+import  {BaseContract,ContractType} from '@zap/basecontract';
 import {SubscriptionInit,SubscriptionEnd,Filter,SubscriptionType,txid} from "./types"
 const {toBN,utf8ToHex} = require ('web3-utils');
 import {Utils} from "@zap/utils"
@@ -16,8 +16,8 @@ export class ZapArbiter extends BaseContract {
      * @param {string} networkId
      * @param  networkProvider : Ethereum network provider
      */
-    constructor({artifactsDir, networkId,networkProvider}:BaseContractType){
-        super({artifactsDir,artifactName:'Arbiter',networkId,networkProvider});
+    constructor(obj ?: ContractType){
+        super({artifactName:"Arbiter",...obj});
     }
 
 

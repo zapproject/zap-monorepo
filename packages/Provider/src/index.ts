@@ -13,7 +13,7 @@ const EventEmitter = require('events');
 
 export class ZapProvider  {
     providerOwner:string;
-    handler : ProviderHandler;
+    handler : ProviderHandler | {};
     zapDispatch : ZapDispatch;
     zapBondage : ZapBondage;
     zapArbiter : ZapArbiter;
@@ -25,11 +25,11 @@ export class ZapProvider  {
     constructor({owner,handler,zapRegistry,zapDispatch,zapBondage,zapArbiter}:ProviderConstructorType) {
         assert(owner, 'owner address is required');
         this.providerOwner = owner;
-        this.handler = handler;
-        this.zapDispatch = zapDispatch;
-        this.zapBondage = zapBondage;
-        this.zapArbiter = zapArbiter;
-        this.zapRegistry = zapRegistry;
+        this.handler = handler || {};
+        this.zapDispatch = zapDispatch || new ZapDispatch();
+        this.zapBondage = zapBondage || new ZapBondage();
+        this.zapArbiter = zapArbiter || new ZapArbiter();
+        this.zapRegistry = zapRegistry || new ZapRegistry();
         this.curve = undefined;
         this.title = "";
         this.pubkey = '';
@@ -155,7 +155,9 @@ export class ZapProvider  {
             if (error) {
                 console.error(error);
             } else {
-                return this.handler.handleSubscription(result);
+                if('handleSubscription' in this.handler)
+                    return this.handler.handleSubscription(result);
+                return result;
             }
         };
 
@@ -176,7 +178,9 @@ export class ZapProvider  {
             if (error) {
                 console.log(error);
             } else {
-                return this.handler.handleUnsubscription(result);
+                if('handleUnsubscription' in this.handler)
+                    return this.handler.handleUnsubscription(result);
+                return result;
             }
         };
 
@@ -197,7 +201,9 @@ export class ZapProvider  {
             if (error) {
                 console.error(error);
             } else {
-                return this.handler.handleIncoming(result);
+                if('handleIncoming' in this.handler)
+                    return this.handler.handleIncoming(result);
+                return result;
             }
         };
 

@@ -1,4 +1,4 @@
-import {BaseContract, BaseContractType} from "@zap/basecontract";
+import {BaseContract, ContractType} from "@zap/basecontract";
 import {Utils} from "@zap/utils";
 import {BondageArgs, BondArgs, CalcBondRateType, Filter, txid, UnbondArgs} from "./types";
 const {toBN, utf8ToHex, toHex} = require("web3-utils");
@@ -13,9 +13,8 @@ const assert = require("assert");
  * @param {any} networkProvider
  */
 export class ZapBondage extends BaseContract {
-
-    constructor({artifactsDir, artifactName, networkId, networkProvider}: BaseContractType) {
-        super({artifactsDir, artifactName: "Bondage", networkId, networkProvider});
+    constructor(obj ?: ContractType){
+        super({artifactName:"Bondage",...obj});
     }
 
     /**

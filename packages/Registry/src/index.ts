@@ -1,5 +1,5 @@
 const {toHex,utf8ToHex,toBN, hexToUtf8} = require("web3-utils");
-import {BaseContract,BaseContractType} from "@zap/basecontract";
+import {BaseContract,ContractType} from "@zap/basecontract";
 import {Curve,CurveType} from "@zap/curve";
 import {Utils} from "@zap/utils"
 import {InitProvider, InitCurve, NextEndpoint, EndpointParams,txid,address,Filter} from "./types"
@@ -14,9 +14,10 @@ import {InitProvider, InitCurve, NextEndpoint, EndpointParams,txid,address,Filte
 export class ZapRegistry extends BaseContract {
     contract:any;
 
-    constructor({artifactsDir=undefined,networkId=undefined,networkProvider=undefined}:BaseContractType){
-        super({artifactsDir,artifactName:"Registry",networkId,networkProvider});
+    constructor(obj ?: ContractType){
+        super({artifactName:"Registry",...obj});
     }
+
 
     /**
      * Add a brand new provider in Registry contract, distinguished by provider's address

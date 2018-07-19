@@ -41,11 +41,11 @@ export type Respond = {
 
 export type ProviderConstructorType = {
     owner:address,
-    zapDispatch:ZapDispatch,
-    zapBondage: ZapBondage,
-    zapArbiter: ZapArbiter,
-    zapRegistry: ZapRegistry,
-    handler : ProviderHandler
+    zapDispatch?:ZapDispatch,
+    zapBondage?: ZapBondage,
+    zapArbiter?: ZapArbiter,
+    zapRegistry?: ZapRegistry,
+    handler ?: ProviderHandler
 }
 
 export interface ProviderHandler{
