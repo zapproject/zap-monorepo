@@ -2,7 +2,7 @@ import {join,basename} from "path";
 import {readdirSync} from "fs";
 
 /**
- * Get Artifacts in this package
+ * Returns the artifacts in this package.
  * @returns Artifacts
  */
 function getArtifacts(){
