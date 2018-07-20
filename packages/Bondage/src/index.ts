@@ -134,7 +134,7 @@ export class ZapBondage extends BaseContract {
      * @returns {Promise<number>} Returns a Promise that will eventually resolve into an integer number of dots
      */
     public async getDotsIssued({provider, endpoint}: BondageArgs): Promise<number> {
-        const issuedDots = await  this.contract.methods.getDotsIssued(
+        const issuedDots = await this.contract.methods.getDotsIssued(
             provider,
             utf8ToHex(endpoint)
         ).call();
