@@ -22,18 +22,18 @@ async function configureEnvironment(func: Function) {
 
 describe('Zap Provider Test', () => {
     let accounts :Array<string> = [],
-        zapToken:any,
-        zapRegistry:any,
-        zapBondage:any,
-        zapDispatch:any,
-        zapArbiter:any,
-        zapProvider:any,
-        testArtifacts:any,
-        ganacheServer:any,
-        web3:any,
-        buildDir = join(__dirname,"contracts"),
-        providerAddress:string,subscriberAddress:string,
-        testZapProvider = Utils.Constants.testZapProvider;
+    zapToken:any,
+    zapRegistry:any,
+    zapBondage:any,
+    zapDispatch:any,
+    zapArbiter:any,
+    zapProvider:any,
+    testArtifacts:any,
+    ganacheServer:any,
+    web3:any,
+    buildDir = join(__dirname,"contracts"),
+    providerAddress:string,subscriberAddress:string,
+    testZapProvider = Utils.Constants.testZapProvider;
 
     const options:any = {
         artifactsDir: buildDir,
@@ -54,48 +54,53 @@ describe('Zap Provider Test', () => {
             });
     });
 
-            });
-        });
-        it("Should initiate all the required contracts",async ()=>{
-           zapToken = new ZapToken(options);
-           zapRegistry = new ZapRegistry(options);
-           zapBondage = new ZapBondage(options);
-           zapDispatch = new ZapDispatch(options);
-           zapArbiter = new ZapArbiter(options);
-        });
-        it("Should allocate ZapToken to accounts",async ()=>{
-            let zapTokenOwner = await zapToken.getContractOwner()
-            for(let account of accounts){
-                await zapToken.allocate({to:account,amount:Utils.toZapBase(1000),from:zapTokenOwner})
-            }
-        });
-        it("Should init zapProvider class",async ()=>{
-            zapProvider = new ZapProvider({
-                owner:providerAddress,
-                zapRegistry:zapRegistry,
-                zapDispatch:zapDispatch,
-                zapBondage:zapBondage,
-                zapArbiter:zapArbiter
-            })
+    after(function(){
+        console.log("Done running Subscriber tests");
+        ganacheServer.close();
+        process.exit();
+    });
+
+
+    it("Should initiate all the required contracts",async ()=>{
+     zapToken = new ZapToken(options);
+     zapRegistry = new ZapRegistry(options);
+     zapBondage = new ZapBondage(options);
+     zapDispatch = new ZapDispatch(options);
+     zapArbiter = new ZapArbiter(options);
+ });
+    it("Should allocate ZapToken to accounts",async ()=>{
+        let zapTokenOwner = await zapToken.getContractOwner()
+        for(let account of accounts){
+            await zapToken.allocate({to:account,amount:Utils.toZapBase(1000),from:zapTokenOwner})
+        }
+    });
+    it("Should init zapProvider class",async ()=>{
+        zapProvider = new ZapProvider({
+            owner:providerAddress,
+            zapRegistry:zapRegistry,
+            zapDispatch:zapDispatch,
+            zapBondage:zapBondage,
+            zapArbiter:zapArbiter
         })
     })
+
     it('Should initiate provider', async()=> {
-       let tx = await zapProvider.initiateProvider({
+     let tx = await zapProvider.initiateProvider({
         public_key:testZapProvider.pubkey,
         endpoint: testZapProvider.endpoint,
         title: testZapProvider.title,
         endpoint_params:testZapProvider.endpoint_params
     })
-       expect(tx).to.include.keys("events")
-       expect(tx.events).to.include.keys("NewProvider")
-       expect(tx.events.NewProvider).to.include.keys("returnValues");
-       let returnValues = tx.events.NewProvider.returnValues;
-       expect(returnValues).to.include.keys("provider","title","endpoint")
-       expect(testZapProvider.title).to.equal(hexToUtf8(returnValues.title))
-       expect(returnValues.provider).to.equal(providerAddress);
-       expect(testZapProvider.endpoint).to.equal(hexToUtf8(returnValues.endpoint));
+     expect(tx).to.include.keys("events")
+     expect(tx.events).to.include.keys("NewProvider")
+     expect(tx.events.NewProvider).to.include.keys("returnValues");
+     let returnValues = tx.events.NewProvider.returnValues;
+     expect(returnValues).to.include.keys("provider","title","endpoint")
+     expect(testZapProvider.title).to.equal(hexToUtf8(returnValues.title))
+     expect(returnValues.provider).to.equal(providerAddress);
+     expect(testZapProvider.endpoint).to.equal(hexToUtf8(returnValues.endpoint));
 
-   });
+ });
     it("Should get provider title", async () => {
         let returnedTitle = await zapProvider.getTitle();
         expect(returnedTitle).to.equal(testZapProvider.title)

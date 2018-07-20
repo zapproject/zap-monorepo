@@ -14,7 +14,7 @@ async function configureEnvironment(func:Function) {
     await func();
 }
 
-describe('Zap Dispatch Test"', () => {
+describe('Zap Dispatch Test', () => {
     let accounts :Array<string>= [],
     ganacheServer:any,
     dispatchWrapper:any,

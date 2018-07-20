@@ -37,13 +37,13 @@ describe('ZapToken, path to "/src/api/contracts/ZapToken"', () => {
         });
     });
 
-        it('Should initiate wrapper', async () => {
-            zapTokenWrapper = new ZapToken({
-                    artifactsDir : buildDir,
-                networkId: Utils.Constants.ganacheServerOptions.network_id,
-                networkProvider: Utils.Constants.ganacheProvider});
-            zapTokenOwner = await  zapTokenWrapper.getContractOwner()
-        });
+    it('Should initiate wrapper', async () => {
+        zapTokenWrapper = new ZapToken({
+            artifactsDir : buildDir,
+            networkId: Utils.Constants.ganacheServerOptions.network_id,
+            networkProvider: Utils.Constants.ganacheProvider});
+        zapTokenOwner = await  zapTokenWrapper.getContractOwner()
+    });
     after(function(){
         console.log("Done running Token tests");
         ganacheServer.close();
@@ -54,8 +54,7 @@ describe('ZapToken, path to "/src/api/contracts/ZapToken"', () => {
         zapTokenWrapper = new ZapToken({
             artifactsDir : buildDir,
             networkId: Utils.Constants.ganacheServerOptions.network_id,
-            networkProvider: Utils.Constants.ganacheProvider,
-            artifactName: "Registry"});
+            networkProvider: Utils.Constants.ganacheProvider});
         zapTokenOwner = await  zapTokenWrapper.getContractOwner()
     });
 

@@ -185,9 +185,9 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "pragma solidity ^0.4.24;\n\ninterface DispatchInterface {\n    function query(address, string, bytes32, bytes32[], bool, bool) external returns (uint256);\n    function respond1(uint256, string) external returns (bool);\n    function respond2(uint256, string, string) external returns (bool);\n    function respond3(uint256, string, string, string) external returns (bool);\n    function respond4(uint256, string, string, string, string) external returns (bool);\n    function respondBytes32Array(uint256, bytes32[]) external returns (bool);\n}\n",
-  "sourcePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/packages/Utils/node_modules/zap_contracts/contracts/platform/dispatch/DispatchInterface.sol",
+  "sourcePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/node_modules/zap_contracts/contracts/platform/dispatch/DispatchInterface.sol",
   "ast": {
-    "absolutePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/packages/Utils/node_modules/zap_contracts/contracts/platform/dispatch/DispatchInterface.sol",
+    "absolutePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/node_modules/zap_contracts/contracts/platform/dispatch/DispatchInterface.sol",
     "exportedSymbols": {
       "DispatchInterface": [
         3850
@@ -1162,7 +1162,7 @@
     "src": "0:536:18"
   },
   "legacyAST": {
-    "absolutePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/packages/Utils/node_modules/zap_contracts/contracts/platform/dispatch/DispatchInterface.sol",
+    "absolutePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/node_modules/zap_contracts/contracts/platform/dispatch/DispatchInterface.sol",
     "exportedSymbols": {
       "DispatchInterface": [
         3850
@@ -2142,5 +2142,5 @@
   },
   "networks": {},
   "schemaVersion": "2.0.1",
-  "updatedAt": "2018-07-20T20:00:18.268Z"
+  "updatedAt": "2018-07-20T20:48:56.512Z"
 }

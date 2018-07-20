@@ -272,9 +272,9 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "pragma solidity ^0.4.24;\n// Technically an abstract contract, not interface (solidity compiler devs are working to fix this right now)\n\ncontract RegistryInterface {\n    function initiateProvider(uint256, bytes32, bytes32, bytes32[]) public returns (bool);\n    function initiateProviderCurve(bytes32, int256[], uint256[], uint256[]) public returns (bool);\n    function setEndpointParams(bytes32, bytes32[]) public;\n    function getProviderPublicKey(address) public view returns (uint256);\n    function getProviderTitle(address) public view returns (bytes32);\n  \tfunction getNextEndpointParam(address, bytes32, uint256) public view returns (uint256, bytes32);\n    function getProviderCurve(address, bytes32) public view returns (int[], uint[], uint[]);\n    function getDotLimit(address, bytes32) public view returns (uint);\n    function getNextProvider(uint256) public view returns (uint256, address, uint256, bytes32);\n    function getProviderArgsLength(address, bytes32) public view returns (uint,uint,uint);\n}\n",
-  "sourcePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/packages/Utils/node_modules/zap_contracts/contracts/platform/registry/RegistryInterface.sol",
+  "sourcePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/node_modules/zap_contracts/contracts/platform/registry/RegistryInterface.sol",
   "ast": {
-    "absolutePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/packages/Utils/node_modules/zap_contracts/contracts/platform/registry/RegistryInterface.sol",
+    "absolutePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/node_modules/zap_contracts/contracts/platform/registry/RegistryInterface.sol",
     "exportedSymbols": {
       "RegistryInterface": [
         4520
@@ -1718,7 +1718,7 @@
     "src": "0:1011:21"
   },
   "legacyAST": {
-    "absolutePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/packages/Utils/node_modules/zap_contracts/contracts/platform/registry/RegistryInterface.sol",
+    "absolutePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/node_modules/zap_contracts/contracts/platform/registry/RegistryInterface.sol",
     "exportedSymbols": {
       "RegistryInterface": [
         4520
@@ -3167,5 +3167,5 @@
   },
   "networks": {},
   "schemaVersion": "2.0.1",
-  "updatedAt": "2018-07-20T20:00:18.275Z"
+  "updatedAt": "2018-07-20T20:48:56.525Z"
 }

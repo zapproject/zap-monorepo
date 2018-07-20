@@ -312,9 +312,9 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "pragma solidity ^0.4.24;\n\ncontract BondageInterface {\n    function bond(address, bytes32, uint256) external returns(uint256);\n    function unbond(address, bytes32, uint256) external returns (uint256);\n    function delegateBond(address, address, bytes32, uint256) external returns(uint256);\n    function escrowDots(address, address, bytes32, uint256) external returns (bool);\n    function releaseDots(address, address, bytes32, uint256) external returns (bool);\n    function calcZapForDots(address, bytes32, uint256) external view returns (uint256);\n    function calcBondRate(address, bytes32, uint256) public view returns (uint256, uint256);\n    function currentCostOfDot(address, bytes32, uint256) public view returns (uint256);\n    function getDotsIssued(address, bytes32) public view returns (uint256);\n    function getBoundDots(address, address, bytes32) public view returns (uint256);\n    function getZapBound(address, bytes32) public view returns (uint256);\n}\n",
-  "sourcePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/packages/Utils/node_modules/zap_contracts/contracts/platform/bondage/BondageInterface.sol",
+  "sourcePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/node_modules/zap_contracts/contracts/platform/bondage/BondageInterface.sol",
   "ast": {
-    "absolutePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/packages/Utils/node_modules/zap_contracts/contracts/platform/bondage/BondageInterface.sol",
+    "absolutePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/node_modules/zap_contracts/contracts/platform/bondage/BondageInterface.sol",
     "exportedSymbols": {
       "BondageInterface": [
         2609
@@ -1892,7 +1892,7 @@
     "src": "0:966:13"
   },
   "legacyAST": {
-    "absolutePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/packages/Utils/node_modules/zap_contracts/contracts/platform/bondage/BondageInterface.sol",
+    "absolutePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/node_modules/zap_contracts/contracts/platform/bondage/BondageInterface.sol",
     "exportedSymbols": {
       "BondageInterface": [
         2609
@@ -3475,5 +3475,5 @@
   },
   "networks": {},
   "schemaVersion": "2.0.1",
-  "updatedAt": "2018-07-20T20:00:18.263Z"
+  "updatedAt": "2018-07-20T20:48:56.503Z"
 }

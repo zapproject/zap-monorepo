@@ -165,14 +165,14 @@
       "type": "function"
     }
   ],
-  "bytecode": "0x608060405234801561001057600080fd5b5060405160808061069b83398101806040528101908080519060200190929190805190602001909291908051906020019092919080519060200190929190505050836000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555082600160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555081600260006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555080600360006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555050505050610534806101676000396000f300608060405260043610610062576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806363b41fe914610067578063b69a375d146100ac578063d075f20f146100f1578063f5795cd514610172575b600080fd5b34801561007357600080fd5b506100aa600480360381019080803590602001909291908035906020019082018035906020019190919293919293905050506101cf565b005b3480156100b857600080fd5b506100ef60048036038101908080359060200190929190803590602001908201803590602001919091929391929390505050610234565b005b3480156100fd57600080fd5b50610170600480360381019080803573ffffffffffffffffffffffffffffffffffffffff1690602001909291908035906020019082018035906020019190919293919293908035600019169060200190929190803590602001908201803590602001919091929391929390505050610315565b005b34801561017e57600080fd5b506101cd60048036038101908080359060200190929190803590602001908201803590602001919091929391929390803590602001908201803590602001919091929391929390505050610486565b005b7f5eef7b8de70c44e7326d1d7baa155450f5b38fc8d41309c12b2fc81817606b818383836000818110151561020057fe5b90506020020135600019166040518083815260200182600019166000191681526020019250505060405180910390a1505050565b606082828080601f01602080910402602001604051908101604052809392919081815260200183838082843782019150505050505090507f5d599109d8427016e4c93bff9b5f27e4cd24a83316a010d9ef7e15b7105d30e784826040518083815260200180602001828103825283818151815260200191508051906020019080838360005b838110156102d45780820151818401526020810190506102b9565b50505050905090810190601f1680156103015780820380516001836020036101000a031916815260200191505b50935050505060405180910390a150505050565b600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16639f77d6008787878787876001806040518963ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401808973ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200180602001876000191660001916815260200180602001851515151581526020018415151515815260200183810383528a8a828181526020019250808284378201915050838103825287878281815260200192506020028082843782019150509a5050505050505050505050602060405180830381600087803b15801561044257600080fd5b505af1158015610456573d6000803e3d6000fd5b505050506040513d602081101561046c57600080fd5b810190808051906020019092919050505050505050505050565b7f0c98c7262dfd083f4b7cd58bc095ed2ef00c31ad4e6859d16be4c2b0f7fadeae8585858585604051808681526020018060200180602001838103835287878281815260200192508082843782019150508381038252858582818152602001925080828437820191505097505050505050505060405180910390a150505050505600a165627a7a723058202e1a6b7ec8f12b045b30603deeb4f382a87adae27a5830522ccec2011fa843490029",
-  "deployedBytecode": "0x608060405260043610610062576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806363b41fe914610067578063b69a375d146100ac578063d075f20f146100f1578063f5795cd514610172575b600080fd5b34801561007357600080fd5b506100aa600480360381019080803590602001909291908035906020019082018035906020019190919293919293905050506101cf565b005b3480156100b857600080fd5b506100ef60048036038101908080359060200190929190803590602001908201803590602001919091929391929390505050610234565b005b3480156100fd57600080fd5b50610170600480360381019080803573ffffffffffffffffffffffffffffffffffffffff1690602001909291908035906020019082018035906020019190919293919293908035600019169060200190929190803590602001908201803590602001919091929391929390505050610315565b005b34801561017e57600080fd5b506101cd60048036038101908080359060200190929190803590602001908201803590602001919091929391929390803590602001908201803590602001919091929391929390505050610486565b005b7f5eef7b8de70c44e7326d1d7baa155450f5b38fc8d41309c12b2fc81817606b818383836000818110151561020057fe5b90506020020135600019166040518083815260200182600019166000191681526020019250505060405180910390a1505050565b606082828080601f01602080910402602001604051908101604052809392919081815260200183838082843782019150505050505090507f5d599109d8427016e4c93bff9b5f27e4cd24a83316a010d9ef7e15b7105d30e784826040518083815260200180602001828103825283818151815260200191508051906020019080838360005b838110156102d45780820151818401526020810190506102b9565b50505050905090810190601f1680156103015780820380516001836020036101000a031916815260200191505b50935050505060405180910390a150505050565b600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16639f77d6008787878787876001806040518963ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401808973ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200180602001876000191660001916815260200180602001851515151581526020018415151515815260200183810383528a8a828181526020019250808284378201915050838103825287878281815260200192506020028082843782019150509a5050505050505050505050602060405180830381600087803b15801561044257600080fd5b505af1158015610456573d6000803e3d6000fd5b505050506040513d602081101561046c57600080fd5b810190808051906020019092919050505050505050505050565b7f0c98c7262dfd083f4b7cd58bc095ed2ef00c31ad4e6859d16be4c2b0f7fadeae8585858585604051808681526020018060200180602001838103835287878281815260200192508082843782019150508381038252858582818152602001925080828437820191505097505050505050505060405180910390a150505050505600a165627a7a723058202e1a6b7ec8f12b045b30603deeb4f382a87adae27a5830522ccec2011fa843490029",
+  "bytecode": "0x608060405234801561001057600080fd5b5060405160808061069b83398101806040528101908080519060200190929190805190602001909291908051906020019092919080519060200190929190505050836000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555082600160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555081600260006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555080600360006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555050505050610534806101676000396000f300608060405260043610610062576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806363b41fe914610067578063b69a375d146100ac578063d075f20f146100f1578063f5795cd514610172575b600080fd5b34801561007357600080fd5b506100aa600480360381019080803590602001909291908035906020019082018035906020019190919293919293905050506101cf565b005b3480156100b857600080fd5b506100ef60048036038101908080359060200190929190803590602001908201803590602001919091929391929390505050610234565b005b3480156100fd57600080fd5b50610170600480360381019080803573ffffffffffffffffffffffffffffffffffffffff1690602001909291908035906020019082018035906020019190919293919293908035600019169060200190929190803590602001908201803590602001919091929391929390505050610315565b005b34801561017e57600080fd5b506101cd60048036038101908080359060200190929190803590602001908201803590602001919091929391929390803590602001908201803590602001919091929391929390505050610486565b005b7f5eef7b8de70c44e7326d1d7baa155450f5b38fc8d41309c12b2fc81817606b818383836000818110151561020057fe5b90506020020135600019166040518083815260200182600019166000191681526020019250505060405180910390a1505050565b606082828080601f01602080910402602001604051908101604052809392919081815260200183838082843782019150505050505090507f5d599109d8427016e4c93bff9b5f27e4cd24a83316a010d9ef7e15b7105d30e784826040518083815260200180602001828103825283818151815260200191508051906020019080838360005b838110156102d45780820151818401526020810190506102b9565b50505050905090810190601f1680156103015780820380516001836020036101000a031916815260200191505b50935050505060405180910390a150505050565b600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16639f77d6008787878787876001806040518963ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401808973ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200180602001876000191660001916815260200180602001851515151581526020018415151515815260200183810383528a8a828181526020019250808284378201915050838103825287878281815260200192506020028082843782019150509a5050505050505050505050602060405180830381600087803b15801561044257600080fd5b505af1158015610456573d6000803e3d6000fd5b505050506040513d602081101561046c57600080fd5b810190808051906020019092919050505050505050505050565b7f0c98c7262dfd083f4b7cd58bc095ed2ef00c31ad4e6859d16be4c2b0f7fadeae8585858585604051808681526020018060200180602001838103835287878281815260200192508082843782019150508381038252858582818152602001925080828437820191505097505050505050505060405180910390a150505050505600a165627a7a723058201c0e16fab8902a3cb1397280be1962f30a6b0fbe51c93aeb906022a6fbb930f50029",
+  "deployedBytecode": "0x608060405260043610610062576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806363b41fe914610067578063b69a375d146100ac578063d075f20f146100f1578063f5795cd514610172575b600080fd5b34801561007357600080fd5b506100aa600480360381019080803590602001909291908035906020019082018035906020019190919293919293905050506101cf565b005b3480156100b857600080fd5b506100ef60048036038101908080359060200190929190803590602001908201803590602001919091929391929390505050610234565b005b3480156100fd57600080fd5b50610170600480360381019080803573ffffffffffffffffffffffffffffffffffffffff1690602001909291908035906020019082018035906020019190919293919293908035600019169060200190929190803590602001908201803590602001919091929391929390505050610315565b005b34801561017e57600080fd5b506101cd60048036038101908080359060200190929190803590602001908201803590602001919091929391929390803590602001908201803590602001919091929391929390505050610486565b005b7f5eef7b8de70c44e7326d1d7baa155450f5b38fc8d41309c12b2fc81817606b818383836000818110151561020057fe5b90506020020135600019166040518083815260200182600019166000191681526020019250505060405180910390a1505050565b606082828080601f01602080910402602001604051908101604052809392919081815260200183838082843782019150505050505090507f5d599109d8427016e4c93bff9b5f27e4cd24a83316a010d9ef7e15b7105d30e784826040518083815260200180602001828103825283818151815260200191508051906020019080838360005b838110156102d45780820151818401526020810190506102b9565b50505050905090810190601f1680156103015780820380516001836020036101000a031916815260200191505b50935050505060405180910390a150505050565b600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16639f77d6008787878787876001806040518963ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401808973ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200180602001876000191660001916815260200180602001851515151581526020018415151515815260200183810383528a8a828181526020019250808284378201915050838103825287878281815260200192506020028082843782019150509a5050505050505050505050602060405180830381600087803b15801561044257600080fd5b505af1158015610456573d6000803e3d6000fd5b505050506040513d602081101561046c57600080fd5b810190808051906020019092919050505050505050505050565b7f0c98c7262dfd083f4b7cd58bc095ed2ef00c31ad4e6859d16be4c2b0f7fadeae8585858585604051808681526020018060200180602001838103835287878281815260200192508082843782019150508381038252858582818152602001925080828437820191505097505050505050505060405180910390a150505050505600a165627a7a723058201c0e16fab8902a3cb1397280be1962f30a6b0fbe51c93aeb906022a6fbb930f50029",
   "sourceMap": "4433:1681:8:-;;;4743:300;8:9:-1;5:2;;;30:1;27;20:12;5:2;4743:300:8;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;4876:12;4862:5;;:27;;;;;;;;;;;;;;;;;;4922:15;4893:8;;:45;;;;;;;;;;;;;;;;;;4969:14;4942:7;;:42;;;;;;;;;;;;;;;;;;5023:15;4994:8;;:45;;;;;;;;;;;;;;;;;;4743:300;;;;4433:1681;;;;;;",
   "deployedSourceMap": "4433:1681:8:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;5304:142;;8:9:-1;5:2;;;30:1;27;20:12;5:2;5304:142:8;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;5120:178;;8:9:-1;5:2;;;30:1;27;20:12;5:2;5120:178:8;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;5648:177;;8:9:-1;5:2;;;30:1;27;20:12;5:2;5648:177:8;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;5476:166;;8:9:-1;5:2;;;30:1;27;20:12;5:2;5476:166:8;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;5304:142;5379:24;5387:2;5391:8;;5400:1;5391:11;;;;;;;;;;;;;;;;;;5379:24;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;5304:142;;;:::o;5120:178::-;5184:24;5211:9;;5184:36;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;5232:23;5240:2;5244:10;5232:23;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;23:1:-1;8:100;33:3;30:1;27:10;8:100;;;99:1;94:3;90:11;84:18;80:1;75:3;71:11;64:39;52:2;49:1;45:10;40:15;;8:100;;;12:14;5232:23:8;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;5120:178;;;;:::o;5648:177::-;5754:8;;;;;;;;;;;:14;;;5769:10;5781:5;;5788:9;5799:6;;5807:4;5813;5754:64;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;5754:64:8;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;5754:64:8;;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;5754:64:8;;;;;;;;;;;;;;;;;5648:177;;;;;;:::o;5476:166::-;5566:33;5574:2;5578:9;;5589;;5566:33;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;5476:166;;;;;:::o",
   "source": "pragma solidity ^0.4.24;\n\nimport \"./Client.sol\";\nimport \"../../platform/dispatch/DispatchInterface.sol\";\nimport \"../../platform/bondage/BondageInterface.sol\";\nimport \"../../platform/registry/RegistryInterface.sol\";\nimport \"./OnChainProvider.sol\";\nimport \"../ERC20.sol\";\n\ncontract TestProvider is OnChainProvider {\n\tevent RecievedQuery(string query, bytes32 endpoint, bytes32[] params);\n\n    event TEST(uint res, bytes32 b, string s);\n\n    bytes32 public spec1 = \"Hello?\";\n    bytes32 public spec2 = \"Reverse\";\n    bytes32 public spec3 = \"Add\";\n    bytes32 public spec4 = \"Double\";\n\n    /* Endpoints to Functions:\n    spec1: Hello? -> returns \"Hello World\"\n    spec2: Reverse -> returns the query string in reverse\n    spec3: Add -> Adds up the values in endpointParams \n    */\n\n    // curve 2x^2\n    int[] constants = [2, 2, 0];\n    uint[] parts = [0, 1000000000];\n    uint[] dividers = [1]; \n\n    RegistryInterface registry;\n\n    // middleware function for handling queries\n\tfunction receive(uint256 id, string userQuery, bytes32 endpoint, bytes32[] endpointParams, bool onchainSubscriber) external {\n        emit RecievedQuery(userQuery, endpoint, endpointParams);\n        if(onchainSubscriber) {\n            bytes32 hash = keccak256(endpoint);\n\n            if(hash == keccak256(spec1)){\n                endpoint1(id, userQuery, endpointParams);\n            } else if (hash == keccak256(spec2)){               \n                endpoint2(id, userQuery, endpointParams);\n            } else if (hash == keccak256(spec3)){\n                endpoint3(id, userQuery, endpointParams);\n            } else if (hash == keccak256(spec4)){\n                endpoint4(id, userQuery, endpointParams);\n            } else {\n                revert(\"Invalid endpoint\");\n            }\n        }\n\t}\n\n    constructor(address registryAddress) public{\n\n        registry = RegistryInterface(registryAddress);\n\n        // initialize in registry\n        bytes32 title = \"TestContract\";\n\n        bytes32[] memory params = new bytes32[](2);\n        params[0] = \"p1\";\n        params[1] = \"p2\";\n\n        registry.initiateProvider(12345, title, spec1, params);\n\n        registry.initiateProviderCurve(spec1, constants, parts, dividers);\n        registry.initiateProviderCurve(spec2, constants, parts, dividers);\n        registry.initiateProviderCurve(spec3, constants, parts, dividers);\n        registry.initiateProviderCurve(spec4, constants, parts, dividers);\n    }\n\n\n    // return Hello World to query-maker\n    function endpoint1(uint256 id, string userQuery, bytes32[] endpointParams) internal{\n        Dispatch(msg.sender).respond1(id, \"Hello World\");\n    }\n\n    // return the hash of the query\n    function endpoint2(uint256 id, string userQuery, bytes32[] endpointParams) internal{\n        // endpointParams\n        string memory reversed = reverseString(userQuery);\n        Dispatch(msg.sender).respond1(id, reversed);\n    }\n\n     // returns the sum of all values in endpointParams\n    function endpoint3(uint256 id, string userQuery, bytes32[] endpointParams) internal{\n        uint sum = 0;\n        for(uint i = 0; i<endpointParams.length; i++){\n            uint value = uint(endpointParams[i]);\n            sum += value;\n        }\n\n        bytes32[] memory res = new bytes32[](1);\n        res[0] = bytes32(sum);\n\n        Dispatch(msg.sender).respondBytes32Array(id, res);\n    }\n\n    // returns the sum of all values in endpointParams\n    function endpoint4(uint256 id, string userQuery, bytes32[] endpointParams) internal{\n        Dispatch(msg.sender).respond2(id, \"Hello\", \"World\");\n    }\n\n    // TODO: TEST OUT MORE RETURN VALUES (1,2,3 or 4)!\n\n\n\n    function reverseString(string _base) internal pure returns (string){\n        bytes memory _baseBytes = bytes(_base);\n        string memory _tempValue = new string(_baseBytes.length);\n        bytes memory _newValue = bytes(_tempValue);\n\n        for(uint i=0;i<_baseBytes.length;i++){\n            _newValue[ _baseBytes.length - i - 1] = _baseBytes[i];\n        }\n\n        return string(_newValue);\n    }\n\n\n    function bytes32ToString (bytes32 data) internal pure returns (string) {\n        bytes memory bytesString = new bytes(32);\n        for (uint j=0; j<32; j++) {\n            byte char = byte(bytes32(uint(data) * 2 ** (8 * j)));\n            if (char != 0) {\n                bytesString[j] = char;\n            }\n        }\n        return string(bytesString);\n    }\n\n}\n\n/* Test Subscriber Client */\ncontract TestClient is Client1, Client2{\n\n\tevent Result1(uint256 id, string response1);\n    event Result1(uint256 id, bytes32 response1);\n    event Result2(uint256 id, string response1, string response2);\n\n\tERC20 token;\n\tDispatchInterface dispatch;\n\tBondageInterface bondage;\n    RegistryInterface registry;\n\n\tconstructor(address tokenAddress, address dispatchAddress, address bondageAddress, address registryAddress) public {\n\t\ttoken = ERC20(tokenAddress);\n\t\tdispatch = DispatchInterface(dispatchAddress);\n\t\tbondage = BondageInterface(bondageAddress);\n        registry = RegistryInterface(registryAddress);\n\t}\n\n    /*\n    Implements overloaded callback functions for Client1\n    */\n    function callback(uint256 id, string response1) external {\n    \tstring memory _response1 = response1;\n    \temit Result1(id, _response1);\n        // do something with result\n    }\n\n    function callback(uint256 id, bytes32[] response) external {\n\n        emit Result1(id, response[0]);\n        // do something with result\n    }\n\n    // Client2 callback\n    function callback(uint256 id, string response1, string response2) external {\n        emit Result2(id, response1, response2);\n        // do something with result\n    }\n\n    function testQuery(address oracleAddr, string query, bytes32 specifier, bytes32[] params) external {\n    \tdispatch.query(oracleAddr, query, specifier, params, true, true);\n    }\n\n    function stringToBytes32(string memory source) internal pure returns (bytes32 result) {\n    \tbytes memory tempEmptyStringTest = bytes(source);\n\n    \tif (tempEmptyStringTest.length == 0) {\n    \t\treturn 0x0;\n    \t}\n    \tassembly {\n    \t\tresult := mload(add(source, 32))\n    \t}\n    }\n\n}\n",
-  "sourcePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/packages/Utils/node_modules/zap_contracts/contracts/lib/platform/TestContracts.sol",
+  "sourcePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/node_modules/zap_contracts/contracts/lib/platform/TestContracts.sol",
   "ast": {
-    "absolutePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/packages/Utils/node_modules/zap_contracts/contracts/lib/platform/TestContracts.sol",
+    "absolutePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/node_modules/zap_contracts/contracts/lib/platform/TestContracts.sol",
     "exportedSymbols": {
       "TestClient": [
         1165
@@ -196,7 +196,7 @@
         "src": "0:24:8"
       },
       {
-        "absolutePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/packages/Utils/node_modules/zap_contracts/contracts/lib/platform/Client.sol",
+        "absolutePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/node_modules/zap_contracts/contracts/lib/platform/Client.sol",
         "file": "./Client.sol",
         "id": 522,
         "nodeType": "ImportDirective",
@@ -207,7 +207,7 @@
         "unitAlias": ""
       },
       {
-        "absolutePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/packages/Utils/node_modules/zap_contracts/contracts/platform/dispatch/DispatchInterface.sol",
+        "absolutePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/node_modules/zap_contracts/contracts/platform/dispatch/DispatchInterface.sol",
         "file": "../../platform/dispatch/DispatchInterface.sol",
         "id": 523,
         "nodeType": "ImportDirective",
@@ -218,7 +218,7 @@
         "unitAlias": ""
       },
       {
-        "absolutePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/packages/Utils/node_modules/zap_contracts/contracts/platform/bondage/BondageInterface.sol",
+        "absolutePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/node_modules/zap_contracts/contracts/platform/bondage/BondageInterface.sol",
         "file": "../../platform/bondage/BondageInterface.sol",
         "id": 524,
         "nodeType": "ImportDirective",
@@ -229,7 +229,7 @@
         "unitAlias": ""
       },
       {
-        "absolutePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/packages/Utils/node_modules/zap_contracts/contracts/platform/registry/RegistryInterface.sol",
+        "absolutePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/node_modules/zap_contracts/contracts/platform/registry/RegistryInterface.sol",
         "file": "../../platform/registry/RegistryInterface.sol",
         "id": 525,
         "nodeType": "ImportDirective",
@@ -240,7 +240,7 @@
         "unitAlias": ""
       },
       {
-        "absolutePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/packages/Utils/node_modules/zap_contracts/contracts/lib/platform/OnChainProvider.sol",
+        "absolutePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/node_modules/zap_contracts/contracts/lib/platform/OnChainProvider.sol",
         "file": "./OnChainProvider.sol",
         "id": 526,
         "nodeType": "ImportDirective",
@@ -251,7 +251,7 @@
         "unitAlias": ""
       },
       {
-        "absolutePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/packages/Utils/node_modules/zap_contracts/contracts/lib/ERC20.sol",
+        "absolutePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/node_modules/zap_contracts/contracts/lib/ERC20.sol",
         "file": "../ERC20.sol",
         "id": 527,
         "nodeType": "ImportDirective",
@@ -8721,7 +8721,7 @@
     "src": "0:6115:8"
   },
   "legacyAST": {
-    "absolutePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/packages/Utils/node_modules/zap_contracts/contracts/lib/platform/TestContracts.sol",
+    "absolutePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/node_modules/zap_contracts/contracts/lib/platform/TestContracts.sol",
     "exportedSymbols": {
       "TestClient": [
         1165
@@ -8745,7 +8745,7 @@
         "src": "0:24:8"
       },
       {
-        "absolutePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/packages/Utils/node_modules/zap_contracts/contracts/lib/platform/Client.sol",
+        "absolutePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/node_modules/zap_contracts/contracts/lib/platform/Client.sol",
         "file": "./Client.sol",
         "id": 522,
         "nodeType": "ImportDirective",
@@ -8756,7 +8756,7 @@
         "unitAlias": ""
       },
       {
-        "absolutePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/packages/Utils/node_modules/zap_contracts/contracts/platform/dispatch/DispatchInterface.sol",
+        "absolutePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/node_modules/zap_contracts/contracts/platform/dispatch/DispatchInterface.sol",
         "file": "../../platform/dispatch/DispatchInterface.sol",
         "id": 523,
         "nodeType": "ImportDirective",
@@ -8767,7 +8767,7 @@
         "unitAlias": ""
       },
       {
-        "absolutePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/packages/Utils/node_modules/zap_contracts/contracts/platform/bondage/BondageInterface.sol",
+        "absolutePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/node_modules/zap_contracts/contracts/platform/bondage/BondageInterface.sol",
         "file": "../../platform/bondage/BondageInterface.sol",
         "id": 524,
         "nodeType": "ImportDirective",
@@ -8778,7 +8778,7 @@
         "unitAlias": ""
       },
       {
-        "absolutePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/packages/Utils/node_modules/zap_contracts/contracts/platform/registry/RegistryInterface.sol",
+        "absolutePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/node_modules/zap_contracts/contracts/platform/registry/RegistryInterface.sol",
         "file": "../../platform/registry/RegistryInterface.sol",
         "id": 525,
         "nodeType": "ImportDirective",
@@ -8789,7 +8789,7 @@
         "unitAlias": ""
       },
       {
-        "absolutePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/packages/Utils/node_modules/zap_contracts/contracts/lib/platform/OnChainProvider.sol",
+        "absolutePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/node_modules/zap_contracts/contracts/lib/platform/OnChainProvider.sol",
         "file": "./OnChainProvider.sol",
         "id": 526,
         "nodeType": "ImportDirective",
@@ -8800,7 +8800,7 @@
         "unitAlias": ""
       },
       {
-        "absolutePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/packages/Utils/node_modules/zap_contracts/contracts/lib/ERC20.sol",
+        "absolutePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/node_modules/zap_contracts/contracts/lib/ERC20.sol",
         "file": "../ERC20.sol",
         "id": 527,
         "nodeType": "ImportDirective",
@@ -17275,5 +17275,5 @@
   },
   "networks": {},
   "schemaVersion": "2.0.1",
-  "updatedAt": "2018-07-20T20:00:18.253Z"
+  "updatedAt": "2018-07-20T20:48:56.493Z"
 }

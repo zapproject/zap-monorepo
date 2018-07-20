@@ -49,13 +49,13 @@ describe('Registry test', () => {
     });
 
     it("should be able to create registryWrapper", async ()=>{
-            registryWrapper = new ZapRegistry({
-                artifactsDir : buildDir,
-                networkId: Utils.Constants.ganacheServerOptions.network_id,
-                networkProvider: Utils.Constants.ganacheProvider
-            })
+        registryWrapper = new ZapRegistry({
+            artifactsDir : buildDir,
+            networkId: Utils.Constants.ganacheServerOptions.network_id,
+            networkProvider: Utils.Constants.ganacheProvider
         })
     })
+
 
     it('Should initiate provider in zap registry contract', async () => {
      let tx =  await registryWrapper.initiateProvider({

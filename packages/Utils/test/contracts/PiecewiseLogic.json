@@ -1,14 +1,14 @@
 {
   "contractName": "PiecewiseLogic",
   "abi": [],
-  "bytecode": "0x604c602c600b82828239805160001a60731460008114601c57601e565bfe5b5030600052607381538281f30073000000000000000000000000000000000000000030146080604052600080fd00a165627a7a72305820ba082e784c94c40837e1e309737097817e01e228fb2ffd9d780a2e8d44aaf4910029",
-  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fd00a165627a7a72305820ba082e784c94c40837e1e309737097817e01e228fb2ffd9d780a2e8d44aaf4910029",
+  "bytecode": "0x604c602c600b82828239805160001a60731460008114601c57601e565bfe5b5030600052607381538281f30073000000000000000000000000000000000000000030146080604052600080fd00a165627a7a72305820672d0b5f826fcc667b9a7bff0c4b81d41f2d9f1e11294e6a4e9b02621a79ee130029",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fd00a165627a7a72305820672d0b5f826fcc667b9a7bff0c4b81d41f2d9f1e11294e6a4e9b02621a79ee130029",
   "sourceMap": "26:3918:6:-;;132:2:-1;166:7;155:9;146:7;137:37;252:7;246:14;243:1;238:23;232:4;229:33;270:1;265:20;;;;222:63;;265:20;274:9;222:63;;298:9;295:1;288:20;328:4;319:7;311:22;352:7;343;336:24",
   "deployedSourceMap": "26:3918:6:-;;;;;;;;",
   "source": "pragma solidity ^0.4.24;\n\nlibrary PiecewiseLogic {\n    /// @dev choose needed function piece and calculate it\n    /// @param constants flattened array of all coefficients/powers/function across all polynomial terms, [c0,p0,fn0, c1,p1,fn1 ...]\n    /// @param parts array of starting/ending points for piecewise function pieces [start0,end0,start1,end1...]\n    /// @param dividers array of indices, each specifying range of indices in coef, power, fn belonging to each piece\n    /// @param x currently bound dots\n    /// @return chosen piece result\n    function evalutePiecewiseFunction(int[] constants, uint[] parts, uint[] dividers, uint x) internal pure returns (int) {\n        for ( uint i = 0; i < dividers.length; i++ ) {\n            // Check start range\n            uint start = parts[2 * i];\n\n            if ( x < start ) {\n                continue;\n            }\n\n            // Check the end range\n            uint end = parts[(2 * i) + 1];\n\n            if ( x > end ) {\n                continue;\n            }\n\n            // Calculate sum\n            int sum = 0;\n            uint pStart = i == 0 ? 0 : dividers[i - 1];\n\n            for ( uint j = pStart; j < dividers[i]; j++ ) {\n                // Get the components\n                int coef = constants[(3 * j)];\n                int power = constants[(3 * j)+1];\n                int fn = constants[(3 * j)+2];\n\n                // Calculate the exponential in constant time\n                assembly {\n                    let _x := x\n\n                    switch fn\n                        // Fast Log2 calculation\n                        case 1 {\n                            _x := sub(_x, 1)\n                            _x := or(_x, div(_x, 0x02))\n                            _x := or(_x, div(_x, 0x04))\n                            _x := or(_x, div(_x, 0x10))\n                            _x := or(_x, div(_x, 0x100))\n                            _x := or(_x, div(_x, 0x10000))\n                            _x := or(_x, div(_x, 0x100000000))\n                            _x := or(_x, div(_x, 0x10000000000000000))\n                            _x := or(_x, div(_x, 0x100000000000000000000000000000000))\n                            _x := add(_x, 1)\n                            let m := mload(0x40)\n                            mstore(m, 0xf8f9cbfae6cc78fbefe7cdc3a1793dfcf4f0e8bbd8cec470b6a28a7a5a3e1efd)\n                            mstore(add(m, 0x20), 0xf5ecf1b3e9debc68e1d9cfabc5997135bfb7a7a3938b7b606b5b4b3f2f1f0ffe)\n                            mstore(add(m, 0x40), 0xf6e4ed9ff2d6b458eadcdf97bd91692de2d4da8fd2d0ac50c6ae9a8272523616)\n                            mstore(add(m, 0x60), 0xc8c0b887b0a8a4489c948c7f847c6125746c645c544c444038302820181008ff)\n                            mstore(add(m, 0x80), 0xf7cae577eec2a03cf3bad76fb589591debb2dd67e0aa9834bea6925f6a4a2e0e)\n                            mstore(add(m, 0xa0), 0xe39ed557db96902cd38ed14fad815115c786af479b7e83247363534337271707)\n                            mstore(add(m, 0xc0), 0xc976c13bb96e881cb166a933a55e490d9d56952b8d4e801485467d2362422606)\n                            mstore(add(m, 0xe0), 0x753a6d1b65325d0c552a4d1345224105391a310b29122104190a110309020100)\n                            mstore(0x40, add(m, 0x100))\n                            let y := div(mload(add(m, sub(255, div(mul(_x, 0x818283848586878898a8b8c8d8e8f929395969799a9b9d9e9faaeb6bedeeff), 0x100000000000000000000000000000000000000000000000000000000000000)))), 0x100000000000000000000000000000000000000000000000000000000000000)\n                            y := add(y, mul(256, gt(_x, 0x8000000000000000000000000000000000000000000000000000000000000000)))\n                            _x := y\n                        }\n                        default {}\n\n                    // sum += (_x ** power) * coef\n                    sum := add(sum, mul(exp(_x, power), coef))\n                }\n            }\n\n            return sum;\n        }\n\n        return 0;\n    }\n}\n",
-  "sourcePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/packages/Utils/node_modules/zap_contracts/contracts/lib/platform/PiecewiseLogic.sol",
+  "sourcePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/node_modules/zap_contracts/contracts/lib/platform/PiecewiseLogic.sol",
   "ast": {
-    "absolutePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/packages/Utils/node_modules/zap_contracts/contracts/lib/platform/PiecewiseLogic.sol",
+    "absolutePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/node_modules/zap_contracts/contracts/lib/platform/PiecewiseLogic.sol",
     "exportedSymbols": {
       "PiecewiseLogic": [
         407
@@ -1798,7 +1798,7 @@
     "src": "0:3945:6"
   },
   "legacyAST": {
-    "absolutePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/packages/Utils/node_modules/zap_contracts/contracts/lib/platform/PiecewiseLogic.sol",
+    "absolutePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/node_modules/zap_contracts/contracts/lib/platform/PiecewiseLogic.sol",
     "exportedSymbols": {
       "PiecewiseLogic": [
         407
@@ -3593,5 +3593,5 @@
   },
   "networks": {},
   "schemaVersion": "2.0.1",
-  "updatedAt": "2018-07-20T20:00:18.252Z"
+  "updatedAt": "2018-07-20T20:48:56.492Z"
 }
