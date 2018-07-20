@@ -16,13 +16,13 @@ What things you need to install the software and how to install them
 ### Installing
 
 ```
-npm install @zap/subscriber
+npm install @zapjs/subscriber
 ```
 
 ## Usage
 ##### Create a Zap Susbcriber and interact with Provider
 ```
-import {ZapSubscriber} from '@zap/subscriber';
+import {ZapSubscriber} from '@zapjs/subscriber';
 let myZapSubscriber = new ZapSubscriber({owner:address})
 ```
 **With Custom configuration**

@@ -1,11 +1,11 @@
 
 const assert = require('assert');
 import {BondType,UnbondType,SubscribeType,SubscriberConstructorType, txid,address} from "./types";
-import {ZapDispatch} from "@zap/dispatch";
-import {ZapRegistry} from "@zap/registry";
-import {ZapBondage} from "@zap/bondage";
-import {ZapArbiter} from "@zap/arbiter";
-import {ZapToken} from "@zap/zaptoken";
+import {ZapDispatch} from "@zapjs/dispatch";
+import {ZapRegistry} from "@zapjs/registry";
+import {ZapBondage} from "@zapjs/bondage";
+import {ZapArbiter} from "@zapjs/arbiter";
+import {ZapToken} from "@zapjs/zaptoken";
 
 /**
  * @class

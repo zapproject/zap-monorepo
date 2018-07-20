@@ -1,4 +1,4 @@
-import {Curve} from "@zap/curve"
+import {Curve} from "@zapjs/curve"
 const Web3  = require('web3');
 import {join,dirname} from "path";
 import {serverOptionsType} from "./types"

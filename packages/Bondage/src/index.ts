@@ -1,5 +1,5 @@
-import {BaseContract, ContractType} from "@zap/basecontract";
-import {Utils} from "@zap/utils";
+import {BaseContract, ContractType} from "@zapjs/basecontract";
+import {Utils} from "@zapjs/utils";
 import {BondageArgs, BondArgs, CalcBondRateType, Filter, txid, UnbondArgs} from "./types";
 const {toBN, utf8ToHex, toHex} = require("web3-utils");
 const assert = require("assert");

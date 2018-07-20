@@ -11,11 +11,11 @@ This repository provides dev tools for developing Zap monorepo packages
 
 ## Usage 
 ```
-npm install `@zap/utils`
+npm install `@zapjs/utils`
 ```
 Methods available
 ```
-import {Utils} from '@zap/utils';
+import {Utils} from '@zapjs/utils';
 Utils.getHexBuffer(string)
 Utils.getHexString(string)
 Utils.toZapBase(num)

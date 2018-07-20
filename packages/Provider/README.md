@@ -15,10 +15,10 @@ What things you need to install the software and how to install them
 ## Usage
 ##### Create and manage a Zap Provider
 ```
-npm install `@zap/provider`
+npm install `@zapjs/provider`
 ```
 ```
-import {ZapProvider, ProviderHandler} from '@zap/provider';
+import {ZapProvider, ProviderHandler} from '@zapjs/provider';
 let myZapProvider = new ZapProvider({owner:address});
 ```
 **Create Zap Provider**

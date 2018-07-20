@@ -6,8 +6,8 @@ const expect = require('chai')
 const Web3 = require('web3');
 import {bootstrap} from "./utils/setup_test";
 
-import {Utils} from "@zap/utils";
-import {BaseContract,BaseContractType} from "@zap/basecontract"
+import {Utils} from "@zapjs/utils";
+import {BaseContract,BaseContractType} from "@zapjs/basecontract"
 import {ZapDispatch} from '../src';
 
 async function configureEnvironment(func:Function) {

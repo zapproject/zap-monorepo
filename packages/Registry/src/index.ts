@@ -1,7 +1,7 @@
 const {toHex,utf8ToHex,toBN, hexToUtf8} = require("web3-utils");
-import {BaseContract,ContractType} from "@zap/basecontract";
-import {Curve,CurveType} from "@zap/curve";
-import {Utils} from "@zap/utils"
+import {BaseContract,ContractType} from "@zapjs/basecontract";
+import {Curve,CurveType} from "@zapjs/curve";
+import {Utils} from "@zapjs/utils"
 import {InitProvider, InitCurve, NextEndpoint, EndpointParams,txid,address,Filter} from "./types"
 
 /**

@@ -1,5 +1,5 @@
 {
-  "name": "@zap/dispatch",
+  "name": "@zapjs/dispatch",
   "version": "1.0.0",
   "description": "",
   "main": "lib/src/index.js",
@@ -17,8 +17,8 @@
     "@types/chai": "^4.1.4",
     "@types/mocha": "^5.2.4",
     "@types/node": "^10.5.2",
-    "@zap/basecontract": "^1.0.0",
-    "@zap/utils": "^1.0.0",
+    "@zapjs/basecontract": "^1.0.0",
+    "@zapjs/utils": "^1.0.0",
     "bignumber.js": "^7.2.1",
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",

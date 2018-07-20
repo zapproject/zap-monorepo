@@ -1,5 +1,5 @@
-import {BaseContract,ContractType} from "@zap/basecontract";
-import {Utils} from "@zap/utils";
+import {BaseContract,ContractType} from "@zapjs/basecontract";
+import {Utils} from "@zapjs/utils";
 import {TransferType,address,txid} from "./types";
 
 /**

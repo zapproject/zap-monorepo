@@ -2,26 +2,26 @@
 This monorepo repository includes packages that are published to NPM (todo) and managed independently. 
 
 ### Packages
-[@zap/artifacts](/packages/Artifacts) : Contains .json files for mainnet  
-[@zap/basecontract](/packages/BaseContract) : parent class for all contracts class
+[@zapjs/artifacts](/packages/Artifacts) : Contains .json files for mainnet  
+[@zapjs/basecontract](/packages/BaseContract) : parent class for all contracts class
 
-[@zap/arbiter](/packages/Arbiter) : Manage Subscriptions
+[@zapjs/arbiter](/packages/Arbiter) : Manage Subscriptions
  
-[@zap/bondage](/packages/Bondage) : Help Subscriber bond and unbond
+[@zapjs/bondage](/packages/Bondage) : Help Subscriber bond and unbond
 
-[@zap/dispatch](/packages/Dispatch) : Managing queries and responses
+[@zapjs/dispatch](/packages/Dispatch) : Managing queries and responses
 
-[@zap/registry](/packages/Registry) : Managing providers registry
+[@zapjs/registry](/packages/Registry) : Managing providers registry
 
-[@zap/zaptoken](/packages/ZapToken) : Zap Token
+[@zapjs/zaptoken](/packages/ZapToken) : Zap Token
 
-[@zap/provider](/packages/Provider) : Interacting with contract classes for providers
+[@zapjs/provider](/packages/Provider) : Interacting with contract classes for providers
 
-[@zap/subscriber](/packages/Subscriber): Interacting with contract classes for subscribers
+[@zapjs/subscriber](/packages/Subscriber): Interacting with contract classes for subscribers
 
-[@zap/curve](/packages/Curve) : Calculating curve functions
+[@zapjs/curve](/packages/Curve) : Calculating curve functions
 
-[@zap/utils](/packages/Utils): dev tools
+[@zapjs/utils](/packages/Utils): dev tools
 
 ##### Development setup with Lerna
 - clone the project 

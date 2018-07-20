@@ -1,19 +1,19 @@
-import { ZapToken } from "@zap/zaptoken";
+import { ZapToken } from "@zapjs/zaptoken";
 
 const expect = require('chai')
 .use(require('chai-as-promised'))
 .use(require('chai-bignumber'))
 .expect;
-import { ZapRegistry } from "@zap/registry";
-import { ZapBondage } from "@zap/bondage";
-import { ZapDispatch } from "@zap/dispatch";
-import { ZapArbiter } from "@zap/arbiter";
+import { ZapRegistry } from "@zapjs/registry";
+import { ZapBondage } from "@zapjs/bondage";
+import { ZapDispatch } from "@zapjs/dispatch";
+import { ZapArbiter } from "@zapjs/arbiter";
 import { ZapProvider } from "../src";
 const Web3 = require('web3');
 const { hexToUtf8 } = require("web3-utils");
 import { join } from 'path';
 
-import {Utils} from "@zap/utils";
+import {Utils} from "@zapjs/utils";
 
 async function configureEnvironment(func: Function) {
     await func();

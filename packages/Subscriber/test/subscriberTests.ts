@@ -6,13 +6,13 @@ const expect = require('chai')
 const Web3 = require('web3');
 import { bootstrap } from "./utils/setup_test";
 
-import {Utils} from "@zap/utils";
+import {Utils} from "@zapjs/utils";
 import { Subscriber } from '../src';
-import { ZapBondage } from '@zap/bondage';
-import { ZapRegistry } from "@zap/registry";
-import { ZapToken } from "@zap/zaptoken";
-import { ZapDispatch } from "@zap/dispatch";
-import { ZapArbiter } from "@zap/arbiter";
+import { ZapBondage } from '@zapjs/bondage';
+import { ZapRegistry } from "@zapjs/registry";
+import { ZapToken } from "@zapjs/zaptoken";
+import { ZapDispatch } from "@zapjs/dispatch";
+import { ZapArbiter } from "@zapjs/arbiter";
 
 async function configureEnvironment(func: Function) {
     await func();

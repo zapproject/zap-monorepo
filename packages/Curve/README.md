@@ -69,10 +69,10 @@ npm run run_test
 ## Usage
 ##### Create a Zap Provider
 ```
-npm install `@zap/provider`
+npm install `@zapjs/provider`
 ```
 ```
-import {ZapProvider, ProviderHandler} from '@zap/provider';
+import {ZapProvider, ProviderHandler} from '@zapjs/provider';
 
 class myHandler implements ProviderHander{
     handleIncoming(res:any){

@@ -1,7 +1,7 @@
-import  {BaseContract,ContractType} from '@zap/basecontract';
+import  {BaseContract,ContractType} from '@zapjs/basecontract';
 import {SubscriptionInit,SubscriptionEnd,Filter,SubscriptionType,txid} from "./types"
 const {toBN,utf8ToHex} = require ('web3-utils');
-import {Utils} from "@zap/utils"
+import {Utils} from "@zapjs/utils"
 
 /**
  * @class

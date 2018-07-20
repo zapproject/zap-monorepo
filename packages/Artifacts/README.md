@@ -11,12 +11,12 @@ This repository provides official mainnet Zap Artifacts
 ## Usage
 ##### Get Artifacts
 ```
-npm install --save `@zap/artifacts`
+npm install --save `@zapjs/artifacts`
 ```
 
 Example : get Bondage Artifact
 ```
-import {ZapArtifacts} from '@zap/artifacts';
+import {ZapArtifacts} from '@zapjs/artifacts';
 const BondageArtifact = ZapArtifacts['Bondage']
 ```
 
