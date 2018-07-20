@@ -12,7 +12,7 @@ const {toBN,utf8ToHex} = require ("web3-utils");
  */
 export class ZapDispatch extends BaseContract {
     constructor(obj ?: ContractType){
-        super(Object.assign({artifactName:"Dispatch"}));
+        super(Object.assign(obj,{artifactName:"Dispatch"}));
     }
 
    /**
