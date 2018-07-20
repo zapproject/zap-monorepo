@@ -3,7 +3,8 @@ import{ZapToken} from '@zap/zaptoken';
 import {ZapBondage} from "@zap/bondage";
 import{ZapArbiter} from '@zap/arbiter';
 import {ZapRegistry} from "@zap/registry";
-
+export type txid = string;
+export type address = string;
 export type BondType = {
     provider:string,
     endpoint:string,
@@ -15,7 +16,7 @@ export type UnbondType = {
     dots :number
 }
 
-export type SubscribeType= {
+export type SubscribeType = {
     provider:string,
     endpoint:string,
     dots :number,

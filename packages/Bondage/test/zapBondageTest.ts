@@ -54,7 +54,7 @@ describe('Zap Bondage Test"', () => {
             await bootstrap(testZapProvider, accounts, deployedRegistry, deployedBondage, deployedToken);
         });
     it("2) Should initiate Bondage Wrapper", async () => {
-            bondageWrapper = new ZapBondage(Object.assign(options, {artifactName: "Bondage"}));
+            bondageWrapper = new ZapBondage(options);
         });
     it("3) Should have no bound dots for new provider", async () => {
             const boundDots = await bondageWrapper.getBoundDots({subscriber: accounts[2], provider: accounts[0], endpoint: testZapProvider.endpoint});

@@ -1,4 +1,3 @@
-import {CurveType} from "@zap/curve"
 import {ZapDispatch} from "@zap/dispatch";
 import {ZapRegistry} from "@zap/registry";
 import {ZapBondage} from "@zap/bondage";
@@ -41,15 +40,16 @@ export type Respond = {
 
 export type ProviderConstructorType = {
     owner:address,
-    zapDispatch:ZapDispatch,
-    zapBondage: ZapBondage,
-    zapArbiter: ZapArbiter,
-    zapRegistry: ZapRegistry,
-    handler : ProviderHandler
+    zapDispatch?:ZapDispatch,
+    zapBondage?: ZapBondage,
+    zapArbiter?: ZapArbiter,
+    zapRegistry?: ZapRegistry,
 }
 
-export interface ProviderHandler{
-    handleIncoming : Function,
-    handleUnsubscription : Function,
-    handleSubscription : Function
+export interface Filter{
+    fromBlock ?: number,
+    toBlock ?: number,
+    provider ?: address,
+    subscriber ?:address,
+    terminator ?:address
 }

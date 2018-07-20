@@ -73,14 +73,22 @@ npm install `@zap/provider`
 ```
 ```
 import {ZapProvider, ProviderHandler} from '@zap/provider';
-let myZapProvider = new ZapProvider({owner:address});
+
+class myHandler implements ProviderHander{
+    handleIncoming(res:any){
+    }
+
+    handleSubscription(res:any) {
+    }
+
+    handleUnsubscription (res:string){
+    }
+}
 ```
-**With Custom configuration**
 ```
-let myZapProvider = new ZapProvider({owner:address});
-```
-**Some example for provider usage**
-```
+let myZapProvider = new ZapProvider({owner:address,handler:new myHandler()})
+
+
 await myZapProvider.initiateProvider({
     public_key:111,
     title: "testTitle",
@@ -103,13 +111,13 @@ await myZapProvider.initiateProviderCurve({
 ```
 
 ### See more Usages of each packages :
-* [Provider](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Provider/README.md)
-* [Subscriber](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Subscriber/README.md)
-* [Register](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Register/README.md)
-* [Bondage](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Bondage/README.md)
-* [Dispatch](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Dispatch/README.md)
-* [Arbiter](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Arbiter/README.md)
-* [ZapToken](https://github.com/zapproject/Zap-monorepo/tree/master/packages/ZapToken/README.md)
+* [Provider] ()
+* [Subscriber] ()
+* [Register] ()
+* [Bondage] ()
+* [Dispatch] ()
+* [Arbiter] ()
+* [ZapToken] ()
 
 
 ## Built With
@@ -118,7 +126,7 @@ await myZapProvider.initiateProviderCurve({
 * [Typescript](https://www.typescriptlang.org/) 
 * [Mocha](https://mochajs.org/) 
 * [Truffle](https://truffleframework.com/)
-* [Ganache](https://truffleframework.com/ganache)
+* [Ganache] (https://truffleframework.com/ganache)
 
 ## Contributing
 

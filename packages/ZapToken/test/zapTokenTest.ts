@@ -41,8 +41,7 @@ describe('ZapToken, path to "/src/api/contracts/ZapToken"', () => {
             zapTokenWrapper = new ZapToken({
                     artifactsDir : buildDir,
                 networkId: Utils.Constants.ganacheServerOptions.network_id,
-                networkProvider: Utils.Constants.ganacheProvider,
-                artifactName: "Registry"});
+                networkProvider: Utils.Constants.ganacheProvider});
             zapTokenOwner = await  zapTokenWrapper.getContractOwner()
         });
 

@@ -54,7 +54,7 @@ describe('Arbiter Test', () => {
     });
 
     it('Should initiate zapArbiter wrapper', function() {
-      arbiterWrapper = new ZapArbiter(Object.assign(options, {artifactName:"Arbiter"}));
+      arbiterWrapper = new ZapArbiter(options);
     });
 
     it('Should initiate subscription', async function() {
