@@ -1,6 +1,5 @@
 
 const assert = require('assert');
-
 import {BondType,UnbondType,SubscribeType,SubscriberConstructorType, txid,address} from "./types";
 import {ZapDispatch} from "@zap/dispatch";
 import {ZapRegistry} from "@zap/registry";
