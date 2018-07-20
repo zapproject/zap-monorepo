@@ -149,11 +149,11 @@ export class ZapBondage extends BaseContract {
      * @returns {Promise<number>} Returns a Promise that will eventually resolve into an integer amount of Zap (wei)
      */
     public async getZapBound({provider, endpoint}: BondageArgs ): Promise<number> {
-        const zapBound =  this.contract.methods.getZapBound(
+        const zapBound = await this.contract.methods.getZapBound(
             provider,
             utf8ToHex(endpoint)
         ).call();
-        return parseFloat(zapBound);
+        return parseInt(zapBound);
     }
 
     /**

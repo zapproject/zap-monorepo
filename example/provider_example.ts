@@ -173,6 +173,7 @@ async function getEndpointInfo(provider: ZapProvider): Promise<void> {
 	const endpoint: string = await ask('Endpoint> ');
 
 	const bound: number = await provider.zapBondage.getBoundDots({ subscriber: provider.providerOwner, provider: provider.providerOwner, endpoint});
+	const zapBound : number = await provider.getZapBound(endpoint);
 	const curve = await provider.getCurve(endpoint);
 
 	if ( curve.constants.length == 0 ) {
@@ -182,6 +183,7 @@ async function getEndpointInfo(provider: ZapProvider): Promise<void> {
 
 	console.log('Curve:', curve);
 	console.log('DOTs Bound:', bound);
+	console.log('ZAP Bound:', zapBound);
 }
 
 /**
