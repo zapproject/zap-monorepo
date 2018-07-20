@@ -76,34 +76,44 @@ describe('Zap Subscriber Test', () => {
         process.exit();
     });
 
+        it("Should have all pre conditions set up for subscriber to work", async () => {
+            const res = await bootstrap(testZapProvider, accounts, registryWrapper, tokenWrapper);
+            await expect(res).to.be.equal("done");
+        })
 
-    it("Should have all pre conditions set up for subscriber to work", async () => {
-        const res = await bootstrap(testZapProvider, accounts, deployedRegistry, deployedToken);
-        await expect(res).to.be.equal("done");
-    })
+        it("Should bond specified number of zap", async () => {
+            let zapRequired:number = await bondageWrapper.calcZapForDots({
+                provider: accounts[0],
+                endpoint: testZapProvider.endpoint,
+                dots: 5
+            });
+            const approve = await subscriber.approveToBond(accounts[0],zapRequired)
+            const res = await subscriber.bond({
+                provider: accounts[0],
+                endpoint: testZapProvider.endpoint,
+                zapNum: zapRequired
+            });
+            await expect(res.events.Bound.event).to.be.equal('Bound');
+        })
 
-    it("Should bond specified number of zap", async () => {
-        let zapRequired:number = await bondageWrapper.calcZapForDots({
-            provider: accounts[0],
-            endpoint: testZapProvider.endpoint,
-            dots: 5
-        });        
-        const res = await subscriber.bond({
-            provider: accounts[0],
-            endpoint: testZapProvider.endpoint,
-            zapNum: zapRequired
+        it("Should unbond specified number of dots", async () => {
+            const res = await subscriber.unBond({
+                provider: accounts[0],
+                endpoint: testZapProvider.endpoint,
+                dots: 1
+            });
+            await expect(res.events.Unbound.event).to.be.equal('Unbound');
+        })
+
+        it("Should subscribe to specified provider", async () => {
+            const approve = await subscriber.approveToBond(accounts[0],100)
+            const res = await subscriber.subscribe({
+                provider: accounts[0],
+                endpoint: testZapProvider.endpoint,
+                endpointParams: testZapProvider.endpoint_params,
+                dots: 2
+            });
         });
-        await expect(res.events.Bound.event).to.be.equal('Bound');
-    })
-
-    it("Should unbond specified number of dots", async () => {
-        const res = await subscriber.unBond({
-            provider: accounts[0],
-            endpoint: testZapProvider.endpoint,
-            dots: 1
-        });
-        await expect(res.events.Unbound.event).to.be.equal('Unbound');
-    })
 
     it("Should subscribe to specified provider", async () => {
         const res = await subscriber.subscribe({
@@ -112,12 +122,5 @@ describe('Zap Subscriber Test', () => {
             endpointParams: testZapProvider.endpoint_params,
             dots: 2
         });
-    })
-
-
-    after(() => {
-        ganacheServer.close();
-        process.exit();
     });
-
 });
