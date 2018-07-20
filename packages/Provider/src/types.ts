@@ -1,4 +1,3 @@
-import {CurveType} from "@zap/curve"
 import {ZapDispatch} from "@zap/dispatch";
 import {ZapRegistry} from "@zap/registry";
 import {ZapBondage} from "@zap/bondage";
@@ -45,14 +44,8 @@ export type ProviderConstructorType = {
     zapBondage?: ZapBondage,
     zapArbiter?: ZapArbiter,
     zapRegistry?: ZapRegistry,
-    handler ?: ProviderHandler
 }
 
-export interface ProviderHandler{
-    handleIncoming : Function,
-    handleUnsubscription : Function,
-    handleSubscription : Function
-}
 export interface Filter{
     fromBlock ?: number,
     toBlock ?: number,

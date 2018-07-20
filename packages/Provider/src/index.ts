@@ -1,21 +1,17 @@
-import {Provider} from "web3/types";
-
 const assert = require("assert");
 import {Curve,CurveType} from "@zap/curve"
-import {InitProvider, InitCurve, UnsubscribeListen, ListenQuery, Respond, ProviderConstructorType,ProviderHandler,address,txid,Filter} from "./types";
+import {InitProvider, InitCurve, Respond, ProviderConstructorType,txid,Filter} from "./types";
 import {ZapDispatch} from "@zap/dispatch";
 import {ZapRegistry} from "@zap/registry";
 import {ZapBondage} from "@zap/bondage";
 import {ZapArbiter} from "@zap/arbiter";
-const {hexToUtf8} = require("web3-utils");
 
 /**
  * @class
- * Represents an offchain Provider and provides an interface to the appropriate smart contracts.
+ * Represents an Zap Providers and provides an interface to the appropriate smart contracts.
  */
  export class ZapProvider  {
     providerOwner:string;
-    handler : ProviderHandler | {};
     zapDispatch : ZapDispatch;
     zapBondage : ZapBondage;
     zapArbiter : ZapArbiter;
@@ -24,10 +20,9 @@ const {hexToUtf8} = require("web3-utils");
     title:string;
     pubkey:number|string;
 
-    constructor({owner,handler,zapRegistry,zapDispatch,zapBondage,zapArbiter}:ProviderConstructorType) {
+    constructor({owner,zapRegistry,zapDispatch,zapBondage,zapArbiter}:ProviderConstructorType) {
         assert(owner, 'owner address is required');
         this.providerOwner = owner;
-        this.handler = handler || {};
         this.zapDispatch = zapDispatch || new ZapDispatch();
         this.zapBondage = zapBondage || new ZapBondage();
         this.zapArbiter = zapArbiter || new ZapArbiter();

@@ -17,30 +17,21 @@ What things you need to install the software and how to install them
 ```
 npm install `@zap/provider`
 ```
-Create handler for query and subscription requests
 ```
 import {ZapProvider, ProviderHandler} from '@zap/provider';
-
-class myHandler implements ProviderHander{
-    handleIncoming(res:any){
-    }
-
-    handleSubscription(res:any) {
-    }
-
-    handleUnsubscription (res:string){
-    }
-}
+let myZapProvider = new ZapProvider({owner:address});
 ```
+**With Custom configuration**
+```
+let myZapProvider = new ZapProvider({owner,zapRegistry,zapDispatch,zapBondage,zapArbiter});
+```
+
+
 Create Zap Provider
-- Without handler
 ```
 let myZapProvider = new zapProvider({owner})
 ```
-- With handler
-```
-let myZapProvider = new ZapProvider({owner:address,handler:new myHandler()})
-```
+
 Initiate in Registry and create Curve for an endpoint
 ```
 await myZapProvider.initiateProvider({
@@ -90,10 +81,10 @@ await myZapProvider.respond({queryId,responseParams,dynamic}); //string, array, 
 
 
 ### See more Usages of each packages :
-* [Subscriber]()
-* [Register]()
-* [Bondage]()
-* [Dispatch]()
-* [Arbiter]()
-* [ZapToken]()
+* [Subscriber](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Subscriber/README.md)
+* [Register](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Register/README.md)
+* [Bondage](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Bondage/README.md)
+* [Dispatch](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Dispatch/README.md)
+* [Arbiter](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Arbiter/README.md)
+* [ZapToken](https://github.com/zapproject/Zap-monorepo/tree/master/packages/ZapToken/README.md)
 

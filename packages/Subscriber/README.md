@@ -109,34 +109,11 @@ await myZapProvider.initiateProviderCurve({
 
 
 ```
-
 ### See more Usages of each packages :
-* [Provider] ()
-* [Subscriber] ()
-* [Register] ()
-* [Bondage] ()
-* [Dispatch] ()
-* [Arbiter] ()
-* [ZapToken] ()
-
-
-## Built With
-
-* [Lerna](https://lernajs.io/) - The tool to manage monorepo project
-* [Typescript](https://www.typescriptlang.org/) 
-* [Mocha](https://mochajs.org/) 
-* [Truffle](https://truffleframework.com/)
-* [Ganache] (https://truffleframework.com/ganache)
-
-## Contributing
-
-Please read [CONTRIBUTING.md]() for details on our code of conduct, and the process for submitting pull requests to us.
-
-
-See also the list of [contributors](https://github.com/zapproject/Zap-monorepo/graphs/contributors)
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
+* [Provider](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Provider/README.md)
+* [Register](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Register/README.md)
+* [Bondage](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Bondage/README.md)
+* [Dispatch](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Dispatch/README.md)
+* [Arbiter](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Arbiter/README.md)
+* [ZapToken](https://github.com/zapproject/Zap-monorepo/tree/master/packages/ZapToken/README.md)
 
