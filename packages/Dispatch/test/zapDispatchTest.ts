@@ -58,7 +58,7 @@ describe('Zap Dispatch Test"', () => {
         })
 
         it("Should initiate Dispatch Wrapper", async () => {
-            dispatchWrapper = new ZapDispatch(Object.assign(options, {artifactName: "Dispatch"}));
+            dispatchWrapper = new ZapDispatch(options);
             expect(dispatchWrapper).to.be.ok;
         });
 

@@ -53,39 +53,13 @@ describe('Zap Subscriber Test"', () => {
             await Utils.migrateContracts(buildDir);
             console.log("Migration complete. ");
             testArtifacts = Utils.getArtifacts(buildDir);
-            bondageWrapper = new ZapBondage({
-                artifactsDir: buildDir,
-                networkId: Utils.Constants.ganacheServerOptions.network_id,
-                networkProvider: Utils.Constants.ganacheProvider,
-                artifactName: "Bondage"
-            });
-            registryWrapper = new ZapRegistry({
-                artifactsDir: buildDir,
-                networkId:Utils.Constants. ganacheServerOptions.network_id,
-                networkProvider: Utils.Constants.ganacheProvider,
-                artifactName: "Registry"
-            });
-            tokenWrapper = new ZapToken({
-                artifactsDir: buildDir,
-                networkId: Utils.Constants.ganacheServerOptions.network_id,
-                networkProvider: Utils.Constants.ganacheProvider,
-                artifactName: "ZapToken"
-            });
-            dispatchWrapper = new ZapDispatch({
-                artifactsDir: buildDir,
-                networkId: Utils.Constants.ganacheServerOptions.network_id,
-                networkProvider: Utils.Constants.ganacheProvider,
-                artifactName: "Dispatch"
-            });
-            arbiterWrapper = new ZapArbiter({
-                artifactsDir: buildDir,
-                networkId: Utils.Constants.ganacheServerOptions.network_id,
-                networkProvider: Utils.Constants.ganacheProvider,
-                artifactName: "Arbiter"
-            });
+            bondageWrapper = new ZapBondage(options);
+            registryWrapper = new ZapRegistry(options);
+            tokenWrapper = new ZapToken(options);
+            dispatchWrapper = new ZapDispatch(options);
+            arbiterWrapper = new ZapArbiter(options);
             subscriber = new Subscriber({
                 owner: accounts[2],
-                handler: null,
                 zapToken: tokenWrapper,
                 zapRegistry: registryWrapper,
                 zapDispatch: dispatchWrapper,

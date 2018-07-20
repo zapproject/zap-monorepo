@@ -3,7 +3,7 @@ import{ZapToken} from '@zap/zaptoken';
 import {ZapBondage} from "@zap/bondage";
 import{ZapArbiter} from '@zap/arbiter';
 import {ZapRegistry} from "@zap/registry";
-
+export type txid = string;
 export type BondType = {
     provider:string,
     endpoint:string,

@@ -1,6 +1,7 @@
 
 const assert = require('assert');
-import {BondType,UnbondType,SubscribeType,SubscriberConstructorType,SubscriberHandler} from "./types";
+
+import {BondType,UnbondType,SubscribeType,SubscriberConstructorType, txid} from "./types";
 import {ZapDispatch} from "@zap/dispatch";
 import {ZapRegistry} from "@zap/registry";
 import {ZapBondage} from "@zap/bondage";
@@ -13,7 +14,6 @@ import {ZapToken} from "@zap/zaptoken";
  */
 export class Subscriber  {
     subscriberOwner:string;
-    handler : SubscriberHandler;
     zapDispatch : ZapDispatch;
     zapBondage : ZapBondage;
     zapArbiter : ZapArbiter;
@@ -23,7 +23,6 @@ export class Subscriber  {
     constructor({owner,handler,zapToken,zapRegistry,zapDispatch,zapBondage,zapArbiter}:SubscriberConstructorType) {
         assert(owner, 'owner address is required');
         this.subscriberOwner = owner;
-        this.handler = handler || {};
         this.zapToken = zapToken;
         this.zapDispatch = zapDispatch;
         this.zapBondage = zapBondage;

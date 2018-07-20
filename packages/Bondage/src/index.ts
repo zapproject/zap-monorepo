@@ -1,4 +1,4 @@
-import {BaseContract, BaseContractType} from "@zap/basecontract";
+import {BaseContract, ContractType} from "@zap/basecontract";
 import {Utils} from "@zap/utils";
 import {BondageArgs, BondArgs, CalcBondRateType, Filter, txid, UnbondArgs} from "./types";
 const {toBN, utf8ToHex, toHex} = require("web3-utils");
@@ -22,8 +22,8 @@ export class ZapBondage extends BaseContract {
      * @param {string} networkId Select which network the contract is located on (mainnet, testnet, private)
      * @param  networkProvider Ethereum network provider (e.g. Infura)
      */
-    constructor({artifactsDir, artifactName, networkId, networkProvider}: BaseContractType) {
-        super({artifactsDir, artifactName: "Bondage", networkId, networkProvider});
+    constructor(obj ?: ContractType){
+        super(Object.assign(obj,{artifactName:"Bondage"}));
     }
 
     /**
@@ -56,7 +56,7 @@ export class ZapBondage extends BaseContract {
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
     public async unbond({provider, endpoint, dots, from, gas= Utils.Constants.DEFAULT_GAS}: UnbondArgs): Promise<txid> {
-        assert(dots && dots>0,"Dots to unbond must be greater than 0"); 
+        assert(dots && dots>0,"Dots to unbond must be greater than 0");
         return await this.contract.methods.unbond(
             provider,
             utf8ToHex(endpoint),

@@ -1,4 +1,4 @@
-import {BaseContract,BaseContractType} from "@zap/basecontract";
+import {BaseContract,ContractType} from "@zap/basecontract";
 import {Utils} from "@zap/utils";
 import {TransferType,address,txid} from "./types";
 
@@ -18,9 +18,10 @@ import {TransferType,address,txid} from "./types";
 
  export class ZapToken extends BaseContract {
 
-    constructor({artifactsDir=undefined,artifactName=undefined,networkId=undefined,networkProvider=undefined}:BaseContractType){
-        super({artifactsDir,artifactName:"ZapToken",networkId,networkProvider});
+    constructor(obj ?: ContractType){
+        super(Object.assign(obj,{artifactName:"ZapToken"}));
     }
+
 
     /**
      * Get the Zap Token balance of a given address.

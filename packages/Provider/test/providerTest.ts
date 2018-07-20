@@ -9,7 +9,6 @@ import { ZapBondage } from "@zap/bondage";
 import { ZapDispatch } from "@zap/dispatch";
 import { ZapArbiter } from "@zap/arbiter";
 import { ZapProvider } from "../src";
-import { providerHandler } from "./utils/setup_test"
 const Web3 = require('web3');
 const { hexToUtf8 } = require("web3-utils");
 import { join } from 'path';
@@ -32,7 +31,6 @@ describe('Zap Provider Test', () => {
         testArtifacts:any,
         ganacheServer:any,
         web3:any,
-        thisHandler:any,
         buildDir = join(__dirname,"contracts"),
         providerAddress:string,subscriberAddress:string,
         testZapProvider = Utils.Constants.testZapProvider;
@@ -62,7 +60,6 @@ describe('Zap Provider Test', () => {
            zapBondage = new ZapBondage(options);
            zapDispatch = new ZapDispatch(options);
            zapArbiter = new ZapArbiter(options);
-           thisHandler = new providerHandler();
         });
         it("Should allocate ZapToken to accounts",async ()=>{
             let zapTokenOwner = await zapToken.getContractOwner()
@@ -73,7 +70,6 @@ describe('Zap Provider Test', () => {
         it("Should init zapProvider class",async ()=>{
             zapProvider = new ZapProvider({
                 owner:providerAddress,
-                handler:thisHandler,
                 zapRegistry:zapRegistry,
                 zapDispatch:zapDispatch,
                 zapBondage:zapBondage,
