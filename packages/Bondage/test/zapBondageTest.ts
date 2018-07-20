@@ -16,7 +16,7 @@ async function configureEnvironment(func: Function) {
     await func();
 }
 
-describe('Zap Bondage Test"', () => {
+describe('Zap Bondage Test', () => {
     let accounts: string[] = [],
     ganacheServer: any,
     bondageWrapper: any,
@@ -48,6 +48,12 @@ describe('Zap Bondage Test"', () => {
             deployedToken = new BaseContract(Object.assign(options, {artifactName: "ZapToken"}));
             done();
         });
+    });
+
+    after(function(){
+        console.log("Done running Bondage tests");
+        ganacheServer.close();
+        process.exit();
     });
 
     it("1) Should have all pre conditions set up for bondage to work", async () => {

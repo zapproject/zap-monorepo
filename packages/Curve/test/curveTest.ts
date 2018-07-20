@@ -5,7 +5,7 @@ const expect = require("chai")
 .use(require("chai-bignumber"))
 .expect;
 
-describe('Zap Curve Test"', function() {
+describe('Zap Curve Test', function() {
 
 	it("1) Try to initialize a simple curve", async () => {
 		const constants = [2, 2, 0]; // 2x^2

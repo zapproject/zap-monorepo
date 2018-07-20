@@ -1,9 +1,9 @@
 import { ZapToken } from "@zap/zaptoken";
 
 const expect = require('chai')
-    .use(require('chai-as-promised'))
-    .use(require('chai-bignumber'))
-    .expect;
+.use(require('chai-as-promised'))
+.use(require('chai-bignumber'))
+.expect;
 import { ZapRegistry } from "@zap/registry";
 import { ZapBondage } from "@zap/bondage";
 import { ZapDispatch } from "@zap/dispatch";
@@ -36,21 +36,23 @@ describe('Zap Provider Test', () => {
         testZapProvider = Utils.Constants.testZapProvider;
 
     const options:any = {
-            artifactsDir: buildDir,
-            networkId: Utils.Constants.ganacheServerOptions.network_id,
-            networkProvider: Utils.Constants.ganacheProvider
-        };
+        artifactsDir: buildDir,
+        networkId: Utils.Constants.ganacheServerOptions.network_id,
+        networkProvider: Utils.Constants.ganacheProvider
+    };
 
-        before(function(done) {
-            configureEnvironment(async () => {
-                ganacheServer = await Utils.startGanacheServer();
-                web3 = new Web3(Utils.Constants.ganacheProvider);
-                accounts = await web3.eth.getAccounts();
-                providerAddress = accounts[2];
-                subscriberAddress = accounts[3]
+    before(function(done) {
+        configureEnvironment(async () => {
+            ganacheServer = await Utils.startGanacheServer();
+            web3 = new Web3(Utils.Constants.ganacheProvider);
+            accounts = await web3.eth.getAccounts();
+            providerAddress = accounts[2];
+            subscriberAddress = accounts[3]
                 //delete require.cache[require.resolve('/contracts')];
                 await Utils.migrateContracts(buildDir);
                 done();
+            });
+    });
 
             });
         });
@@ -76,23 +78,24 @@ describe('Zap Provider Test', () => {
                 zapArbiter:zapArbiter
             })
         })
-        it('Should initiate provider', async()=> {
-             let tx = await zapProvider.initiateProvider({
-                public_key:testZapProvider.pubkey,
-                endpoint: testZapProvider.endpoint,
-                title: testZapProvider.title,
-                endpoint_params:testZapProvider.endpoint_params
-             })
-             expect(tx).to.include.keys("events")
-             expect(tx.events).to.include.keys("NewProvider")
-            expect(tx.events.NewProvider).to.include.keys("returnValues");
-             let returnValues = tx.events.NewProvider.returnValues;
-            expect(returnValues).to.include.keys("provider","title","endpoint")
-            expect(testZapProvider.title).to.equal(hexToUtf8(returnValues.title))
-            expect(returnValues.provider).to.equal(providerAddress);
-            expect(testZapProvider.endpoint).to.equal(hexToUtf8(returnValues.endpoint));
+    })
+    it('Should initiate provider', async()=> {
+       let tx = await zapProvider.initiateProvider({
+        public_key:testZapProvider.pubkey,
+        endpoint: testZapProvider.endpoint,
+        title: testZapProvider.title,
+        endpoint_params:testZapProvider.endpoint_params
+    })
+       expect(tx).to.include.keys("events")
+       expect(tx.events).to.include.keys("NewProvider")
+       expect(tx.events.NewProvider).to.include.keys("returnValues");
+       let returnValues = tx.events.NewProvider.returnValues;
+       expect(returnValues).to.include.keys("provider","title","endpoint")
+       expect(testZapProvider.title).to.equal(hexToUtf8(returnValues.title))
+       expect(returnValues.provider).to.equal(providerAddress);
+       expect(testZapProvider.endpoint).to.equal(hexToUtf8(returnValues.endpoint));
 
-    });
+   });
     it("Should get provider title", async () => {
         let returnedTitle = await zapProvider.getTitle();
         expect(returnedTitle).to.equal(testZapProvider.title)

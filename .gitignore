@@ -46,3 +46,5 @@ packages/Registry/test/contracts/
 
 docs/
 documentation/
+
+yarn\.lock
