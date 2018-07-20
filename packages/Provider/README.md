@@ -21,16 +21,15 @@ npm install `@zap/provider`
 import {ZapProvider, ProviderHandler} from '@zap/provider';
 let myZapProvider = new ZapProvider({owner:address});
 ```
+**Create Zap Provider**
+```
+let myZapProvider = new zapProvider({owner})
+```
 **With Custom configuration**
 ```
 let myZapProvider = new ZapProvider({owner,zapRegistry,zapDispatch,zapBondage,zapArbiter});
 ```
 
-
-Create Zap Provider
-```
-let myZapProvider = new zapProvider({owner})
-```
 
 Initiate in Registry and create Curve for an endpoint
 ```
