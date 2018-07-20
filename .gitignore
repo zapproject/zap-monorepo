@@ -48,3 +48,5 @@ docs/
 documentation/
 
 yarn\.lock
+
+package\.json\.lerna_backup
