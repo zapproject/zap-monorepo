@@ -33,6 +33,8 @@ packages/ZapToken/lib/
 
 packages/Registry/lib/
 
+packages/**/*.json
+
 lerna-debug\.log
 
 packages/Arbiter/test/contracts/
@@ -46,5 +48,10 @@ packages/Registry/test/contracts/
 
 docs/
 documentation/
-
-yarn\.lock
+packages/**/*.js
+packages/**/*.d.ts
+packages/**/*.map
+example/**/*.js
+example/**/*.d.ts
+example/**/*.map
+yarn.lock
