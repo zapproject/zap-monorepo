@@ -9,8 +9,8 @@
   ],
   "scripts": {
     "ganache": "ganache-cli -p 8545 --networkId 5777",
-    "tsc_build": "./node_modules/.bin/tsc --target ES2018", 
-    "build": "./node_modules/.bin/lerna run build && ./node_modules/.bin/lerna bootstrap --hoist", 
+    "tsc_build": "./node_modules/.bin/tsc --target ES2018",
+    "build": "./node_modules/.bin/lerna bootstrap --hoist && ./node_modules/.bin/lerna run build",
     "test": "lerna exec npm run run_test --concurrency=1"
   },
   "dependencies": {
