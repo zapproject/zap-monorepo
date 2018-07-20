@@ -148,13 +148,12 @@ import {InitProvider, InitCurve, NextEndpoint, EndpointParams,txid,address,Filte
     // ==== Events ====//
 
     /**
-     * Listen to all Registry contract events with filters
-     * @param {Filter} filters Filters events based on certain key parameters
+     * Listen to all Registry contract events
      * @param {Function} callback Callback function that is called whenever an event is emitted
      * @returns {Promise<void>} Returns a Promise that will eventually resolve when the callback is set
      */
-     async listen(filters:Filter={}, callback:Function):Promise<void>{
-        this.contract.events.allEvents(filters, callback);
+     async listen(callback:Function):Promise<void>{
+        this.contract.events.allEvents(callback);
     }
 
     /**
@@ -168,11 +167,11 @@ import {InitProvider, InitCurve, NextEndpoint, EndpointParams,txid,address,Filte
 
     /**
      * Listen to Registry contract's events for new providers' curve
-     * @param {address} provider The address of this provider
+     * @param {Filter} filters Filters events based on certain key parameters
      * @param {Promise<void>} callback Returns a Promise that will eventually resolve when the callback is set
      */
-     async listenNewCurve(provider:address, callback:Function):Promise<void>{
-        this.contract.events.NewCurve(provider, callback);
+     async listenNewCurve(filters:Filter, callback:Function):Promise<void>{
+        this.contract.events.NewCurve(filters, callback);
     }
 
 }

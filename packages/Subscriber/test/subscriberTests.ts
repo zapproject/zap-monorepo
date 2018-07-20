@@ -72,7 +72,7 @@ describe('Zap Subscriber Test"', () => {
 
 
         it("Should have all pre conditions set up for subscriber to work", async () => {
-            const res = await bootstrap(testZapProvider, accounts, deployedRegistry, deployedToken);
+            const res = await bootstrap(testZapProvider, accounts, registryWrapper, tokenWrapper);
             await expect(res).to.be.equal("done");
         })
 
@@ -81,7 +81,8 @@ describe('Zap Subscriber Test"', () => {
                 provider: accounts[0],
                 endpoint: testZapProvider.endpoint,
                 dots: 5
-            });        
+            });
+            const approve = await subscriber.approveToBond(accounts[0],zapRequired)
             const res = await subscriber.bond({
                 provider: accounts[0],
                 endpoint: testZapProvider.endpoint,
@@ -100,6 +101,7 @@ describe('Zap Subscriber Test"', () => {
         })
 
         it("Should subscribe to specified provider", async () => {
+            const approve = await subscriber.approveToBond(accounts[0],100)
             const res = await subscriber.subscribe({
                 provider: accounts[0],
                 endpoint: testZapProvider.endpoint,
@@ -112,8 +114,6 @@ describe('Zap Subscriber Test"', () => {
         after(() => {
             ganacheServer.close();
 
-            // Hotfix for infinity running migration
-            process.exit();
         });
 
 

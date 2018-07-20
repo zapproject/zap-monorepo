@@ -1,37 +1,49 @@
-# ZAP-Utils
+# Zap-registry
 
-This repository provides dev tools for developing Zap monorepo packages
+This repository provides Interface to Zap Registry contract
 
 ### Prerequisites
-
 ```
 - Nodejs and npm>=6.1.11
 - Typescript
 ```
 
-## Usage 
+## Usage
+##### Using Zap Arbiter to listen to subscriptions events
 ```
-npm install `@zap/utils`
+npm install --save `@zap/registry`
 ```
-Methods available
 ```
-import {Utils} from '@zap/utils';
-Utils.getHexBuffer(string)
-Utils.getHexString(string)
-Utils.toZapBase(num)
-Utils.fromzapBase(num)
-Utils.normalizeProvider(ZapProvider)
+import {ZapRegistry} from '@zap/registry';
+
+let myZapRegistry = new ZapRegistry(); 
+```
+
+Custom configuration
+``` 
+let myZapRegistry = new ZapRegistry({artifactDir,networkId,networkProvider})
+```
+#### Methods
+Get methods
+```
+myZapRegistry.getNextProvider(index);
+
+```
+Listen to events
+```
+myZapRegistry.listenNewProvider(filters,callback)
+myZapRegistry.listenNewCurve(filters,callback)
+```
+Listen all events
+```
+myZapRegistry.listen(callback)
 ```
 
 ### See more Usages of each packages :
 * [Provider](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Provider/README.md)
 * [Subscriber](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Subscriber/README.md)
-* [Register](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Register/README.md)
 * [Bondage](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Bondage/README.md)
 * [Dispatch](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Dispatch/README.md)
 * [Arbiter](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Arbiter/README.md)
 * [ZapToken](https://github.com/zapproject/Zap-monorepo/tree/master/packages/ZapToken/README.md)
-
-
-
 

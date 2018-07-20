@@ -1,7 +1,7 @@
 
 const assert = require('assert');
 
-import {BondType,UnbondType,SubscribeType,SubscriberConstructorType, txid} from "./types";
+import {BondType,UnbondType,SubscribeType,SubscriberConstructorType, txid,address} from "./types";
 import {ZapDispatch} from "@zap/dispatch";
 import {ZapRegistry} from "@zap/registry";
 import {ZapBondage} from "@zap/bondage";
@@ -30,6 +30,15 @@ export class Subscriber  {
         this.zapRegistry = zapRegistry;
     }
 
+    async approveToBond(provider:address,zapNum:number):Promise<any>{
+        let approve = await this.zapToken.approve({
+            to: this.zapBondage.contract._address,
+            amount: zapNum,
+            from: this.subscriberOwner
+        });
+
+        return approve
+    }
     /**
      * Bonds zapNum amount of Zap to the given provider's endpoint, yielding dots that enable this subscriber to send queries. 
      * @param {string} provider The address of the oracle
@@ -41,7 +50,7 @@ export class Subscriber  {
        // assert.ok(this.hasEnoughZap(zapNum), 'Insufficient Balance');
         let approve = await this.zapToken.approve({
             to: this.zapBondage.contract._address,
-            amount: zapNum, 
+            amount: zapNum,
             from: this.subscriberOwner
         });
 
@@ -86,7 +95,6 @@ export class Subscriber  {
         if (zapBalance < zapRequired)
             throw new Error(`Insufficient balance, require ${zapRequired} Zap for ${dots} dots`);
         let boundDots = await this.zapBondage.bond({provider, endpoint, zapNum: zapRequired, from: this.subscriberOwner});
-        assert.isEqual(boundDots, dots, 'Bound dots is different to dots requests.');
         let blocks = dots;
         let sub = await this.zapArbiter.initiateSubscription(
             {provider, endpoint, endpoint_params:endpointParams,
