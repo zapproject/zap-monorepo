@@ -11,10 +11,10 @@ This repository provides Interface to Zap Registry contract
 ## Usage
 ##### Using Zap Arbiter to listen to subscriptions events
 ```
-npm install --save `@zap/registry`
+npm install --save `@zapjs/registry`
 ```
 ```
-import {ZapRegistry} from '@zap/registry';
+import {ZapRegistry} from '@zapjs/registry';
 
 let myZapRegistry = new ZapRegistry(); 
 ```

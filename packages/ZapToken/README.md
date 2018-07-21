@@ -11,10 +11,10 @@ This repository provides Interface to Zap Token contract
 ## Usage
 ##### Using ZapToken package for ERC20 methods with Zap Token
 ```
-npm install --save `@zap/zaptoken`
+npm install --save `@zapjs/zaptoken`
 ```
 ```
-import {ZaopToken} from '@zap/zaptoken';
+import {ZaopToken} from '@zapjs/zaptoken';
 
 let myZapToken = new ZapToken(); 
 ```

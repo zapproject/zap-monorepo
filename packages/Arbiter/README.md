@@ -11,10 +11,10 @@ This repository provides Interface to Zap Arbiter contract
 ## Usage
 ##### Using Zap Arbiter to listen to subscriptions events
 ```
-npm install --save `@zap/arbiter`
+npm install --save `@zapjs/arbiter`
 ```
 ```
-import {ZapArbiter} from '@zap/arbiter';
+import {ZapArbiter} from '@zapjs/arbiter';
 
 let myZapArbiter = new ZapArbiter(); 
 ```

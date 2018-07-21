@@ -1,8 +1,8 @@
 import * as assert from "assert";
 const Web3 =require('web3');
-import {Artifacts} from "@zap/artifacts";
+import {Artifacts} from "@zapjs/artifacts";
 import {BaseContractType} from "./types";
-import {Utils} from "@zap/utils"
+import {Utils} from "@zapjs/utils"
 
 /**
  * Parent Class to Dispatch, Bondage, Arbiter, Token, Registry classes

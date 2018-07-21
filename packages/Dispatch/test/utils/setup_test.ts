@@ -1,6 +1,6 @@
 const Web3 = require('web3');
 const {utf8ToHex,toBN} = require("web3-utils");
-import {Utils} from "@zap/utils";
+import {Utils} from "@zapjs/utils";
 
 /**
  * Bootstrap for Dispatch tests, with accounts[0] = provider, accounts[2]=subscriber

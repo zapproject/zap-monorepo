@@ -1,4 +1,4 @@
-import {Utils} from "@zap/utils";
+import {Utils} from "@zapjs/utils";
 
 const expect = require('chai')
 .use(require('chai-as-promised'))

@@ -11,10 +11,10 @@ This repository provides Interface to Zap Bondage contract
 ## Usage
 ##### Using Zap Arbiter to listen to subscriptions events
 ```
-npm install --save `@zap/bondage`
+npm install --save `@zapjs/bondage`
 ```
 ```
-import {ZapBondage} from '@zap/bondage';
+import {ZapBondage} from '@zapjs/bondage';
 
 let myZapBondage = new ZapBondage(); 
 ```

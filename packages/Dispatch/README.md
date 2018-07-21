@@ -13,10 +13,10 @@ This repository provides Interface to Zap Dispatch contract
 ## Usage
 ##### Listen to query and response events
 ```
-npm install `@zap/dispatch`
+npm install `@zapjs/dispatch`
 ```
 ```
-import {ZapDispatch} from '@zap/dispatch';
+import {ZapDispatch} from '@zapjs/dispatch';
 let myZapArbiter = new ZapArbiter(); 
 ```
 Custom configuration

@@ -1,6 +1,6 @@
 {
-  "name": "@zap/artifacts",
-  "version": "1.0.0",
+  "name": "@zapjs/artifacts",
+  "version": "1.0.1",
   "description": "",
   "main": "lib/src/index.js",
   "typings": "lib/src",

@@ -1,8 +1,8 @@
-import {ZapDispatch} from "@zap/dispatch";
-import{ZapToken} from '@zap/zaptoken';
-import {ZapBondage} from "@zap/bondage";
-import{ZapArbiter} from '@zap/arbiter';
-import {ZapRegistry} from "@zap/registry";
+import {ZapDispatch} from "@zapjs/dispatch";
+import{ZapToken} from '@zapjs/zaptoken';
+import {ZapBondage} from "@zapjs/bondage";
+import{ZapArbiter} from '@zapjs/arbiter';
+import {ZapRegistry} from "@zapjs/registry";
 export type txid = string;
 export type address = string;
 export type BondType = {

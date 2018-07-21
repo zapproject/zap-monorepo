@@ -1,6 +1,6 @@
 {
-  "name": "@zap/curve",
-  "version": "1.0.0",
+  "name": "@zapjs/curve",
+  "version": "1.0.1",
   "description": "",
   "main": "lib/src/index.js",
   "type": "lib/src/types.d.ts",
@@ -36,5 +36,8 @@
   "devDependencies": {
     "mocha": "^5.2.0",
     "tslint": "^5.10.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

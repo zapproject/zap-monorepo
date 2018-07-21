@@ -1,4 +1,4 @@
-import {CurveType} from "@zap/curve"
+import {CurveType} from "@zapjs/curve"
 import BigNumber from 'bignumber.js';
 
 export type address = string;

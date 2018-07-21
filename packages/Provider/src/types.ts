@@ -1,7 +1,7 @@
-import {ZapDispatch} from "@zap/dispatch";
-import {ZapRegistry} from "@zap/registry";
-import {ZapBondage} from "@zap/bondage";
-import {ZapArbiter} from "@zap/arbiter";
+import {ZapDispatch} from "@zapjs/dispatch";
+import {ZapRegistry} from "@zapjs/registry";
+import {ZapBondage} from "@zapjs/bondage";
+import {ZapArbiter} from "@zapjs/arbiter";
 export type address = string;
 export type txid = string|object;
 export type InitProvider = {
