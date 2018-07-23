@@ -36,7 +36,7 @@ export class BaseContract{
           //network id default to mainnet
           this.networkId = networkId || 1;
           this.web3 = new Web3(networkProvider);
-          console.log("info : ",artifactName, artifactsDir, this.networkId, artifact.networks)
+          console.log("Initialize contract: ",artifactName, artifactsDir, this.networkId, artifact.networks)
           this.contract = new this.web3.eth.Contract(artifact.abi,artifact.networks[this.networkId].address)
 
         } catch (err) {
