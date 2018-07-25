@@ -1,6 +1,6 @@
-# Zap-registry
+# @zapjs/registry
 
-This repository provides Interface to Zap Registry contract
+This repository provides an interface to the Zap Registry contract, enabling data providers (oracles) to register their endpoints and bonding curves. Furthermore, this package enables data subscribers to discover oracles and receive configuration data (such as titles, endpoints, and parameters) from the Registry smart contract.
 
 ### Prerequisites
 ```

@@ -1,6 +1,6 @@
-# ZAP-Utils
+# @zapjs/utils
 
-This repository provides dev tools for developing Zap monorepo packages
+This repository provides utilities used in other @zapjs packages. This includes various pure functions that are used by other Ethereum-interfacing packages.
 
 ### Prerequisites
 

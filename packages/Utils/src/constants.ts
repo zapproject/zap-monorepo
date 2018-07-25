@@ -9,7 +9,6 @@ const { provider} = require('ganache-core');
 const  migrationDir = join(zapContractDirName,"migrations")
 const contractsDir = join(zapContractDirName,"contracts")
 const workingDir = zapContractDirName
-console.log("working dir : ", workingDir)
 export const  migrate = require("truffle-core/lib/commands/migrate.js");
 /**
  * @ignore

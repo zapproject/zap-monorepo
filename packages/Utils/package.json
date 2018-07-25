@@ -1,6 +1,6 @@
 {
-  "name": "zap-utils",
-  "version": "1.0.1",
+  "name": "@zapjs/utils",
+  "version": "1.0.3",
   "description": "",
   "main": "./lib/src/index.js",
   "types": "./lib/src/index.d.ts",
@@ -16,7 +16,7 @@
   "dependencies": {
     "@types/chai": "^4.1.4",
     "@types/mocha": "^5.2.4",
-    "@types/node": "^10.5.2",
+    "@types/node": "^10.5.2d",
     "@zapjs/curve": "^1.0.0",
     "bignumber.js": "^7.2.1",
     "chai": "^4.1.2",

@@ -1,6 +1,6 @@
-# ZAP-Dispatch
+# @zapjs/dispatch
 
-This repository provides Interface to Zap Dispatch contract 
+This repository provides an interface to the Zap Dispatch contract, enabling queries to be sent to oracles and responses to be received by subscribers.
 
 ### Prerequisites
 

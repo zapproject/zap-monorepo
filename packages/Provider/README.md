@@ -1,6 +1,6 @@
-# ZAP-Provider
+# @zapjs/provider
 
-This repository provides Interface for Oracle dev to build Zap Provider
+This package provides wrapper classes to onchain and offchains oracles on the Zap platform. 
 
 ### Prerequisites
 
@@ -10,7 +10,6 @@ What things you need to install the software and how to install them
 - Nodejs and npm>=6.1.11
 - Typescript
 ```
-
 
 ## Usage
 ##### Create and manage a Zap Provider

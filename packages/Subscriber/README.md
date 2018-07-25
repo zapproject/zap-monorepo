@@ -1,6 +1,7 @@
-# ZAP-Subscriber
+# @zapjs/subscriber
 
-This repository provides methods for subscribers to interact with Zap Providers and other contracts
+This repository provides wrapper classes for data subscribers subscribers to interface with Zap providers.
+
 ## Getting Started
 
 

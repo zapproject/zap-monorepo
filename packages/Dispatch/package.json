@@ -1,6 +1,6 @@
 {
   "name": "@zapjs/dispatch",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
   "main": "lib/src/index.js",
   "type": "lib/src/types.d.ts",

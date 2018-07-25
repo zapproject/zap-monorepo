@@ -1,9 +1,6 @@
-# ZAP
-ZAP Oracles (introduction here)
-# ZAP-Monorepo
+# @zapjs/curve
 
-This repository provides Interface to Zap contracts and tools to use Zap platform with Javascript projects
-Each package is a public npm module that serve developer's needs to intergrate Zap platform
+This package contains objects that can parse the custom Zap bonding curve encoding used by Zap oracles. This package also enables calculations of Dot prices on a given bonding curve.
 
 ## Getting Started
 

@@ -50,3 +50,11 @@ documentation/
 yarn\.lock
 
 package\.json\.lerna_backup
+packages/*/src/**/*.js
+packages/*/src/**/*.d.ts
+packages/*/src/**/*.js
+packages/*/src/**/*.js.map
+packages/*/test/**/*.js
+packages/*/test/**/*.d.ts
+packages/*/test/**/*.js.map
+

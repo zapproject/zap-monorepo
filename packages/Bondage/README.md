@@ -1,6 +1,6 @@
-# Zap-bondage
+# @zapjs/bondage
 
-This repository provides Interface to Zap Bondage contract
+This package provides an interface to the Zap bondage contract. This package enables subscribers to bond and unbond Zap and Dots from registered oracles.
 
 ### Prerequisites
 ```

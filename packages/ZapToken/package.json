@@ -1,6 +1,6 @@
 {
 	"name": "@zapjs/zaptoken",
-	"version": "1.0.1",
+	"version": "1.0.3",
 	"description": "",
 	"main": "lib/src/index.js",
 	"type": "lib/src/types.d.ts",
@@ -30,8 +30,8 @@
 		"ts-node": "^7.0.0",
 		"tslint": "^5.10.0",
 		"typescript": "^2.9.2",
-		"web3": "^1.0.1-beta.34",
-		"web3-utils": "^1.0.1-beta.34",
+		"web3": "^1.0.0-beta.34",
+		"web3-utils": "^1.0.0-beta.34",
 		"zap_contracts": "git+https://github.com/zapproject/zap-ethereum-api.git"
 	},
 	"devDependencies": {
