@@ -7,7 +7,7 @@ import {readdirSync} from "fs";
  */
 function getArtifacts(){
     let Artifacts:any = {};
-        readdirSync(join(__dirname,'../../','contracts')).forEach(function (file) {
+    readdirSync(join(__dirname,'../../','contracts')).forEach(function (file) {
         /* If its the current file ignore it */
         if (!file.endsWith('.json')) return;
 

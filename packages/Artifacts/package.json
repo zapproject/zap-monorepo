@@ -3,13 +3,12 @@
   "version": "1.0.4",
   "description": "",
   "main": "lib/src/index.js",
-  "typings": "lib/src",
+  "types": "lib/src/typings.d.ts",
   "scripts": {
     "build": "./node_modules/.bin/tsc",
     "test": "mocha  -r ts-node/register test/*.ts --serial",
     "run_test": "run-s build test",
-    "bundle": "browserify  src/index.ts -p [tsify --noImplicitAny] > ./dist/bundle.js",
-    "webpack": "./node_mdules/.bin/webpack"
+    "webpack": "./node_modules/.bin/webpack"
   },
   "keywords": [],
   "author": "",
@@ -28,7 +27,6 @@
     "chai-as-promised": "^7.1.1",
     "chai-bignumber": "^2.0.2",
     "fs": "0.0.1-security",
-    "json-loader": "^0.5.7",
     "load-json-file": "^5.0.0",
     "make-promises-safe": "^1.1.0",
     "mocha": "^5.2.0",
@@ -40,13 +38,16 @@
     "ts-node": "^7.0.0",
     "tslint": "^5.10.0",
     "typescript": "^2.9.2",
+    "typings": "^2.1.1",
     "web3": "^1.0.0-beta.34",
     "web3-utils": "^1.0.0-beta.34",
     "webpack": "^4.16.3",
     "zap_contracts": "git+https://github.com/zapproject/zap-ethereum-api.git"
   },
   "devDependencies": {
+    "json-loader": "^0.5.7",
     "mocha": "^5.2.0",
+    "raw-loader": "^0.5.1",
     "tslint": "^5.10.0"
   }
 }

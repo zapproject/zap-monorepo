@@ -1,8 +1,15 @@
-
+const path = require("path");
+const webpack = require("webpack")
 module.exports = {
-    entry: "./src/index.ts",
+    entry: {
+        "artifacts": "./src/bundle.ts",
+        "artifacts.min": "./src/bundle.ts"
+    },
     output: {
-        filename: "bundle.js"
+        path: path.resolve(__dirname, 'dist'),
+        filename: "[name].js",
+        libraryTarget: "umd",
+        umdNamedDefine: true
     },
     resolve: {
         // Add '.ts' and '.tsx' as a resolvable extension.
@@ -14,20 +21,10 @@ module.exports = {
             {
                 test: /\.ts?$/,
                 use: [
-                    {
-                        loader: "awesome-typescript-loader"
-                    }
-                ],
-                exclude: /node_modules/
-            },
-            {
-                test: /\.json$/,
-                loader: "json-loader"
+                    "awesome-typescript-loader"
+                 ],
+                 exclude: /node_modules/
             }
         ]
-    },
-    target: "web",
-    externals: {
-        fs: "commonjs fs"
     }
 }
