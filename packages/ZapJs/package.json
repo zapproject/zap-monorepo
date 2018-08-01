@@ -1,0 +1,33 @@
+{
+  "name": "zapjs",
+  "version": "1.0.0",
+  "dependencies": {
+    "@zapjs/arbiter": "^1.0.2",
+    "@zapjs/artifacts": "^1.0.4",
+    "@zapjs/bondage": "^1.0.3",
+    "@zapjs/dispatch": "^1.0.2",
+    "@zapjs/provider": "^1.0.2",
+    "@zapjs/subscriber": "^1.0.2",
+    "@zapjs/utils": "^1.0.3",
+    "@zapjs/zaptoken": "^1.0.3",
+    "awesome-typescript-loader": "^5.2.0",
+    "babelify": "^8.0.0",
+    "brfs": "^2.0.0",
+    "browserify": "^16.2.2",
+    "browserify-fs": "^1.0.0",
+    "ethereumjs-wallet": "^0.6.1",
+    "fs": "0.0.1-security",
+    "json-loader": "^0.5.7",
+    "ts-loader": "^4.4.2",
+    "tsify": "^4.0.0",
+    "webpack": "^4.16.2"
+  },
+  "scripts": {
+    "bundle": "browserify  src/index.ts -p [tsify --noImplicitAny] > ./dist/bundle.js",
+    "webpack": "./node_mdules/.bin/webpack"
+  },
+  "main": "src/index.js",
+  "repository": "https://github.com/zapproject/Zap-monorepo",
+  "author": "propulsor",
+  "license": "MIT"
+}
