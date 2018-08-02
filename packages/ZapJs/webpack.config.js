@@ -1,13 +1,16 @@
 
-
+const path = require("path")
 module.exports = {
     entry: "./src/index.ts",
     output: {
-        filename: "bundle.js"
+        path: path.resolve(__dirname, 'dist'),
+        filename: "[name].js",
+        libraryTarget: "umd",
+        umdNamedDefine: true
     },
     resolve: {
         // Add '.ts' and '.tsx' as a resolvable extension.
-        extensions: [".ts", ".js"]
+        extensions: [".ts"]
     },
     module: {
         rules: [
@@ -16,19 +19,11 @@ module.exports = {
                 test: /\.ts?$/,
                 use: [
                     {
-                        loader: "ts-loader"
+                        loader: "awesome-typescript-loader"
                     }
                 ],
                 exclude: /node_modules/
-            },
-            {
-                test: /\.json$/,
-                loader: "json-loader"
             }
         ]
-    },
-    target: "node",
-    externals: {
-        fs: "commonjs fs"
     }
 }

@@ -2,8 +2,8 @@ const path = require("path");
 const webpack = require("webpack")
 module.exports = {
     entry: {
-        "artifacts": "./src/bundle.ts",
-        "artifacts.min": "./src/bundle.ts"
+        "artifacts": "./src/index.ts",
+        "artifacts.min": "./src/index.ts"
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -23,8 +23,11 @@ module.exports = {
                 use: [
                     "awesome-typescript-loader"
                  ],
-                 exclude: /node_modules/
+                exclude: [
+                    /node_modules/,
+                    /test/
+                ]
             }
         ]
-    }
+    },
 }

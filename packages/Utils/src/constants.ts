@@ -1,11 +1,8 @@
 import {Curve} from "@zapjs/curve"
 const Web3  = require('web3');
 import {join,dirname} from "path";
-import {serverOptionsType} from "./types"
-const requireAll = require("require-all")
  Web3.providers.HttpProvider.prototype.sendAsync = Web3.providers.HttpProvider.prototype.send;
 const zapContractDirName = dirname(require.resolve("zap_contracts/truffle-config.js"))
-const { provider} = require('ganache-core');
 const  migrationDir = join(zapContractDirName,"migrations")
 const contractsDir = join(zapContractDirName,"contracts")
 const workingDir = zapContractDirName

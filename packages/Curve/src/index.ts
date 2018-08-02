@@ -1,4 +1,4 @@
-import {CurveTerm, CurveType} from "./types";
+import {CurveTerm} from "./types";
 const {toHex}  = require("web3-utils");
 import {BigNumber} from "bignumber.js";
 
