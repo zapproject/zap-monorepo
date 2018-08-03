@@ -1,7 +1,8 @@
 {
   "name": "@zapjs/curve",
   "version": "1.0.2",
-  "description": "",
+  "description": "Zap Curve",
+  "repository": "https://github.com/zapproject/Zap-monorepo",
   "main": "lib/src/index.js",
   "type": "lib/src/types.d.ts",
   "typings": "lib/src",

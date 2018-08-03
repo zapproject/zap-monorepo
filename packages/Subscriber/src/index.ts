@@ -11,7 +11,7 @@ import {ZapToken} from "@zapjs/zaptoken";
  * @class
  * Represents an offchain Subscriber and provides an interface to the appropriate smart contracts.
  */
-export class Subscriber  {
+export class ZapSubscriber  {
     subscriberOwner:string;
     zapDispatch : ZapDispatch;
     zapBondage : ZapBondage;

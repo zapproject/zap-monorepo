@@ -1,7 +1,8 @@
 {
 	"name": "@zapjs/zaptoken",
 	"version": "1.0.3",
-	"description": "",
+	"description": "Zap Token",
+	"repository": "https://github.com/zapproject/Zap-monorepo",
 	"main": "lib/src/index.js",
 	"type": "lib/src/types.d.ts",
 	"typings": "lib/src",

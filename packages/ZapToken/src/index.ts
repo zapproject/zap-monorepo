@@ -1,4 +1,4 @@
-import {BaseContract,ContractType} from "@zapjs/basecontract";
+import {BaseContract,ContractType} from "./../../BaseContract/src";
 import {Utils} from "./utils";
 import {TransferType,address,txid} from "./types";
 

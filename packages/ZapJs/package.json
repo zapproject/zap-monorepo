@@ -1,14 +1,16 @@
 {
   "name": "zapjs",
   "version": "1.0.0",
+  "repository": "https://github.com/zapproject/Zap-monorepo",
   "dependencies": {
     "@zapjs/arbiter": "^1.0.2",
     "@zapjs/artifacts": "^1.0.4",
     "@zapjs/bondage": "^1.0.3",
+    "@zapjs/curve": "^1.0.2",
     "@zapjs/dispatch": "^1.0.2",
     "@zapjs/provider": "^1.0.2",
+    "@zapjs/registry": "^1.0.3",
     "@zapjs/subscriber": "^1.0.2",
-    "@zapjs/utils": "^1.0.3",
     "@zapjs/zaptoken": "^1.0.3",
     "awesome-typescript-loader": "^5.2.0",
     "json-loader": "^0.5.7",
@@ -19,7 +21,6 @@
     "webpack": "./node_mdules/.bin/webpack"
   },
   "main": "src/index.js",
-  "repository": "https://github.com/zapproject/Zap-monorepo",
   "author": "propulsor",
   "license": "MIT"
 }

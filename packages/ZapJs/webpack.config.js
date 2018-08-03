@@ -1,7 +1,10 @@
 
 const path = require("path")
 module.exports = {
-    entry: "./src/index.ts",
+    entry: {
+        "zapjs": "./src/index.ts",
+        "zapjs.min": "./src/index.ts"
+    },
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: "[name].js",
@@ -10,7 +13,7 @@ module.exports = {
     },
     resolve: {
         // Add '.ts' and '.tsx' as a resolvable extension.
-        extensions: [".ts"]
+        extensions: [".ts", ".js", ".json"]
     },
     module: {
         rules: [
@@ -19,10 +22,21 @@ module.exports = {
                 test: /\.ts?$/,
                 use: [
                     {
-                        loader: "awesome-typescript-loader"
+                        loader: "awesome-typescript-loader",
+                        options: {
+                            transpileOnly: true,
+                            happyPackModeL: true
+                        }
+                    },
+                    {
+                        loader: "cache-loader"
                     }
                 ],
-                exclude: /node_modules/
+                exclude: [
+                    /node_modules/,
+                    /test/
+                ]
+
             }
         ]
     }

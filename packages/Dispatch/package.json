@@ -1,7 +1,8 @@
 {
   "name": "@zapjs/dispatch",
   "version": "1.0.2",
-  "description": "",
+  "description": "Zap Dispatch",
+  "repository": "https://github.com/zapproject/Zap-monorepo",
   "main": "lib/src/index.js",
   "type": "lib/src/types.d.ts",
   "typings": "lib/src",
@@ -14,12 +15,18 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@zapjs/basecontract": "^1.0.0",
+    "@zapjs/utils": "^1.0.0",
+    "awesome-typescript-loader": "^5.2.0",
+    "cache-loader": "^1.2.2",
+    "typescript": "^2.9.2",
+    "web3-utils": "^1.0.0-beta.34",
+    "webpack": "^4.16.4"
+  },
+  "devDependencies": {
     "@types/chai": "^4.1.4",
     "@types/mocha": "^5.2.4",
     "@types/node": "^10.5.2",
-    "@zapjs/basecontract": "^1.0.0",
-    "@zapjs/utils": "^1.0.0",
-    "bignumber.js": "^7.2.1",
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
     "chai-bignumber": "^2.0.2",
@@ -29,13 +36,7 @@
     "path": "^0.12.7",
     "ts-node": "^7.0.0",
     "tslint": "^5.10.0",
-    "typescript": "^2.9.2",
-    "web3": "^1.0.0-beta.34",
-    "web3-utils": "^1.0.0-beta.34",
+    "webpack-command": "^0.4.1",
     "zap_contracts": "git+https://github.com/zapproject/zap-ethereum-api.git"
-  },
-  "devDependencies": {
-    "mocha": "^5.2.0",
-    "tslint": "^5.10.0"
   }
 }

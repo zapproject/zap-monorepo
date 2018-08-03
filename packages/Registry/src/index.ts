@@ -1,8 +1,8 @@
 const {toHex,utf8ToHex,toBN, hexToUtf8} = require("web3-utils");
 import {BaseContract,ContractType} from "@zapjs/basecontract";
 import {Curve,CurveType} from "@zapjs/curve";
-import {Utils} from "@zapjs/utils"
 import {InitProvider, InitCurve, NextEndpoint, EndpointParams,txid,address,Filter} from "./types"
+const DEFAULT_GAS = 300000
 
 /**
  * Manage Providers and Curves registration
@@ -29,7 +29,7 @@ import {InitProvider, InitCurve, NextEndpoint, EndpointParams,txid,address,Filte
      * @param {BigNumber} gas Sets the gas limit for this transaction (optional)
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-     async initiateProvider({public_key, title, endpoint, endpoint_params, from, gas=Utils.Constants.DEFAULT_GAS}:InitProvider): Promise<txid>{
+     async initiateProvider({public_key, title, endpoint, endpoint_params, from, gas=DEFAULT_GAS}:InitProvider): Promise<txid>{
         let params:Array<string>;
         if(!endpoint_params) params = []
             else params = endpoint_params.map((item:string) =>{return utf8ToHex(item)});
@@ -49,7 +49,7 @@ import {InitProvider, InitCurve, NextEndpoint, EndpointParams,txid,address,Filte
      * @param {BigNumber} gas Sets the gas limit for this transaction (optional)
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-     async initiateProviderCurve({endpoint, curve, from, gas=Utils.Constants.DEFAULT_GAS}:InitCurve):Promise<txid> {
+     async initiateProviderCurve({endpoint, curve, from, gas=DEFAULT_GAS}:InitCurve):Promise<txid> {
         let convertedConstants = curve.constants.map((item:number) => {
             return toHex(item);
         });
@@ -75,7 +75,7 @@ import {InitProvider, InitCurve, NextEndpoint, EndpointParams,txid,address,Filte
      * @param {BigNumber} gas Sets the gas limit for this transaction (optional)
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-     async setEndpointParams({endpoint, endpoint_params, from, gas=Utils.Constants.DEFAULT_GAS}:EndpointParams) :Promise<txid>{
+     async setEndpointParams({endpoint, endpoint_params, from, gas=DEFAULT_GAS}:EndpointParams) :Promise<txid>{
       let params = endpoint_params ? endpoint_params.map(el =>{return utf8ToHex(el)}) : [];
       return await this.contract.methods.setEndpointParams(
         utf8ToHex(endpoint),

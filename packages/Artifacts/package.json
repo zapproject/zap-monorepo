@@ -1,8 +1,9 @@
 {
   "name": "@zapjs/artifactstemp",
   "version": "1.0.4",
-  "description": "",
+  "description": "ZapArtifacts",
   "main": "lib/src/index.js",
+  "repository": "https://github.com/zapproject/Zap-monorepo",
   "types": "lib/src/typings.d.ts",
   "scripts": {
     "build": "./node_modules/.bin/tsc",

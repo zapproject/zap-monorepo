@@ -1,7 +1,8 @@
 {
   "name": "@zapjs/utils",
   "version": "1.0.3",
-  "description": "",
+  "description": "Zap Utils",
+  "repository": "https://github.com/zapproject/Zap-monorepo",
   "main": "./lib/src/index.js",
   "types": "./lib/src/index.d.ts",
   "typings": "lib/src",

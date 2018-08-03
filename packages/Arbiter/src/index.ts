@@ -1,8 +1,7 @@
 import  {BaseContract,ContractType} from '@zapjs/basecontract';
 import {SubscriptionInit,SubscriptionEnd,Filter,SubscriptionType,txid} from "./types"
 const {toBN,utf8ToHex} = require ('web3-utils');
-import {Utils} from "@zapjs/utils"
-
+const DEFAULT_GAS = 300000
 /**
  * @class
  * Provides an interface to the Arbiter contract for managing temporal subscriptions to oracles.
@@ -33,7 +32,7 @@ export class ZapArbiter extends BaseContract {
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
     async initiateSubscription(
-        {provider, endpoint, endpoint_params, blocks, pubkey, from, gas=Utils.Constants.DEFAULT_GAS} : SubscriptionInit):Promise<txid> {
+        {provider, endpoint, endpoint_params, blocks, pubkey, from, gas=DEFAULT_GAS} : SubscriptionInit):Promise<txid> {
         try {
             for (let i in endpoint_params){
                 endpoint_params[i] = utf8ToHex(endpoint_params[i]);
@@ -71,7 +70,7 @@ export class ZapArbiter extends BaseContract {
      * @param {number} gas Gas limit of this transaction
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-    async endSubscriptionSubscriber({provider, endpoint, from, gas=Utils.Constants.DEFAULT_GAS}:SubscriptionEnd) :Promise<txid>{
+    async endSubscriptionSubscriber({provider, endpoint, from, gas=DEFAULT_GAS}:SubscriptionEnd) :Promise<txid>{
         let unSubscription:any
         unSubscription =  await this.contract.methods.endSubscriptionSubscriber(
             provider,
@@ -88,7 +87,7 @@ export class ZapArbiter extends BaseContract {
      * @param {number} gas Gas limit of this transaction
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-    async endSubscriptionProvider({subscriber, endpoint, from, gas=Utils.Constants.DEFAULT_GAS}:SubscriptionEnd) :Promise<txid>{
+    async endSubscriptionProvider({subscriber, endpoint, from, gas=DEFAULT_GAS}:SubscriptionEnd) :Promise<txid>{
         let unSubscription:any;
         unSubscription= await this.contract.methods.endSubscriptionProvider(
             subscriber,

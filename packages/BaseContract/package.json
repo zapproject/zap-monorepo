@@ -3,6 +3,7 @@
   "version": "1.0.3",
   "description": "",
   "main": "lib/src/index.js",
+  "repository": "https://github.com/zapproject/Zap-monorepo",
   "types": "lib/src/types.d.ts",
   "typings": "lib/src/index.js",
   "scripts": {

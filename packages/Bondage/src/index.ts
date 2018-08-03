@@ -1,8 +1,8 @@
 import {BaseContract, ContractType} from "@zapjs/basecontract";
-import {Utils} from "@zapjs/utils";
 import {BondageArgs, BondArgs, CalcBondRateType, Filter, txid, UnbondArgs} from "./types";
-const {toBN, utf8ToHex, toHex} = require("web3-utils");
+const {toBN, utf8ToHex} = require("web3-utils");
 const assert = require("assert");
+const DEFAULT_GAS = 300000
 
 /**
  * Provides an interface to the Bondage contract for enabling bonds and unbonds to Oracles.
@@ -35,7 +35,7 @@ export class ZapBondage extends BaseContract {
      * @param {number} gas Sets the gas limit for this transaction (optional)
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-    public async bond({provider, endpoint, zapNum, from, gas= Utils.Constants.DEFAULT_GAS}: BondArgs): Promise<txid> {
+    public async bond({provider, endpoint, zapNum, from, gas= DEFAULT_GAS}: BondArgs): Promise<txid> {
         console.log("args : ", provider, endpoint, zapNum, from);
         assert(zapNum && zapNum > 0, "Zap to bond must be greater than 0.");
         return await this.contract.methods.bond(
@@ -55,7 +55,7 @@ export class ZapBondage extends BaseContract {
      * @param {number} gas Sets the gas limit for this transaction (optional)
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-    public async unbond({provider, endpoint, dots, from, gas= Utils.Constants.DEFAULT_GAS}: UnbondArgs): Promise<txid> {
+    public async unbond({provider, endpoint, dots, from, gas= DEFAULT_GAS}: UnbondArgs): Promise<txid> {
         assert(dots && dots>0,"Dots to unbond must be greater than 0");
         return await this.contract.methods.unbond(
             provider,
