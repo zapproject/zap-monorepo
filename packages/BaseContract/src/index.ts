@@ -21,13 +21,14 @@ export class BaseContract{
      * @param {any | null} networkProvider Ethereum network provider (e.g. Infura)
      */
     constructor({artifactsDir,artifactName,networkId,networkProvider}:BaseContractType) {
+        console.log(artifactsDir,artifactName,networkId)
         let artifact:any = undefined;
         try {
           if(!artifactsDir){
             artifact = Artifacts[artifactName];
           }
           else{
-            let artifacts:any = Utils.getArtifacts(artifactsDir);
+            let artifacts:any= Utils.getArtifacts(artifactsDir);
             artifact = artifacts[artifactName];
           }
           this.provider = networkProvider ||
@@ -35,7 +36,7 @@ export class BaseContract{
           //network id default to mainnet
           this.networkId = networkId || 1;
           this.web3 = new Web3(networkProvider);
-          console.log("Initialize contract: ",artifactName, artifactsDir, this.networkId, artifact.networks)
+          //console.log("Initialize contract: ",artifactName, artifactsDir, this.networkId, artifact.networks)
           this.contract = new this.web3.eth.Contract(artifact.abi,artifact.networks[this.networkId].address)
 
         } catch (err) {

@@ -7,7 +7,7 @@ const Web3 = require('web3');
 import { bootstrap } from "./utils/setup_test";
 
 import {Utils} from "@zapjs/utils";
-import { Subscriber } from '../src';
+import { ZapSubscriber } from '../src';
 import { ZapBondage } from '@zapjs/bondage';
 import { ZapRegistry } from "@zapjs/registry";
 import { ZapToken } from "@zapjs/zaptoken";
@@ -21,7 +21,7 @@ async function configureEnvironment(func: Function) {
 describe('Zap Subscriber Test', () => {
     let accounts: Array<string> = [],
     ganacheServer: any,
-    subscriber: Subscriber,
+    subscriber: ZapSubscriber,
     arbiterWrapper: any,
     dispatchWrapper: any,
     registryWrapper: any,
@@ -58,7 +58,7 @@ describe('Zap Subscriber Test', () => {
             tokenWrapper = new ZapToken(options);
             dispatchWrapper = new ZapDispatch(options);
             arbiterWrapper = new ZapArbiter(options);
-            subscriber = new Subscriber({
+            subscriber = new ZapSubscriber({
                 owner: accounts[2],
                 zapToken: tokenWrapper,
                 zapRegistry: registryWrapper,

@@ -18,7 +18,9 @@
     "webpack": "^4.16.2"
   },
   "scripts": {
-    "webpack": "./node_mdules/.bin/webpack"
+    "webpack": "./node_mdules/.bin/webpack",
+    "build": "tsc",
+    "run_test": "tsc"
   },
   "main": "src/index.js",
   "author": "propulsor",

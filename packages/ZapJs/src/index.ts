@@ -8,7 +8,6 @@ import {ZapBondage} from "@zapjs/bondage";
 import {Curve} from "@zapjs/curve"
 import {ZapToken} from "@zapjs/zaptoken";
 import {ZapProvider} from "@zapjs/provider";
-import {Subscriber} from "@zapjs/subscriber";
+import {ZapSubscriber} from "@zapjs/subscriber";
 
-//export const zapjs ={Artifacts,ZapRegistry,ZapArbiter,ZapDispatch,ZapBondage,ZapToken,ZapProvider,Subscriber}
-console.log(ZapToken)
+export const zapjs ={Artifacts,ZapRegistry,ZapArbiter,ZapDispatch,ZapBondage,ZapToken,ZapProvider,ZapSubscriber,Curve}
