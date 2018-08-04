@@ -15,6 +15,9 @@ module.exports = {
         // Add '.ts' and '.tsx' as a resolvable extension.
         extensions: [".ts", ".js", ".json"]
     },
+    optimization: {
+        minimize: true
+    },
     module: {
         rules: [
             // all files with a '.ts' or '.tsx' extension will be handled by 'ts-loader'

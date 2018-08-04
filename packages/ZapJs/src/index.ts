@@ -9,5 +9,7 @@ import {Curve} from "@zapjs/curve"
 import {ZapToken} from "@zapjs/zaptoken";
 import {ZapProvider} from "@zapjs/provider";
 import {ZapSubscriber} from "@zapjs/subscriber";
+import {ContractType} from "@zapjs/basecontract"
 
-export const zapjs ={Artifacts,ZapRegistry,ZapArbiter,ZapDispatch,ZapBondage,ZapToken,ZapProvider,ZapSubscriber,Curve}
+export const zapjs ={Artifacts, ZapRegistry,ZapArbiter,ZapDispatch,ZapBondage,Curve,ZapToken,ZapProvider,ZapSubscriber}
+

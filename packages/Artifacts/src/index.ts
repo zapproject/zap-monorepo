@@ -13,8 +13,7 @@ export const Artifacts =  {
     Client1 : require("./../contracts/Client1.json"),
     Client2 : require("./../contracts/Client2.json"),
     Client3 : require("./../contracts/Client3.json"),
-    Client4 : require("./../contracts/Client4.json"),
-    OnChainProvider : require("./../contracts/OnChainProvider.json")
+    Client4 : require("./../contracts/Client4.json")
 }
 
 
