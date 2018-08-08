@@ -12,7 +12,6 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS} from "@zapjs/ty
  * @param {any} networkProvider Ethereum network provider (e.g. Infura)
  */
  export class ZapRegistry extends BaseContract {
-    contract:any;
 
     constructor(obj ?: NetworkProviderOptions){
         super(Object.assign(obj,{artifactName:"Registry"}));

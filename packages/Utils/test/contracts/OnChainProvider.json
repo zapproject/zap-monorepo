@@ -37,9 +37,9 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "pragma solidity ^0.4.24;\nimport \"../../platform/dispatch/Dispatch.sol\";\n\ncontract OnChainProvider {\n    /// @dev function for requesting data from on-chain provider\n    /// @param id request id\n    /// @param userQuery query string\n    /// @param endpoint endpoint specifier ala 'smart_contract'\n    /// @param endpointParams endpoint-specific params\n    function receive(uint256 id, string userQuery, bytes32 endpoint, bytes32[] endpointParams, bool onchainSubscriber) external;\n}\n",
-  "sourcePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/node_modules/zap_contracts/contracts/lib/platform/OnChainProvider.sol",
+  "sourcePath": "/home/kim/ZAP/ZAPJS/node_modules/zap_contracts/contracts/lib/platform/OnChainProvider.sol",
   "ast": {
-    "absolutePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/node_modules/zap_contracts/contracts/lib/platform/OnChainProvider.sol",
+    "absolutePath": "/home/kim/ZAP/ZAPJS/node_modules/zap_contracts/contracts/lib/platform/OnChainProvider.sol",
     "exportedSymbols": {
       "OnChainProvider": [
         276
@@ -60,12 +60,12 @@
         "src": "0:24:5"
       },
       {
-        "absolutePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/node_modules/zap_contracts/contracts/platform/dispatch/Dispatch.sol",
+        "absolutePath": "/home/kim/ZAP/ZAPJS/node_modules/zap_contracts/contracts/platform/dispatch/Dispatch.sol",
         "file": "../../platform/dispatch/Dispatch.sol",
         "id": 261,
         "nodeType": "ImportDirective",
         "scope": 277,
-        "sourceUnit": 3772,
+        "sourceUnit": 3794,
         "src": "25:46:5",
         "symbolAliases": [],
         "unitAlias": ""
@@ -261,7 +261,7 @@
     "src": "0:482:5"
   },
   "legacyAST": {
-    "absolutePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/node_modules/zap_contracts/contracts/lib/platform/OnChainProvider.sol",
+    "absolutePath": "/home/kim/ZAP/ZAPJS/node_modules/zap_contracts/contracts/lib/platform/OnChainProvider.sol",
     "exportedSymbols": {
       "OnChainProvider": [
         276
@@ -282,12 +282,12 @@
         "src": "0:24:5"
       },
       {
-        "absolutePath": "/Users/michaelzman/Documents/workspace/Zap-monorepo/node_modules/zap_contracts/contracts/platform/dispatch/Dispatch.sol",
+        "absolutePath": "/home/kim/ZAP/ZAPJS/node_modules/zap_contracts/contracts/platform/dispatch/Dispatch.sol",
         "file": "../../platform/dispatch/Dispatch.sol",
         "id": 261,
         "nodeType": "ImportDirective",
         "scope": 277,
-        "sourceUnit": 3772,
+        "sourceUnit": 3794,
         "src": "25:46:5",
         "symbolAliases": [],
         "unitAlias": ""
@@ -488,5 +488,5 @@
   },
   "networks": {},
   "schemaVersion": "2.0.1",
-  "updatedAt": "2018-07-20T20:48:56.492Z"
+  "updatedAt": "2018-08-03T19:23:57.279Z"
 }
