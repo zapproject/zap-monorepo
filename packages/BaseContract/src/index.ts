@@ -1,6 +1,7 @@
 const  {Artifacts} =require("@zapjs/artifacts1");
 import {BaseContractType} from "@zapjs/types";
 import {Utils} from "./utils"
+const Web3 = require("web3")
 
 /**
  * Parent Class to Dispatch, Bondage, Arbiter, Token, Registry classes
@@ -30,12 +31,12 @@ export class BaseContract{
             let artifacts:any= Utils.getArtifacts(artifactsDir);
             artifact = artifacts[artifactName];
           }
-          console.log("artifact : ", artifact)
-          this.provider = networkProvider;
+          let currentProvider = networkProvider || new Web3.providers.HttpProvider("http://localhost:8545");
+          this.provider = new Web3(currentProvider)
           //network id default to mainnet
           this.networkId = networkId || 1;
           //console.log("Initialize contract: ",artifactName, artifactsDir, this.networkId, artifact.networks)
-          this.contract = new this.provider.eth.contract(artifact.abi,artifact.networks[this.networkId].address)
+          this.contract = this.provider.eth.contract(artifact.abi).at(artifact.networks[this.networkId].address)
 
         } catch (err) {
             throw err;
