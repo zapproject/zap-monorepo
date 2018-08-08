@@ -7,7 +7,7 @@ const expect = require('chai')
 .expect;
 
 import {Utils} from "@zapjs/utils";
-import {BaseContract,BaseContractType} from "@zapjs/basecontract"
+import {BaseContract} from "@zapjs/basecontract1"
 import {ZapRegistry} from '../src';
 
 async function configureEnvironment(func:Function) {

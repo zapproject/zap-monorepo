@@ -1,6 +1,6 @@
-import {BaseContract,ContractType} from "@zapjs/basecontract";
+import {BaseContract} from "@zapjs/basecontract1";
 import {Utils} from "./utils";
-import {TransferType,address,txid} from "./types";
+import {TransferType,address,txid,NetworkProviderOptions} from "@zapjs/types";
 
 /**
  * ERC20 Tokens methods for Zap Tokens
@@ -18,7 +18,7 @@ import {TransferType,address,txid} from "./types";
 
  export class ZapToken extends BaseContract {
 
-    constructor(obj ?: ContractType){
+    constructor(obj ?: NetworkProviderOptions){
         super(Object.assign(obj,{artifactName:"ZapToken"}));
     }
 

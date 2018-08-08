@@ -1,8 +1,8 @@
 const {toHex,utf8ToHex,toBN, hexToUtf8} = require("web3-utils");
-import {BaseContract,ContractType} from "@zapjs/basecontract";
-import {Curve,CurveType} from "@zapjs/curve";
-import {InitProvider, InitCurve, NextEndpoint, EndpointParams,txid,address,Filter} from "./types"
-const DEFAULT_GAS = 300000
+import {BaseContract} from "@zapjs/basecontract1";
+import {Curve,CurveType} from "@zapjs/curve1";
+import {InitProvider, InitCurve, NextEndpoint, EndpointParams} from "./types"
+import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS} from "@zapjs/types";
 
 /**
  * Manage Providers and Curves registration
@@ -14,7 +14,7 @@ const DEFAULT_GAS = 300000
  export class ZapRegistry extends BaseContract {
     contract:any;
 
-    constructor(obj ?: ContractType){
+    constructor(obj ?: NetworkProviderOptions){
         super(Object.assign(obj,{artifactName:"Registry"}));
     }
 

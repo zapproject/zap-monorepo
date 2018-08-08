@@ -8,11 +8,11 @@ import { bootstrap } from "./utils/setup_test";
 
 import {Utils} from "@zapjs/utils";
 import { ZapSubscriber } from '../src';
-import { ZapBondage } from '@zapjs/bondage';
-import { ZapRegistry } from "@zapjs/registry";
-import { ZapToken } from "@zapjs/zaptoken";
-import { ZapDispatch } from "@zapjs/dispatch";
-import { ZapArbiter } from "@zapjs/arbiter";
+import { ZapBondage } from '@zapjs/bondage1';
+import { ZapRegistry } from "@zapjs/registry1";
+import { ZapToken } from "@zapjs/zaptoken1";
+import { ZapDispatch } from "@zapjs/dispatch1";
+import { ZapArbiter } from "@zapjs/arbiter1";
 
 async function configureEnvironment(func: Function) {
     await func();
@@ -58,14 +58,7 @@ describe('Zap Subscriber Test', () => {
             tokenWrapper = new ZapToken(options);
             dispatchWrapper = new ZapDispatch(options);
             arbiterWrapper = new ZapArbiter(options);
-            subscriber = new ZapSubscriber({
-                owner: accounts[2],
-                zapToken: tokenWrapper,
-                zapRegistry: registryWrapper,
-                zapDispatch: dispatchWrapper,
-                zapBondage: bondageWrapper,
-                zapArbiter: arbiterWrapper
-            });
+            subscriber = new ZapSubscriber(accounts[2],options);
             done();
         });
     });

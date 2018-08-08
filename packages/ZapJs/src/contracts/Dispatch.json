@@ -1,0 +1,537 @@
+{
+  "contractName": "Dispatch",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "storageAddress",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "selfDestruct",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "bondageAddress",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "name": "_storageAddress",
+          "type": "address"
+        },
+        {
+          "name": "_bondageAddress",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "id",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "name": "provider",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "subscriber",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "query",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "name": "endpoint",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "name": "endpointParams",
+          "type": "bytes32[]"
+        },
+        {
+          "indexed": false,
+          "name": "onchainSubscriber",
+          "type": "bool"
+        }
+      ],
+      "name": "Incoming",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "subscriber",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "provider",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "endpoint",
+          "type": "bytes32"
+        }
+      ],
+      "name": "FulfillQuery",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "id",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "name": "subscriber",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "provider",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "response",
+          "type": "bytes32[]"
+        }
+      ],
+      "name": "OffchainResponse",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "id",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "name": "subscriber",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "provider",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "response1",
+          "type": "string"
+        }
+      ],
+      "name": "OffchainResult1",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "id",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "name": "subscriber",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "provider",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "response1",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "name": "response2",
+          "type": "string"
+        }
+      ],
+      "name": "OffchainResult2",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "id",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "name": "subscriber",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "provider",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "response1",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "name": "response2",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "name": "response3",
+          "type": "string"
+        }
+      ],
+      "name": "OffchainResult3",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "id",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "name": "subscriber",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "provider",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "response1",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "name": "response2",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "name": "response3",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "name": "response4",
+          "type": "string"
+        }
+      ],
+      "name": "OffchainResult4",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "previousOwner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnershipTransferred",
+      "type": "event"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_bondageAddress",
+          "type": "address"
+        }
+      ],
+      "name": "setBondage",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "provider",
+          "type": "address"
+        },
+        {
+          "name": "userQuery",
+          "type": "string"
+        },
+        {
+          "name": "endpoint",
+          "type": "bytes32"
+        },
+        {
+          "name": "endpointParams",
+          "type": "bytes32[]"
+        },
+        {
+          "name": "onchainProvider",
+          "type": "bool"
+        },
+        {
+          "name": "onchainSubscriber",
+          "type": "bool"
+        }
+      ],
+      "name": "query",
+      "outputs": [
+        {
+          "name": "id",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "id",
+          "type": "uint256"
+        },
+        {
+          "name": "response",
+          "type": "bytes32[]"
+        }
+      ],
+      "name": "respondBytes32Array",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "id",
+          "type": "uint256"
+        },
+        {
+          "name": "response",
+          "type": "string"
+        }
+      ],
+      "name": "respond1",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "id",
+          "type": "uint256"
+        },
+        {
+          "name": "response1",
+          "type": "string"
+        },
+        {
+          "name": "response2",
+          "type": "string"
+        }
+      ],
+      "name": "respond2",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "id",
+          "type": "uint256"
+        },
+        {
+          "name": "response1",
+          "type": "string"
+        },
+        {
+          "name": "response2",
+          "type": "string"
+        },
+        {
+          "name": "response3",
+          "type": "string"
+        }
+      ],
+      "name": "respond3",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "id",
+          "type": "uint256"
+        },
+        {
+          "name": "response1",
+          "type": "string"
+        },
+        {
+          "name": "response2",
+          "type": "string"
+        },
+        {
+          "name": "response3",
+          "type": "string"
+        },
+        {
+          "name": "response4",
+          "type": "string"
+        }
+      ],
+      "name": "respond4",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "networks": {
+    "42": {
+      "events": {},
+      "links": {},
+      "address": "0xac1763814975d1664aa580bf9eb234d5eea4e0ca",
+      "transactionHash": "0x6b4290319d794baf935b29f06242e66253490575ce3c62fc615d6fa3aeb00d34"
+    },
+    "development": {
+      "events": {},
+      "links": {},
+      "address": "0xa06e6d80c96f49f3e747bffd64a222f344fedcd6",
+      "transactionHash": "0x2f0021d872167ea4fa24f41e4cd7ec91d725df21d6bebcb97651f2f61b9c45a2"
+    }
+  }
+}

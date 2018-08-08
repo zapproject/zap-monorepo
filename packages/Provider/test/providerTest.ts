@@ -1,13 +1,13 @@
-import { ZapToken } from "@zapjs/zaptoken";
+import { ZapToken } from "@zapjs/zaptoken1";
 
 const expect = require('chai')
 .use(require('chai-as-promised'))
 .use(require('chai-bignumber'))
 .expect;
-import { ZapRegistry } from "@zapjs/registry";
-import { ZapBondage } from "@zapjs/bondage";
-import { ZapDispatch } from "@zapjs/dispatch";
-import { ZapArbiter } from "@zapjs/arbiter";
+import { ZapRegistry } from "@zapjs/registry1";
+import { ZapBondage } from "@zapjs/bondage1";
+import { ZapDispatch } from "@zapjs/dispatch1";
+import { ZapArbiter } from "@zapjs/arbiter1";
 import { ZapProvider } from "../src";
 const Web3 = require('web3');
 const { hexToUtf8 } = require("web3-utils");
@@ -75,13 +75,7 @@ describe('Zap Provider Test', () => {
         }
     });
     it("Should init zapProvider class",async ()=>{
-        zapProvider = new ZapProvider({
-            owner:providerAddress,
-            zapRegistry:zapRegistry,
-            zapDispatch:zapDispatch,
-            zapBondage:zapBondage,
-            zapArbiter:zapArbiter
-        })
+        zapProvider = new ZapProvider(accounts[0],options)
     })
 
     it('Should initiate provider', async()=> {

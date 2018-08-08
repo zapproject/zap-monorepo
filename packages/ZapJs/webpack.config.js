@@ -2,8 +2,8 @@
 const path = require("path")
 module.exports = {
     entry: {
-        "zapjs": "./src/index.ts",
-        "zapjs.min": "./src/index.ts"
+        "zapjs": "./src/index.ts"
+       // "zapjs.min": "./src/index.ts"
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -37,7 +37,9 @@ module.exports = {
                 ],
                 exclude: [
                     /node_modules/,
-                    /test/
+                    /test/,
+                    /dist/,
+                    /.cache-loader/
                 ]
 
             }

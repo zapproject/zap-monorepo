@@ -1,5 +1,5 @@
 {
-  "name": "@zapjs/arbiter",
+  "name": "@zapjs/arbiter1",
   "version": "1.0.2",
   "description": "Zap Arbiter",
   "main": "lib/src/index.js",
@@ -15,28 +15,28 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@zapjs/basecontract": "^1.0.0",
+    "@zapjs/basecontract1": "^1.0.0",
+    "@zapjs/types": "^1.0.0",
     "awesome-typescript-loader": "^5.2.0",
     "cache-loader": "^1.2.2",
-    "web3-utils": "^1.0.0-beta.34",
-    "webpack": "^4.16.4",
-    "webpack-command": "^0.4.1"
+    "web3-utils": "^1.0.0-beta.34"
   },
   "devDependencies": {
-    "@zapjs/utils": "^1.0.0",
+
+    "@types/chai": "^4.1.4",
+    "@types/mocha": "^5.2.4",
+    "@types/node": "^10.5.2",
+    "@zapjs/utils1": "^1.0.0",
     "bignumber.js": "^7.2.1",
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
     "chai-bignumber": "^2.0.2",
     "make-promises-safe": "^1.1.0",
+    "mocha": "^5.2.0",
     "npm-run-all": "^4.1.3",
     "ts-node": "^7.0.0",
-    "typescript": "^2.9.2",
-    "@types/chai": "^4.1.4",
-    "@types/mocha": "^5.2.4",
-    "@types/node": "^10.5.2",
-    "mocha": "^5.2.0",
     "tslint": "^5.10.0",
+    "typescript": "^2.9.2",
     "zap_contracts": "git+https://github.com/zapproject/zap-ethereum-api.git"
   }
 }

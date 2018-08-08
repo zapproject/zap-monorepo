@@ -1,11 +1,12 @@
 
 const assert = require('assert');
-import {BondType,UnbondType,SubscribeType,SubscriberConstructorType, txid,address} from "./types";
-import {ZapDispatch} from "@zapjs/dispatch";
-import {ZapRegistry} from "@zapjs/registry";
-import {ZapBondage} from "@zapjs/bondage";
-import {ZapArbiter} from "@zapjs/arbiter";
-import {ZapToken} from "@zapjs/zaptoken";
+import {BondType,UnbondType,SubscribeType} from "./types";
+import {txid,address,NetworkProviderOptions} from "@zapjs/types";
+import {ZapDispatch} from "@zapjs/dispatch1";
+import {ZapRegistry} from "@zapjs/registry1";
+import {ZapBondage} from "@zapjs/bondage1";
+import {ZapArbiter} from "@zapjs/arbiter1";
+import {ZapToken} from "@zapjs/zaptoken1";
 
 /**
  * @class
@@ -19,14 +20,14 @@ export class ZapSubscriber  {
     zapRegistry:  ZapRegistry;
     zapToken: ZapToken;
 
-    constructor({owner,handler,zapToken,zapRegistry,zapDispatch,zapBondage,zapArbiter}:SubscriberConstructorType) {
+    constructor(owner:string,{options}:{options:NetworkProviderOptions}) {
         assert(owner, 'owner address is required');
         this.subscriberOwner = owner;
-        this.zapToken = zapToken;
-        this.zapDispatch = zapDispatch;
-        this.zapBondage = zapBondage;
-        this.zapArbiter = zapArbiter;
-        this.zapRegistry = zapRegistry;
+        this.zapToken = new ZapToken(options);
+        this.zapDispatch = new ZapDispatch(options);
+        this.zapBondage = new ZapBondage(options);
+        this.zapArbiter = new ZapArbiter(options);
+        this.zapRegistry = new ZapRegistry(options);
     }
 
     async approveToBond(provider:address,zapNum:number):Promise<any>{

@@ -1,5 +1,6 @@
-import {BaseContract, ContractType} from "@zapjs/basecontract";
-import {BondageArgs, BondArgs, CalcBondRateType, Filter, txid, UnbondArgs} from "./types";
+import {BaseContract} from "@zapjs/basecontract1";
+import {BondageArgs, BondArgs, CalcBondRateType,  UnbondArgs} from "./types";
+import {Filter,txid,NetworkProviderOptions} from "@zapjs/types"
 const {toBN, utf8ToHex} = require("web3-utils");
 const assert = require("assert");
 const DEFAULT_GAS = 300000
@@ -22,7 +23,7 @@ export class ZapBondage extends BaseContract {
      * @param {string} networkId Select which network the contract is located on (mainnet, testnet, private)
      * @param  networkProvider Ethereum network provider (e.g. Infura)
      */
-    constructor(obj ?: ContractType){
+    constructor(obj ?: NetworkProviderOptions){
         super(Object.assign(obj,{artifactName:"Bondage"}));
     }
 

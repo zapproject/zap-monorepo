@@ -28,13 +28,3 @@ export interface CalcBondRateType {
     endpoint: string;
     zapNum: number;
 }
-
-export interface Filter {
-    provider ?: address;
-    fromBlock ?: number;
-    toBlock ?: number;
-}
-export interface listenEvent {
-    filter ?: Filter;
-    callback: Function;
-}

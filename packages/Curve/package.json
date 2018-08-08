@@ -1,5 +1,5 @@
 {
-  "name": "@zapjs/curve",
+  "name": "@zapjs/curve1",
   "version": "1.0.2",
   "description": "Zap Curve",
   "repository": "https://github.com/zapproject/Zap-monorepo",
@@ -19,6 +19,7 @@
     "@types/chai": "^4.1.4",
     "@types/mocha": "^5.2.4",
     "@types/node": "^10.5.2",
+    "@zapjs/types": "^1.0.0",
     "big-number": "^1.0.0",
     "bignumber.js": "^7.2.1",
     "chai": "^4.1.2",

@@ -1,6 +1,5 @@
-const Web3 =require('web3');
-import {Artifacts} from "@zapjs/artifacts";
-import {BaseContractType} from "./types";
+const  {Artifacts} =require("@zapjs/artifacts1");
+import {BaseContractType} from "@zapjs/types";
 import {Utils} from "./utils"
 
 /**
@@ -31,13 +30,12 @@ export class BaseContract{
             let artifacts:any= Utils.getArtifacts(artifactsDir);
             artifact = artifacts[artifactName];
           }
-          this.provider = networkProvider ||
-              new Web3.providers.WebsocketProvider('ws://127.0.0.1:8545');
+          console.log("artifact : ", artifact)
+          this.provider = networkProvider;
           //network id default to mainnet
           this.networkId = networkId || 1;
-          this.web3 = new Web3(networkProvider);
           //console.log("Initialize contract: ",artifactName, artifactsDir, this.networkId, artifact.networks)
-          this.contract = new this.web3.eth.Contract(artifact.abi,artifact.networks[this.networkId].address)
+          this.contract = new this.provider.eth.contract(artifact.abi,artifact.networks[this.networkId].address)
 
         } catch (err) {
             throw err;
@@ -53,4 +51,3 @@ export class BaseContract{
     }
 }
 
-export * from "./types"

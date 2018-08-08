@@ -1,7 +1,7 @@
-import  {BaseContract,ContractType} from '@zapjs/basecontract';
-import {SubscriptionInit,SubscriptionEnd,Filter,SubscriptionType,txid} from "./types"
+import  {BaseContract} from '@zapjs/basecontract1';
+import {SubscriptionInit,SubscriptionEnd,SubscriptionType} from "./types"
+import {Filter,txid,DEFAULT_GAS,NetworkProviderOptions} from "@zapjs/types"
 const {toBN,utf8ToHex} = require ('web3-utils');
-const DEFAULT_GAS = 300000
 /**
  * @class
  * Provides an interface to the Arbiter contract for managing temporal subscriptions to oracles.
@@ -16,7 +16,7 @@ export class ZapArbiter extends BaseContract {
      * @param {string} networkId Select which network the contract is located on (mainnet, testnet, private)
      * @param  networkProvider Ethereum network provider (e.g. Infura)
      */
-    constructor(obj ?: ContractType){
+    constructor(obj ?: NetworkProviderOptions){
         super(Object.assign(obj,{artifactName:"Arbiter"}))
     }
 

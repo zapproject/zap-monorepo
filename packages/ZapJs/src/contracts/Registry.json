@@ -1,0 +1,417 @@
+{
+  "contractName": "Registry",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "storageAddress",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "selfDestruct",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "name": "_storageAddress",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "provider",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "title",
+          "type": "bytes32"
+        },
+        {
+          "indexed": true,
+          "name": "endpoint",
+          "type": "bytes32"
+        }
+      ],
+      "name": "NewProvider",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "provider",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "endpoint",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "name": "constants",
+          "type": "int256[]"
+        },
+        {
+          "indexed": false,
+          "name": "parts",
+          "type": "uint256[]"
+        },
+        {
+          "indexed": false,
+          "name": "dividers",
+          "type": "uint256[]"
+        }
+      ],
+      "name": "NewCurve",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "previousOwner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnershipTransferred",
+      "type": "event"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "publicKey",
+          "type": "uint256"
+        },
+        {
+          "name": "title",
+          "type": "bytes32"
+        },
+        {
+          "name": "endpoint",
+          "type": "bytes32"
+        },
+        {
+          "name": "endpointParams",
+          "type": "bytes32[]"
+        }
+      ],
+      "name": "initiateProvider",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "endpoint",
+          "type": "bytes32"
+        },
+        {
+          "name": "constants",
+          "type": "int256[]"
+        },
+        {
+          "name": "parts",
+          "type": "uint256[]"
+        },
+        {
+          "name": "dividers",
+          "type": "uint256[]"
+        }
+      ],
+      "name": "initiateProviderCurve",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "endpoint",
+          "type": "bytes32"
+        },
+        {
+          "name": "endpointParams",
+          "type": "bytes32[]"
+        }
+      ],
+      "name": "setEndpointParams",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "provider",
+          "type": "address"
+        }
+      ],
+      "name": "getProviderPublicKey",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "provider",
+          "type": "address"
+        }
+      ],
+      "name": "getProviderTitle",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "provider",
+          "type": "address"
+        },
+        {
+          "name": "endpoint",
+          "type": "bytes32"
+        },
+        {
+          "name": "index",
+          "type": "uint256"
+        }
+      ],
+      "name": "getNextEndpointParam",
+      "outputs": [
+        {
+          "name": "nextIndex",
+          "type": "uint256"
+        },
+        {
+          "name": "endpointParam",
+          "type": "bytes32"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "provider",
+          "type": "address"
+        },
+        {
+          "name": "endpoint",
+          "type": "bytes32"
+        }
+      ],
+      "name": "getProviderCurve",
+      "outputs": [
+        {
+          "name": "",
+          "type": "int256[]"
+        },
+        {
+          "name": "",
+          "type": "uint256[]"
+        },
+        {
+          "name": "",
+          "type": "uint256[]"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "provider",
+          "type": "address"
+        },
+        {
+          "name": "endpoint",
+          "type": "bytes32"
+        }
+      ],
+      "name": "getDotLimit",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "provider",
+          "type": "address"
+        },
+        {
+          "name": "endpoint",
+          "type": "bytes32"
+        }
+      ],
+      "name": "getProviderArgsLength",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "index",
+          "type": "uint256"
+        }
+      ],
+      "name": "getNextProvider",
+      "outputs": [
+        {
+          "name": "nextIndex",
+          "type": "uint256"
+        },
+        {
+          "name": "oracleAddress",
+          "type": "address"
+        },
+        {
+          "name": "publicKey",
+          "type": "uint256"
+        },
+        {
+          "name": "title",
+          "type": "bytes32"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "networks": {
+    "42": {
+      "events": {},
+      "links": {},
+      "address": "0xef341dc88d61734e31ca561af31418ec4f8f127a",
+      "transactionHash": "0xc8c94dddd3101c63b1697e69aa502f3acf749f71e70cdac22bcbe28b4c78da20"
+    },
+    "development": {
+      "events": {},
+      "links": {},
+      "address": "0x0238e4214f98e1fc79e934bfd01ff82ec63f9365",
+      "transactionHash": "0x1e96804ae43194ae4bbb971f24f7c87677ae41b4826895654920955f343acdd6"
+    }
+  }
+}

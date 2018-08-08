@@ -1,7 +1,7 @@
-import {BaseContract,ContractType} from '@zapjs/basecontract';
-import {QueryArgs,ResponseArgs,Filter,txid} from './types'
+import {BaseContract} from '@zapjs/basecontract1';
+import {QueryArgs,ResponseArgs} from './types'
+import {NetworkProviderOptions, txid,Filter,DEFAULT_GAS} from "@zapjs/types"
 const {utf8ToHex} = require ("web3-utils");
-const DEFAULT_GAS = 300000
 /**
  * Provides an interface to the Dispatch contract for enabling data queries and responses.
  * @extends BaseContract
@@ -10,7 +10,7 @@ const DEFAULT_GAS = 300000
  * @param networkProvider Ethereum network provider (e.g. Infura)
  */
 export class ZapDispatch extends BaseContract {
-    constructor(obj ?: ContractType){
+    constructor(obj ?: NetworkProviderOptions){
         super(Object.assign(obj, {artifactName:"Dispatch"}));
     }
 

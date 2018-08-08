@@ -7,7 +7,7 @@ const expect = require("chai")
 const Web3 = require("web3");
 import {BigNumber} from "bignumber.js";
 
-import {BaseContract, BaseContractType} from "@zapjs/basecontract";
+import {BaseContract} from "@zapjs/basecontract1";
 import {Utils} from "@zapjs/utils";
 import {ZapBondage} from "../src";
 import {bootstrap} from "./utils/setup_test";

@@ -1,10 +1,11 @@
 const assert = require("assert");
-import {Curve,CurveType} from "@zapjs/curve"
-import {InitProvider, InitCurve, Respond, ProviderConstructorType,txid,Filter} from "./types";
-import {ZapDispatch} from "@zapjs/dispatch";
-import {ZapRegistry} from "@zapjs/registry";
-import {ZapBondage} from "@zapjs/bondage";
-import {ZapArbiter} from "@zapjs/arbiter";
+import {InitProvider, InitCurve, Respond, ProviderConstructorType} from "./types";
+import {txid,Filter,NetworkProviderOptions,DEFAULT_GAS} from "@zapjs/types";
+import {Curve,CurveType} from "@zapjs/curve1"
+import {ZapDispatch} from "@zapjs/dispatch1";
+import {ZapRegistry} from "@zapjs/registry1";
+import {ZapBondage} from "@zapjs/bondage1";
+import {ZapArbiter} from "@zapjs/arbiter1";
 
 /**
  * @class
@@ -20,13 +21,13 @@ import {ZapArbiter} from "@zapjs/arbiter";
     title:string;
     pubkey:number|string;
 
-    constructor({owner,zapRegistry,zapDispatch,zapBondage,zapArbiter}:ProviderConstructorType) {
+    constructor(owner:string,{options}:{options:NetworkProviderOptions}) {
         assert(owner, 'owner address is required');
         this.providerOwner = owner;
-        this.zapDispatch = zapDispatch || new ZapDispatch();
-        this.zapBondage = zapBondage || new ZapBondage();
-        this.zapArbiter = zapArbiter || new ZapArbiter();
-        this.zapRegistry = zapRegistry || new ZapRegistry();
+        this.zapDispatch = new ZapDispatch(options)
+        this.zapBondage = new ZapBondage(options);
+        this.zapArbiter = new ZapArbiter(options);
+        this.zapRegistry = new ZapRegistry(options);
         this.curve = undefined;
         this.title = "";
         this.pubkey = '';

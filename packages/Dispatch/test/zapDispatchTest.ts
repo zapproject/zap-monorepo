@@ -7,7 +7,7 @@ const Web3 = require('web3');
 import {bootstrap} from "./utils/setup_test";
 
 import {Utils} from "@zapjs/utils";
-import {BaseContract,BaseContractType} from "@zapjs/basecontract"
+import {BaseContract} from "@zapjs/basecontract1"
 import {ZapDispatch} from '../src';
 
 async function configureEnvironment(func:Function) {

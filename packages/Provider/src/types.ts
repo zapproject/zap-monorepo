@@ -1,9 +1,9 @@
-import {ZapDispatch} from "@zapjs/dispatch";
-import {ZapRegistry} from "@zapjs/registry";
-import {ZapBondage} from "@zapjs/bondage";
-import {ZapArbiter} from "@zapjs/arbiter";
-export type address = string;
-export type txid = string|object;
+import {ZapDispatch} from "@zapjs/dispatch1";
+import {ZapRegistry} from "@zapjs/registry1";
+import {ZapBondage} from "@zapjs/bondage1";
+import {ZapArbiter} from "@zapjs/arbiter1";
+import {address,txid} from "@zapjs/types";
+
 export type InitProvider = {
     public_key : string,
     title :string,
@@ -44,12 +44,4 @@ export type ProviderConstructorType = {
     zapBondage?: ZapBondage,
     zapArbiter?: ZapArbiter,
     zapRegistry?: ZapRegistry,
-}
-
-export interface Filter{
-    fromBlock ?: number,
-    toBlock ?: number,
-    provider ?: address,
-    subscriber ?:address,
-    terminator ?:address
 }

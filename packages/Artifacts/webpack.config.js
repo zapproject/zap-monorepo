@@ -1,9 +1,9 @@
-const path = require("path");
-const webpack = require("webpack")
+
+const path = require("path")
 module.exports = {
     entry: {
-        "artifacts": "./src/index.ts",
-        "artifacts.min": "./src/index.ts"
+        "zapjs": "./src/index.ts"
+       // "zapjs.min": "./src/index.ts"
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -15,19 +15,34 @@ module.exports = {
         // Add '.ts' and '.tsx' as a resolvable extension.
         extensions: [".ts", ".js", ".json"]
     },
+    optimization: {
+        minimize: true
+    },
     module: {
         rules: [
             // all files with a '.ts' or '.tsx' extension will be handled by 'ts-loader'
             {
                 test: /\.ts?$/,
                 use: [
-                    "awesome-typescript-loader"
-                 ],
+                    {
+                        loader: "awesome-typescript-loader",
+                        options: {
+                            transpileOnly: true,
+                            happyPackModeL: true
+                        }
+                    },
+                    {
+                        loader: "cache-loader"
+                    }
+                ],
                 exclude: [
                     /node_modules/,
-                    /test/
+                    /test/,
+                    /dist/,
+                    /.cache-loader/
                 ]
+
             }
         ]
-    },
+    }
 }

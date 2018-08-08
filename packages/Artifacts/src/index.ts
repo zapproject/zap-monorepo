@@ -1,3 +1,4 @@
+import {join} from "path"
 export const Artifacts =  {
     Arbiter : require("./../contracts/Arbiter.json"),
     ArbiterStorage : require("./../contracts/ArbiterStorage.json"),
