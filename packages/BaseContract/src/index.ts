@@ -33,11 +33,10 @@ export class BaseContract{
           }
           let currentProvider = networkProvider || new Web3.providers.HttpProvider("http://localhost:8545");
           this.provider = new Web3(currentProvider)
-          //network id default to mainnet
+            //network id default to mainnet
           this.networkId = networkId || 1;
           //console.log("Initialize contract: ",artifactName, artifactsDir, this.networkId, artifact.networks)
-          this.contract = this.provider.eth.contract(artifact.abi).at(artifact.networks[this.networkId].address)
-
+          this.contract = new this.provider.eth.Contract(artifact.abi,artifact.networks[this.networkId].address)
         } catch (err) {
             throw err;
         }
