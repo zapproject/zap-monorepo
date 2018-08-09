@@ -3,7 +3,30 @@
     {
       "constant": true,
       "inputs": [],
-      "name": "storageAddress",
+      "name": "db",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "updateDependencies",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "owner",
       "outputs": [
         {
           "name": "",
@@ -17,7 +40,7 @@
     {
       "constant": true,
       "inputs": [],
-      "name": "owner",
+      "name": "bondage",
       "outputs": [
         {
           "name": "",
@@ -68,11 +91,7 @@
     {
       "inputs": [
         {
-          "name": "_storageAddress",
-          "type": "address"
-        },
-        {
-          "name": "_bondageAddress",
+          "name": "c",
           "type": "address"
         }
       ],
@@ -314,6 +333,50 @@
       "inputs": [
         {
           "indexed": true,
+          "name": "id",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "name": "subscriber",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "provider",
+          "type": "address"
+        }
+      ],
+      "name": "CanceledRequest",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "id",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "name": "subscriber",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "provider",
+          "type": "address"
+        }
+      ],
+      "name": "RevertCancelation",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
           "name": "previousOwner",
           "type": "address"
         },
@@ -325,20 +388,6 @@
       ],
       "name": "OwnershipTransferred",
       "type": "event"
-    },
-    {
-      "constant": false,
-      "inputs": [
-        {
-          "name": "_bondageAddress",
-          "type": "address"
-        }
-      ],
-      "name": "setBondage",
-      "outputs": [],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "function"
     },
     {
       "constant": false,
@@ -375,6 +424,20 @@
           "type": "uint256"
         }
       ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "id",
+          "type": "uint256"
+        }
+      ],
+      "name": "cancelQuery",
+      "outputs": [],
       "payable": false,
       "stateMutability": "nonpayable",
       "type": "function"
@@ -517,20 +580,153 @@
       "payable": false,
       "stateMutability": "nonpayable",
       "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "id",
+          "type": "uint256"
+        }
+      ],
+      "name": "getProvider",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "id",
+          "type": "uint256"
+        }
+      ],
+      "name": "getSubscriber",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "id",
+          "type": "uint256"
+        }
+      ],
+      "name": "getEndpoint",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "id",
+          "type": "uint256"
+        }
+      ],
+      "name": "getStatus",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "id",
+          "type": "uint256"
+        }
+      ],
+      "name": "getCancel",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "id",
+          "type": "uint256"
+        }
+      ],
+      "name": "getUserQuery",
+      "outputs": [
+        {
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "id",
+          "type": "uint256"
+        }
+      ],
+      "name": "getSubscriberOnchain",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
     }
   ],
   "networks": {
     "42": {
       "events": {},
       "links": {},
-      "address": "0xac1763814975d1664aa580bf9eb234d5eea4e0ca",
-      "transactionHash": "0x6b4290319d794baf935b29f06242e66253490575ce3c62fc615d6fa3aeb00d34"
+      "address": "0xea6ee4ecc809ae2b28c544459db45bb371d7dbad",
+      "transactionHash": "0xcec44fed0db9bbc89ef18b65ef888a945de0560a0aaf3aa3b992a5fddacab366"
     },
-    "development": {
+    "4447": {
       "events": {},
       "links": {},
-      "address": "0xa06e6d80c96f49f3e747bffd64a222f344fedcd6",
-      "transactionHash": "0x2f0021d872167ea4fa24f41e4cd7ec91d725df21d6bebcb97651f2f61b9c45a2"
+      "address": "0x855d1c79ad3fb086d516554dc7187e3fdfc1c79a",
+      "transactionHash": "0xff5d201dd9ca72813ae0b585d53c6abb8902a6cd02122c5160158c27dbd65ecb"
     }
   }
 }

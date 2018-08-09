@@ -75,16 +75,16 @@ describe('Zap Dispatch Test', () => {
                 endpointParams: ['a'],
                 onchainProvider: false,
                 onchainSubscriber: false,
-                from: accounts[2], // account that used for bond in booststrap function 
+                from: accounts[2], // account that used for bond in booststrap function
                 gas: Utils.Constants.DEFAULT_GAS
             });
+        expect(queryData).to.have.all.keys(["events"])
         queryData = queryData.events.Incoming.returnValues;
-        console.log(queryData)
     });
 
     it("Should call query function in Dispatch smart contract for onchain provider", async () => {
-        let result:string
-        try {
+        let result:any
+        //try {
            result = await dispatchWrapper.queryData({
                     provider: accounts[0], // account that used as oracle in booststrap function
                     query: query,
@@ -92,13 +92,15 @@ describe('Zap Dispatch Test', () => {
                     params: ['a'],
                     onchainProvider: true,
                     onchainSubscriber: false,
-                    from: accounts[2], // account that used for bond in booststrap function 
+                    from: accounts[2], // account that used for bond in booststrap function
                     gas: Utils.Constants.DEFAULT_GAS
                 });
-           console.log(result)
-        } catch (e) {
-            await expect(e.toString()).to.include('revert');
-        }
+         //  console.log("RESULT : ",result)
+          // expect(result).to.be.undefined
+        // } catch (e) {
+        //     console.error("error : ", e)
+        //     //await expect(e.toString()).to.include('revert');
+        // }
     });
 
     it("Should call query function in Dispatch smart contract for onchain subscriber", async () => {
@@ -112,6 +114,7 @@ describe('Zap Dispatch Test', () => {
                 from: accounts[2], // account that used for bond in booststrap function 
                 gas: Utils.Constants.DEFAULT_GAS
             });
+        console.log("query data : ", queryData)
         queryData = queryData.events.Incoming.returnValues;
     });
 

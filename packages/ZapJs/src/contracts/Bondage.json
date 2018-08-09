@@ -3,7 +3,7 @@
     {
       "constant": true,
       "inputs": [],
-      "name": "arbiterAddress",
+      "name": "db",
       "outputs": [
         {
           "name": "",
@@ -17,7 +17,7 @@
     {
       "constant": true,
       "inputs": [],
-      "name": "storageAddress",
+      "name": "arbiterAddress",
       "outputs": [
         {
           "name": "",
@@ -26,6 +26,15 @@
       ],
       "payable": false,
       "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "updateDependencies",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -82,15 +91,7 @@
     {
       "inputs": [
         {
-          "name": "_storageAddress",
-          "type": "address"
-        },
-        {
-          "name": "_tokenAddress",
-          "type": "address"
-        },
-        {
-          "name": "_currentCostAddress",
+          "name": "c",
           "type": "address"
         }
       ],
@@ -216,6 +217,33 @@
       "inputs": [
         {
           "indexed": true,
+          "name": "holder",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "oracle",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "endpoint",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "name": "numDots",
+          "type": "uint256"
+        }
+      ],
+      "name": "Returned",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
           "name": "previousOwner",
           "type": "address"
         },
@@ -232,48 +260,6 @@
       "constant": false,
       "inputs": [
         {
-          "name": "_arbiterAddress",
-          "type": "address"
-        }
-      ],
-      "name": "setArbiterAddress",
-      "outputs": [],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "constant": false,
-      "inputs": [
-        {
-          "name": "_dispatchAddress",
-          "type": "address"
-        }
-      ],
-      "name": "setDispatchAddress",
-      "outputs": [],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "constant": false,
-      "inputs": [
-        {
-          "name": "currentCostAddress",
-          "type": "address"
-        }
-      ],
-      "name": "setCurrentCostAddress",
-      "outputs": [],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "constant": false,
-      "inputs": [
-        {
           "name": "oracleAddress",
           "type": "address"
         },
@@ -282,7 +268,7 @@
           "type": "bytes32"
         },
         {
-          "name": "numZap",
+          "name": "numDots",
           "type": "uint256"
         }
       ],
@@ -340,14 +326,14 @@
           "type": "bytes32"
         },
         {
-          "name": "numZap",
+          "name": "numDots",
           "type": "uint256"
         }
       ],
       "name": "delegateBond",
       "outputs": [
         {
-          "name": "boundDots",
+          "name": "boundZap",
           "type": "uint256"
         }
       ],
@@ -418,6 +404,37 @@
       "type": "function"
     },
     {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "holderAddress",
+          "type": "address"
+        },
+        {
+          "name": "oracleAddress",
+          "type": "address"
+        },
+        {
+          "name": "endpoint",
+          "type": "bytes32"
+        },
+        {
+          "name": "numDots",
+          "type": "uint256"
+        }
+      ],
+      "name": "returnDots",
+      "outputs": [
+        {
+          "name": "success",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
       "constant": true,
       "inputs": [
         {
@@ -437,37 +454,6 @@
       "outputs": [
         {
           "name": "numZap",
-          "type": "uint256"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "constant": true,
-      "inputs": [
-        {
-          "name": "oracleAddress",
-          "type": "address"
-        },
-        {
-          "name": "endpoint",
-          "type": "bytes32"
-        },
-        {
-          "name": "numZap",
-          "type": "uint256"
-        }
-      ],
-      "name": "calcBondRate",
-      "outputs": [
-        {
-          "name": "",
-          "type": "uint256"
-        },
-        {
-          "name": "",
           "type": "uint256"
         }
       ],
@@ -537,10 +523,106 @@
           "type": "bytes32"
         }
       ],
+      "name": "getZapBound",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "holderAddress",
+          "type": "address"
+        },
+        {
+          "name": "oracleAddress",
+          "type": "address"
+        }
+      ],
+      "name": "isProviderInitialized",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "holderAddress",
+          "type": "address"
+        },
+        {
+          "name": "oracleAddress",
+          "type": "address"
+        },
+        {
+          "name": "endpoint",
+          "type": "bytes32"
+        }
+      ],
+      "name": "getNumEscrow",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "oracleAddress",
+          "type": "address"
+        },
+        {
+          "name": "endpoint",
+          "type": "bytes32"
+        }
+      ],
+      "name": "getNumZap",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "oracleAddress",
+          "type": "address"
+        },
+        {
+          "name": "endpoint",
+          "type": "bytes32"
+        }
+      ],
       "name": "getDotsIssued",
       "outputs": [
         {
-          "name": "dots",
+          "name": "",
           "type": "uint256"
         }
       ],
@@ -567,7 +649,7 @@
       "name": "getBoundDots",
       "outputs": [
         {
-          "name": "dots",
+          "name": "",
           "type": "uint256"
         }
       ],
@@ -579,19 +661,38 @@
       "constant": true,
       "inputs": [
         {
-          "name": "oracleAddress",
+          "name": "holderAddress",
           "type": "address"
-        },
-        {
-          "name": "endpoint",
-          "type": "bytes32"
         }
       ],
-      "name": "getZapBound",
+      "name": "getIndexSize",
       "outputs": [
         {
           "name": "",
           "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "holderAddress",
+          "type": "address"
+        },
+        {
+          "name": "index",
+          "type": "uint256"
+        }
+      ],
+      "name": "getOracleAddress",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
         }
       ],
       "payable": false,
@@ -603,14 +704,14 @@
     "42": {
       "events": {},
       "links": {},
-      "address": "0xddc0923e2a63f321559c37a48f44ed74d8a93c32",
-      "transactionHash": "0xc31f044cc9c50b15df1f23e5ad3273d92cd5ac3453f001ce952765b940837a73"
+      "address": "0x3d62f760ab698fe9208c0870308974609abae6fd",
+      "transactionHash": "0x160a7e1a4dde03f1d909cc5fffdcd76ddd1b083cd408465b6bb35df714e16b57"
     },
-    "development": {
+    "4447": {
       "events": {},
       "links": {},
-      "address": "0x12ce65a90f01486051ecb650b4f3d91d4fceb10f",
-      "transactionHash": "0xcb0a29054e3ec3851d51a0f63ff6288899bdc6e7f83657a0ea3b68d9e76a39a7"
+      "address": "0x1411cb266fced1587b0aa29e9d5a9ef3db64a9c5",
+      "transactionHash": "0x18ebc195951627112daade0f2731820a23f3b0c208a355508ce9b75c9c587b69"
     }
   }
 }

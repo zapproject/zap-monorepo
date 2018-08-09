@@ -3,7 +3,7 @@
     {
       "constant": true,
       "inputs": [],
-      "name": "storageAddress",
+      "name": "db",
       "outputs": [
         {
           "name": "",
@@ -12,6 +12,15 @@
       ],
       "payable": false,
       "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "updateDependencies",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -68,11 +77,7 @@
     {
       "inputs": [
         {
-          "name": "_storageAddress",
-          "type": "address"
-        },
-        {
-          "name": "_bondageAddress",
+          "name": "c",
           "type": "address"
         }
       ],
@@ -155,20 +160,6 @@
       ],
       "name": "OwnershipTransferred",
       "type": "event"
-    },
-    {
-      "constant": false,
-      "inputs": [
-        {
-          "name": "newBondageAddress",
-          "type": "address"
-        }
-      ],
-      "name": "setBondage",
-      "outputs": [],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "function"
     },
     {
       "constant": false,
@@ -270,20 +261,101 @@
       "payable": false,
       "stateMutability": "nonpayable",
       "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "providerAddress",
+          "type": "address"
+        },
+        {
+          "name": "subscriberAddress",
+          "type": "address"
+        },
+        {
+          "name": "endpoint",
+          "type": "bytes32"
+        }
+      ],
+      "name": "getDots",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint64"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "providerAddress",
+          "type": "address"
+        },
+        {
+          "name": "subscriberAddress",
+          "type": "address"
+        },
+        {
+          "name": "endpoint",
+          "type": "bytes32"
+        }
+      ],
+      "name": "getBlockStart",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint96"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "providerAddress",
+          "type": "address"
+        },
+        {
+          "name": "subscriberAddress",
+          "type": "address"
+        },
+        {
+          "name": "endpoint",
+          "type": "bytes32"
+        }
+      ],
+      "name": "getPreBlockEnd",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint96"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
     }
   ],
   "networks": {
     "42": {
       "events": {},
       "links": {},
-      "address": "0x97f846a118faddddd00de18de71f6f0e3125041d",
-      "transactionHash": "0xde3ce6eeb78eb7fd25608d91df804d4a5d1bc09f941627097c3c576fc56445f0"
+      "address": "0xc85fe9131794f289f61e6e7a442fbe9e6587308a",
+      "transactionHash": "0x4006ee0634604cd5058b5406eabdb0937e0f0253c9c4bdda8543d36319aac119"
     },
-    "development": {
+    "4447": {
       "events": {},
       "links": {},
-      "address": "0xa3f4b3668a4c4bb2307ab7fbf5dafca6797dafc0",
-      "transactionHash": "0x54d4b7281aa3fe23c1d2db3801bfd25331947d57775c3d836e94e5624b01782c"
+      "address": "0x2467636bea0f3c2441227eedbffac59f11d54a80",
+      "transactionHash": "0x5a816d3359f52a735aa1ac9b1dae7471381edb68db6bd1621aefec135f10c090"
     }
   }
 }

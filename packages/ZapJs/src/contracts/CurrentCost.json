@@ -1,6 +1,15 @@
 {
   "abi": [
     {
+      "constant": false,
+      "inputs": [],
+      "name": "updateDependencies",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
       "constant": true,
       "inputs": [],
       "name": "owner",
@@ -40,7 +49,7 @@
     {
       "inputs": [
         {
-          "name": "registryAddress",
+          "name": "c",
           "type": "address"
         }
       ],
@@ -77,11 +86,42 @@
           "type": "bytes32"
         },
         {
-          "name": "totalBound",
+          "name": "start",
           "type": "uint256"
         }
       ],
       "name": "_currentCostOfDot",
+      "outputs": [
+        {
+          "name": "cost",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "oracleAddress",
+          "type": "address"
+        },
+        {
+          "name": "endpoint",
+          "type": "bytes32"
+        },
+        {
+          "name": "start",
+          "type": "uint256"
+        },
+        {
+          "name": "nDots",
+          "type": "uint256"
+        }
+      ],
+      "name": "_costOfNDots",
       "outputs": [
         {
           "name": "cost",
@@ -107,7 +147,7 @@
       "name": "_dotLimit",
       "outputs": [
         {
-          "name": "limit",
+          "name": "",
           "type": "uint256"
         }
       ],
@@ -120,14 +160,14 @@
     "42": {
       "events": {},
       "links": {},
-      "address": "0x63bbba6be5e6d5e5589d5287b122b79b50401cc7",
-      "transactionHash": "0x1c206fc753c1be894d8f36fd0b6c9d5b8497042fcafda18ac0b5ccb8a365cbb0"
+      "address": "0xedbe37a14cbe9a60a972982e3694a30f381ec536",
+      "transactionHash": "0xa75af47e80e5bf378c846c21e4c4f50cfa8f49ff78f14550665be712576977c4"
     },
-    "development": {
+    "4447": {
       "events": {},
       "links": {},
-      "address": "0x4d31dca28cf1947098cdd895be15f42c213ed01d",
-      "transactionHash": "0x037277351308c85bf54c0f362f76c0c9210384fa97a5a04e3e37206a3d4dd9a5"
+      "address": "0x8e4c131b37383e431b9cd0635d3cf9f3f628edae",
+      "transactionHash": "0x39e1009fa32a6419c5bdb35f33e3a7e48871a9eb6d5684de58b6637a05646291"
     }
   }
 }

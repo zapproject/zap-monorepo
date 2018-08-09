@@ -3,7 +3,7 @@
     {
       "constant": true,
       "inputs": [],
-      "name": "storageAddress",
+      "name": "db",
       "outputs": [
         {
           "name": "",
@@ -12,6 +12,15 @@
       ],
       "payable": false,
       "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "updateDependencies",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -54,7 +63,7 @@
     {
       "inputs": [
         {
-          "name": "_storageAddress",
+          "name": "c",
           "type": "address"
         }
       ],
@@ -99,18 +108,8 @@
         },
         {
           "indexed": false,
-          "name": "constants",
+          "name": "curve",
           "type": "int256[]"
-        },
-        {
-          "indexed": false,
-          "name": "parts",
-          "type": "uint256[]"
-        },
-        {
-          "indexed": false,
-          "name": "dividers",
-          "type": "uint256[]"
         }
       ],
       "name": "NewCurve",
@@ -172,16 +171,8 @@
           "type": "bytes32"
         },
         {
-          "name": "constants",
+          "name": "curve",
           "type": "int256[]"
-        },
-        {
-          "name": "parts",
-          "type": "uint256[]"
-        },
-        {
-          "name": "dividers",
-          "type": "uint256[]"
         }
       ],
       "name": "initiateProviderCurve",
@@ -299,68 +290,6 @@
         {
           "name": "",
           "type": "int256[]"
-        },
-        {
-          "name": "",
-          "type": "uint256[]"
-        },
-        {
-          "name": "",
-          "type": "uint256[]"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "constant": true,
-      "inputs": [
-        {
-          "name": "provider",
-          "type": "address"
-        },
-        {
-          "name": "endpoint",
-          "type": "bytes32"
-        }
-      ],
-      "name": "getDotLimit",
-      "outputs": [
-        {
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "constant": true,
-      "inputs": [
-        {
-          "name": "provider",
-          "type": "address"
-        },
-        {
-          "name": "endpoint",
-          "type": "bytes32"
-        }
-      ],
-      "name": "getProviderArgsLength",
-      "outputs": [
-        {
-          "name": "",
-          "type": "uint256"
-        },
-        {
-          "name": "",
-          "type": "uint256"
-        },
-        {
-          "name": "",
-          "type": "uint256"
         }
       ],
       "payable": false,
@@ -397,20 +326,243 @@
       "payable": false,
       "stateMutability": "view",
       "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "oracleAddress",
+          "type": "address"
+        }
+      ],
+      "name": "isProviderInitiated",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "provider",
+          "type": "address"
+        }
+      ],
+      "name": "getPublicKey",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "provider",
+          "type": "address"
+        }
+      ],
+      "name": "getTitle",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "provider",
+          "type": "address"
+        },
+        {
+          "name": "endpoint",
+          "type": "bytes32"
+        }
+      ],
+      "name": "getEndpointIndexSize",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "provider",
+          "type": "address"
+        },
+        {
+          "name": "endpoint",
+          "type": "bytes32"
+        },
+        {
+          "name": "index",
+          "type": "uint256"
+        }
+      ],
+      "name": "getEndPointParam",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "provider",
+          "type": "address"
+        },
+        {
+          "name": "endpoint",
+          "type": "bytes32"
+        }
+      ],
+      "name": "getCurve",
+      "outputs": [
+        {
+          "name": "",
+          "type": "int256[]"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "provider",
+          "type": "address"
+        },
+        {
+          "name": "endpoint",
+          "type": "bytes32"
+        }
+      ],
+      "name": "getProviderArgsLength",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "provider",
+          "type": "address"
+        },
+        {
+          "name": "endpoint",
+          "type": "bytes32"
+        }
+      ],
+      "name": "getCurveUnset",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "getOracleIndexSize",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "index",
+          "type": "uint256"
+        }
+      ],
+      "name": "getOracleAddress",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "getAllOracles",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address[]"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
     }
   ],
   "networks": {
     "42": {
       "events": {},
       "links": {},
-      "address": "0xef341dc88d61734e31ca561af31418ec4f8f127a",
-      "transactionHash": "0xc8c94dddd3101c63b1697e69aa502f3acf749f71e70cdac22bcbe28b4c78da20"
+      "address": "0x98ce8cd4fefc019711b64e3cd78dc3f05390f83e",
+      "transactionHash": "0x4983de3f1b619beab3e4edbf791e228a600dd2e3c8cf276720f531ec06f99695"
     },
-    "development": {
+    "4447": {
       "events": {},
       "links": {},
-      "address": "0x0238e4214f98e1fc79e934bfd01ff82ec63f9365",
-      "transactionHash": "0x1e96804ae43194ae4bbb971f24f7c87677ae41b4826895654920955f343acdd6"
+      "address": "0x98d9f9e8debd4a632682ba207670d2a5acd3c489",
+      "transactionHash": "0xcc00dae7619ff0856e3c9d0dd10810182ec7512f97ec11e6f46579201299c4da"
     }
   }
 }
