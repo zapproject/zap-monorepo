@@ -8,7 +8,7 @@
   "typings": "lib/src",
   "scripts": {
     "build": "tsc",
-    "test": "mocha  -r ts-node/register test/*.ts --serial",
+    "test": "mocha  -r ts-node/register test/*.ts --serial --bail --exit",
     "run_test": "run-s build test",
     "webpack": "./node_modules/.bin/webpack"
   },

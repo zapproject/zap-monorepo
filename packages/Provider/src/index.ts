@@ -21,7 +21,7 @@ import {ZapArbiter} from "@zapjs/arbiter1";
     title:string;
     pubkey:number|string;
 
-    constructor(owner:string,{options}:{options:NetworkProviderOptions}) {
+    constructor(owner:string,options:NetworkProviderOptions) {
         assert(owner, 'owner address is required');
         this.providerOwner = owner;
         this.zapDispatch = new ZapDispatch(options)

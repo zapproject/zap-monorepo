@@ -20,7 +20,7 @@ export class ZapSubscriber  {
     zapRegistry:  ZapRegistry;
     zapToken: ZapToken;
 
-    constructor(owner:string,{options}:{options:NetworkProviderOptions}) {
+    constructor(owner:string,options:NetworkProviderOptions) {
         assert(owner, 'owner address is required');
         this.subscriberOwner = owner;
         this.zapToken = new ZapToken(options);

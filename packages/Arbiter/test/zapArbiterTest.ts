@@ -7,7 +7,7 @@ import {ZapArbiter} from "../src";
 const Web3  = require('web3');
 import {join} from 'path';
 
-import {Utils} from "@zapjs/utils";
+import {Utils} from "@zapjs/utils1";
 
 async function configureEnvironment(func:Function) {
   await func();

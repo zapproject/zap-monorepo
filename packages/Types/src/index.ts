@@ -3,7 +3,7 @@ import {TransactionReceipt,TxData,ContractAbi} from "ethereum-types";
 
 export type address = string;
 export type txid = string;
-export const  DEFAULT_GAS = new BigNumber(300000)
+export const  DEFAULT_GAS = new BigNumber(600000)
 export type BNType = BigNumber;
 
 

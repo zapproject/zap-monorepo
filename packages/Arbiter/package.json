@@ -8,7 +8,7 @@
   "typings": "lib/src",
   "scripts": {
     "build": "tsc --module commonjs",
-    "test": "mocha  -r ts-node/register test/*.ts --serial",
+    "test": "mocha  -r ts-node/register test/*.ts --serial --bail --exit",
     "run_test": "run-s build test"
   },
   "keywords": [],
@@ -22,7 +22,6 @@
     "web3-utils": "^1.0.0-beta.34"
   },
   "devDependencies": {
-
     "@types/chai": "^4.1.4",
     "@types/mocha": "^5.2.4",
     "@types/node": "^10.5.2",

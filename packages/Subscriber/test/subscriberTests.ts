@@ -6,7 +6,7 @@ const expect = require('chai')
 const Web3 = require('web3');
 import { bootstrap } from "./utils/setup_test";
 
-import {Utils} from "@zapjs/utils";
+import {Utils} from "@zapjs/utils1";
 import { ZapSubscriber } from '../src';
 import { ZapBondage } from '@zapjs/bondage1';
 import { ZapRegistry } from "@zapjs/registry1";
@@ -109,11 +109,12 @@ describe('Zap Subscriber Test', () => {
         });
 
     it("Should subscribe to specified provider", async () => {
-        const res = await subscriber.subscribe({
+        await subscriber.subscribe({
             provider: accounts[0],
             endpoint: testZapProvider.endpoint,
             endpointParams: testZapProvider.endpoint_params,
             dots: 2
         });
+
     });
 });

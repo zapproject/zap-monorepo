@@ -2,13 +2,12 @@
   "name": "@zapjs/artifacts1",
   "version": "1.0.4",
   "description": "ZapArtifacts",
-  "main": "lib/index.js",
-  "types": "lib/typings.d.ts",
+  "main": "./lib/index.js",
+  "types": "./typings.d.ts",
   "repository": "https://github.com/zapproject/Zap-monorepo",
   "scripts": {
     "build": "./node_modules/.bin/tsc",
-    "test": "mocha  -r ts-node/register test/*.ts --serial",
-    "run_test": "run-s build test"
+    "run_test":"run-s build"
   },
   "keywords": [],
   "author": "",

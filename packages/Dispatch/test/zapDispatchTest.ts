@@ -6,7 +6,7 @@ const expect = require('chai')
 const Web3 = require('web3');
 import {bootstrap} from "./utils/setup_test";
 
-import {Utils} from "@zapjs/utils";
+import {Utils} from "@zapjs/utils1";
 import {BaseContract} from "@zapjs/basecontract1"
 import {ZapDispatch} from '../src';
 
@@ -79,11 +79,13 @@ describe('Zap Dispatch Test', () => {
                 gas: Utils.Constants.DEFAULT_GAS
             });
         queryData = queryData.events.Incoming.returnValues;
+        console.log(queryData)
     });
 
     it("Should call query function in Dispatch smart contract for onchain provider", async () => {
+        let result:string
         try {
-            await dispatchWrapper.queryData({
+           result = await dispatchWrapper.queryData({
                     provider: accounts[0], // account that used as oracle in booststrap function
                     query: query,
                     endpoint: testZapProvider.endpoint,
@@ -93,6 +95,7 @@ describe('Zap Dispatch Test', () => {
                     from: accounts[2], // account that used for bond in booststrap function 
                     gas: Utils.Constants.DEFAULT_GAS
                 });
+           console.log(result)
         } catch (e) {
             await expect(e.toString()).to.include('revert');
         }
