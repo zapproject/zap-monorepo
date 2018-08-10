@@ -98,11 +98,11 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS} from "@zapjs/ty
      * @returns {Promise<CurveType>} Returns a Promise that will eventually resolve into a Curve object
      */
      async getProviderCurve(provider:string,endpoint:string):Promise<Curve>{
-        let term:CurveType =  await this.contract.methods.getProviderCurve(
+        let term:string[] =  await this.contract.methods.getProviderCurve(
             provider,
             utf8ToHex(endpoint)
             ).call();
-        return new Curve(term)
+        return new Curve(term.map((i:string)=>{return parseInt(i)}))
     }
 
     /**

@@ -17,7 +17,7 @@ export async function bootstrap(zapProvider:any,accounts:Array<string>,deployedR
     await deployedRegistry.contract.methods.initiateProvider(normalizedP.pubkey,normalizedP.title, normalizedP.endpoint, normalizedP.endpoint_params).send(defaultTx);
     let convertedCurve = zapProvider.curve.convertToBNArrays();
     let tokenOwner = await deployedToken.contract.methods.owner().call();
-    await deployedRegistry.contract.methods.initiateProviderCurve(normalizedP.endpoint,convertedCurve[0], convertedCurve[1],convertedCurve[2]).send(defaultTx);
+    await deployedRegistry.contract.methods.initiateProviderCurve(normalizedP.endpoint,convertedCurve).send(defaultTx);
     let providerCurve = await deployedRegistry.contract.methods.getProviderCurve(accounts[0],normalizedP.endpoint).call();
     console.log("provider curve", providerCurve);
     console.log("token owner : ", tokenOwner)
@@ -30,6 +30,6 @@ export async function bootstrap(zapProvider:any,accounts:Array<string>,deployedR
     console.log("bondage contract address", deployedBondage.contract._address)
     await deployedToken.contract.methods.approve(deployedBondage.contract._address, requiredZap).send({from:accounts[2],gas:Utils.Constants.DEFAULT_GAS});
     console.log("Token approved, endpoint : ", normalizedP.endpoint);
-    await deployedBondage.contract.methods.bond(accounts[0],normalizedP.endpoint, 10).send({from:accounts[2], gas:Utils.Constants.DEFAULT_GAS});
+    await deployedBondage.contract.methods.bond(accounts[0],normalizedP.endpoint, toBN(10)).send({from:accounts[2], gas:Utils.Constants.DEFAULT_GAS});
     return "done";
 }

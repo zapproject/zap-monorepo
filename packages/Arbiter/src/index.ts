@@ -1,7 +1,7 @@
 import  {BaseContract} from '@zapjs/basecontract';
 import {SubscriptionInit,SubscriptionEnd,SubscriptionType} from "./types"
 import {Filter,txid,DEFAULT_GAS,NetworkProviderOptions} from "@zapjs/types"
-const {toBN,utf8ToHex} = require ('web3-utils');
+const {toBN,utf8ToHex,isHex} = require ('web3-utils');
 /**
  * @class
  * Provides an interface to the Arbiter contract for managing temporal subscriptions to oracles.
@@ -34,9 +34,12 @@ export class ZapArbiter extends BaseContract {
     async initiateSubscription(
         {provider, endpoint, endpoint_params, blocks, pubkey, from, gas=DEFAULT_GAS} : SubscriptionInit):Promise<txid> {
         try {
-            for (let i in endpoint_params){
-                endpoint_params[i] = utf8ToHex(endpoint_params[i]);
-            }
+            endpoint_params = endpoint_params.map((i:string)=>{
+                if(!isHex(i)) {
+                    return utf8ToHex(i)
+                }
+                else return i;
+            })
             return await this.contract.methods.initiateSubscription(
                 provider,
                 utf8ToHex(endpoint),

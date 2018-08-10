@@ -59,7 +59,7 @@ describe('Zap Dispatch Test', () => {
     it("Should have all pre conditions set up for dispatch to work", async () => {
      const res = await bootstrap(testZapProvider, accounts, deployedRegistry, deployedToken, deployedBondage);
      await expect(res).to.be.equal("done");
- })
+    });
 
         it("Should initiate Dispatch Wrapper", async () => {
             dispatchWrapper = new ZapDispatch(options);

@@ -1,5 +1,6 @@
 {
   "name": "@zapjs/arbiter",
+  "private":true,
   "version": "1.0.2",
   "description": "Zap Arbiter",
   "main": "lib/src/index.js",

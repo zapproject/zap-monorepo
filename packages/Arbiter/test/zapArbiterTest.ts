@@ -1,3 +1,5 @@
+import {bootstrap} from "../../Dispatch/test/utils/setup_test";
+
 const expect = require('chai')
 .use(require('chai-as-promised'))
 .use(require('chai-bignumber'))
@@ -53,6 +55,11 @@ describe('Arbiter Test', () => {
     ganacheServer.close();
     process.exit();
   });
+
+    it("Should have all pre conditions set up for dispatch to work", async () => {
+        const res = await bootstrap(testZapProvider, accounts, deployedRegistry, deployedToken, deployedBondage);
+        await expect(res).to.be.equal("done");
+    });
 
     it('Should initiate zapArbiter wrapper', function() {
       arbiterWrapper = new ZapArbiter(options);

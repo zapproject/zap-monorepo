@@ -12,13 +12,13 @@ import {Utils} from "@zapjs/utils";
  * @returns {Promise<void>}
  */
 export async function bootstrap(zapProvider:any,accounts:Array<string>,deployedRegistry:any, deployedToken:any,deployedBondage:any){
-    const dots = 100;
+    const dots = 10;
     let normalizedP = Utils.normalizeProvider(zapProvider);
     let defaultTx = {from:accounts[0], gas:Utils.Constants.DEFAULT_GAS};
     await deployedRegistry.contract.methods.initiateProvider(normalizedP.pubkey,normalizedP.title, normalizedP.endpoint, normalizedP.endpoint_params).send(defaultTx);
     let convertedCurve = zapProvider.curve.convertToBNArrays();
     let tokenOwner = await deployedToken.contract.methods.owner().call();
-    await deployedRegistry.contract.methods.initiateProviderCurve(normalizedP.endpoint,convertedCurve[0], convertedCurve[1],convertedCurve[2]).send(defaultTx);
+    await deployedRegistry.contract.methods.initiateProviderCurve(normalizedP.endpoint,convertedCurve).send(defaultTx);
     let providerCurve = await deployedRegistry.contract.methods.getProviderCurve(accounts[0],normalizedP.endpoint).call();
     console.log("provider curve", providerCurve);
     console.log("token owner : ", tokenOwner);

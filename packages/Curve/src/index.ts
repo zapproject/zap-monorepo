@@ -57,7 +57,9 @@ export class Curve {
         return this.values.map((item: number) => {
             return toHex(item);
         });
-
+    }
+    public valuesToString(): string[]{
+         return this.values.map((item:number)=> {return ''+item})
     }
 
 }
