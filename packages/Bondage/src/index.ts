@@ -180,7 +180,7 @@ export class ZapBondage extends BaseContract {
      * @param {Function} callback Callback function that is called whenever an event is emitted
      */
     public listenUnbound(filters: Filter = {} , callback: Function): void {
-        this.contract.events.Unbond(filters, {toBlock: "latest"}, callback);
+        this.contract.events.Unbound(filters, {toBlock: "latest"}, callback);
     }
 
     /**

@@ -34,7 +34,6 @@ export class Utils {
 
     static getHexString(str: string) {
         const data = new Buffer(str);
-        console.log(data.byteLength);
         const hex = data.toString('hex');
         return `0x${hex}`;
     };
