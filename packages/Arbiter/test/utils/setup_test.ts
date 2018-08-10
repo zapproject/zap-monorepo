@@ -30,6 +30,6 @@ export async function bootstrap(zapProvider:any,accounts:Array<string>,deployedR
     console.log("bondage contract address", deployedBondage.contract._address)
     await deployedToken.contract.methods.approve(deployedBondage.contract._address, requiredZap).send({from:accounts[2],gas:Utils.Constants.DEFAULT_GAS});
     console.log("Token approved, endpoint : ", normalizedP.endpoint);
-    await deployedBondage.contract.methods.bond(accounts[0],normalizedP.endpoint, requiredZap).send({from:accounts[2], gas:Utils.Constants.DEFAULT_GAS});
+    await deployedBondage.contract.methods.bond(accounts[0],normalizedP.endpoint, 10).send({from:accounts[2], gas:Utils.Constants.DEFAULT_GAS});
     return "done";
 }

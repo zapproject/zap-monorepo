@@ -49,7 +49,7 @@
     "web3": "^1.0.0-beta.34",
     "web3-utils": "^1.0.0-beta.34",
     "webpack-log": "^1.2.0",
-    "zap_contracts": "git+https://github.com/zapproject/zap-ethereum-api.git"
+    "zap_contracts": "git+https://github.com/zapproject/zap-ethereum-api.git#RC2"
   },
   "devDependencies": {
     "@types/node": "^10.5.2",

@@ -36,6 +36,6 @@
     "ts-node": "^7.0.0",
     "tslint": "^5.10.0",
     "typescript": "^2.9.2",
-    "zap_contracts": "git+https://github.com/zapproject/zap-ethereum-api.git"
+    "zap_contracts": "git+https://github.com/zapproject/zap-ethereum-api.git#RC2"
   }
 }

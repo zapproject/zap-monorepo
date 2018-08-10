@@ -1,5 +1,5 @@
 {
-  "name": "@zapjs/basecontract1",
+  "name": "@zapjs/basecontract",
   "version": "1.0.5",
   "description": "",
   "main": "lib/src/index.js",
@@ -37,6 +37,6 @@
     "truffle-core": "^4.1.13",
     "tslint": "^5.10.0",
     "webpack": "^4.16.4",
-    "zap_contracts": "git+https://github.com/zapproject/zap-ethereum-api.git"
+    "zap_contracts": "git+https://github.com/zapproject/zap-ethereum-api.git#RC2"
   }
 }

@@ -6,6 +6,11 @@ const zapContractDirName = dirname(require.resolve("zap_contracts/truffle-config
 const  migrationDir = join(zapContractDirName,"migrations")
 const contractsDir = join(zapContractDirName,"contracts")
 const workingDir = zapContractDirName
+
+// y = 2x + x^2 from [1, 100]
+export const TEST_CURVE = [3, 0, 2, 1, 100];
+
+
 export const  migrate = require("truffle-core/lib/commands/migrate.js");
 /**
  * @ignore
@@ -45,7 +50,7 @@ export const testZapProvider:any = {
   endpoint_params:  ["p1", "p2"],
   endpoint: "testEndpoint",
   query : "btcPrice",
-  curve : new Curve([2, 2, 0, 1, 1, 1, 10, 0, 0], [0, 5, 5, 1000], [1, 3])
+  curve : new Curve(TEST_CURVE)
 
 }
 
@@ -68,3 +73,4 @@ export const GAS_PRICE = 40000000
  * @type {string}
  */
 export const NETWORK = "ganache-gui"
+

@@ -5,6 +5,7 @@ const expect = require('chai')
 .expect;
 const Web3 = require('web3');
 import {bootstrap} from "./utils/setup_test";
+const {hexToUtf8} = require("web3-utils");
 
 import {Utils} from "@zapjs/utils1";
 import {BaseContract} from "@zapjs/basecontract1"
@@ -78,29 +79,31 @@ describe('Zap Dispatch Test', () => {
                 from: accounts[2], // account that used for bond in booststrap function
                 gas: Utils.Constants.DEFAULT_GAS
             });
-        expect(queryData).to.have.all.keys(["events"])
+        expect(queryData).to.have.any.keys(["events"])
         queryData = queryData.events.Incoming.returnValues;
+        expect(queryData).to.have.any.keys(["provider","subscriber","query","endpoint","endpointParams","onchainSubscriber"])
+        expect(queryData.provider).to.equal(accounts[0])
+        expect(queryData.subscriber).to.equal(accounts[2])
+        expect(hexToUtf8(queryData.endpoint)).to.equal(testZapProvider.endpoint)
+        expect(queryData.query).to.equal(query)
     });
 
     it("Should call query function in Dispatch smart contract for onchain provider", async () => {
-        let result:any
-        //try {
-           result = await dispatchWrapper.queryData({
-                    provider: accounts[0], // account that used as oracle in booststrap function
-                    query: query,
-                    endpoint: testZapProvider.endpoint,
-                    params: ['a'],
-                    onchainProvider: true,
-                    onchainSubscriber: false,
-                    from: accounts[2], // account that used for bond in booststrap function
-                    gas: Utils.Constants.DEFAULT_GAS
-                });
-         //  console.log("RESULT : ",result)
-          // expect(result).to.be.undefined
-        // } catch (e) {
-        //     console.error("error : ", e)
-        //     //await expect(e.toString()).to.include('revert');
-        // }
+        //let result:any
+        try {
+            queryData = await dispatchWrapper.queryData({
+                provider: accounts[0], // account that used as oracle in booststrap function
+                query: query,
+                endpoint: testZapProvider.endpoint,
+                endpointParams: ['a'],
+                onchainProvider: true,
+                onchainSubscriber: false,
+                from: accounts[2], // account that used for bond in booststrap function
+                gas: Utils.Constants.DEFAULT_GAS
+            });
+         } catch (e) {
+             await expect(e.toString()).to.include('revert');
+         }
     });
 
     it("Should call query function in Dispatch smart contract for onchain subscriber", async () => {
@@ -108,14 +111,21 @@ describe('Zap Dispatch Test', () => {
                 provider: accounts[0], // account that used as oracle in booststrap function
                 query: query,
                 endpoint: testZapProvider.endpoint,
-                params: ['a'],
+                endpointParams: ['a'],
                 onchainProvider: false,
                 onchainSubscriber: true,
                 from: accounts[2], // account that used for bond in booststrap function 
                 gas: Utils.Constants.DEFAULT_GAS
             });
-        console.log("query data : ", queryData)
+        expect(queryData).to.have.any.keys(["events"])
         queryData = queryData.events.Incoming.returnValues;
+        expect(queryData).to.have.any.keys(["provider","subscriber","query","endpoint","endpointParams","onchainSubscriber"])
+        expect(queryData.provider).to.equal(accounts[0])
+        expect(queryData.subscriber).to.equal(accounts[2])
+        expect(hexToUtf8(queryData.endpoint)).to.equal(testZapProvider.endpoint)
+        expect(queryData.query).to.equal(query)
+
+
     });
 
     it("Should call query function in Dispatch smart contract for onchain subscriber and provider", async () => {
@@ -124,7 +134,7 @@ describe('Zap Dispatch Test', () => {
                     provider: accounts[0], // account that used as oracle in booststrap function
                     query: query,
                     endpoint: testZapProvider.endpoint,
-                    params: ['a'],
+                    endpointParams: ['a'],
                     onchainProvider: true,
                     onchainSubscriber: true,
                     from: accounts[2], // account that used for bond in booststrap function 

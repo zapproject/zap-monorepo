@@ -1,7 +1,7 @@
 {
-  "name": "@zapjs/bondage1",
+  "name": "@zapjs/bondage",
   "version": "1.0.3",
-  "description": "Zap Bondage",
+  "description": "",
   "repository": "https://github.com/zapproject/Zap-monorepo",
   "main": "lib/src/index.js",
   "type": "lib/src/types.d.ts",
@@ -38,6 +38,6 @@
     "tslint": "^5.10.0",
     "webpack": "^4.16.4",
     "webpack-command": "^0.4.1",
-    "zap_contracts": "git+https://github.com/zapproject/zap-ethereum-api.git"
+    "zap_contracts": "git+https://github.com/zapproject/zap-ethereum-api.git#RC2"
   }
 }

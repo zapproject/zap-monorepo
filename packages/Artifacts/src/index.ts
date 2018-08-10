@@ -1,13 +1,9 @@
 import {join} from "path"
 export const Artifacts =  {
     Arbiter : require("./../contracts/Arbiter.json"),
-    ArbiterStorage : require("./../contracts/ArbiterStorage.json"),
     Bondage : require("./../contracts/Bondage.json"),
-    BondageStorage : require("./../contracts/BondageStorage.json"),
     Dispatch : require("./../contracts/Dispatch.json"),
-    DispatchStorage : require("./../contracts/DispatchStorage.json"),
     Registry : require("./../contracts/Registry.json"),
-    RegistryStorage : require("./../contracts/RegistryStorage.json"),
     CurrentCost : require("./../contracts/CurrentCost.json"),
     PiecewiseLogic : require("./../contracts/PiecewiseLogic.json"),
     ZapToken : require("./../contracts/ZapToken.json"),

@@ -7,7 +7,7 @@ import {ZapRegistry} from "@zapjs/registry1";
 export type BondType = {
     provider:string,
     endpoint:string,
-    zapNum :number
+    dots :number
 }
 export type UnbondType = {
     provider:string,

@@ -48,21 +48,10 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS} from "@zapjs/ty
      * @param {BigNumber} gas Sets the gas limit for this transaction (optional)
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-     async initiateProviderCurve({endpoint, curve, from, gas=DEFAULT_GAS}:InitCurve):Promise<txid> {
-        let convertedConstants = curve.constants.map((item:number) => {
-            return toHex(item);
-        });
-        let convertedParts = curve.parts.map((item:number)=> {
-            return toHex(item);
-        });
-        let convertedDividers = curve.dividers.map((item:number) => {
-            return toHex(item);
-        });
-        return await this.contract.methods.initiateProviderCurve(
-            utf8ToHex(endpoint),
-            convertedConstants,
-            convertedParts,
-            convertedDividers)
+     async initiateProviderCurve({endpoint, term, from, gas=DEFAULT_GAS}:InitCurve):Promise<txid> {
+       let curve = new Curve(term);
+        let convertedCurve = curve.convertToBNArrays()
+        return await this.contract.methods.initiateProviderCurve(utf8ToHex(endpoint), convertedCurve)
         .send({from, gas});
     }
 
@@ -79,16 +68,16 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS} from "@zapjs/ty
       return await this.contract.methods.setEndpointParams(
         utf8ToHex(endpoint),
         params).send({from, gas});
-  }
+      }
 
     /**
      * Get a provider's public key from the Registry contract.
      * @param {address} provider The address of this provider
-     * @returns {Promise<number>} Returns a Promise that will eventually resolve into public key number
+     * @returns {Promise<any>} Returns a Promise that will eventually resolve into public key BigNumber object
      */
-     async getProviderPublicKey(provider:address):Promise<number>{
-        let pubKey:string =  await this.contract.methods.getProviderPublicKey(provider).call();
-        return Number(pubKey.valueOf());
+     async getProviderPublicKey(provider:address):Promise<any>{
+        let pubKey:any = await this.contract.methods.getProviderPublicKey(provider).call();
+        return pubKey;
     }
 
     /**
@@ -108,12 +97,12 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS} from "@zapjs/ty
      * @param {string} endpoint Data endpoint of the provider
      * @returns {Promise<CurveType>} Returns a Promise that will eventually resolve into a Curve object
      */
-     async getProviderCurve(provider:string,endpoint:string):Promise<CurveType>{
-        let curve =  await this.contract.methods.getProviderCurve(
+     async getProviderCurve(provider:string,endpoint:string):Promise<Curve>{
+        let term:CurveType =  await this.contract.methods.getProviderCurve(
             provider,
             utf8ToHex(endpoint)
             ).call();
-        return new Curve(curve['0'].map((i:string)=>parseInt(i)),curve['1'].map((i:string)=>parseInt(i)),curve['2'].map((i:string)=>parseInt(i)))
+        return new Curve(term)
     }
 
     /**
