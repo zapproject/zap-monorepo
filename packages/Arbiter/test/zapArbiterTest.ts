@@ -6,6 +6,7 @@ import {BaseContract} from "@zapjs/basecontract"
 import {ZapArbiter} from "../src";
 const Web3  = require('web3');
 import {join} from 'path';
+import {bootstrap} from "./utils/setup_test";
 
 import {Utils} from "@zapjs/utils";
 
