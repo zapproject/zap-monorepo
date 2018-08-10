@@ -68,16 +68,16 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS} from "@zapjs/ty
       return await this.contract.methods.setEndpointParams(
         utf8ToHex(endpoint),
         params).send({from, gas});
-  }
+      }
 
     /**
      * Get a provider's public key from the Registry contract.
      * @param {address} provider The address of this provider
-     * @returns {Promise<number>} Returns a Promise that will eventually resolve into public key number
+     * @returns {Promise<any>} Returns a Promise that will eventually resolve into public key BigNumber object
      */
-     async getProviderPublicKey(provider:address):Promise<number>{
-        let pubKey:string =  await this.contract.methods.getProviderPublicKey(provider).call();
-        return Number(pubKey.valueOf());
+     async getProviderPublicKey(provider:address):Promise<any>{
+        let pubKey:any = await this.contract.methods.getProviderPublicKey(provider).call();
+        return pubKey;
     }
 
     /**

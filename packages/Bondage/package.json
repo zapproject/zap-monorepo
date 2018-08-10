@@ -1,7 +1,7 @@
 {
-  "name": "@zapjs/bondage1",
+  "name": "@zapjs/bondage",
   "version": "1.0.3",
-  "description": "Zap Bondage",
+  "description": "",
   "repository": "https://github.com/zapproject/Zap-monorepo",
   "main": "lib/src/index.js",
   "type": "lib/src/types.d.ts",

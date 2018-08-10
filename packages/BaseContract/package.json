@@ -1,5 +1,5 @@
 {
-  "name": "@zapjs/basecontract1",
+  "name": "@zapjs/basecontract",
   "version": "1.0.5",
   "description": "",
   "main": "lib/src/index.js",

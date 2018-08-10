@@ -1,7 +1,7 @@
 {
-  "name": "@zapjs/registry1",
-  "version": "1.0.3",
-  "description": "Zap Registry",
+  "name": "@zapjs/registry",
+  "version": "1.0.4",
+  "description": "",
   "repository": "https://github.com/zapproject/Zap-monorepo",
   "main": "lib/src/index.js",
   "types": "lib/src/types.d.ts",
