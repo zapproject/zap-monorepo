@@ -14,7 +14,8 @@
     "build": "./node_modules/.bin/lerna run build",
     "test": "lerna exec npm run run_test --concurrency=1",
     "webpack": "lerna exec npm run webpack --scope='zapjs1'",
-    "bundle": "run-s build webpack"
+    "bundle": "run-s build webpack",
+    "generateDoc": "./node_modules/.bin/compodoc -p docstsconfig.json --watch --disableCoverage --hideGenerator --serve "
   },
   "dependencies": {
     "@compodoc/compodoc": "^1.1.3",
@@ -26,7 +27,6 @@
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
     "chai-bignumber": "^2.0.2",
-    "compodoc": "0.0.41",
     "documentation": "^8.0.1",
     "ethereumjs-wallet": "^0.6.0",
     "ganache-core": "^2.1.5",

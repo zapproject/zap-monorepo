@@ -31,9 +31,3 @@ export type EndpointParams = {
   from: address,
   gas ?: BNType
 }
-export interface Filter  {
-  fromBlock ?: number,
-    toBlock ?: number,
-    provider ?: address
-
-}
