@@ -46,11 +46,12 @@ export class ZapSubscriber  {
      * @param {number} zapNum The amount of Zap (in wei) to bond
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-    async bond({provider, endpoint, zapNum}:BondType):Promise<any>{
+    async bond({provider, endpoint, dots}:BondType):Promise<any>{
        // assert.ok(this.hasEnoughZap(zapNum), 'Insufficient Balance');
+        let zapRequire = await this.zapBondage.calcZapForDots({provider,endpoint,dots})
         let approve = await this.zapToken.approve({
             to: this.zapBondage.contract._address,
-            amount: zapNum,
+            amount: zapRequire,
             from: this.subscriberOwner
         });
 
@@ -58,7 +59,7 @@ export class ZapSubscriber  {
         const bonded = await this.zapBondage.bond({
             provider: provider,
             endpoint: endpoint,
-            zapNum: zapNum,
+            dots: dots,
             from: this.subscriberOwner
         });
     
@@ -94,7 +95,7 @@ export class ZapSubscriber  {
         let zapBalance = await this.zapToken.balanceOf(this.subscriberOwner);
         if (zapBalance < zapRequired)
             throw new Error(`Insufficient balance, require ${zapRequired} Zap for ${dots} dots`);
-        let boundDots = await this.zapBondage.bond({provider, endpoint, zapNum: zapRequired, from: this.subscriberOwner});
+        let boundDots = await this.zapBondage.bond({provider, endpoint, dots: dots, from: this.subscriberOwner});
         let blocks = dots;
         let sub = await this.zapArbiter.initiateSubscription(
             {provider, endpoint, endpoint_params:endpointParams,

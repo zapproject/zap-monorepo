@@ -13,7 +13,7 @@ export interface InitProvider  {
 
 export type InitCurve = {
   endpoint:string,
-  curve:CurveType,
+  term:CurveType,
   from: address,
   gas ?: BNType
 }

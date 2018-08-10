@@ -1,8 +1,4 @@
-export interface CurveType {
-  constants: number[];
-  parts: number[];
-  dividers: number[];
-}
+export type CurveType = number[]
 
 export interface CurveTerm {
   fn: number;

@@ -10,11 +10,8 @@ export class Utils {
         artifacts = {
             Arbiter: require(join(buildDir, "Arbiter.json")),
             Bondage: require(join(buildDir,"Bondage.json")),
-            BondageStorage: require(join(buildDir,"BondageStorage.json")),
             Dispatch: require(join(buildDir,"Dispatch.json")),
-            DispatchStorage: require(join(buildDir,"DispatchStorage.json")),
             Registry: require(join(buildDir,"Registry.json")),
-            RegistryStorage: require(join(buildDir,"RegistryStorage.json")),
             CurrentCost: require(join(buildDir,"CurrentCost.json")),
             PiecewiseLogic: require(join(buildDir,"PiecewiseLogic.json")),
             ZapToken: require(join(buildDir,"ZapToken.json")),
@@ -22,7 +19,6 @@ export class Utils {
             Client2: require(join(buildDir,"Client2.json")),
             Client3: require(join(buildDir,"Client3.json")),
             Client4: require(join(buildDir,"Client4.json")),
-            OnChainProvider: require(join(buildDir,"OnChainProvider.json"))
         }
         return artifacts
 

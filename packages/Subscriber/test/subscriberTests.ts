@@ -84,7 +84,7 @@ describe('Zap Subscriber Test', () => {
             const res = await subscriber.bond({
                 provider: accounts[0],
                 endpoint: testZapProvider.endpoint,
-                zapNum: zapRequired
+                dots: 5
             });
             await expect(res.events.Bound.event).to.be.equal('Bound');
         })

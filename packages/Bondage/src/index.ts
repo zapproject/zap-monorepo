@@ -36,13 +36,12 @@ export class ZapBondage extends BaseContract {
      * @param {number} gas Sets the gas limit for this transaction (optional)
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-    public async bond({provider, endpoint, zapNum, from, gas= DEFAULT_GAS}: BondArgs): Promise<txid> {
-        console.log("args : ", provider, endpoint, zapNum, from);
-        assert(zapNum && zapNum > 0, "Zap to bond must be greater than 0.");
+    public async bond({provider, endpoint, dots, from, gas= DEFAULT_GAS}: BondArgs): Promise<txid> {
+        assert(dots && dots > 0, "dots number to bond must be greater than 0.");
         return await this.contract.methods.bond(
             provider,
             utf8ToHex(endpoint),
-            toBN(zapNum))
+            toBN(dots))
             .send({from, gas});
 
     }
@@ -94,23 +93,6 @@ export class ZapBondage extends BaseContract {
             utf8ToHex(endpoint),
             toBN(dots)).call();
         return parseInt(zapRequired);
-    }
-
-    /**
-     * Calculates the number of dots that can be bonded from a given amount of Zap to a provider's endpoint.
-     * @param {address} provider Address of the data provider
-     * @param {string} endpoint Data endpoint of the provider
-     * @param {number} zapNum Amount of Zap to compute the bond rate for
-     * @returns {Promise<number>} Returns a Promise that will eventually resolve into the number of dots the given amount of Zap can buy
-     */
-    public async calcBondRate({provider, endpoint, zapNum}: CalcBondRateType): Promise<number> {
-        const bondRate =  await this.contract.methods.calcBondRate(
-            provider,
-            utf8ToHex(endpoint),
-            zapNum
-        ).call();
-        return parseInt(bondRate["1"]);
-
     }
 
     /**

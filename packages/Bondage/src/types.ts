@@ -3,7 +3,7 @@ export type txid = string;
 export interface BondArgs {
     provider: address;
     endpoint: string;
-    zapNum: number;
+    dots: number;
     from: address;
     gas ?: number;
 }

@@ -38,6 +38,6 @@
     "tslint": "^5.10.0",
     "webpack": "^4.16.4",
     "webpack-command": "^0.4.1",
-    "zap_contracts": "git+https://github.com/zapproject/zap-ethereum-api.git"
+    "zap_contracts": "git+https://github.com/zapproject/zap-ethereum-api.git#RC2"
   }
 }
