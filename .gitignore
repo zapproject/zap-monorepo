@@ -58,3 +58,9 @@ packages/*/test/**/*.js
 packages/*/test/**/*.d.ts
 packages/*/test/**/*.js.map
 
+
+packages/Types/lib/
+
+packages/ZapJs/lib/
+
+packages/Utils/test/contracts/
