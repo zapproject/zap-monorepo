@@ -1,5 +1,6 @@
 {
   "name": "@zapjs/registry",
+  "private":true,
   "version": "1.0.4",
   "description": "",
   "repository": "https://github.com/zapproject/Zap-monorepo",
@@ -15,10 +16,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@zapjs/basecontract1": "^1.0.0",
-    "@zapjs/curve1": "^1.0.2",
+    "@zapjs/basecontract": "^1.0.0",
+    "@zapjs/curve": "^1.0.2",
     "@zapjs/types": "^1.0.0",
-    "@zapjs/utils1": "^1.0.0",
+    "@zapjs/utils": "^1.0.0",
     "awesome-typescript-loader": "^5.2.0",
     "cache-loader": "^1.2.2",
     "typescript": "^2.9.2",

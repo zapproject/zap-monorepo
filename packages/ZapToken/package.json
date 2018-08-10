@@ -1,5 +1,6 @@
 {
-	"name": "@zapjs/zaptoken1",
+	"name": "@zapjs/zaptoken",
+	"private":true,
 	"version": "1.0.3",
 	"description": "Zap Token",
 	"repository": "https://github.com/zapproject/Zap-monorepo",
@@ -15,7 +16,7 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
-		"@zapjs/basecontract1": "^1.0.5",
+		"@zapjs/basecontract": "^1.0.5",
 		"@zapjs/types": "^1.0.0",
 		"bn.js": "^4.11.8",
 		"ethereumjs-util": "^5.2.0",
@@ -27,7 +28,7 @@
 		"@types/chai": "^4.1.4",
 		"@types/mocha": "^5.2.4",
 		"@types/node": "^10.5.2",
-		"@zapjs/utils1": "^1.0.3",
+		"@zapjs/utils": "^1.0.3",
 		"awesome-typescript-loader": "^5.2.0",
 		"cache-loader": "^1.2.2",
 		"chai": "^4.1.2",

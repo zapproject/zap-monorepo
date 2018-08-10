@@ -1,5 +1,6 @@
 {
-  "name": "@zapjs/artifacts1",
+  "name": "@zapjs/artifacts",
+  "private":true,
   "version": "1.0.4",
   "description": "ZapArtifacts",
   "main": "./lib/index.js",

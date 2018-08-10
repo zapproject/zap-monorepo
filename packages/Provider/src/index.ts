@@ -1,11 +1,11 @@
 const assert = require("assert");
 import {InitProvider, InitCurve, Respond, ProviderConstructorType} from "./types";
 import {txid,Filter,NetworkProviderOptions,DEFAULT_GAS} from "@zapjs/types";
-import {Curve,CurveType} from "@zapjs/curve1"
-import {ZapDispatch} from "@zapjs/dispatch1";
-import {ZapRegistry} from "@zapjs/registry1";
-import {ZapBondage} from "@zapjs/bondage1";
-import {ZapArbiter} from "@zapjs/arbiter1";
+import {Curve,CurveType} from "@zapjs/curve"
+import {ZapDispatch} from "@zapjs/dispatch";
+import {ZapRegistry} from "@zapjs/registry";
+import {ZapBondage} from "@zapjs/bondage";
+import {ZapArbiter} from "@zapjs/arbiter";
 
 /**
  * @class

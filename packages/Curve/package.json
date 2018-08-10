@@ -1,5 +1,6 @@
 {
-  "name": "@zapjs/curve1",
+  "name": "@zapjs/curve",
+  "private":true,
   "version": "1.0.2",
   "description": "Zap Curve",
   "repository": "https://github.com/zapproject/Zap-monorepo",

@@ -1,4 +1,4 @@
-import {BaseContract} from '@zapjs/basecontract1';
+import {BaseContract} from '@zapjs/basecontract';
 import {QueryArgs,ResponseArgs} from './types'
 import {NetworkProviderOptions, txid,Filter,DEFAULT_GAS} from "@zapjs/types"
 const {utf8ToHex} = require ("web3-utils");

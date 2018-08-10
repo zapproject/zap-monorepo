@@ -7,8 +7,8 @@ const Web3 = require('web3');
 import {bootstrap} from "./utils/setup_test";
 const {hexToUtf8} = require("web3-utils");
 
-import {Utils} from "@zapjs/utils1";
-import {BaseContract} from "@zapjs/basecontract1"
+import {Utils} from "@zapjs/utils";
+import {BaseContract} from "@zapjs/basecontract"
 import {ZapDispatch} from '../src';
 
 async function configureEnvironment(func:Function) {
@@ -19,7 +19,6 @@ describe('Zap Dispatch Test', () => {
     let accounts :Array<string>= [],
     ganacheServer:any,
     dispatchWrapper:any,
-    deployedDispatchStorage,
     deployedRegistry:any,
     deployedToken:any,
     deployedBondage:any,
@@ -47,7 +46,6 @@ describe('Zap Dispatch Test', () => {
             deployedBondage = new BaseContract(Object.assign(options, {artifactName: "Bondage"}));
             deployedRegistry = new BaseContract(Object.assign(options, {artifactName: "Registry"}));
             deployedToken = new BaseContract(Object.assign(options, {artifactName: "ZapToken"}));
-            deployedDispatchStorage = new BaseContract(Object.assign(options, {artifactName: "DispatchStorage"}));
             done();
         });
     });

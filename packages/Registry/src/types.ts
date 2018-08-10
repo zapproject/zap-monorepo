@@ -1,4 +1,4 @@
-import {CurveType} from "@zapjs/curve1"
+import {CurveType} from "@zapjs/curve"
 import {BigNumber} from 'bignumber.js';
 import {address,BNType} from "@zapjs/types"
 export interface InitProvider  {

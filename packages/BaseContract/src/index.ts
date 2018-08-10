@@ -1,4 +1,4 @@
-const  {Artifacts} =require("@zapjs/artifacts1");
+const  {Artifacts} =require("@zapjs/artifacts");
 import {BaseContractType} from "@zapjs/types";
 import {Utils} from "./utils"
 const Web3 = require("web3")
@@ -35,6 +35,7 @@ export class BaseContract{
           this.provider = new Web3(currentProvider)
             //network id default to mainnet
           this.networkId = networkId || 1;
+          //console.log("Initialize contract: ",artifactName, artifactsDir, this.networkId, artifact.networks)
           this.contract = new this.provider.eth.Contract(artifact.abi,artifact.networks[this.networkId].address)
         } catch (err) {
             throw err;

@@ -1,4 +1,4 @@
-import {Curve} from "@zapjs/curve1";
+import {Curve} from "@zapjs/curve";
 export type serverOptionsType = {
     network: string ,
     network_id: number,

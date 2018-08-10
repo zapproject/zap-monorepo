@@ -1,4 +1,4 @@
-import {Curve} from "@zapjs/curve1"
+import {Curve} from "@zapjs/curve"
 const Web3  = require('web3');
 import {join,dirname} from "path";
  Web3.providers.HttpProvider.prototype.sendAsync = Web3.providers.HttpProvider.prototype.send;
