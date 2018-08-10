@@ -1,5 +1,9 @@
 const BN = require("bn.js")
-export class Utils {
+
+/**
+ * @ignore
+ */
+export class Util {
     /**
      * @param {number} num
      * @returns {any}

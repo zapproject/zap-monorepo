@@ -1,6 +1,6 @@
-# Zap-arbiter
+# zapjs
 
-This repository provides Interface to Zap Arbiter contract
+This repository provides an interface to all zapjs-monorepo packages
 
 ### Prerequisites
 ```
@@ -9,35 +9,19 @@ This repository provides Interface to Zap Arbiter contract
 ```
 
 ## Usage
-##### Using Zap Arbiter to listen to subscriptions events
+##### Using ZapToken package for ERC20 methods with Zap Token
 ```
-npm install --save `@zapjs/arbiter`
+npm install --save `zapjs`
 ```
 ```
-import {ZapArbiter} from '@zapjs/arbiter';
+import {ZapArbiter,ZapProvider,ZapSubscriber,ZapToken} from 'zapjs';
 
-let myZapArbiter = new ZapArbiter(); 
+let myZapToken = new ZapToken(); 
 ```
 
 Custom configuration
 ``` 
-let myZapArbiter = new ZapArbiter({artifactDir,networkId,networkProvider})
-```
-Listen to new subscription events
-```
-myZapArbiter.listenSubscriptionStart(filters,allback)
-```
-Listen to end subscription events
-```
-myZapArbiter.listenSubscriptionEnd(filters,allback)
-```
-Get Subscription of provider-subscriber-endpoint
-```
-await myZapArbiter.getSubscription({provider,subscriber,endpoint})
-```
-Listen all events
-```
-myZapArbiter.listen(callback)
+let myZapToken = new ZapToken({artifactDir,networkId,networkProvider})
 ```
 
 ### See more Usages of each packages :
@@ -46,8 +30,7 @@ myZapArbiter.listen(callback)
 * [Register](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Register/README.md)
 * [Bondage](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Bondage/README.md)
 * [Dispatch](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Dispatch/README.md)
-* [ZapToken](https://github.com/zapproject/Zap-monorepo/tree/master/packages/ZapToken/README.md)
-* [Zapjs](https://github.com/zapproject/Zap-monorepo/tree/master/packages/ZapJs/README.md)
+* [Arbiter](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Arbiter/README.md)
 
 
 ## Built With
