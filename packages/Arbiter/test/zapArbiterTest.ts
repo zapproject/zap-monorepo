@@ -16,6 +16,7 @@ async function configureEnvironment(func:Function) {
 
 const {utf8ToHex,toBN} = require("web3-utils");
 
+import {bootstrap} from "./utils/setup_test"; 
 
 describe('Arbiter Test', () => {
   let accounts :Array<string> = [],
