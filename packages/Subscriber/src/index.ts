@@ -1,17 +1,18 @@
 
 const assert = require('assert');
-import {BondType,UnbondType,SubscribeType,SubscriberConstructorType, txid,address} from "./types";
-import {ZapDispatch} from "@zapjs/dispatch";
-import {ZapRegistry} from "@zapjs/registry";
-import {ZapBondage} from "@zapjs/bondage";
-import {ZapArbiter} from "@zapjs/arbiter";
-import {ZapToken} from "@zapjs/zaptoken";
+import {BondType,UnbondType,SubscribeType} from "./types";
+import {txid,address,NetworkProviderOptions} from "@zapjs/types";
+import {ZapDispatch} from "@zapjs/dispatch1";
+import {ZapRegistry} from "@zapjs/registry1";
+import {ZapBondage} from "@zapjs/bondage1";
+import {ZapArbiter} from "@zapjs/arbiter1";
+import {ZapToken} from "@zapjs/zaptoken1";
 
 /**
  * @class
  * Represents an offchain Subscriber and provides an interface to the appropriate smart contracts.
  */
-export class Subscriber  {
+export class ZapSubscriber  {
     subscriberOwner:string;
     zapDispatch : ZapDispatch;
     zapBondage : ZapBondage;
@@ -19,14 +20,14 @@ export class Subscriber  {
     zapRegistry:  ZapRegistry;
     zapToken: ZapToken;
 
-    constructor({owner,handler,zapToken,zapRegistry,zapDispatch,zapBondage,zapArbiter}:SubscriberConstructorType) {
+    constructor(owner:string,options:NetworkProviderOptions) {
         assert(owner, 'owner address is required');
         this.subscriberOwner = owner;
-        this.zapToken = zapToken;
-        this.zapDispatch = zapDispatch;
-        this.zapBondage = zapBondage;
-        this.zapArbiter = zapArbiter;
-        this.zapRegistry = zapRegistry;
+        this.zapToken = new ZapToken(options);
+        this.zapDispatch = new ZapDispatch(options);
+        this.zapBondage = new ZapBondage(options);
+        this.zapArbiter = new ZapArbiter(options);
+        this.zapRegistry = new ZapRegistry(options);
     }
 
     async approveToBond(provider:address,zapNum:number):Promise<any>{
@@ -45,11 +46,12 @@ export class Subscriber  {
      * @param {number} zapNum The amount of Zap (in wei) to bond
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-    async bond({provider, endpoint, zapNum}:BondType):Promise<any>{
+    async bond({provider, endpoint, dots}:BondType):Promise<any>{
        // assert.ok(this.hasEnoughZap(zapNum), 'Insufficient Balance');
+        let zapRequire = await this.zapBondage.calcZapForDots({provider,endpoint,dots})
         let approve = await this.zapToken.approve({
             to: this.zapBondage.contract._address,
-            amount: zapNum,
+            amount: zapRequire,
             from: this.subscriberOwner
         });
 
@@ -57,7 +59,7 @@ export class Subscriber  {
         const bonded = await this.zapBondage.bond({
             provider: provider,
             endpoint: endpoint,
-            zapNum: zapNum,
+            dots: dots,
             from: this.subscriberOwner
         });
     
@@ -93,7 +95,7 @@ export class Subscriber  {
         let zapBalance = await this.zapToken.balanceOf(this.subscriberOwner);
         if (zapBalance < zapRequired)
             throw new Error(`Insufficient balance, require ${zapRequired} Zap for ${dots} dots`);
-        let boundDots = await this.zapBondage.bond({provider, endpoint, zapNum: zapRequired, from: this.subscriberOwner});
+        let boundDots = await this.zapBondage.bond({provider, endpoint, dots: dots, from: this.subscriberOwner});
         let blocks = dots;
         let sub = await this.zapArbiter.initiateSubscription(
             {provider, endpoint, endpoint_params:endpointParams,

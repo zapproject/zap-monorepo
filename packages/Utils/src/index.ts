@@ -1,4 +1,3 @@
-import {readdirSync} from "fs";
 import {ZapProviderType} from "./types";
 import {clearBuild, getArtifacts, migrateContracts, startGanacheServer} from "./migrations";
 const {utf8ToHex,toBN} = require("web3-utils");

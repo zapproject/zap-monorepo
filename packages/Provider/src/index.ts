@@ -1,10 +1,11 @@
 const assert = require("assert");
-import {Curve,CurveType} from "@zapjs/curve"
-import {InitProvider, InitCurve, Respond, ProviderConstructorType,txid,Filter} from "./types";
-import {ZapDispatch} from "@zapjs/dispatch";
-import {ZapRegistry} from "@zapjs/registry";
-import {ZapBondage} from "@zapjs/bondage";
-import {ZapArbiter} from "@zapjs/arbiter";
+import {InitProvider, InitCurve, Respond, ProviderConstructorType} from "./types";
+import {txid,Filter,NetworkProviderOptions,DEFAULT_GAS} from "@zapjs/types";
+import {Curve,CurveType} from "@zapjs/curve1"
+import {ZapDispatch} from "@zapjs/dispatch1";
+import {ZapRegistry} from "@zapjs/registry1";
+import {ZapBondage} from "@zapjs/bondage1";
+import {ZapArbiter} from "@zapjs/arbiter1";
 
 /**
  * @class
@@ -16,18 +17,18 @@ import {ZapArbiter} from "@zapjs/arbiter";
     zapBondage : ZapBondage;
     zapArbiter : ZapArbiter;
     zapRegistry:  ZapRegistry;
-    curve : CurveType | undefined;
+    curve : Curve;
     title:string;
     pubkey:number|string;
 
-    constructor({owner,zapRegistry,zapDispatch,zapBondage,zapArbiter}:ProviderConstructorType) {
+    constructor(owner:string,options:NetworkProviderOptions) {
         assert(owner, 'owner address is required');
         this.providerOwner = owner;
-        this.zapDispatch = zapDispatch || new ZapDispatch();
-        this.zapBondage = zapBondage || new ZapBondage();
-        this.zapArbiter = zapArbiter || new ZapArbiter();
-        this.zapRegistry = zapRegistry || new ZapRegistry();
-        this.curve = undefined;
+        this.zapDispatch = new ZapDispatch(options)
+        this.zapBondage = new ZapBondage(options);
+        this.zapArbiter = new ZapArbiter(options);
+        this.zapRegistry = new ZapRegistry(options);
+        this.curve = new Curve();
         this.title = "";
         this.pubkey = '';
     }
@@ -54,11 +55,11 @@ import {ZapArbiter} from "@zapjs/arbiter";
      * @param {number[]} dividers The dividers array that demarcates each piecewise piece
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-     async initiateProviderCurve({endpoint, constants, parts, dividers}: InitCurve) :Promise<txid>{
-        let curve = new Curve(constants, parts, dividers)
-        let txid = await this.zapRegistry.initiateProviderCurve({endpoint, curve, from: this.providerOwner});
+     async initiateProviderCurve({endpoint, term}: InitCurve) :Promise<txid>{
+        let curve = new Curve(term)
+        let txid = await this.zapRegistry.initiateProviderCurve({endpoint, term, from: this.providerOwner});
         assert(txid, 'Failed to init curve.');
-        this.curve = new Curve(constants, parts, dividers);
+        this.curve = curve
         return txid;
     }
 
@@ -90,8 +91,8 @@ import {ZapArbiter} from "@zapjs/arbiter";
      * @param {string} endpoint The endpoint identifier matching the desired endpoint
      * @returns {Promise<CurveType>} Returns a Promise that will eventually resolve into the Curve of this provider's endpoint.
      */
-     async getCurve(endpoint:string):Promise<CurveType> {
-        if (this.curve) return this.curve;
+     async getCurve(endpoint:string):Promise<Curve> {
+        if (this.curve.values.length>0) return this.curve;
         let curve = await this.zapRegistry.getProviderCurve(this.providerOwner, endpoint);
         this.curve = curve;
         return curve;
@@ -118,18 +119,6 @@ import {ZapArbiter} from "@zapjs/arbiter";
         return await this.zapBondage.calcZapForDots({provider: this.providerOwner, endpoint, dots});
     }
 
-    /**
-     * Calculate the total number of dots that the subscriber can receive for a given amount of Zap.
-     * @param {string} endpoint The endpoint identifier matching the desired endpoint
-     * @param {number} zapNum Amount of Zap (wei) to calculate dots for
-     * @returns {Promise<number>} Returns a Promise that will eventually resolve into an integer number of dots.
-     */
-     async calcDotsForZap({endpoint, zapNum}:{endpoint:string, zapNum:number}): Promise<number> {
-        return await this.zapBondage.calcBondRate({
-            provider: this.providerOwner,
-            endpoint,
-            zapNum});
-    }
 
     /**
      * Responds to a specific query from the subscriber by identifying a

@@ -1,14 +1,13 @@
-import {ZapDispatch} from "@zapjs/dispatch";
-import{ZapToken} from '@zapjs/zaptoken';
-import {ZapBondage} from "@zapjs/bondage";
-import{ZapArbiter} from '@zapjs/arbiter';
-import {ZapRegistry} from "@zapjs/registry";
-export type txid = string;
-export type address = string;
+import {ZapDispatch} from "@zapjs/dispatch1";
+import{ZapToken} from '@zapjs/zaptoken1';
+import {ZapBondage} from "@zapjs/bondage1";
+import{ZapArbiter} from '@zapjs/arbiter1';
+import {ZapRegistry} from "@zapjs/registry1";
+
 export type BondType = {
     provider:string,
     endpoint:string,
-    zapNum :number
+    dots :number
 }
 export type UnbondType = {
     provider:string,
@@ -24,11 +23,6 @@ export type SubscribeType = {
 }
 export type SubscriberConstructorType = {
   owner:string,
-  zapDispatch:ZapDispatch,
-  zapToken:ZapToken,
-  zapBondage: ZapBondage,
-  zapArbiter: ZapArbiter,
-  zapRegistry: ZapRegistry,
   handler ?: any
 }
 

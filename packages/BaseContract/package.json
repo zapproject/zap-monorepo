@@ -3,40 +3,40 @@
   "version": "1.0.5",
   "description": "",
   "main": "lib/src/index.js",
+  "repository": "https://github.com/zapproject/Zap-monorepo",
   "types": "lib/src/types.d.ts",
   "typings": "lib/src/index.js",
   "scripts": {
     "build": "tsc",
-    "test": "mocha  -r ts-node/register test/*.ts --serial",
+    "test": "mocha  -r ts-node/register test/*.ts --serial --bail --exit",
     "run_test": "run-s build test"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/node": "^10.5.2",
+    "@zapjs/artifacts1": "^1.0.0",
+    "@zapjs/types": "^1.0.0",
+    "npm-run-all": "^4.1.3",
+    "path": "^0.12.7",
+    "ts-node": "^7.0.0",
+    "typescript": "^2.9.2",
+    "web3": "^1.0.0-beta.34"
+  },
+  "devDependencies": {
     "@types/chai": "^4.1.4",
     "@types/mocha": "^5.2.4",
-    "@types/node": "^10.5.2",
-    "@zapjs/artifacts": "^1.0.0",
-    "@zapjs/utils": "^1.0.1",
-    "bignumber.js": "^7.2.1",
+    "awesome-typescript-loader": "^5.2.0",
+    "cache-loader": "^1.2.2",
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
     "chai-bignumber": "^2.0.2",
     "make-promises-safe": "^1.1.0",
     "mocha": "^5.2.0",
-    "npm-run-all": "^4.1.3",
-    "path": "^0.12.7",
     "truffle-core": "^4.1.13",
-    "ts-node": "^7.0.0",
     "tslint": "^5.10.0",
-    "typescript": "^2.9.2",
-    "web3": "^1.0.0-beta.34",
-    "web3-utils": "^1.0.0-beta.34",
-    "zap_contracts": "git+https://github.com/zapproject/zap-ethereum-api.git"
-  },
-  "devDependencies": {
-    "mocha": "^5.2.0",
-    "tslint": "^5.10.0"
+    "webpack": "^4.16.4",
+    "zap_contracts": "git+https://github.com/zapproject/zap-ethereum-api.git#RC2"
   }
 }

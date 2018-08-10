@@ -3,7 +3,7 @@ export type txid = string;
 export interface BondArgs {
     provider: address;
     endpoint: string;
-    zapNum: number;
+    dots: number;
     from: address;
     gas ?: number;
 }
@@ -27,14 +27,4 @@ export interface CalcBondRateType {
     provider: address;
     endpoint: string;
     zapNum: number;
-}
-
-export interface Filter {
-    provider ?: address;
-    fromBlock ?: number;
-    toBlock ?: number;
-}
-export interface listenEvent {
-    filter ?: Filter;
-    callback: Function;
 }

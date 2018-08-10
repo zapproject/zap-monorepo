@@ -1,6 +1,6 @@
 const Web3 = require('web3');
 const {utf8ToHex,toBN} = require("web3-utils");
-import {Utils} from "@zapjs/utils";
+import {Utils} from "@zapjs/utils1";
 
 /**
  * Bootstrap for Dispatch tests, with accounts[0] = provider, accounts[2]=subscriber
@@ -30,6 +30,6 @@ export async function bootstrap(zapProvider:any,accounts:Array<string>,deployedR
     console.log("bondage contract address", deployedBondage.contract._address)
     await deployedToken.contract.methods.approve(deployedBondage.contract._address, requiredZap).send({from:accounts[2],gas:Utils.Constants.DEFAULT_GAS});
     console.log("Token approved, endpoint : ", normalizedP.endpoint);
-    await deployedBondage.contract.methods.bond(accounts[0],normalizedP.endpoint, requiredZap).send({from:accounts[2], gas:Utils.Constants.DEFAULT_GAS});
+    await deployedBondage.contract.methods.bond(accounts[0],normalizedP.endpoint, 10).send({from:accounts[2], gas:Utils.Constants.DEFAULT_GAS});
     return "done";
 }

@@ -1,19 +1,19 @@
-import { ZapToken } from "@zapjs/zaptoken";
+import { ZapToken } from "@zapjs/zaptoken1";
 
 const expect = require('chai')
 .use(require('chai-as-promised'))
 .use(require('chai-bignumber'))
 .expect;
-import { ZapRegistry } from "@zapjs/registry";
-import { ZapBondage } from "@zapjs/bondage";
-import { ZapDispatch } from "@zapjs/dispatch";
-import { ZapArbiter } from "@zapjs/arbiter";
+import { ZapRegistry } from "@zapjs/registry1";
+import { ZapBondage } from "@zapjs/bondage1";
+import { ZapDispatch } from "@zapjs/dispatch1";
+import { ZapArbiter } from "@zapjs/arbiter1";
 import { ZapProvider } from "../src";
 const Web3 = require('web3');
 const { hexToUtf8 } = require("web3-utils");
 import { join } from 'path';
 
-import {Utils} from "@zapjs/utils";
+import {Utils} from "@zapjs/utils1";
 
 async function configureEnvironment(func: Function) {
     await func();
@@ -55,7 +55,7 @@ describe('Zap Provider Test', () => {
     });
 
     after(function(){
-        console.log("Done running Subscriber tests");
+        console.log("Done running Provider tests");
         ganacheServer.close();
         process.exit();
     });
@@ -75,13 +75,8 @@ describe('Zap Provider Test', () => {
         }
     });
     it("Should init zapProvider class",async ()=>{
-        zapProvider = new ZapProvider({
-            owner:providerAddress,
-            zapRegistry:zapRegistry,
-            zapDispatch:zapDispatch,
-            zapBondage:zapBondage,
-            zapArbiter:zapArbiter
-        })
+        zapProvider = new ZapProvider(accounts[0],options)
+        expect(zapProvider.providerOwner).to.equal(accounts[0])
     })
 
     it('Should initiate provider', async()=> {

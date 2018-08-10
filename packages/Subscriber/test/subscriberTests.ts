@@ -6,13 +6,13 @@ const expect = require('chai')
 const Web3 = require('web3');
 import { bootstrap } from "./utils/setup_test";
 
-import {Utils} from "@zapjs/utils";
-import { Subscriber } from '../src';
-import { ZapBondage } from '@zapjs/bondage';
-import { ZapRegistry } from "@zapjs/registry";
-import { ZapToken } from "@zapjs/zaptoken";
-import { ZapDispatch } from "@zapjs/dispatch";
-import { ZapArbiter } from "@zapjs/arbiter";
+import {Utils} from "@zapjs/utils1";
+import { ZapSubscriber } from '../src';
+import { ZapBondage } from '@zapjs/bondage1';
+import { ZapRegistry } from "@zapjs/registry1";
+import { ZapToken } from "@zapjs/zaptoken1";
+import { ZapDispatch } from "@zapjs/dispatch1";
+import { ZapArbiter } from "@zapjs/arbiter1";
 
 async function configureEnvironment(func: Function) {
     await func();
@@ -21,7 +21,7 @@ async function configureEnvironment(func: Function) {
 describe('Zap Subscriber Test', () => {
     let accounts: Array<string> = [],
     ganacheServer: any,
-    subscriber: Subscriber,
+    subscriber: ZapSubscriber,
     arbiterWrapper: any,
     dispatchWrapper: any,
     registryWrapper: any,
@@ -58,14 +58,7 @@ describe('Zap Subscriber Test', () => {
             tokenWrapper = new ZapToken(options);
             dispatchWrapper = new ZapDispatch(options);
             arbiterWrapper = new ZapArbiter(options);
-            subscriber = new Subscriber({
-                owner: accounts[2],
-                zapToken: tokenWrapper,
-                zapRegistry: registryWrapper,
-                zapDispatch: dispatchWrapper,
-                zapBondage: bondageWrapper,
-                zapArbiter: arbiterWrapper
-            });
+            subscriber = new ZapSubscriber(accounts[2],options);
             done();
         });
     });
@@ -91,7 +84,7 @@ describe('Zap Subscriber Test', () => {
             const res = await subscriber.bond({
                 provider: accounts[0],
                 endpoint: testZapProvider.endpoint,
-                zapNum: zapRequired
+                dots: 5
             });
             await expect(res.events.Bound.event).to.be.equal('Bound');
         })
@@ -116,11 +109,12 @@ describe('Zap Subscriber Test', () => {
         });
 
     it("Should subscribe to specified provider", async () => {
-        const res = await subscriber.subscribe({
+        await subscriber.subscribe({
             provider: accounts[0],
             endpoint: testZapProvider.endpoint,
             endpointParams: testZapProvider.endpoint_params,
             dots: 2
         });
+
     });
 });

@@ -13,9 +13,11 @@
     "pretty": true,
     "skipLibCheck": true,
     "strict": true,
-    "outDir": "lib"
-  },
-  "include": ["./src/**/*", "./test/**/*"],
+    "outDir": "lib",
+    "resolveJsonModule": true,
+      "esModuleInterop": true
+    },
+  "files": ["./src/index.ts"],
   "exclude":[
     "node_modules"
   ]

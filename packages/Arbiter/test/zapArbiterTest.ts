@@ -2,13 +2,12 @@ const expect = require('chai')
 .use(require('chai-as-promised'))
 .use(require('chai-bignumber'))
 .expect;
-import {bootstrap} from "./utils/setup_test";
-import {BaseContract,BaseContractType} from "@zapjs/basecontract"
+import {BaseContract} from "@zapjs/basecontract1"
 import {ZapArbiter} from "../src";
 const Web3  = require('web3');
 import {join} from 'path';
 
-import {Utils} from "@zapjs/utils";
+import {Utils} from "@zapjs/utils1";
 
 async function configureEnvironment(func:Function) {
   await func();
