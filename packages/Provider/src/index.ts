@@ -110,6 +110,18 @@ import {ZapArbiter} from "@zapjs/arbiter";
     }
 
     /**
+     * Gets the amount of dots bound by a user
+     * @param {string} endpoint The endpoint identifier matching the desired endpoint
+     * @param {string} subscriber The subscriber that is being checked
+     * @returns {Promise<number>} Retunrs a Promise that will eventually resolve into an integer amount of dots
+     */
+    async getBoundDots({endpoint, subscriber}: {endpoint: string, subscriber: string}): Promise<number> {
+    	assert(endpoint, 'endpoint required');
+    	assert(subscriber, 'subscriber required');
+    	return await this.zapBondage.getBoundDots({ endpoint, subscriber, provider: this.providerOwner });
+    } 
+
+    /**
      * Gets the total amount of Zap required to bond x dots.
      * @param endpoint The endpoint identifier matching the desired endpoint
      * @param dots Number of dots that is desired.
