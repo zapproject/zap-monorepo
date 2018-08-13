@@ -1,7 +1,7 @@
 {
   "name": "@zapjs/bondage",
-  "private":true,
-  "version": "1.0.3",
+  "private": false,
+  "version": "2.0.2",
   "description": "",
   "repository": "https://github.com/zapproject/Zap-monorepo",
   "main": "lib/src/index.js",
@@ -16,9 +16,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@zapjs/basecontract": "^1.0.0",
-    "@zapjs/types": "^1.0.0",
-    "@zapjs/utils": "^1.0.0",
+    "@zapjs/basecontract": "^2.0.2",
+    "@zapjs/types": "^2.0.2",
+    "@zapjs/utils": "^2.0.2",
     "path": "^0.12.7",
     "typescript": "^2.9.2",
     "web3-utils": "^1.0.0-beta.35"
