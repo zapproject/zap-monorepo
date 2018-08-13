@@ -1,6 +1,7 @@
-# ZAP-Subscriber
+# @zapjs/subscriber
 
-This repository provides methods for subscribers to interact with Zap Providers and other contracts
+This repository provides wrapper classes for data subscribers subscribers to interface with Zap providers.
+
 ## Getting Started
 
 
@@ -43,4 +44,6 @@ await myZapSubscriber.subscribe({provider, endpoint, endpointParams, dots})
 * [Dispatch](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Dispatch/README.md)
 * [Arbiter](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Arbiter/README.md)
 * [ZapToken](https://github.com/zapproject/Zap-monorepo/tree/master/packages/ZapToken/README.md)
+* [Zapjs](https://github.com/zapproject/Zap-monorepo/tree/master/packages/ZapJs/README.md)
+
 

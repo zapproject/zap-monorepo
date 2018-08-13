@@ -17,7 +17,7 @@ export async function bootstrap(zapProvider:any,accounts:Array<string>,zapRegist
     await zapRegistry.contract.methods.initiateProvider(normalizedP.pubkey,normalizedP.title, normalizedP.endpoint, normalizedP.endpoint_params).send(defaultTx);
     let convertedCurve = zapProvider.curve.convertToBNArrays();
     let tokenOwner = await zapToken.contract.methods.owner().call();
-    await zapRegistry.initiateProviderCurve({endpoint:zapProvider.endpoint,curve:zapProvider.curve,from:accounts[0]});
+    await zapRegistry.initiateProviderCurve({endpoint:zapProvider.endpoint,term:zapProvider.curve.values,from:accounts[0]});
     let providerCurve = await zapRegistry.getProviderCurve(accounts[0],zapProvider.endpoint);
     console.log("provider curve", providerCurve);
     for(let account of accounts) {

@@ -1,0 +1,33 @@
+{
+  "name": "zapjs",
+  "private": false,
+  "version": "1.0.0",
+  "repository": "https://github.com/zapproject/Zap-monorepo",
+  "dependencies": {
+    "@zapjs/arbiter": "^2.0.0",
+    "@zapjs/bondage": "^2.0.0",
+    "@zapjs/curve": "^2.0.0",
+    "@zapjs/dispatch": "^2.0.0",
+    "@zapjs/provider": "^2.0.0",
+    "@zapjs/registry": "^2.0.0",
+    "@zapjs/subscriber": "^2.0.0",
+    "@zapjs/types": "^2.0.0",
+    "@zapjs/zaptoken": "^2.0.0"
+  },
+  "scripts": {
+    "webpack": "./node_modules/.bin/webpack",
+    "build": "tsc",
+    "run_test": "tsc"
+  },
+  "main": "src/index.js",
+  "author": "propulsor",
+  "license": "MIT",
+  "devDependencies": {
+    "webpack-command": "^0.4.1",
+    "awesome-typescript-loader": "^5.2.0",
+    "json-loader": "^0.5.7",
+    "ts-loader": "^4.4.2",
+    "webpack": "^4.16.5",
+    "webpack-log": "^1.2.0"
+  }
+}

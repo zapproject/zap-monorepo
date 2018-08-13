@@ -51,7 +51,7 @@ const asyncMigrate = promisify(migrate.run);
 
       compiledJson.networks = {};
       writeFileSync(filePath, JSON.stringify(compiledJson), {flag: 'w'});
-      console.log('deployment info for file ' + filePath + ' was cleared.');
+      //console.log('deployment info for file ' + filePath + ' was cleared.');
     } else {
       try {
         if(filePath.endsWith('.json')){

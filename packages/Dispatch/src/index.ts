@@ -1,8 +1,7 @@
-import {BaseContract,ContractType} from '@zapjs/basecontract';
-import {QueryArgs,ResponseArgs,Filter,txid} from './types'
-import {Utils} from "@zapjs/utils";
-const {toBN,utf8ToHex} = require ("web3-utils");
-
+import {BaseContract} from '@zapjs/basecontract';
+import {QueryArgs,ResponseArgs} from './types'
+import {NetworkProviderOptions, txid,Filter,DEFAULT_GAS} from "@zapjs/types"
+const {utf8ToHex} = require ("web3-utils");
 /**
  * Provides an interface to the Dispatch contract for enabling data queries and responses.
  * @extends BaseContract
@@ -11,7 +10,7 @@ const {toBN,utf8ToHex} = require ("web3-utils");
  * @param networkProvider Ethereum network provider (e.g. Infura)
  */
 export class ZapDispatch extends BaseContract {
-    constructor(obj ?: ContractType){
+    constructor(obj ?: NetworkProviderOptions){
         super(Object.assign(obj, {artifactName:"Dispatch"}));
     }
 
@@ -27,7 +26,7 @@ export class ZapDispatch extends BaseContract {
      * @param {BigNumber} gas Set the gas limit for this transaction (optional)
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-    async queryData({provider, query, endpoint, endpointParams, onchainProvider, onchainSubscriber,from,gas=Utils.Constants.DEFAULT_GAS}:QueryArgs):Promise<txid>{
+    async queryData({provider, query, endpoint, endpointParams, onchainProvider, onchainSubscriber,from,gas=DEFAULT_GAS}:QueryArgs):Promise<txid>{
         if(endpointParams.length > 0) {
             for (let i in endpointParams) {
                 if (!endpointParams[i].startsWith('0x')) {
@@ -55,7 +54,7 @@ export class ZapDispatch extends BaseContract {
      * @param {BigNumber} gas Set the gas limit for this transaction (optional)
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-    async respond({queryId, responseParams, dynamic, from,gas=Utils.Constants.DEFAULT_GAS}:ResponseArgs) :Promise<txid>{
+    async respond({queryId, responseParams, dynamic, from,gas=DEFAULT_GAS}:ResponseArgs) :Promise<txid>{
         if (dynamic){
             return this.contract.methods.respondBytes32Array(
                 queryId,
