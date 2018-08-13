@@ -1,5 +1,5 @@
 import {BaseContract} from "@zapjs/basecontract";
-import {BondageArgs, BondArgs, CalcBondRateType,  UnbondArgs} from "./types";
+import {BondageArgs, BondArgs, CalcBondRateType,  UnbondArgs, DelegateBondArgs} from "./types";
 import {Filter,txid,NetworkProviderOptions} from "@zapjs/types"
 const {toBN, utf8ToHex} = require("web3-utils");
 const assert = require("assert");
@@ -28,7 +28,7 @@ export class ZapBondage extends BaseContract {
     }
 
     /**
-     * Bonds a given amount of Zap from a subscriber to a provider's endpoint. Note: this requires that at least zapNum has been approved from the subscriber to be transferred by the Bondage contract.
+     * Bonds a given number of dots from a subscriber to a provider's endpoint. Note: this requires that at least zapNum has been approved from the subscriber to be transferred by the Bondage contract.
      * @param {address} provider Address of the data provider
      * @param {string} endpoint Data endpoint of the provider
      * @param {number} zapNum Number of zap to bond to this provider (Units: 1 wei Zap = 10^-18 Zap)
@@ -37,13 +37,33 @@ export class ZapBondage extends BaseContract {
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
     public async bond({provider, endpoint, dots, from, gas= DEFAULT_GAS}: BondArgs): Promise<txid> {
-        assert(dots && dots > 0, "dots number to bond must be greater than 0.");
+        assert(dots && dots > 0, "Dots to bond must be greater than 0.");
         return await this.contract.methods.bond(
             provider,
             utf8ToHex(endpoint),
             toBN(dots))
             .send({from, gas});
 
+    }
+
+     /**
+     * Bonds a given number of dots from an account to a subscriber. This would be used to bond to a provider on behalf of another account, such as a smart contract.
+     * @param {address} provider Address of the data provider
+     * @param {string} endpoint Data endpoint of the provider
+     * @param {number} zapNum Number of zap to bond to this provider (Units: 1 wei Zap = 10^-18 Zap)
+     * @param {address} subscriber Address of the intended holder of the dots (subscriber)
+     * @param {address} from Address of the data subscriber
+     * @param {number} gas Sets the gas limit for this transaction (optional)
+     * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
+     */
+    public async delegateBond({provider, endpoint, dots, subscriber, from, gas= DEFAULT_GAS}: DelegateBondArgs): Promise<txid> {
+        assert(dots && dots > 0, "Dots to bond must be greater than 0.");
+        return await this.contract.methods.delegateBond(
+            subscriber,
+            provider,
+            utf8ToHex(endpoint),
+            toBN(dots))
+            .send({from, gas});
     }
 
     /**
