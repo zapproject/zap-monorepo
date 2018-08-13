@@ -21,7 +21,6 @@ export class BaseContract{
      * @param {any | null} networkProvider Ethereum network provider (e.g. Infura)
      */
     constructor({artifactsDir,artifactName,networkId,networkProvider}:BaseContractType) {
-        console.log(artifactsDir,artifactName,networkId)
         let artifact:any = undefined;
         try {
           if(!artifactsDir){

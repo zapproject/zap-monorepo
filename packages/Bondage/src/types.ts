@@ -16,6 +16,15 @@ export interface UnbondArgs {
     gas ?: number;
 }
 
+export interface DelegateBondArgs {
+    provider: address;
+    endpoint: string;
+    dots: number;
+    subscriber: address;
+    from: address;
+    gas ?: number;
+}
+
 export interface BondageArgs {
 	subscriber ?: address;
 	provider: address;
