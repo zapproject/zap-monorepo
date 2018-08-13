@@ -1,6 +1,6 @@
 {
   "name": "@zapjs/arbiter",
-  "private": true,
+  "private": false,
   "version": "2.0.1",
   "description": "Zap Arbiter",
   "main": "lib/src/index.js",
@@ -17,7 +17,7 @@
   "license": "ISC",
   "dependencies": {
     "@zapjs/basecontract": "^2.0.1",
-    "@zapjs/types": "^2.0.1",
+    "@zapjs/types": "^2.0.2",
     "awesome-typescript-loader": "^5.2.0",
     "cache-loader": "^1.2.2",
     "web3-utils": "^1.0.0-beta.34"

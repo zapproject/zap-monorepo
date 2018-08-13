@@ -1,6 +1,6 @@
 {
   "name": "@zapjs/utils",
-  "private": true,
+  "private": false,
   "version": "2.0.1",
   "description": "Zap Utils",
   "repository": "https://github.com/zapproject/Zap-monorepo",
@@ -21,7 +21,7 @@
     "@types/node": "^10.5.2d",
     "@zapjs/artifacts": "^2.0.1",
     "@zapjs/curve": "^2.0.1",
-    "@zapjs/types": "^2.0.1",
+    "@zapjs/types": "^2.0.2",
     "awesome-typescript-loader": "^5.2.0",
     "bignumber.js": "^7.2.1",
     "chai": "^4.1.2",

@@ -1,7 +1,7 @@
 {
   "name": "zapjs",
-  "private": true,
-  "version": "2.0.1",
+  "private": false,
+  "version": "1.0.1",
   "repository": "https://github.com/zapproject/Zap-monorepo",
   "dependencies": {
     "@zapjs/arbiter": "^2.0.1",
@@ -11,7 +11,7 @@
     "@zapjs/provider": "^2.0.1",
     "@zapjs/registry": "^2.0.1",
     "@zapjs/subscriber": "^2.0.1",
-    "@zapjs/types": "^2.0.1",
+    "@zapjs/types": "^2.0.2",
     "@zapjs/zaptoken": "^2.0.1",
     "awesome-typescript-loader": "^5.2.0",
     "json-loader": "^0.5.7",

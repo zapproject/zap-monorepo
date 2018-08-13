@@ -1,6 +1,6 @@
 {
   "name": "@zapjs/provider",
-  "private": true,
+  "private": false,
   "version": "2.0.1",
   "description": "Zap Provider",
   "repository": "https://github.com/zapproject/Zap-monorepo",
@@ -21,7 +21,7 @@
     "@zapjs/curve": "^2.0.1",
     "@zapjs/dispatch": "^2.0.1",
     "@zapjs/registry": "^2.0.1",
-    "@zapjs/types": "^2.0.1",
+    "@zapjs/types": "^2.0.2",
     "@zapjs/zaptoken": "^2.0.1",
     "bignumber.js": "^7.2.1",
     "web3-utils": "^1.0.0-beta.34"
