@@ -90,6 +90,26 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS} from "@zapjs/ty
         return hexToUtf8(title)
     }
 
+     /**
+     * Gets whether this provider has already been created
+     * @param {address} provider The address of this provider
+     * @returns {Promise<boolean>} Returns a Promise that will eventually resolve a true/false value.
+     */
+     async isProviderInitiated(provider:address):Promise<boolean> {
+        const created:boolean = await this.contract.methods.isProviderInitiated(provider);
+        return created;
+    }
+
+    /**
+     * Gets whether this endpoint and its corresponding curve have already been set
+     * @param {address} provider The address of this provider
+     * @returns {Promise<boolean>} Returns a Promise that will eventually resolve a true/false value.
+     */
+     async isEndpointSet(provider:address, endpoint:string):Promise<boolean> {
+        const notCreated:boolean = await this.contract.methods.getCurveUnset(provider, endpoint);
+        return !notCreated;
+    }
+
 
     /**
      * Get a provider's endpoint's curve from the Registry contract.

@@ -17,7 +17,7 @@ import {ZapArbiter} from "@zapjs/arbiter";
     zapBondage : ZapBondage;
     zapArbiter : ZapArbiter;
     zapRegistry:  ZapRegistry;
-    curve : Curve;
+    curves:any;
     title:string;
     pubkey:number|string;
 
@@ -28,7 +28,7 @@ import {ZapArbiter} from "@zapjs/arbiter";
         this.zapBondage = new ZapBondage(options);
         this.zapArbiter = new ZapArbiter(options);
         this.zapRegistry = new ZapRegistry(options);
-        this.curve = new Curve();
+        this.curves = {};
         this.title = "";
         this.pubkey = '';
     }
@@ -50,16 +50,14 @@ import {ZapArbiter} from "@zapjs/arbiter";
     /**
      * Calls the Registry contract to initialize a new Curve for a given endpoint. See Curve for more information on encoding.
      * @param {string} endpoint The endpoint identifier matching the created endpoint
-     * @param {number[]} constants The constants array for this curve, setting the coefficients, powers, and functions for each term.
-     * @param {number[]} parts The parts array that defines the ranges that each piece applies to.
-     * @param {number[]} dividers The dividers array that demarcates each piecewise piece
-     * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
+     * @param {number[]} term The curve array for this endpoint, setting the coefficients, powers, and domains for each piece.
      */
      async initiateProviderCurve({endpoint, term}: InitCurve) :Promise<txid>{
+        if(endpoint in this.curves) throw("Endpoint " + endpoint + " already exists");
         let curve = new Curve(term)
         let txid = await this.zapRegistry.initiateProviderCurve({endpoint, term, from: this.providerOwner});
         assert(txid, 'Failed to init curve.');
-        this.curve = curve
+        this.curves[endpoint] = curve;
         return txid;
     }
 
@@ -73,6 +71,24 @@ import {ZapArbiter} from "@zapjs/arbiter";
         title = await this.zapRegistry.getProviderTitle(this.providerOwner);
         this.title = title;
         return title;
+    }
+
+    /**
+     * Gets whether this provider has already been created
+     * @returns {Promise<boolean>} Returns a Promise that will eventually resolve a true/false value.
+     */
+     async isProviderInitialized():Promise<boolean> {
+        const created:boolean = await this.zapRegistry.isProviderInitiated(this.providerOwner);
+        return created;
+    }
+
+    /**
+     * Gets whether this endpoint and its corresponding curve have already been set
+     * @returns {Promise<boolean>} Returns a Promise that will eventually resolve a true/false value.
+     */
+     async isEndpointCreated(endpoint:string):Promise<boolean> {
+        const notCreated:boolean = await this.zapRegistry.isEndpointSet(this.providerOwner, endpoint);
+        return !notCreated;
     }
 
     /**
@@ -92,9 +108,9 @@ import {ZapArbiter} from "@zapjs/arbiter";
      * @returns {Promise<CurveType>} Returns a Promise that will eventually resolve into the Curve of this provider's endpoint.
      */
      async getCurve(endpoint:string):Promise<Curve> {
-        if (this.curve.values.length>0) return this.curve;
+        if (endpoint in this.curves) return this.curves[endpoint];
         let curve = await this.zapRegistry.getProviderCurve(this.providerOwner, endpoint);
-        this.curve = curve;
+        this.curves[endpoint] = curve;
         return curve;
     }
 
@@ -118,7 +134,6 @@ import {ZapArbiter} from "@zapjs/arbiter";
      async getZapRequired({endpoint, dots}:{endpoint:string,dots:number}):Promise<number> {
         return await this.zapBondage.calcZapForDots({provider: this.providerOwner, endpoint, dots});
     }
-
 
     /**
      * Responds to a specific query from the subscriber by identifying a
