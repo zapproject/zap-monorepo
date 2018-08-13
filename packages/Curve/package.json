@@ -17,29 +17,24 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@zapjs/types": "^2.0.2"
+  },
+  "devDependencies": {
     "@types/chai": "^4.1.4",
     "@types/mocha": "^5.2.4",
     "@types/node": "^10.5.2",
-    "@zapjs/types": "^2.0.2",
-    "big-number": "^1.0.0",
     "bignumber.js": "^7.2.1",
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
     "chai-bignumber": "^2.0.2",
     "make-promises-safe": "^1.1.0",
-    "mocha": "^5.2.0",
     "path": "^0.12.7",
     "ts-loader": "^4.4.2",
     "ts-node": "^7.0.0",
     "tslint": "^5.10.0",
     "typescript": "^2.9.2",
     "web3-utils": "^1.0.0-beta.35",
-    "webpack": "^4.16.3"
-  },
-  "devDependencies": {
-    "mocha": "^5.2.0",
-    "tslint": "^5.10.0",
-    "webpack-command": "^0.4.1"
+    "mocha": "^5.2.0"
   },
   "publishConfig": {
     "access": "public"
