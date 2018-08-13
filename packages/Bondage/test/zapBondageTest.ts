@@ -191,6 +191,22 @@ describe('Zap Bondage Test', () => {
 
         });
 
+    it("13) Check that you can delegateBond", async () => {
+            const startDots = await bondageWrapper.getBoundDots({subscriber: accounts[1], provider: accounts[0], endpoint: testZapProvider.endpoint});
+
+            await deployedToken.contract.methods.approve(deployedBondage.contract._address, 50).send({from: accounts[2], gas: Utils.Constants.DEFAULT_GAS});
+            const bonded = await bondageWrapper.delegateBond({
+                provider: accounts[0],
+                endpoint: testZapProvider.endpoint,
+                dots: 1,
+                subscriber: accounts[1],
+                from: accounts[2]
+            });
+
+            const finalDots = await bondageWrapper.getBoundDots({subscriber: accounts[1], provider: accounts[0], endpoint: testZapProvider.endpoint});
+            expect(finalDots - startDots).to.equal(1);
+    });
+
         /* Can't figure out how to get this working
         it("13) Check that bonding without approval will fail", async() => {
             let allowance = await deployedToken.contract.methods.allowance(accounts[2],deployedBondage.contract._address).call().valueOf();
