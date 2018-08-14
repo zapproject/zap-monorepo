@@ -17,7 +17,8 @@
   "license": "ISC",
   "dependencies": {
     "@zapjs/artifacts": "^2.0.3",
-    "@zapjs/types": "^2.0.3"
+    "@zapjs/types": "^2.0.3",
+    "web3": "^1.0.0-beta.34"
   },
   "devDependencies": {
     "@types/chai": "^4.1.4",
@@ -32,7 +33,6 @@
     "path": "^0.12.7",
     "ts-node": "^7.0.0",
     "tslint": "^5.10.0",
-    "typescript": "^2.9.2",
-    "web3": "^1.0.0-beta.34"
+    "typescript": "^2.9.2"
   }
 }
