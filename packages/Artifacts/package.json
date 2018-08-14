@@ -1,7 +1,7 @@
 {
   "name": "@zapjs/artifacts",
   "private": false,
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "ZapArtifacts",
   "main": "./lib/index.js",
   "types": "./typings.d.ts",
@@ -14,7 +14,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@zapjs/types": "^2.0.3",
+    "@zapjs/types": "^2.0.4",
     "bignumber.js": "^7.2.1",
     "path": "^0.12.7"
   },

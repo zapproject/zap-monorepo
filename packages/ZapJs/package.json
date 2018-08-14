@@ -1,19 +1,22 @@
 {
   "name": "zapjs",
   "private": false,
-  "version": "1.0.0",
+  "version": "1.0.3",
   "repository": "https://github.com/zapproject/Zap-monorepo",
   "dependencies": {
     "@types/node": "^10.7.0",
-    "@zapjs/arbiter": "^2.0.0",
-    "@zapjs/bondage": "^2.0.0",
-    "@zapjs/curve": "^2.0.0",
-    "@zapjs/dispatch": "^2.0.0",
-    "@zapjs/provider": "^2.0.0",
-    "@zapjs/registry": "^2.0.0",
-    "@zapjs/subscriber": "^2.0.0",
-    "@zapjs/types": "^2.0.0",
-    "@zapjs/zaptoken": "^2.0.0"
+    "@zapjs/arbiter": "^2.0.4",
+    "@zapjs/bondage": "^2.0.4",
+    "@zapjs/curve": "^2.0.4",
+    "@zapjs/dispatch": "^2.0.4",
+    "@zapjs/provider": "^2.0.4",
+    "@zapjs/registry": "^2.0.4",
+    "@zapjs/subscriber": "^2.0.4",
+    "@zapjs/types": "^2.0.4",
+    "@zapjs/zaptoken": "^2.0.4",
+    "cache-loader": "^1.2.2",
+    "ts-loader": "^4.4.2",
+    "typescript": "^3.0.1"
   },
   "scripts": {
     "webpack": "./node_modules/.bin/webpack",
@@ -26,7 +29,6 @@
   "devDependencies": {
     "awesome-typescript-loader": "^5.2.0",
     "json-loader": "^0.5.7",
-    "ts-loader": "^4.4.2",
     "webpack": "^4.16.5",
     "webpack-command": "^0.4.1",
     "webpack-log": "^1.2.0"

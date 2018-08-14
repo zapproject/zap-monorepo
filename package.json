@@ -12,7 +12,7 @@
     "compile": "./node_modules/.bin/tsc --target ES2018",
     "build": "./node_modules/.bin/lerna bootstrap --hoist && ./node_modules/.bin/lerna run build",
     "test": "./node_modules/.bin/lerna exec npm run run_test --concurrency=1",
-    "webpack": "./node_modules/.bin/lerna exec npm run webpack --scope='zapjs1'",
+    "webpack": "./node_modules/.bin/lerna exec npm run webpack --scope='zapjs'",
     "bundle": "run-s build webpack",
     "generateDoc": "./node_modules/.bin/compodoc -p docstsconfig.json --watch --disableCoverage --hideGenerator --serve "
   },
