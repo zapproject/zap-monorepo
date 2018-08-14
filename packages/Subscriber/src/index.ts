@@ -124,6 +124,12 @@ export class ZapSubscriber  {
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
     async queryData({provider, query, endpoint, endpointParams, onchainProvider, onchainSubscriber}: QueryArgs): Promise<any> {
+        let boundDots = await this.zapBondage.getBoundDots({provider,endpoint,subscriber:this.subscriberOwner})
+        
+        if ( !boundDots ) {
+            throw new Error("Insufficient balance of bound dots to query")
+        }
+
         return await this.zapDispatch.queryData({provider, query, endpoint, endpointParams, onchainProvider, onchainSubscriber, from: this.subscriberOwner, gas: DEFAULT_GAS});
     }
 
