@@ -1,5 +1,5 @@
 import  {BaseContract} from '@zapjs/basecontract';
-import {SubscriptionInit,SubscriptionEnd,SubscriptionType} from "./types"
+import {SubscriptionInit,SubscriptionEnd,SubscriptionType,SubscriptionParams} from "./types"
 import {Filter,txid,DEFAULT_GAS,NetworkProviderOptions} from "@zapjs/types"
 const {toBN,utf8ToHex,isHex} = require ('web3-utils');
 /**
@@ -46,6 +46,31 @@ export class ZapArbiter extends BaseContract {
                 endpoint_params,
                 toBN(pubkey),
                 toBN(blocks)).send({from, gas});
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    /**
+     * Pass parameters between parties 
+     * @param {address} receiver Address to receive parameters 
+     * @param {string} endpoint Data endpoint of the provider
+     * @param {Array<string>} params Params passed to reciever 
+     * @param {number} gas Gas limit of this transaction
+     * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
+     */
+    async passParams({receiver, endpoint, params, from, gas=DEFAULT_GAS} : SubscriptionParams) :Promise<txid>{
+        try {
+            params = params.map((i:string)=>{
+                if(!isHex(i)) {
+                    return utf8ToHex(i)
+                }
+                else return i;
+            })
+            return await this.contract.methods.passParams(
+                receiver,
+                utf8ToHex(endpoint),
+                params).send({from, gas});
         } catch (err) {
             throw err;
         }

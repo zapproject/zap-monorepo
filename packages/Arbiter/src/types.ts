@@ -22,3 +22,11 @@ export interface SubscriptionType {
     subscriber:address,
     endpoint:string
 }
+
+export interface SubscriptionParams {
+    receiver:address,
+    endpoint:string,
+    params: Array<string>,
+    from: address,
+    gas?: BNType
+}
