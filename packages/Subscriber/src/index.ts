@@ -30,6 +30,14 @@ export class ZapSubscriber  {
         this.zapRegistry = new ZapRegistry(options);
     }
 
+    /**
+      * Gets the Zap balance of the current ZapSubscriber
+      * @returns {Promise<number>} Returns a Promsie that will be eventually resolved with the number of wei Zap
+      */
+    async getZapBalance(): Promise<number> {
+        return await this.zapToken.balanceOf(this.subscriberOwner);
+    }
+
     async approveToBond(provider:address,zapNum:number):Promise<any>{
         let approve = await this.zapToken.approve({
             to: this.zapBondage.contract._address,
