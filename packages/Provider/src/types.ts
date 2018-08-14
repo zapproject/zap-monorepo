@@ -15,7 +15,6 @@ export type InitProvider = {
 export type InitCurve = {
     endpoint:string,
     term: number[],
-    from:string
     gas ?: number
 }
 
