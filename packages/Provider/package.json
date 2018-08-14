@@ -1,7 +1,7 @@
 {
   "name": "@zapjs/provider",
   "private": false,
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "Zap Provider",
   "repository": "https://github.com/zapproject/Zap-monorepo",
   "main": "lib/src/index.js",
@@ -16,8 +16,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@zapjs/arbiter": "^2.0.4",
-    "@zapjs/bondage": "^2.0.4",
+    "@zapjs/arbiter": "^2.0.5",
+    "@zapjs/bondage": "^2.0.7",
     "@zapjs/curve": "^2.0.4",
     "@zapjs/dispatch": "^2.0.4",
     "@zapjs/registry": "^2.0.4",
