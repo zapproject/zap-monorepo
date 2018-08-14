@@ -13,7 +13,10 @@
     "@zapjs/registry": "^2.0.4",
     "@zapjs/subscriber": "^2.0.4",
     "@zapjs/types": "^2.0.4",
-    "@zapjs/zaptoken": "^2.0.4"
+    "@zapjs/zaptoken": "^2.0.4",
+    "cache-loader": "^1.2.2",
+    "ts-loader": "^4.4.2",
+    "typescript": "^3.0.1"
   },
   "scripts": {
     "webpack": "./node_modules/.bin/webpack",
@@ -26,7 +29,6 @@
   "devDependencies": {
     "awesome-typescript-loader": "^5.2.0",
     "json-loader": "^0.5.7",
-    "ts-loader": "^4.4.2",
     "webpack": "^4.16.5",
     "webpack-command": "^0.4.1",
     "webpack-log": "^1.2.0"
