@@ -1,7 +1,7 @@
 import {BaseContract} from '@zapjs/basecontract';
 import {QueryArgs,ResponseArgs} from './types'
 import {NetworkProviderOptions, txid,Filter,DEFAULT_GAS} from "@zapjs/types"
-const {utf8ToHex} = require ("web3-utils");
+const {utf8ToHex, toBN} = require ("web3-utils");
 /**
  * Provides an interface to the Dispatch contract for enabling data queries and responses.
  * @extends BaseContract
@@ -48,14 +48,18 @@ export class ZapDispatch extends BaseContract {
     /**
      * Provider responds to a query it received
      * @param {string} queryId A unique identifier for the query
-     * @param {Array<string>} responseParams List of responses returned by provider. Length determines which dispatch response is called
-     * @param {boolean} dynamic Determines if the Bytes32Array dispatch response should be used
+     * @param {Array<string | number>} responseParams List of responses returned by provider. Length determines which dispatch response is called
+     * @param {boolean} dynamic Determines if the IntArray/Bytes32Array dispatch response should be used
      * @param {address} from Address of the provider calling the respond function
      * @param {BigNumber} gas Set the gas limit for this transaction (optional)
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
     async respond({queryId, responseParams, dynamic, from,gas=DEFAULT_GAS}:ResponseArgs) :Promise<txid>{
         if (dynamic){
+            if(typeof responseParams[0] === "number"){
+                const bignums = responseParams.map(x => Number(x).toLocaleString('fullwide', { useGrouping: false }));
+                return this.contract.methods.respondIntArray(queryId, bignums).send({from,gas});
+            }
             return this.contract.methods.respondBytes32Array(
                 queryId,
                 responseParams).send({from,gas});

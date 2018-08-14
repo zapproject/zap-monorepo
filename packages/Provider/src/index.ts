@@ -160,7 +160,7 @@ import {ZapArbiter} from "@zapjs/arbiter";
     /**
      * Responds to a specific query from the subscriber by identifying a
      * @param {string} queryId The query identifier to send this response to
-     * @param {string[]} responseParams List of responses returned by provider. Length determines which dispatch response is called
+     * @param {string[] | number[]} responseParams List of responses returned by provider. Length determines which dispatch response is called
      * @param {boolean} dynamic True if the response contains a dynamic bytes32 array
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */

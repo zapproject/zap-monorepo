@@ -32,7 +32,7 @@ export type ListenQuery = {
 
 export type Respond = {
     queryId:string,
-    responseParams : string[],
+    responseParams : Array<string | number>,
     dynamic:boolean
 }
 

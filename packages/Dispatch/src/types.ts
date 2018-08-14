@@ -12,7 +12,7 @@ export type QueryArgs = {
 
 export interface ResponseArgs {
   queryId : string,
-  responseParams: Array<string>,
+  responseParams: Array<string | number>,
   dynamic : boolean,
   from: address,
     gas?:BNType
