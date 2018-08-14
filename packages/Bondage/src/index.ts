@@ -31,7 +31,7 @@ export class ZapBondage extends BaseContract {
      * Bonds a given number of dots from a subscriber to a provider's endpoint. Note: this requires that at least zapNum has been approved from the subscriber to be transferred by the Bondage contract.
      * @param {address} provider Address of the data provider
      * @param {string} endpoint Data endpoint of the provider
-     * @param {number} zapNum Number of zap to bond to this provider (Units: 1 wei Zap = 10^-18 Zap)
+     * @param {number} dots Number of dots to bond to this provider
      * @param {address} from Address of the data subscriber
      * @param {number} gas Sets the gas limit for this transaction (optional)
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
@@ -50,7 +50,7 @@ export class ZapBondage extends BaseContract {
      * Bonds a given number of dots from an account to a subscriber. This would be used to bond to a provider on behalf of another account, such as a smart contract.
      * @param {address} provider Address of the data provider
      * @param {string} endpoint Data endpoint of the provider
-     * @param {number} zapNum Number of zap to bond to this provider (Units: 1 wei Zap = 10^-18 Zap)
+     * @param {number} dots Number of dots to bond to this provider
      * @param {address} subscriber Address of the intended holder of the dots (subscriber)
      * @param {address} from Address of the data subscriber
      * @param {number} gas Sets the gas limit for this transaction (optional)

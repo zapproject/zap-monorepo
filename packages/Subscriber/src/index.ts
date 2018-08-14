@@ -1,3 +1,4 @@
+import {Filter} from "@zapjs/types/lib";
 
 const assert = require('assert');
 import {BondType,UnbondType,SubscribeType} from "./types";
@@ -105,12 +106,20 @@ export class ZapSubscriber  {
             throw new Error(`Insufficient balance, require ${zapRequired} Zap for ${dots} dots`);
         let boundDots = await this.zapBondage.getBoundDots({provider, endpoint, subscriber: this.subscriberOwner});
         if(boundDots<dots)
-            throw new Error(`Insufficient bound dots, pls bond ${dots} dots to subscribe`)
+            throw new Error(`Insufficient bound dots, please bond ${dots} dots to subscribe`)
         let blocks = dots;
         let sub = await this.zapArbiter.initiateSubscription(
             {provider, endpoint, endpoint_params:endpointParams,
                 blocks: blocks, pubkey: providerPubkey, from: this.subscriberOwner});
         return sub;
+    }
+
+
+
+    async listenToOffchainResponse(filter:Filter,callback:Function){
+        this.zapDispatch.listenOffchainResponse(filter,callback)
+
+
     }
 
     // === Helpers ===//

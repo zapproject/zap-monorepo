@@ -23,7 +23,7 @@
     "build": "tsc",
     "run_test": "tsc"
   },
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "author": "propulsor",
   "license": "MIT",
   "devDependencies": {
