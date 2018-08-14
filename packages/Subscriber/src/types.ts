@@ -31,3 +31,13 @@ export interface SubscriberHandler{
     handleUnsubscription ?: Function,
     handleSubscription ?: Function
 }
+
+export type QueryArgs = {
+  provider: string,
+  endpoint: string,
+  query: string,
+  endpointParams : Array<string>,
+  onchainProvider : boolean,
+  onchainSubscriber : boolean,
+  gas: number
+}
