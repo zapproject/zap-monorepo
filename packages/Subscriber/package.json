@@ -1,7 +1,7 @@
 {
   "name": "@zapjs/subscriber",
   "private": false,
-  "version": "2.0.5",
+  "version": "2.0.6",
   "description": "Zap Subscriber",
   "repository": "https://github.com/zapproject/Zap-monorepo",
   "main": "lib/src/index.js",
@@ -16,19 +16,19 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@zapjs/arbiter": "^2.0.5",
-    "@zapjs/bondage": "^2.0.7",
-    "@zapjs/curve": "^2.0.4",
-    "@zapjs/dispatch": "^2.0.4",
-    "@zapjs/registry": "^2.0.4",
+    "@zapjs/arbiter": "^2.0.6",
+    "@zapjs/bondage": "^2.0.8",
+    "@zapjs/curve": "^2.0.6",
+    "@zapjs/dispatch": "^2.0.8",
+    "@zapjs/registry": "^2.0.6",
     "@zapjs/types": "^2.0.4",
-    "@zapjs/zaptoken": "^2.0.4"
+    "@zapjs/zaptoken": "^2.0.7"
   },
   "devDependencies": {
     "@types/chai": "^4.1.4",
     "@types/mocha": "^5.2.4",
     "@types/node": "^10.5.2",
-    "@zapjs/utils": "^2.0.4",
+    "@zapjs/utils": "^2.0.6",
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
     "chai-bignumber": "^2.0.2",
