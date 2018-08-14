@@ -18,7 +18,8 @@
   "dependencies": {
     "@zapjs/basecontract": "^2.0.3",
     "@zapjs/curve": "^2.0.3",
-    "@zapjs/types": "^2.0.3"
+    "@zapjs/types": "^2.0.3",
+    "bignumber.js": "^7.2.1"
   },
   "devDependencies": {
     "@types/chai": "^4.1.4",
