@@ -66,8 +66,11 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS} from "@zapjs/ty
 
     /**
      * Set the parameter of a provider
-     * @param {address} provider The address of the provider
-     * @param {string} 
+     * @param {string} key The key to be set
+     * @param {string} value The value to set the key to
+     * @param {address} from The address of the provider
+     * @param {BN} gas The amount of gas to use.
+     * @returns {Promise<txid>} Returns a Promise that will be eventually resolve into a transaction hash
      */
     async setProviderParameter({ key, value, from, gas=DEFAULT_GAS }: SetProviderParams): Promise<txid> {
         return await this.contract.methods.setProviderParameter(
