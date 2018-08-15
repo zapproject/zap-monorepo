@@ -8,6 +8,7 @@ const expect = require('chai')
 import {ZapToken} from "../src"
 import {join} from "path";
 const Web3 = require('web3');
+const BigNumber = require("bignumber.js")
 
 async function configureEnvironment(func:Function) {
     await func();
@@ -21,7 +22,7 @@ describe('ZapToken, path to "/src/api/contracts/ZapToken"', () => {
     testArtifacts:any,
     buildDir:string = join(__dirname,"contracts"),
     zapTokenOwner:string;
-    const allocateAmount = 100;
+    const allocateAmount = new BigNumber(1000);
 
 
     before(function (done) {
@@ -79,12 +80,12 @@ describe('ZapToken, path to "/src/api/contracts/ZapToken"', () => {
     it('Should make transfer to another account', async () => {
         await zapTokenWrapper.send({
             to: accounts[2],
-            amount: 1,
+            amount: allocateAmount,
             from: accounts[1]
         });
         const balance = await zapTokenWrapper.balanceOf(accounts[2]);
 
-        await expect(balance.valueOf()).to.be.equal(1);
+        await expect(balance.valueOf()).to.be.equal(allocateAmount);
     });
 
     it('Should approve to transfer from one to the another account', async () => {

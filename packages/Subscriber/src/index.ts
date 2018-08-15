@@ -2,7 +2,7 @@ import {Filter} from "@zapjs/types/lib";
 
 const assert = require('assert');
 import {BondType,UnbondType,SubscribeType,QueryArgs} from "./types";
-import {txid,address,NetworkProviderOptions,DEFAULT_GAS} from "@zapjs/types";
+import {txid,address,NetworkProviderOptions,DEFAULT_GAS,BNType} from "@zapjs/types";
 import {ZapDispatch} from "@zapjs/dispatch";
 import {ZapRegistry} from "@zapjs/registry";
 import {ZapBondage} from "@zapjs/bondage";
@@ -35,11 +35,11 @@ export class ZapSubscriber  {
       * Gets the Zap balance of the current ZapSubscriber
       * @returns {Promise<number>} Returns a Promsie that will be eventually resolved with the number of wei Zap
       */
-    async getZapBalance(): Promise<number> {
+    async getZapBalance(): Promise<BNType> {
         return await this.zapToken.balanceOf(this.subscriberOwner);
     }
 
-    async approveToBond(provider:address,zapNum:number):Promise<any>{
+    async approveToBond(provider:address,zapNum:BNType):Promise<any>{
         let approve = await this.zapToken.approve({
             to: this.zapBondage.contract._address,
             amount: zapNum,
@@ -154,7 +154,7 @@ export class ZapSubscriber  {
      * @param {number} zapRequired The number of zap to check for
      * @returns {Promise<boolean>} Returns a Promise that will eventually resolve into a true or false value
      */
-    async hasEnoughZap(zapRequired:number):Promise<boolean>{
+    async hasEnoughZap(zapRequired:BNType):Promise<boolean>{
         let balance = await this.zapToken.balanceOf(this.subscriberOwner);
         return balance >= zapRequired;
     }

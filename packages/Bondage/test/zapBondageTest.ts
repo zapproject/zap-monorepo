@@ -64,7 +64,7 @@ describe('Zap Bondage Test', () => {
         });
     it("3) Should have no bound dots for new provider", async () => {
             const boundDots = await bondageWrapper.getBoundDots({subscriber: accounts[2], provider: accounts[0], endpoint: testZapProvider.endpoint});
-            expect(boundDots).to.equal(0);
+            expect(boundDots).to.equal('0');
         });
 
     it("4) Check that total bound zap of unbonded provider is 0", async function() {
@@ -79,7 +79,7 @@ describe('Zap Bondage Test', () => {
                 dots: 5,
             });
 
-            expect(requiredZap).to.equal(85);
+            expect(requiredZap).to.equal('85');
         });
     it("6) calcBondRate should return the 5 dots for that amount of Zap", async () => {
         //REMOVED

@@ -16,7 +16,7 @@
     "resolveJsonModule": true,
       "esModuleInterop": true
     },
-  "files": ["./src/index.ts"],
+  "files": ["./src/index.ts","./src/typings.d.ts"],
   "exclude":[
     "node_modules"
   ]

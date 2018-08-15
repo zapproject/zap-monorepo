@@ -1,6 +1,6 @@
 import {BaseContract} from "@zapjs/basecontract";
 import {Util} from "./utils";
-import {TransferType,address,txid,NetworkProviderOptions} from "@zapjs/types";
+import {TransferType,address,txid,NetworkProviderOptions,BNType} from "@zapjs/types";
 
 /**
  * ERC20 Tokens methods for Zap Tokens
@@ -28,9 +28,8 @@ import {TransferType,address,txid,NetworkProviderOptions} from "@zapjs/types";
      * @param {address} address The Ethereum address to check
      * @returns {Promise<number>} Returns a Promise that will eventually resolve into a Zap balance (wei)
      */
-     async balanceOf(address:address) :Promise<number>{
-        let balance = await this.contract.methods.balanceOf(address).call();
-        return Util.fromZapBase(balance);
+     async balanceOf(address:address) :Promise<BNType>{
+        return await this.contract.methods.balanceOf(address).call();
     }
 
     /**
@@ -42,8 +41,7 @@ import {TransferType,address,txid,NetworkProviderOptions} from "@zapjs/types";
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
      async send({to, amount, from,gas=Util.DEFAULT_GAS}:TransferType) :Promise<txid>{
-        let bigAmount = Util.toZapBase(amount);
-        return await this.contract.methods.transfer(to, bigAmount).send({from,gas});
+        return await this.contract.methods.transfer(to, amount).send({from,gas});
     }
 
     /**
@@ -55,8 +53,7 @@ import {TransferType,address,txid,NetworkProviderOptions} from "@zapjs/types";
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
      async allocate({to, amount, from,gas=Util.DEFAULT_GAS}:TransferType):Promise<txid> {
-         let bigAmount=  Util.toZapBase(amount)
-        return await this.contract.methods.allocate(to, bigAmount).send({from,gas});
+        return await this.contract.methods.allocate(to, amount).send({from,gas});
     }
 
     /**

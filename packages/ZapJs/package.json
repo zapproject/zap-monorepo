@@ -6,6 +6,7 @@
   "dependencies": {
     "@types/node": "^10.7.0",
     "@zapjs/arbiter": "^2.0.6",
+    "@zapjs/artifacts": "^2.0.7",
     "@zapjs/bondage": "^2.0.8",
     "@zapjs/curve": "^2.0.6",
     "@zapjs/dispatch": "^2.0.8",

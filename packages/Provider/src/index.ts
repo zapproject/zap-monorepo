@@ -1,6 +1,6 @@
 const assert = require("assert");
 import {InitProvider, InitCurve, Respond, ProviderConstructorType} from "./types";
-import {txid,Filter,NetworkProviderOptions,DEFAULT_GAS} from "@zapjs/types";
+import {txid,Filter,NetworkProviderOptions,DEFAULT_GAS,BNType} from "@zapjs/types";
 import {Curve,CurveType} from "@zapjs/curve"
 import {ZapDispatch} from "@zapjs/dispatch";
 import {ZapRegistry} from "@zapjs/registry";
@@ -153,7 +153,7 @@ import {ZapArbiter} from "@zapjs/arbiter";
      * @param dots Number of dots that is desired.
      * @returns {Promise<number>} Returns a Promise that will eventually resolve into an integer amount of Zap (wei).
      */
-     async getZapRequired({endpoint, dots}:{endpoint:string,dots:number}):Promise<number> {
+     async getZapRequired({endpoint, dots}:{endpoint:string,dots:number}):Promise<BNType> {
         return await this.zapBondage.calcZapForDots({provider: this.providerOwner, endpoint, dots});
     }
 
