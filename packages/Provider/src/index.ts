@@ -59,6 +59,22 @@ import {ZapArbiter} from "@zapjs/arbiter";
     }
 
     /**
+     * Set the parameter of a provider
+     * @param {string} key The key to be set
+     * @param {string} value The value to set the key to
+     * @param {BN} gas The amount of gas to use.
+
+     */
+    async setProviderParameter({ key, value, gas=DEFAULT_GAS }: SetProviderParams): Promise<txid> {
+        return await this.zapRegistry.setProviderParameter({
+            key,
+            value,
+            from: this.providerOwner,
+            gas
+        });
+    }
+
+    /**
      * Gets the title of this provider from the Registry contract.
      * @returns {Promise<string>} Returns a Promise that will eventually resolve into the title of this provider.
      */
@@ -160,6 +176,35 @@ import {ZapArbiter} from "@zapjs/arbiter";
      */
      async getZapRequired({endpoint, dots}:{endpoint:string,dots:number}):Promise<string|BNType> {
         return await this.zapBondage.calcZapForDots({provider: this.providerOwner, endpoint, dots});
+    }
+
+    /**
+     * Get a parameter from a provider
+     * @param {string} provider The address of the provider
+     * @param {string} key The key you're getting
+     * @returns {Promise<string>} A promise that will be resolved with the value of the key
+     */
+    async getProviderParam(key: string): Promise<string> {
+        return await this.zapRegistry.getProviderParam(this.providerOwner, key);
+    }
+
+    /**
+     * Get all the parameters of a provider
+     * @param {string} provider The address of the provider
+     * @returns {Promise<string[]>} A promise that will be resolved with all the keys
+     */
+    async getAllProviderParams(): Promise<string[]> {
+        return await this.zapRegistry.getAllProviderParams(this.providerOwner);
+    }
+
+    /**
+     * Get the endpoint params at a certain index of a provider's endpoint.
+     * @param {address} provider The address of this provider
+     * @param {string} endpoint Data endpoint of the provider
+     * @returns {Promise<string>} Returns a Promise that will eventually resolve into the endpoint's param at this index
+     */
+    async getEndpointParams(endpoint: string):Promise<string>{
+        return await this.zapRegistry.getEndpointParams({ provider: this.providerOwner, endpoint });
     }
 
     /**
