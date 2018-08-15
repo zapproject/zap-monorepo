@@ -2,11 +2,11 @@ const expect = require('chai')
 .use(require('chai-as-promised'))
 .use(require('chai-bignumber'))
 .expect;
-import {bootstrap} from "./utils/setup_test";
-import {BaseContract,BaseContractType} from "@zapjs/basecontract"
+import {BaseContract} from "@zapjs/basecontract"
 import {ZapArbiter} from "../src";
 const Web3  = require('web3');
 import {join} from 'path';
+import {bootstrap} from "./utils/setup_test";
 
 import {Utils} from "@zapjs/utils";
 
@@ -14,6 +14,7 @@ async function configureEnvironment(func:Function) {
   await func();
 }
 
+const {utf8ToHex,toBN} = require("web3-utils");
 
 describe('Arbiter Test', () => {
   let accounts :Array<string> = [],
@@ -54,6 +55,11 @@ describe('Arbiter Test', () => {
     ganacheServer.close();
     process.exit();
   });
+
+    it("Should have all pre conditions set up for dispatch to work", async () => {
+        const res = await bootstrap(testZapProvider, accounts, deployedRegistry, deployedToken, deployedBondage);
+        await expect(res).to.be.equal("done");
+    });
 
     it('Should initiate zapArbiter wrapper', function() {
       arbiterWrapper = new ZapArbiter(options);

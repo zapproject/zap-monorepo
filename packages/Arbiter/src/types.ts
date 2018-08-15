@@ -1,15 +1,12 @@
-const DEFAULT_GAS = 400000
-/** ethereum address */
-export type address = string
-export type txid = string
+import {address,BNType} from "@zapjs/types"
 export interface SubscriptionInit {
     provider:address,
     endpoint :string,
     endpoint_params: Array<string>,
-    blocks : number,
+    blocks : number|string,
     pubkey:number,
     from: address,
-    gas?: number
+    gas?: BNType|string
 }
 
 export interface SubscriptionEnd {
@@ -17,15 +14,7 @@ export interface SubscriptionEnd {
     subscriber ?:address,
     endpoint : string,
     from: address,
-    gas?:number
-}
-
-export interface Filter {
-    fromBlock ?: number,
-    toBlock ?: number,
-    provider ?: address,
-    subscriber ?:address,
-    terminator ?:address
+    gas?:BNType|string
 }
 
 export interface SubscriptionType {
@@ -34,3 +23,10 @@ export interface SubscriptionType {
     endpoint:string
 }
 
+export interface SubscriptionParams {
+    receiver:address,
+    endpoint:string,
+    params: Array<string>,
+    from: address,
+    gas?: BNType|string
+}

@@ -1,6 +1,6 @@
-# ZAP-Dispatch
+# @zapjs/dispatch
 
-This repository provides Interface to Zap Dispatch contract 
+This repository provides an interface to the Zap Dispatch contract, enabling queries to be sent to oracles and responses to be received by subscribers.
 
 ### Prerequisites
 
@@ -42,12 +42,13 @@ Listen to all events
 myZapDispatch.listen(callback) 
 ```
 
-### See more Usages of each packages :
-* [Provider]()
-* [Subscriber]()
-* [Register]()
-* [Bondage]()
-* [Arbiter]()
-* [ZapToken]()
 
+### See more Usages of each packages 
+* [Provider](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Provider/README.md)
+* [Subscriber](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Subscriber/README.md)
+* [Register](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Register/README.md)
+* [Dispatch](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Dispatch/README.md)
+* [Arbiter](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Arbiter/README.md)
+* [ZapToken](https://github.com/zapproject/Zap-monorepo/tree/master/packages/ZapToken/README.md)
+* [Zapjs](https://github.com/zapproject/Zap-monorepo/tree/master/packages/ZapJs/README.md)
 

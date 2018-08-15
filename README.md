@@ -21,36 +21,32 @@ What things you need to install the software and how to install them
 
 ### Installing
 
-
+- Installs lerna (used for package bundling) and typescript, as well as all build dependencies.
+  
 ```
-npm install -g lerna typescript
-npm i
-```
-
-- Bootstrap lerna with --hoist option
-
-```
-lerna bootstrap --hoist
+npm install lerna typescript
+npm install
 ```
 
 
 ## Running build and tests
 
-- Running build for all packages
+- Packages and installs all dependencies (including @zapjs packages) in the root
+  node_modules folder, and compiles all Typescript files.
 
 ```
-lerna run build
-```
-
-- Running mocha unit tests for all packages
+npm run build
 
 ```
-lerna run test
+- Runs mocha unit tests for all packages.
+
+```
+npm run test
 ```            
 
-### Running build and tests for a package
+### Running build and tests for a singular package
 
-- Develop in single package
+- Developing in single package
 
 ```
 cd packages/{package_name}
@@ -67,7 +63,7 @@ npm run run_test
 
 
 ## Usage
-##### Create a Zap Provider
+##### Creating a Zap Provider oracle
 ```
 npm install `@zapjs/provider`
 ```
@@ -110,6 +106,7 @@ await myZapProvider.initiateProviderCurve({
 * [Dispatch](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Dispatch/README.md)
 * [Arbiter](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Arbiter/README.md)
 * [ZapToken](https://github.com/zapproject/Zap-monorepo/tree/master/packages/ZapToken/README.md)
+* [Zapjs](https://github.com/zapproject/Zap-monorepo/tree/master/packages/ZapJs/README.md)
 
 
 ## Built With

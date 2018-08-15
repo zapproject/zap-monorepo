@@ -1,4 +1,3 @@
-import {readdirSync} from "fs";
 import {ZapProviderType} from "./types";
 import {clearBuild, getArtifacts, migrateContracts, startGanacheServer} from "./migrations";
 const {utf8ToHex,toBN} = require("web3-utils");
@@ -34,7 +33,6 @@ export class Utils {
 
     static getHexString(str: string) {
         const data = new Buffer(str);
-        console.log(data.byteLength);
         const hex = data.toString('hex');
         return `0x${hex}`;
     };

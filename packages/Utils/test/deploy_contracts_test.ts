@@ -18,7 +18,7 @@ describe("Testing deployment of test contracts",()=>{
     await migrateContracts(testContractsPath, ganacheServerOptions)
 
   });
-  after(()=>{
+  it("should close ganache server", async ()=>{
     ganacheServer.close();
     console.log("Closing server");
     process.exit();

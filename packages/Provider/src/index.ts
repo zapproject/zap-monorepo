@@ -1,6 +1,7 @@
 const assert = require("assert");
+import {InitProvider, InitCurve, Respond, ProviderConstructorType} from "./types";
+import {txid,Filter,NetworkProviderOptions,DEFAULT_GAS,BNType} from "@zapjs/types";
 import {Curve,CurveType} from "@zapjs/curve"
-import {InitProvider, InitCurve, Respond, ProviderConstructorType,txid,Filter} from "./types";
 import {ZapDispatch} from "@zapjs/dispatch";
 import {ZapRegistry} from "@zapjs/registry";
 import {ZapBondage} from "@zapjs/bondage";
@@ -16,18 +17,18 @@ import {ZapArbiter} from "@zapjs/arbiter";
     zapBondage : ZapBondage;
     zapArbiter : ZapArbiter;
     zapRegistry:  ZapRegistry;
-    curve : CurveType | undefined;
+    curves:any;
     title:string;
     pubkey:number|string;
 
-    constructor({owner,zapRegistry,zapDispatch,zapBondage,zapArbiter}:ProviderConstructorType) {
+    constructor(owner:string,options:NetworkProviderOptions) {
         assert(owner, 'owner address is required');
         this.providerOwner = owner;
-        this.zapDispatch = zapDispatch || new ZapDispatch();
-        this.zapBondage = zapBondage || new ZapBondage();
-        this.zapArbiter = zapArbiter || new ZapArbiter();
-        this.zapRegistry = zapRegistry || new ZapRegistry();
-        this.curve = undefined;
+        this.zapDispatch = new ZapDispatch(options)
+        this.zapBondage = new ZapBondage(options);
+        this.zapArbiter = new ZapArbiter(options);
+        this.zapRegistry = new ZapRegistry(options);
+        this.curves = {};
         this.title = "";
         this.pubkey = '';
     }
@@ -49,16 +50,14 @@ import {ZapArbiter} from "@zapjs/arbiter";
     /**
      * Calls the Registry contract to initialize a new Curve for a given endpoint. See Curve for more information on encoding.
      * @param {string} endpoint The endpoint identifier matching the created endpoint
-     * @param {number[]} constants The constants array for this curve, setting the coefficients, powers, and functions for each term.
-     * @param {number[]} parts The parts array that defines the ranges that each piece applies to.
-     * @param {number[]} dividers The dividers array that demarcates each piecewise piece
-     * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
+     * @param {number[]} term The curve array for this endpoint, setting the coefficients, powers, and domains for each piece.
      */
-     async initiateProviderCurve({endpoint, constants, parts, dividers}: InitCurve) :Promise<txid>{
-        let curve = new Curve(constants, parts, dividers)
-        let txid = await this.zapRegistry.initiateProviderCurve({endpoint, curve, from: this.providerOwner});
+     async initiateProviderCurve({endpoint, term}: InitCurve) :Promise<txid>{
+        if(endpoint in this.curves) throw("Endpoint " + endpoint + " already exists");
+        let curve = new Curve(term)
+        let txid = await this.zapRegistry.initiateProviderCurve({endpoint, term, from: this.providerOwner});
         assert(txid, 'Failed to init curve.');
-        this.curve = new Curve(constants, parts, dividers);
+        this.curves[endpoint] = curve;
         return txid;
     }
 
@@ -72,6 +71,24 @@ import {ZapArbiter} from "@zapjs/arbiter";
         title = await this.zapRegistry.getProviderTitle(this.providerOwner);
         this.title = title;
         return title;
+    }
+
+    /**
+     * Gets whether this provider has already been created
+     * @returns {Promise<boolean>} Returns a Promise that will eventually resolve a true/false value.
+     */
+     async isProviderInitialized():Promise<boolean> {
+        const created:boolean = await this.zapRegistry.isProviderInitiated(this.providerOwner);
+        return created;
+    }
+
+    /**
+     * Gets whether this endpoint and its corresponding curve have already been set
+     * @returns {Promise<boolean>} Returns a Promise that will eventually resolve a true/false value.
+     */
+     async isEndpointCreated(endpoint:string):Promise<boolean> {
+        const notCreated:boolean = await this.zapRegistry.isEndpointSet(this.providerOwner, endpoint);
+        return !notCreated;
     }
 
     /**
@@ -90,51 +107,68 @@ import {ZapArbiter} from "@zapjs/arbiter";
      * @param {string} endpoint The endpoint identifier matching the desired endpoint
      * @returns {Promise<CurveType>} Returns a Promise that will eventually resolve into the Curve of this provider's endpoint.
      */
-     async getCurve(endpoint:string):Promise<CurveType> {
-        if (this.curve) return this.curve;
+     async getCurve(endpoint:string):Promise<Curve> {
+        if (endpoint in this.curves) return this.curves[endpoint];
         let curve = await this.zapRegistry.getProviderCurve(this.providerOwner, endpoint);
-        this.curve = curve;
+        this.curves[endpoint] = curve;
         return curve;
     }
 
     /**
      * Gets the total amount of Zap bound to a given endpoint.
      * @param {string} endpoint The endpoint identifier matching the desired endpoint
-     * @returns {Promise<number>} Returns a Promise that will eventually resolve into an integer amount of Zap (wei).
+     * @returns {Promise<string|BigNumber>} Returns a Promise that will eventually resolve into an amount of Zap (wei).
      */
-     async getZapBound(endpoint:string):Promise<number> {
+     async getZapBound(endpoint:string):Promise<string|BNType> {
         assert(endpoint, 'endpoint required');
         return await this.zapBondage.getZapBound({
             provider: this.providerOwner, endpoint:endpoint});
     }
 
     /**
-     * Gets the total amount of Zap required to bond x dots.
-     * @param endpoint The endpoint identifier matching the desired endpoint
-     * @param dots Number of dots that is desired.
-     * @returns {Promise<number>} Returns a Promise that will eventually resolve into an integer amount of Zap (wei).
+     * Gets the amount of dots bound by a user
+     * @param {string} endpoint The endpoint identifier matching the desired endpoint
+     * @param {string} subscriber The subscriber that is being checked
+     * @returns {Promise<string|BigNumber>} Retunrs a Promise that will eventually resolve into an amount of dots
      */
-     async getZapRequired({endpoint, dots}:{endpoint:string,dots:number}):Promise<number> {
-        return await this.zapBondage.calcZapForDots({provider: this.providerOwner, endpoint, dots});
+    async getBoundDots({endpoint, subscriber}: {endpoint: string, subscriber: string}): Promise<string|BNType> {
+    	assert(endpoint, 'endpoint required');
+    	assert(subscriber, 'subscriber required');
+    	return await this.zapBondage.getBoundDots({ endpoint, subscriber, provider: this.providerOwner });
+    } 
+
+    /**
+     * Gets the total amount of DOTs issued
+     * @param {string} endpoint The endpoint identifier matching the desired endpoint
+     * @returns {Promise<string|BigNumber>} Returns a Promise that will eventually be resolved into an integer amount of dots
+     */
+    async getDotsIssued(endpoint: string): Promise<string|BNType> {
+        assert(endpoint, 'endpoint required');
+        return await this.zapBondage.getDotsIssued({ provider: this.providerOwner, endpoint });
     }
 
     /**
-     * Calculate the total number of dots that the subscriber can receive for a given amount of Zap.
-     * @param {string} endpoint The endpoint identifier matching the desired endpoint
-     * @param {number} zapNum Amount of Zap (wei) to calculate dots for
-     * @returns {Promise<number>} Returns a Promise that will eventually resolve into an integer number of dots.
+     * Get maximum dots an endpoint can issue
+     * @param endpoint
      */
-     async calcDotsForZap({endpoint, zapNum}:{endpoint:string, zapNum:number}): Promise<number> {
-        return await this.zapBondage.calcBondRate({
-            provider: this.providerOwner,
-            endpoint,
-            zapNum});
+    async getDotsLimit(endpoint:string):Promise<string|BNType>{
+        return this.zapBondage.getDotsLimit({provider:this.providerOwner,endpoint:endpoint})
+    }
+
+    /**
+     * Gets the total amount of Zap required to bond x dots.
+     * @param endpoint The endpoint identifier matching the desired endpoint
+     * @param dots Number of dots that is desired.
+     * @returns {Promise<string|BigNumber>} Returns a Promise that will eventually resolve into an amount of Zap (wei).
+     */
+     async getZapRequired({endpoint, dots}:{endpoint:string,dots:number}):Promise<string|BNType> {
+        return await this.zapBondage.calcZapForDots({provider: this.providerOwner, endpoint, dots});
     }
 
     /**
      * Responds to a specific query from the subscriber by identifying a
      * @param {string} queryId The query identifier to send this response to
-     * @param {string[]} responseParams List of responses returned by provider. Length determines which dispatch response is called
+     * @param {string[] | number[]} responseParams List of responses returned by provider. Length determines which dispatch response is called
      * @param {boolean} dynamic True if the response contains a dynamic bytes32 array
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */

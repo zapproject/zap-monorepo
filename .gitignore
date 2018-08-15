@@ -11,38 +11,11 @@ test/TestArtifactsModule/contracts/*.json
 /dist/*
 package-lock.json
 
-packages/Arbiter/lib/
-
-packages/Curve/lib/
-
-packages/Artifacts/lib/
-
-packages/Bondage/lib/
-
-packages/BaseContract/lib/
-
-packages/Provider/lib/
-
-packages/Dispatch/lib/
-
-packages/Subscriber/lib/
-
-packages/Utils/lib/
-
-packages/ZapToken/lib/
-
-packages/Registry/lib/
+packages/**/lib/
+packages/**/test/contracts/
+packages/**/.cache-loader
 
 lerna-debug\.log
-
-packages/Arbiter/test/contracts/
-packages/Curve/test/contracts/
-packages/Bondage/test/contracts/
-packages/Provider/test/contracts/
-packages/Dispatch/test/contracts/
-packages/Subscriber/test/contracts/
-packages/ZapToken/test/contracts/
-packages/Registry/test/contracts/
 
 docs/
 documentation/
@@ -50,3 +23,17 @@ documentation/
 yarn\.lock
 
 package\.json\.lerna_backup
+packages/*/src/**/*.js
+packages/*/src/**/*.d.ts
+packages/*/src/**/*.js
+packages/*/src/**/*.js.map
+packages/*/test/**/*.js
+packages/*/test/**/*.d.ts
+packages/*/test/**/*.js.map
+
+
+packages/Types/lib/
+
+packages/ZapJs/lib/
+
+packages/Utils/test/contracts/

@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es6",
+    "lib": [
+      "es2018",
+      "dom"
+    ],
+    "sourceMap": true,
+    "declaration": true,
+    "experimentalDecorators": true,
+    "noImplicitReturns": true,
+    "pretty": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "outDir": "lib",
+    "resolveJsonModule": true
+  },
+  "include": ["./src/**/*","./src/typings.d.ts","./src/contracts/*"],
+  "exclude":[
+    "node_modules"
+  ]
+}

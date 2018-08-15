@@ -1,6 +1,4 @@
-import BigNumber from 'bignumber.js';
-export type address = string;
-export type txid = string;
+import {address,BNType} from "@zapjs/types"
 export type QueryArgs = {
   provider:address,
   endpoint: string,
@@ -9,20 +7,13 @@ export type QueryArgs = {
   onchainProvider : boolean,
   onchainSubscriber : boolean,
     from:address,
-    gas: BigNumber
+    gas: BNType
 }
 
 export interface ResponseArgs {
   queryId : string,
-  responseParams: Array<string>,
+  responseParams: Array<string | number>,
   dynamic : boolean,
   from: address,
-    gas?:BigNumber
-}
-
-export interface Filter{
-  fromBlock ?: number,
-    toBlock ?: number,
-    provider ?: address
-
+    gas?:BNType
 }

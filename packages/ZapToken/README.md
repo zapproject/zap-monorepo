@@ -1,6 +1,6 @@
-# Zap-token
+# @zapjs/zaptoken
 
-This repository provides Interface to Zap Token contract
+This repository provides an interface tothe  Zap ERC20 token contract. This package enables a Zap holder to check their balance, transfer Zap to other accounts, and delegate transfers (approvals) to other accounts and smart contracts.
 
 ### Prerequisites
 ```
@@ -46,6 +46,8 @@ await myZapToken.send({from,to,amount,gas})
 * [Bondage](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Bondage/README.md)
 * [Dispatch](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Dispatch/README.md)
 * [Arbiter](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Arbiter/README.md)
+* [Zapjs](https://github.com/zapproject/Zap-monorepo/tree/master/packages/ZapJs/README.md)
+
 
 
 ## Built With

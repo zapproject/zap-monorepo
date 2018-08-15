@@ -1,26 +1,31 @@
 {
   "name": "@zapjs/registry",
-  "version": "1.0.1",
+  "private": false,
+  "version": "2.0.8",
   "description": "",
+  "repository": "https://github.com/zapproject/Zap-monorepo",
   "main": "lib/src/index.js",
   "types": "lib/src/types.d.ts",
   "typings": "lib/src",
   "scripts": {
     "build": "tsc",
-    "test": "mocha $PKG -r ts-node/register test/*.ts --serial",
+    "test": "mocha $PKG -r ts-node/register test/*.ts --serial --bail --exit",
     "run_test": "run-s build test"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@zapjs/basecontract": "^2.0.8",
+    "@zapjs/curve": "^2.0.8",
+    "@zapjs/types": "^2.0.6",
+    "bignumber.js": "^7.2.1"
+  },
+  "devDependencies": {
     "@types/chai": "^4.1.4",
     "@types/mocha": "^5.2.4",
     "@types/node": "^10.5.2",
-    "@zapjs/basecontract": "^1.0.0",
-    "@zapjs/curve": "^1.0.0",
-    "@zapjs/utils": "^1.0.0",
-    "bignumber.js": "^7.2.1",
+    "@zapjs/utils": "^2.0.8",
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
     "chai-bignumber": "^2.0.2",
@@ -31,12 +36,6 @@
     "ts-node": "^7.0.0",
     "tslint": "^5.10.0",
     "typescript": "^2.9.2",
-    "web3": "^1.0.0-beta.34",
-    "web3-utils": "^1.0.0-beta.34",
-    "zap_contracts": "git+https://github.com/zapproject/zap-ethereum-api.git"
-  },
-  "devDependencies": {
-    "mocha": "^5.2.0",
-    "tslint": "^5.10.0"
+    "web3-utils": "^1.0.0-beta.34"
   }
 }

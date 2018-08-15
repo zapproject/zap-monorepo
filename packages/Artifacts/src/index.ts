@@ -1,21 +1,17 @@
-import {join,basename} from "path";
-import {readdirSync} from "fs";
-
-/**
- * Returns the artifacts in this package.
- * @returns Artifacts
- */
-function getArtifacts(){
-    let Artifacts:any = {};
-        readdirSync(join(__dirname,'../../','contracts')).forEach(function (file) {
-        /* If its the current file ignore it */
-        if (!file.endsWith('.json')) return;
-
-        /* Store module with its name (from filename) */
-        Artifacts[basename(file, '.json')] = require(join(__dirname,'../../contracts/', file));
-    });
-    return Artifacts
-
+export const Artifacts :{[index:string]:any} =  {
+    "Arbiter" : require("../contracts/Arbiter.json"),
+    "Bondage" : require("../contracts/Bondage.json"),
+    "Dispatch" : require("../contracts/Dispatch.json"),
+    "Registry" : require("../contracts/Registry.json"),
+    "CurrentCost" : require("../contracts/CurrentCost.json"),
+    "PiecewiseLogic" : require("../contracts/PiecewiseLogic.json"),
+    "ZapToken" : require("../contracts/ZapToken.json"),
+    "Client1" : require("../contracts/Client1.json"),
+    "Client2" : require("../contracts/Client2.json"),
+    "Client3" : require("../contracts/Client3.json"),
+    "Client4" : require("../contracts/Client4.json")
 }
 
-export const Artifacts:any = getArtifacts();
+
+
+

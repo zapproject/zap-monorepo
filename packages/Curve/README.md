@@ -1,9 +1,6 @@
-# ZAP
-ZAP Oracles (introduction here)
-# ZAP-Monorepo
+# @zapjs/curve
 
-This repository provides Interface to Zap contracts and tools to use Zap platform with Javascript projects
-Each package is a public npm module that serve developer's needs to intergrate Zap platform
+This package contains objects that can parse the custom Zap bonding curve encoding used by Zap oracles. This package also enables calculations of Dot prices on a given bonding curve.
 
 ## Getting Started
 
@@ -110,23 +107,17 @@ await myZapProvider.initiateProviderCurve({
 
 ```
 
-### See more Usages of each packages :
-* [Provider] ()
-* [Subscriber] ()
-* [Register] ()
-* [Bondage] ()
-* [Dispatch] ()
-* [Arbiter] ()
-* [ZapToken] ()
+
+### See more Usages of each packages 
+* [Provider](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Provider/README.md)
+* [Subscriber](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Subscriber/README.md)
+* [Register](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Register/README.md)
+* [Dispatch](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Dispatch/README.md)
+* [Arbiter](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Arbiter/README.md)
+* [ZapToken](https://github.com/zapproject/Zap-monorepo/tree/master/packages/ZapToken/README.md)
+* [Zapjs](https://github.com/zapproject/Zap-monorepo/tree/master/packages/ZapJs/README.md)
 
 
-## Built With
-
-* [Lerna](https://lernajs.io/) - The tool to manage monorepo project
-* [Typescript](https://www.typescriptlang.org/) 
-* [Mocha](https://mochajs.org/) 
-* [Truffle](https://truffleframework.com/)
-* [Ganache] (https://truffleframework.com/ganache)
 
 ## Contributing
 

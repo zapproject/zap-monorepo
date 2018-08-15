@@ -1,6 +1,8 @@
+import {Filter} from "@zapjs/types/lib";
 
 const assert = require('assert');
-import {BondType,UnbondType,SubscribeType,SubscriberConstructorType, txid,address} from "./types";
+import {BondType,UnbondType,SubscribeType,QueryArgs} from "./types";
+import {txid,address,NetworkProviderOptions,DEFAULT_GAS,BNType} from "@zapjs/types";
 import {ZapDispatch} from "@zapjs/dispatch";
 import {ZapRegistry} from "@zapjs/registry";
 import {ZapBondage} from "@zapjs/bondage";
@@ -11,7 +13,7 @@ import {ZapToken} from "@zapjs/zaptoken";
  * @class
  * Represents an offchain Subscriber and provides an interface to the appropriate smart contracts.
  */
-export class Subscriber  {
+export class ZapSubscriber  {
     subscriberOwner:string;
     zapDispatch : ZapDispatch;
     zapBondage : ZapBondage;
@@ -19,17 +21,25 @@ export class Subscriber  {
     zapRegistry:  ZapRegistry;
     zapToken: ZapToken;
 
-    constructor({owner,handler,zapToken,zapRegistry,zapDispatch,zapBondage,zapArbiter}:SubscriberConstructorType) {
+    constructor(owner:string,options:NetworkProviderOptions) {
         assert(owner, 'owner address is required');
         this.subscriberOwner = owner;
-        this.zapToken = zapToken;
-        this.zapDispatch = zapDispatch;
-        this.zapBondage = zapBondage;
-        this.zapArbiter = zapArbiter;
-        this.zapRegistry = zapRegistry;
+        this.zapToken = new ZapToken(options);
+        this.zapDispatch = new ZapDispatch(options);
+        this.zapBondage = new ZapBondage(options);
+        this.zapArbiter = new ZapArbiter(options);
+        this.zapRegistry = new ZapRegistry(options);
     }
 
-    async approveToBond(provider:address,zapNum:number):Promise<any>{
+    /**
+      * Gets the Zap balance of the current ZapSubscriber
+      * @returns {Promise<string|BigNumber>} Returns a Promsie that will be eventually resolved with the number of wei Zap
+      */
+    async getZapBalance(): Promise<string|BNType> {
+        return await this.zapToken.balanceOf(this.subscriberOwner);
+    }
+
+    async approveToBond(provider:address,zapNum:BNType):Promise<any>{
         let approve = await this.zapToken.approve({
             to: this.zapBondage.contract._address,
             amount: zapNum,
@@ -45,11 +55,12 @@ export class Subscriber  {
      * @param {number} zapNum The amount of Zap (in wei) to bond
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-    async bond({provider, endpoint, zapNum}:BondType):Promise<any>{
+    async bond({provider, endpoint, dots}:BondType):Promise<any>{
        // assert.ok(this.hasEnoughZap(zapNum), 'Insufficient Balance');
+        let zapRequire = await this.zapBondage.calcZapForDots({provider,endpoint,dots})
         let approve = await this.zapToken.approve({
             to: this.zapBondage.contract._address,
-            amount: zapNum,
+            amount: zapRequire,
             from: this.subscriberOwner
         });
 
@@ -57,7 +68,7 @@ export class Subscriber  {
         const bonded = await this.zapBondage.bond({
             provider: provider,
             endpoint: endpoint,
-            zapNum: zapNum,
+            dots: dots,
             from: this.subscriberOwner
         });
     
@@ -69,7 +80,7 @@ export class Subscriber  {
      * Unbonds a given number of dots from a given oracle, returning Zap to this subscriber based on the bonding curve.
      * @param {string} provider The address of the oracle
      * @param {string} endpoint The endpoint that the client has already bonded to
-     * @param {number} dots The number of dots to unbond (redeem) from this provider and endpoint
+     * @param {string|number} dots The number of dots to unbond (redeem) from this provider and endpoint
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
     async unBond({provider, endpoint, dots}:UnbondType):Promise<any>{
@@ -93,12 +104,48 @@ export class Subscriber  {
         let zapBalance = await this.zapToken.balanceOf(this.subscriberOwner);
         if (zapBalance < zapRequired)
             throw new Error(`Insufficient balance, require ${zapRequired} Zap for ${dots} dots`);
-        let boundDots = await this.zapBondage.bond({provider, endpoint, zapNum: zapRequired, from: this.subscriberOwner});
+        let boundDots = await this.zapBondage.getBoundDots({provider, endpoint, subscriber: this.subscriberOwner});
+        if(boundDots<dots)
+            throw new Error(`Insufficient bound dots, please bond ${dots} dots to subscribe`)
         let blocks = dots;
         let sub = await this.zapArbiter.initiateSubscription(
             {provider, endpoint, endpoint_params:endpointParams,
                 blocks: blocks, pubkey: providerPubkey, from: this.subscriberOwner});
         return sub;
+    }
+
+   /**
+     * Queries data from a subscriber to a given provider's endpoint, passing in a query string and endpoint parameters that will be processed by the oracle.
+     * @param {address} provider Address of the data provider
+     * @param {string} query Subscriber given query string to be handled by provider
+     * @param {string} endpoint Data endpoint of provider, meant to determine how query is handled
+     * @param {Array<string>} endpointParams Parameters passed to data provider's endpoint
+     * @param {boolean} onchainProvider True if provider is a smart contract
+     * @param {boolean} onchainSubscriber True if subscriber is a smart contract
+     * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
+     */
+    async queryData({provider, query, endpoint, endpointParams, onchainProvider, onchainSubscriber}: QueryArgs): Promise<any> {
+        let boundDots = await this.zapBondage.getBoundDots({provider,endpoint,subscriber:this.subscriberOwner})
+        
+        if ( !boundDots ) {
+            throw new Error("Insufficient balance of bound dots to query")
+        }
+
+        return await this.zapDispatch.queryData({provider, query, endpoint, endpointParams, onchainProvider, onchainSubscriber, from: this.subscriberOwner, gas: DEFAULT_GAS});
+    }
+
+
+    /**
+     * Listen to all Offchain responses events
+     * @param filter
+     * @param callback
+     */
+    async listenToOffchainResponse(filter:Filter,callback:Function){
+        if(!filter['subscriber'])
+            filter = {...filter,subscriber:this.subscriberOwner}
+        this.zapDispatch.listenOffchainResponse(filter,callback)
+
+
     }
 
     // === Helpers ===//
@@ -107,7 +154,7 @@ export class Subscriber  {
      * @param {number} zapRequired The number of zap to check for
      * @returns {Promise<boolean>} Returns a Promise that will eventually resolve into a true or false value
      */
-    async hasEnoughZap(zapRequired:number):Promise<boolean>{
+    async hasEnoughZap(zapRequired:string|BNType):Promise<boolean>{
         let balance = await this.zapToken.balanceOf(this.subscriberOwner);
         return balance >= zapRequired;
     }

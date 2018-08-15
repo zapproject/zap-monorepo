@@ -1,8 +1,8 @@
 const {toHex,utf8ToHex,toBN, hexToUtf8} = require("web3-utils");
-import {BaseContract,ContractType} from "@zapjs/basecontract";
+import {BaseContract} from "@zapjs/basecontract";
 import {Curve,CurveType} from "@zapjs/curve";
-import {Utils} from "@zapjs/utils"
-import {InitProvider, InitCurve, NextEndpoint, EndpointParams,txid,address,Filter} from "./types"
+import {InitProvider, InitCurve, NextEndpoint, EndpointParams} from "./types"
+import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS} from "@zapjs/types";
 
 /**
  * Manage Providers and Curves registration
@@ -12,9 +12,8 @@ import {InitProvider, InitCurve, NextEndpoint, EndpointParams,txid,address,Filte
  * @param {any} networkProvider Ethereum network provider (e.g. Infura)
  */
  export class ZapRegistry extends BaseContract {
-    contract:any;
 
-    constructor(obj ?: ContractType){
+    constructor(obj ?: NetworkProviderOptions){
         super(Object.assign(obj,{artifactName:"Registry"}));
     }
 
@@ -29,7 +28,7 @@ import {InitProvider, InitCurve, NextEndpoint, EndpointParams,txid,address,Filte
      * @param {BigNumber} gas Sets the gas limit for this transaction (optional)
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-     async initiateProvider({public_key, title, endpoint, endpoint_params, from, gas=Utils.Constants.DEFAULT_GAS}:InitProvider): Promise<txid>{
+     async initiateProvider({public_key, title, endpoint, endpoint_params, from, gas=DEFAULT_GAS}:InitProvider): Promise<txid>{
         let params:Array<string>;
         if(!endpoint_params) params = []
             else params = endpoint_params.map((item:string) =>{return utf8ToHex(item)});
@@ -49,21 +48,10 @@ import {InitProvider, InitCurve, NextEndpoint, EndpointParams,txid,address,Filte
      * @param {BigNumber} gas Sets the gas limit for this transaction (optional)
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-     async initiateProviderCurve({endpoint, curve, from, gas=Utils.Constants.DEFAULT_GAS}:InitCurve):Promise<txid> {
-        let convertedConstants = curve.constants.map((item:number) => {
-            return toHex(item);
-        });
-        let convertedParts = curve.parts.map((item:number)=> {
-            return toHex(item);
-        });
-        let convertedDividers = curve.dividers.map((item:number) => {
-            return toHex(item);
-        });
-        return await this.contract.methods.initiateProviderCurve(
-            utf8ToHex(endpoint),
-            convertedConstants,
-            convertedParts,
-            convertedDividers)
+     async initiateProviderCurve({endpoint, term, from, gas=DEFAULT_GAS}:InitCurve):Promise<txid> {
+       let curve = new Curve(term);
+        let convertedCurve = curve.convertToBNArrays()
+        return await this.contract.methods.initiateProviderCurve(utf8ToHex(endpoint), convertedCurve)
         .send({from, gas});
     }
 
@@ -75,7 +63,7 @@ import {InitProvider, InitCurve, NextEndpoint, EndpointParams,txid,address,Filte
      * @param {BigNumber} gas Sets the gas limit for this transaction (optional)
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-     async setEndpointParams({endpoint, endpoint_params, from, gas=Utils.Constants.DEFAULT_GAS}:EndpointParams) :Promise<txid>{
+     async setEndpointParams({endpoint, endpoint_params, from, gas=DEFAULT_GAS}:EndpointParams) :Promise<txid>{
       let params = endpoint_params ? endpoint_params.map(el =>{return utf8ToHex(el)}) : [];
       return await this.contract.methods.setEndpointParams(
         utf8ToHex(endpoint),
@@ -102,6 +90,26 @@ import {InitProvider, InitCurve, NextEndpoint, EndpointParams,txid,address,Filte
         return hexToUtf8(title)
     }
 
+     /**
+     * Gets whether this provider has already been created
+     * @param {address} provider The address of this provider
+     * @returns {Promise<boolean>} Returns a Promise that will eventually resolve a true/false value.
+     */
+     async isProviderInitiated(provider:address):Promise<boolean> {
+        const created:boolean = await this.contract.methods.isProviderInitiated(provider);
+        return created;
+    }
+
+    /**
+     * Gets whether this endpoint and its corresponding curve have already been set
+     * @param {address} provider The address of this provider
+     * @returns {Promise<boolean>} Returns a Promise that will eventually resolve a true/false value.
+     */
+     async isEndpointSet(provider:address, endpoint:string):Promise<boolean> {
+        const notCreated:boolean = await this.contract.methods.getCurveUnset(provider, endpoint);
+        return !notCreated;
+    }
+
 
     /**
      * Get a provider's endpoint's curve from the Registry contract.
@@ -109,12 +117,12 @@ import {InitProvider, InitCurve, NextEndpoint, EndpointParams,txid,address,Filte
      * @param {string} endpoint Data endpoint of the provider
      * @returns {Promise<CurveType>} Returns a Promise that will eventually resolve into a Curve object
      */
-     async getProviderCurve(provider:string,endpoint:string):Promise<CurveType>{
-        let curve =  await this.contract.methods.getProviderCurve(
+     async getProviderCurve(provider:string,endpoint:string):Promise<Curve>{
+        let term:string[] =  await this.contract.methods.getProviderCurve(
             provider,
             utf8ToHex(endpoint)
             ).call();
-        return new Curve(curve['0'].map((i:string)=>parseInt(i)),curve['1'].map((i:string)=>parseInt(i)),curve['2'].map((i:string)=>parseInt(i)))
+        return new Curve(term.map((i:string)=>{return parseInt(i)}))
     }
 
     /**

@@ -7,12 +7,13 @@ const Web3 = require('web3');
 import { bootstrap } from "./utils/setup_test";
 
 import {Utils} from "@zapjs/utils";
-import { Subscriber } from '../src';
+import { ZapSubscriber } from '../src';
 import { ZapBondage } from '@zapjs/bondage';
 import { ZapRegistry } from "@zapjs/registry";
 import { ZapToken } from "@zapjs/zaptoken";
 import { ZapDispatch } from "@zapjs/dispatch";
 import { ZapArbiter } from "@zapjs/arbiter";
+import {BNType} from "@zapjs/types"
 
 async function configureEnvironment(func: Function) {
     await func();
@@ -21,7 +22,7 @@ async function configureEnvironment(func: Function) {
 describe('Zap Subscriber Test', () => {
     let accounts: Array<string> = [],
     ganacheServer: any,
-    subscriber: Subscriber,
+    subscriber: ZapSubscriber,
     arbiterWrapper: any,
     dispatchWrapper: any,
     registryWrapper: any,
@@ -34,8 +35,8 @@ describe('Zap Subscriber Test', () => {
     query = "TestQuery",
     responses = ["TestReponse_1", "TestResponse_2"],
     queryData: any,
-    buildDir: string = join(__dirname, "contracts"),
-    testZapProvider = Utils.Constants.testZapProvider;
+    buildDir: string = join(__dirname, "contracts");
+    const testZapProvider = Utils.Constants.testZapProvider;
     const options:any = {
         artifactsDir: buildDir,
         networkId: Utils.Constants.ganacheServerOptions.network_id,
@@ -58,14 +59,7 @@ describe('Zap Subscriber Test', () => {
             tokenWrapper = new ZapToken(options);
             dispatchWrapper = new ZapDispatch(options);
             arbiterWrapper = new ZapArbiter(options);
-            subscriber = new Subscriber({
-                owner: accounts[2],
-                zapToken: tokenWrapper,
-                zapRegistry: registryWrapper,
-                zapDispatch: dispatchWrapper,
-                zapBondage: bondageWrapper,
-                zapArbiter: arbiterWrapper
-            });
+            subscriber = new ZapSubscriber(accounts[2],options);
             done();
         });
     });
@@ -76,27 +70,27 @@ describe('Zap Subscriber Test', () => {
         process.exit();
     });
 
-        it("Should have all pre conditions set up for subscriber to work", async () => {
+        it("1. Should have all pre conditions set up for subscriber to work", async () => {
             const res = await bootstrap(testZapProvider, accounts, registryWrapper, tokenWrapper);
             await expect(res).to.be.equal("done");
         })
 
-        it("Should bond specified number of zap", async () => {
-            let zapRequired:number = await bondageWrapper.calcZapForDots({
+        it("2. Should bond specified number of zap", async () => {
+            let zapRequired:BNType = await bondageWrapper.calcZapForDots({
                 provider: accounts[0],
                 endpoint: testZapProvider.endpoint,
-                dots: 5
+                dots: 1
             });
             const approve = await subscriber.approveToBond(accounts[0],zapRequired)
             const res = await subscriber.bond({
                 provider: accounts[0],
                 endpoint: testZapProvider.endpoint,
-                zapNum: zapRequired
+                dots: 1
             });
             await expect(res.events.Bound.event).to.be.equal('Bound');
         })
 
-        it("Should unbond specified number of dots", async () => {
+        it("3. Should unbond specified number of dots", async () => {
             const res = await subscriber.unBond({
                 provider: accounts[0],
                 endpoint: testZapProvider.endpoint,
@@ -105,8 +99,11 @@ describe('Zap Subscriber Test', () => {
             await expect(res.events.Unbound.event).to.be.equal('Unbound');
         })
 
-        it("Should subscribe to specified provider", async () => {
-            const approve = await subscriber.approveToBond(accounts[0],100)
+        it("4. Should subscribe to specified provider", async () => {
+            const bound = await subscriber.bond({
+                provider:accounts[0],
+                endpoint:testZapProvider.endpoint,
+                dots:2})
             const res = await subscriber.subscribe({
                 provider: accounts[0],
                 endpoint: testZapProvider.endpoint,
@@ -114,13 +111,4 @@ describe('Zap Subscriber Test', () => {
                 dots: 2
             });
         });
-
-    it("Should subscribe to specified provider", async () => {
-        const res = await subscriber.subscribe({
-            provider: accounts[0],
-            endpoint: testZapProvider.endpoint,
-            endpointParams: testZapProvider.endpoint_params,
-            dots: 2
-        });
-    });
 });

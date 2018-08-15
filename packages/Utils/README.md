@@ -1,6 +1,6 @@
-# ZAP-Utils
+# @zapjs/utils
 
-This repository provides dev tools for developing Zap monorepo packages
+This repository provides utilities used in other @zapjs packages. This includes various pure functions that are used by other Ethereum-interfacing packages.
 
 ### Prerequisites
 
@@ -31,6 +31,8 @@ Utils.normalizeProvider(ZapProvider)
 * [Dispatch](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Dispatch/README.md)
 * [Arbiter](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Arbiter/README.md)
 * [ZapToken](https://github.com/zapproject/Zap-monorepo/tree/master/packages/ZapToken/README.md)
+* [Zapjs](https://github.com/zapproject/Zap-monorepo/tree/master/packages/ZapJs/README.md)
+
 
 
 

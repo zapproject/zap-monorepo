@@ -1,8 +1,7 @@
-import {BaseContract,ContractType} from '@zapjs/basecontract';
-import {QueryArgs,ResponseArgs,Filter,txid} from './types'
-import {Utils} from "@zapjs/utils";
-const {toBN,utf8ToHex} = require ("web3-utils");
-
+import {BaseContract} from '@zapjs/basecontract';
+import {QueryArgs,ResponseArgs} from './types'
+import {NetworkProviderOptions, txid,Filter,DEFAULT_GAS} from "@zapjs/types"
+const {utf8ToHex, toBN} = require ("web3-utils");
 /**
  * Provides an interface to the Dispatch contract for enabling data queries and responses.
  * @extends BaseContract
@@ -11,7 +10,7 @@ const {toBN,utf8ToHex} = require ("web3-utils");
  * @param networkProvider Ethereum network provider (e.g. Infura)
  */
 export class ZapDispatch extends BaseContract {
-    constructor(obj ?: ContractType){
+    constructor(obj ?: NetworkProviderOptions){
         super(Object.assign(obj, {artifactName:"Dispatch"}));
     }
 
@@ -27,7 +26,7 @@ export class ZapDispatch extends BaseContract {
      * @param {BigNumber} gas Set the gas limit for this transaction (optional)
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-    async queryData({provider, query, endpoint, endpointParams, onchainProvider, onchainSubscriber,from,gas=Utils.Constants.DEFAULT_GAS}:QueryArgs):Promise<txid>{
+    async queryData({provider, query, endpoint, endpointParams, onchainProvider, onchainSubscriber,from,gas=DEFAULT_GAS}:QueryArgs):Promise<txid>{
         if(endpointParams.length > 0) {
             for (let i in endpointParams) {
                 if (!endpointParams[i].startsWith('0x')) {
@@ -49,14 +48,18 @@ export class ZapDispatch extends BaseContract {
     /**
      * Provider responds to a query it received
      * @param {string} queryId A unique identifier for the query
-     * @param {Array<string>} responseParams List of responses returned by provider. Length determines which dispatch response is called
-     * @param {boolean} dynamic Determines if the Bytes32Array dispatch response should be used
+     * @param {Array<string | number>} responseParams List of responses returned by provider. Length determines which dispatch response is called
+     * @param {boolean} dynamic Determines if the IntArray/Bytes32Array dispatch response should be used
      * @param {address} from Address of the provider calling the respond function
      * @param {BigNumber} gas Set the gas limit for this transaction (optional)
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-    async respond({queryId, responseParams, dynamic, from,gas=Utils.Constants.DEFAULT_GAS}:ResponseArgs) :Promise<txid>{
+    async respond({queryId, responseParams, dynamic, from,gas=DEFAULT_GAS}:ResponseArgs) :Promise<txid>{
         if (dynamic){
+            if(typeof responseParams[0] === "number"){
+                const bignums = responseParams.map(x => Number(x).toLocaleString('fullwide', { useGrouping: false }));
+                return this.contract.methods.respondIntArray(queryId, bignums).send({from,gas});
+            }
             return this.contract.methods.respondBytes32Array(
                 queryId,
                 responseParams).send({from,gas});
@@ -127,12 +130,18 @@ export class ZapDispatch extends BaseContract {
     }
 
     /**
-     * Listen for "OffchainResponse" Dispatch contract events based on an optional filter, executing a callback function when it matches the filter.
+     * Listen for all Offchain responses Dispatch contract events based on an optional filter, executing a callback function when it matches the filter.
      * @param {object} filters Filters events based on certain key parameters
      * @param {Function} callback Callback function that is called whenever an event is emitted
      */
     listenOffchainResponse(filters:object={}, callback:Function):void{
         this.contract.events.OffchainResponse(filters, callback);
+        this.contract.events.OffchainResponseInt(filters, callback);
+        this.contract.events.OffchainResult1(filters, callback);
+        this.contract.events.OffchainResult2(filters, callback);
+        this.contract.events.OffchainResult3(filters, callback);
+        this.contract.events.OffchainResult4(filters, callback);
+
     }
 
 }

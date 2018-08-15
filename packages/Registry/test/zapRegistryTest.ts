@@ -7,7 +7,7 @@ const expect = require('chai')
 .expect;
 
 import {Utils} from "@zapjs/utils";
-import {BaseContract,BaseContractType} from "@zapjs/basecontract"
+import {BaseContract} from "@zapjs/basecontract"
 import {ZapRegistry} from '../src';
 
 async function configureEnvironment(func:Function) {
@@ -18,11 +18,15 @@ describe('Registry test', () => {
     let accounts :Array<string>= [],
     ganacheServer:any,
     registryWrapper:any,
-    deployedStorage:any ,
     web3,
     testArtifacts,
-    testZapProvider = Utils.Constants.testZapProvider;
-    let buildDir:string = join(__dirname,"contracts");
+    testZapProvider = Utils.Constants.testZapProvider,
+    buildDir:string = join(__dirname,"contracts"),
+    options = {
+        artifactsDir: buildDir,
+        networkId: Utils.Constants.ganacheServerOptions.network_id,
+        networkProvider: Utils.Constants.ganacheProvider
+    };
 
     before(function (done) {
         configureEnvironment(async() => {
@@ -32,12 +36,6 @@ describe('Registry test', () => {
             //delete require.cache[require.resolve('/contracts')];
             await Utils.migrateContracts(join(__dirname,"contracts"));
             testArtifacts = Utils.getArtifacts(join(__dirname,"contracts"));
-            deployedStorage = new BaseContract({
-                artifactsDir : buildDir,
-                artifactName:"RegistryStorage",
-                networkId: Utils.Constants.ganacheServerOptions.network_id,
-                networkProvider: Utils.Constants.ganacheProvider
-            });
             done();
         });
     });
@@ -49,11 +47,7 @@ describe('Registry test', () => {
     });
 
     it("should be able to create registryWrapper", async ()=>{
-        registryWrapper = new ZapRegistry({
-            artifactsDir : buildDir,
-            networkId: Utils.Constants.ganacheServerOptions.network_id,
-            networkProvider: Utils.Constants.ganacheProvider
-        })
+        registryWrapper = new ZapRegistry(options)
     })
 
 
@@ -94,7 +88,7 @@ describe('Registry test', () => {
         let thisCurve = testZapProvider.curve;
         let tx = await registryWrapper.initiateProviderCurve({
             endpoint: testZapProvider.endpoint,
-            curve: testZapProvider.curve,
+            term: testZapProvider.curve.values,
             from: accounts[0],
             gas: 3000000
         });
@@ -102,17 +96,12 @@ describe('Registry test', () => {
         expect(tx.events).to.include.keys("NewCurve");
         expect(tx.events.NewCurve).to.include.keys("returnValues");
         let returnValues = tx.events.NewCurve.returnValues;
-        expect(returnValues).to.include.keys("provider","endpoint","constants","parts","dividers")
+        expect(returnValues).to.include.keys("provider","endpoint","curve")
         expect(returnValues.provider).to.equal(accounts[0]);
         expect(testZapProvider.endpoint).to.equal(hexToUtf8(returnValues.endpoint));
-        expect(returnValues.constants).to.deep.equal(testZapProvider.curve.constants.map((i:number)=>{return ''+i}))
-        expect(returnValues.parts).to.deep.equal(testZapProvider.curve.parts.map((i:number)=>{return ''+i}))
-        expect(returnValues.dividers).to.deep.equal(testZapProvider.curve.dividers.map((i:number)=>{return ''+i}))
+        expect(returnValues.curve).to.deep.equal(testZapProvider.curve.values.map((i:number)=>{return ''+i}))
         const c = await registryWrapper.getProviderCurve(accounts[0], testZapProvider.endpoint);
-
-        await expect(c.constants).to.deep.equal(thisCurve.constants);
-        await expect(c.parts).to.deep.equal(thisCurve.parts);
-        await expect(c.dividers).to.deep.equal(thisCurve.dividers);
+        await expect(c).to.deep.equal(thisCurve);
     });
 
     it('Should set endpoint endpointParams in zap registry contract', async () => {
@@ -122,8 +111,7 @@ describe('Registry test', () => {
             from: accounts[0],
             gas: 600000
         });
-        const endpointsSize = await deployedStorage.contract.methods.getEndpointIndexSize(accounts[0], utf8ToHex(testZapProvider.endpoint)).call();
-        await expect(parseInt(endpointsSize.valueOf())).to.be.equal(testZapProvider.endpoint_params.length);
+
     });
 
 
