@@ -201,7 +201,7 @@ describe('Zap Bondage Test', () => {
             const finalDots = await bondageWrapper.getBoundDots({subscriber: accounts[1], provider: accounts[0], endpoint: testZapProvider.endpoint});
             expect(finalDots - startDots).to.equal(1);
     });
-    it("14) Should be able to bond 10^23 wei zap", async () => {
+    it("14) Should be able to bond more than 10^23 wei zap", async () => {
         let dotsLimit = await bondageWrapper.getDotsLimit({
             provider:accounts[0],
             endpoint:testZapProvider.endpoint

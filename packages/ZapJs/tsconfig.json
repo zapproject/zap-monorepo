@@ -13,6 +13,7 @@
     "pretty": true,
     "skipLibCheck": true,
     "strict": true,
+    "outDir": "lib",
     "resolveJsonModule": true
   },
   "include": ["./src/**/*","./src/typings.d.ts","./src/contracts/*"],
