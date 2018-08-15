@@ -1,7 +1,7 @@
 {
   "name": "@zapjs/artifacts",
   "private": false,
-  "version": "2.0.7",
+  "version": "2.0.8",
   "description": "ZapArtifacts",
   "main": "./src",
   "repository": "https://github.com/zapproject/Zap-monorepo",
@@ -13,7 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@zapjs/types": "^2.0.5",
+    "@zapjs/types": "^2.0.6",
     "bignumber.js": "^7.2.1",
     "path": "^0.12.7"
   },

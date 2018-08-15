@@ -1,7 +1,7 @@
 {
   "name": "@zapjs/curve",
   "private": false,
-  "version": "2.0.7",
+  "version": "2.0.8",
   "description": "Zap Curve",
   "repository": "https://github.com/zapproject/Zap-monorepo",
   "main": "lib/src/index.js",
@@ -17,7 +17,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@zapjs/types": "^2.0.5"
+    "@zapjs/types": "^2.0.6"
   },
   "devDependencies": {
     "@types/chai": "^4.1.4",
