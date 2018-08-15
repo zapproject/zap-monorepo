@@ -1,9 +1,9 @@
 {
   "name": "@zapjs/artifacts",
   "private": false,
-  "version": "2.0.8",
+  "version": "2.0.10",
   "description": "ZapArtifacts",
-  "main": "./src",
+  "main": "./lib/index.js",
   "repository": "https://github.com/zapproject/Zap-monorepo",
   "scripts": {
     "build": "./node_modules/.bin/tsc",
