@@ -1,7 +1,7 @@
 const {toHex,utf8ToHex,toBN, hexToUtf8} = require("web3-utils");
 import {BaseContract} from "@zapjs/basecontract";
 import {Curve,CurveType} from "@zapjs/curve";
-import {InitProvider, InitCurve, NextEndpoint, EndpointParams} from "./types"
+import {InitProvider, InitCurve, NextEndpoint, EndpointParams, SetProviderParams} from "./types"
 import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS} from "@zapjs/types";
 
 /**
@@ -62,7 +62,19 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS} from "@zapjs/ty
       return await this.contract.methods.setEndpointParams(
         utf8ToHex(endpoint),
         params).send({from, gas});
-  }
+    }
+
+    /**
+     * Set the parameter of a provider
+     * @param {address} provider The address of the provider
+     * @param {string} 
+     */
+    async setProviderParameter({ key, value, from, gas=DEFAULT_GAS }: SetProviderParams): Promise<txid> {
+        return await this.contract.methods.setProviderParameter(
+            utf8ToHex(key),
+            utf8ToHex(value)
+        ).send({ from, gas });
+    }
 
     /**
      * Get a provider's public key from the Registry contract.
@@ -112,7 +124,7 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS} from "@zapjs/ty
      * @returns {Promise<CurveType>} Returns a Promise that will eventually resolve into a Curve object
      */
     async getProviderCurve(provider:string,endpoint:string):Promise<Curve>{
-        let term:string[] =  await this.contract.methods.getProviderCurve(
+        const term:string[] =  await this.contract.methods.getProviderCurve(
             provider,
             utf8ToHex(endpoint)
             ).call();
@@ -127,7 +139,6 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS} from "@zapjs/ty
         return await this.contract.methods.getAllOracles().call();
     }
 
-
     /**
      * Get the endpoint params at a certain index of a provider's endpoint.
      * @param {address} provider The address of this provider
@@ -135,7 +146,7 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS} from "@zapjs/ty
      * @returns {Promise<string>} Returns a Promise that will eventually resolve into the endpoint's param at this index
      */
     async getEndpointParams({provider, endpoint}:NextEndpoint):Promise<string>{
-        const params = await this.contract.methods.getProviderEndpoints(
+        const params = await this.contract.methods.getEndpointParams(
             provider,
             utf8ToHex(endpoint)
         ).call();

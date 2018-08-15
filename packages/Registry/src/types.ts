@@ -28,3 +28,10 @@ export type EndpointParams = {
   from: address,
   gas ?: BNType
 }
+
+export type SetProviderParams = {
+  key: string,
+  value: string,
+  from: address,
+  gas ?: BNType
+};
