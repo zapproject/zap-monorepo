@@ -1,7 +1,7 @@
 {
   "name": "@zapjs/artifacts",
   "private": false,
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "ZapArtifacts",
   "main": "./lib/index.js",
   "types": "./typings.d.ts",

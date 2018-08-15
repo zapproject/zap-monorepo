@@ -1,8 +1,8 @@
 import {Filter} from "@zapjs/types/lib";
 
 const assert = require('assert');
-import {BondType,UnbondType,SubscribeType} from "./types";
-import {txid,address,NetworkProviderOptions} from "@zapjs/types";
+import {BondType,UnbondType,SubscribeType,QueryArgs} from "./types";
+import {txid,address,NetworkProviderOptions,DEFAULT_GAS} from "@zapjs/types";
 import {ZapDispatch} from "@zapjs/dispatch";
 import {ZapRegistry} from "@zapjs/registry";
 import {ZapBondage} from "@zapjs/bondage";
@@ -112,6 +112,20 @@ export class ZapSubscriber  {
             {provider, endpoint, endpoint_params:endpointParams,
                 blocks: blocks, pubkey: providerPubkey, from: this.subscriberOwner});
         return sub;
+    }
+
+   /**
+     * Queries data from a subscriber to a given provider's endpoint, passing in a query string and endpoint parameters that will be processed by the oracle.
+     * @param {address} provider Address of the data provider
+     * @param {string} query Subscriber given query string to be handled by provider
+     * @param {string} endpoint Data endpoint of provider, meant to determine how query is handled
+     * @param {Array<string>} endpointParams Parameters passed to data provider's endpoint
+     * @param {boolean} onchainProvider True if provider is a smart contract
+     * @param {boolean} onchainSubscriber True if subscriber is a smart contract
+     * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
+     */
+    async queryData({provider, query, endpoint, endpointParams, onchainProvider, onchainSubscriber}: QueryArgs): Promise<any> {
+        return await this.zapDispatch.queryData({provider, query, endpoint, endpointParams, onchainProvider, onchainSubscriber, from: this.subscriberOwner, gas: DEFAULT_GAS});
     }
 
 
