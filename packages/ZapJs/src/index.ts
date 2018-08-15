@@ -1,6 +1,6 @@
 
 
-const {Artifacts} = require ("./contracts");
+import {Artifacts} from "@zapjs/artifacts"
 import {ZapRegistry} from "@zapjs/registry";
 import {ZapArbiter} from "@zapjs/arbiter";
 import {ZapDispatch} from "@zapjs/dispatch";

@@ -129,8 +129,14 @@ export class ZapSubscriber  {
     }
 
 
-
+    /**
+     * Listen to all Offchain responses events
+     * @param filter
+     * @param callback
+     */
     async listenToOffchainResponse(filter:Filter,callback:Function){
+        if(!filter['subscriber'])
+            filter = {...filter,subscriber:this.subscriberOwner}
         this.zapDispatch.listenOffchainResponse(filter,callback)
 
 

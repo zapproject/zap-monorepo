@@ -55,7 +55,8 @@ import {TransferType,address,txid,NetworkProviderOptions} from "@zapjs/types";
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
      async allocate({to, amount, from,gas=Util.DEFAULT_GAS}:TransferType):Promise<txid> {
-        return await this.contract.methods.allocate(to, amount).send({from,gas});
+         let bigAmount=  Util.toZapBase(amount)
+        return await this.contract.methods.allocate(to, bigAmount).send({from,gas});
     }
 
     /**

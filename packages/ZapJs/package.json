@@ -6,6 +6,7 @@
   "dependencies": {
     "@types/node": "^10.7.0",
     "@zapjs/arbiter": "^2.0.4",
+    "@zapjs/artifacts": "^2.0.5",
     "@zapjs/bondage": "^2.0.4",
     "@zapjs/curve": "^2.0.4",
     "@zapjs/dispatch": "^2.0.4",
@@ -23,7 +24,7 @@
     "build": "tsc",
     "run_test": "tsc"
   },
-  "main": "lib/index.js",
+  "main": "./src",
   "author": "propulsor",
   "license": "MIT",
   "devDependencies": {

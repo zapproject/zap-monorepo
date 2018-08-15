@@ -3,8 +3,7 @@
   "private": false,
   "version": "2.0.5",
   "description": "ZapArtifacts",
-  "main": "./lib/index.js",
-  "types": "./typings.d.ts",
+  "main": "./src/index.js",
   "repository": "https://github.com/zapproject/Zap-monorepo",
   "scripts": {
     "build": "./node_modules/.bin/tsc",
