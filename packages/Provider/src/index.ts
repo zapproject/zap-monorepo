@@ -37,14 +37,11 @@ import {ZapArbiter} from "@zapjs/arbiter";
      * Calls the Registry contract to initialize a new provider endpoint. This needs to be called for each endpoint.
      * @param {string} public_key A public identifier for this oracle
      * @param {string} title A descriptor describing what data this oracle provides
-     * @param {string} endpoint The endpoint identifier
-     * @param {Array<string>} endpoint_params The parameters that this endpoint accepts as query arguments
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-     async initiateProvider({public_key, title, endpoint, endpoint_params}:InitProvider):Promise<txid> {
-        assert(Array.isArray(endpoint_params), 'endpointParams need to be an array');
+     async initiateProvider({public_key, title}:InitProvider):Promise<txid> {
         return await this.zapRegistry.initiateProvider(
-            {public_key, title, endpoint, endpoint_params, from:this.providerOwner});
+            {public_key, title, from:this.providerOwner});
     }
 
     /**

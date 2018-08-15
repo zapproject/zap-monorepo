@@ -7,8 +7,6 @@ import {address,txid} from "@zapjs/types";
 export type InitProvider = {
     public_key : string,
     title :string,
-    endpoint: string,
-    endpoint_params ?: Array<string>,
     gas ?: number
 }
 

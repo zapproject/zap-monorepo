@@ -4,8 +4,6 @@ import {address,BNType} from "@zapjs/types"
 export interface InitProvider  {
   public_key : string,
   title :string,
-  endpoint: string,
-  endpoint_params ?: Array<string>,
   from: address,
   gas ?: BNType
 }
@@ -21,8 +19,7 @@ export type InitCurve = {
 
 export type NextEndpoint = {
   provider:address,
-  endpoint: string,
-  index:number
+  endpoint: string
 }
 
 export type EndpointParams = {
