@@ -140,6 +140,28 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS} from "@zapjs/ty
     }
 
     /**
+     * Get a parameter from a provider
+     * @param {string} provider The address of the provider
+     * @param {string} key The key you're getting
+     * @returns {Promise<string>} A promise that will be resolved with the value of the key
+     */
+    async getProviderParam(provider: string, key: string): Promise<string> {
+        return await this.contract.method.getProviderParameter(
+            provider,
+            utf8ToHex(key)
+        ).call();
+    }
+
+    /**
+     * Get all the parameters of a provider
+     * @param {string} provider The address of the provider
+     * @returns {Promise<string[]>} A promise that will be resolved with all the keys
+     */
+    async getAllProviderParams(provider: string): Promise<string[]> {
+        return await this.contract.method.getAllProviderParams(utf8ToHex).call();
+    }
+
+    /**
      * Get the endpoint params at a certain index of a provider's endpoint.
      * @param {address} provider The address of this provider
      * @param {string} endpoint Data endpoint of the provider
