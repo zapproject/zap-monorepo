@@ -3,10 +3,10 @@ export interface SubscriptionInit {
     provider:address,
     endpoint :string,
     endpoint_params: Array<string>,
-    blocks : number,
+    blocks : number|string,
     pubkey:number,
     from: address,
-    gas?: BNType
+    gas?: BNType|string
 }
 
 export interface SubscriptionEnd {
@@ -14,7 +14,7 @@ export interface SubscriptionEnd {
     subscriber ?:address,
     endpoint : string,
     from: address,
-    gas?:BNType
+    gas?:BNType|string
 }
 
 export interface SubscriptionType {
@@ -28,5 +28,5 @@ export interface SubscriptionParams {
     endpoint:string,
     params: Array<string>,
     from: address,
-    gas?: BNType
+    gas?: BNType|string
 }

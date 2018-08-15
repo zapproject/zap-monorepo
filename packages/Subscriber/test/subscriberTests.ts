@@ -13,6 +13,7 @@ import { ZapRegistry } from "@zapjs/registry";
 import { ZapToken } from "@zapjs/zaptoken";
 import { ZapDispatch } from "@zapjs/dispatch";
 import { ZapArbiter } from "@zapjs/arbiter";
+import {BNType} from "@zapjs/types"
 
 async function configureEnvironment(func: Function) {
     await func();
@@ -75,7 +76,7 @@ describe('Zap Subscriber Test', () => {
         })
 
         it("2. Should bond specified number of zap", async () => {
-            let zapRequired:number = await bondageWrapper.calcZapForDots({
+            let zapRequired:BNType = await bondageWrapper.calcZapForDots({
                 provider: accounts[0],
                 endpoint: testZapProvider.endpoint,
                 dots: 1

@@ -8,11 +8,11 @@ const expect = require('chai')
 import {ZapToken} from "../src"
 import {join} from "path";
 const Web3 = require('web3');
+const BigNumber = require("bignumber.js")
 
 async function configureEnvironment(func:Function) {
     await func();
 }
-
 describe('ZapToken, path to "/src/api/contracts/ZapToken"', () => {
     let addressZapToken:string,
     accounts:Array<string> = [],
@@ -22,7 +22,7 @@ describe('ZapToken, path to "/src/api/contracts/ZapToken"', () => {
     testArtifacts:any,
     buildDir:string = join(__dirname,"contracts"),
     zapTokenOwner:string;
-    const allocateAmount = 100;
+    const allocateAmount = '1000';
 
 
     before(function (done) {
@@ -37,6 +37,12 @@ describe('ZapToken, path to "/src/api/contracts/ZapToken"', () => {
         });
     });
 
+    after(function(){
+        console.log("Done running Token tests");
+        ganacheServer.close();
+        process.exit();
+    });
+
     it('Should initiate wrapper', async () => {
         zapTokenWrapper = new ZapToken({
             artifactsDir : buildDir,
@@ -44,11 +50,7 @@ describe('ZapToken, path to "/src/api/contracts/ZapToken"', () => {
             networkProvider: Utils.Constants.ganacheProvider});
         zapTokenOwner = await  zapTokenWrapper.getContractOwner()
     });
-    after(function(){
-        console.log("Done running Token tests");
-        ganacheServer.close();
-        process.exit();
-    });
+
 
     it('Should initiate wrapper', async () => {
         zapTokenWrapper = new ZapToken({
@@ -66,25 +68,24 @@ describe('ZapToken, path to "/src/api/contracts/ZapToken"', () => {
 
     it('Should get balance of zapToken from wrapper', async () => {
         const balance = await zapTokenWrapper.balanceOf(accounts[0]);
-        await expect(balance.valueOf()).to.be.equal(0);
+        await expect(balance.valueOf()).to.be.equal('0');
     });
 
     it('Should update balance, and get updated balance of zap token', async () => {
-        await zapTokenWrapper.allocate({to:accounts[0], from:zapTokenOwner, amount:allocateAmount});
-        const balance = await zapTokenWrapper.balanceOf(accounts[0]);
-
-        await expect(balance.valueOf()).to.be.equal(allocateAmount);
+        await zapTokenWrapper.allocate({to:accounts[1], from:zapTokenOwner, amount:allocateAmount});
+        const balance = await zapTokenWrapper.balanceOf(accounts[1]);
+        await expect(balance).to.be.equal(allocateAmount);
     });
 
     it('Should make transfer to another account', async () => {
         await zapTokenWrapper.send({
-            to: accounts[1],
+            to: accounts[2],
             amount: allocateAmount,
-            from: accounts[0]
+            from: accounts[1]
         });
-        const balance = await zapTokenWrapper.balanceOf(accounts[1]);
+        const balance = await zapTokenWrapper.balanceOf(accounts[2]);
 
-        await expect(balance.valueOf()).to.be.equal(allocateAmount);
+        await expect(balance).to.be.equal(allocateAmount);
     });
 
     it('Should approve to transfer from one to the another account', async () => {

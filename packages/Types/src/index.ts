@@ -16,7 +16,8 @@ export interface Filter {
     toBlock ?: number,
     provider ?: address,
     subscriber ?:address,
-    terminator ?:address
+    terminator ?:address,
+    id ?: BNType
 }
 
 export interface Artifact {
@@ -71,10 +72,30 @@ export interface NetworkProviderOptions {
 
 export type TransferType = {
     to:address,
-    amount:number,
+    amount:BigNumber|string,
     from:address,
     gas ?: number
 }
+
+export type QueryArgs = {
+    provider:address,
+    endpoint: string,
+    query: string,
+    endpointParams : Array<string>,
+    onchainProvider : boolean,
+    onchainSubscriber : boolean,
+    from:address,
+    gas: BNType
+}
+
+export interface ResponseArgs {
+    queryId : string,
+    responseParams: Array<string>,
+    dynamic : boolean,
+    from: address,
+    gas?:BNType
+}
+
 
 
 

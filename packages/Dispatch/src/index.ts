@@ -130,12 +130,17 @@ export class ZapDispatch extends BaseContract {
     }
 
     /**
-     * Listen for "OffchainResponse" Dispatch contract events based on an optional filter, executing a callback function when it matches the filter.
+     * Listen for all Offchain responses Dispatch contract events based on an optional filter, executing a callback function when it matches the filter.
      * @param {object} filters Filters events based on certain key parameters
      * @param {Function} callback Callback function that is called whenever an event is emitted
      */
     listenOffchainResponse(filters:object={}, callback:Function):void{
         this.contract.events.OffchainResponse(filters, callback);
+        this.contract.events.OffchainResult1(filters, callback);
+        this.contract.events.OffchainResult2(filters, callback);
+        this.contract.events.OffchainResult3(filters, callback);
+        this.contract.events.OffchainResult4(filters, callback);
+
     }
 
 }

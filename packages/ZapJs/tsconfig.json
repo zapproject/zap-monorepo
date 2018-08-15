@@ -13,9 +13,10 @@
     "pretty": true,
     "skipLibCheck": true,
     "strict": true,
-    "outDir": "lib"
+    "outDir": "lib",
+    "resolveJsonModule": true
   },
-  "include": ["./src/**/*"],
+  "include": ["./src/**/*","./src/typings.d.ts","./src/contracts/*"],
   "exclude":[
     "node_modules"
   ]

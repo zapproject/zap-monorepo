@@ -1,4 +1,4 @@
-const  {Artifacts} =require("@zapjs/artifacts");
+import  {Artifacts} from "@zapjs/artifacts";
 import {BaseContractType} from "@zapjs/types";
 import {Utils} from "./utils"
 const Web3 = require("web3")

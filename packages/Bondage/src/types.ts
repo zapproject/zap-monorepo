@@ -1,9 +1,10 @@
 export type address = string;
 export type txid = string;
+import {BNType} from "@zapjs/types"
 export interface BondArgs {
     provider: address;
     endpoint: string;
-    dots: number;
+    dots: string|number|BNType;
     from: address;
     gas ?: number;
 }
@@ -11,7 +12,7 @@ export interface BondArgs {
 export interface UnbondArgs {
 	provider: address;
     endpoint: string;
-    dots: number;
+    dots: number|string;
     from: address;
     gas ?: number;
 }
@@ -29,8 +30,8 @@ export interface BondageArgs {
 	subscriber ?: address;
 	provider: address;
 	endpoint: string;
-	dots ?: number ;
-	zapNum ?: number;
+	dots ?: number|string ;
+	zapNum ?: string|BNType;
 }
 export interface CalcBondRateType {
     provider: address;

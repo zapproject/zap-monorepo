@@ -7,18 +7,18 @@ import {ZapRegistry} from "@zapjs/registry";
 export type BondType = {
     provider:string,
     endpoint:string,
-    dots :number
+    dots :number|string
 }
 export type UnbondType = {
     provider:string,
     endpoint:string,
-    dots :number
+    dots :number|string
 }
 
 export type SubscribeType = {
     provider:string,
     endpoint:string,
-    dots :number,
+    dots :number|string,
     endpointParams : string[]
 }
 export type SubscriberConstructorType = {
