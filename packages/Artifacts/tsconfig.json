@@ -1,22 +1,9 @@
 {
-    "compilerOptions": {
-    "module": "commonjs",
-    "target": "es6",
-    "lib": [
-      "es2018",
-      "dom"
-    ],
-    "sourceMap": true,
-    "declaration": true,
-    "experimentalDecorators": true,
-    "noImplicitReturns": true,
-    "pretty": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "resolveJsonModule": true,
-      "esModuleInterop": true
-    },
-  "files": ["./src/index.ts","./src/typings.d.ts"],
+  "extends": "../../tsconfig",
+  "compilerOptions": {
+    "outDir": "lib"
+  },
+  "include": ["./src/*"],
   "exclude":[
     "node_modules"
   ]
