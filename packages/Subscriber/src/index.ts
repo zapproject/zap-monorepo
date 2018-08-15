@@ -33,9 +33,9 @@ export class ZapSubscriber  {
 
     /**
       * Gets the Zap balance of the current ZapSubscriber
-      * @returns {Promise<number>} Returns a Promsie that will be eventually resolved with the number of wei Zap
+      * @returns {Promise<string|BigNumber>} Returns a Promsie that will be eventually resolved with the number of wei Zap
       */
-    async getZapBalance(): Promise<BNType> {
+    async getZapBalance(): Promise<string|BNType> {
         return await this.zapToken.balanceOf(this.subscriberOwner);
     }
 
@@ -80,7 +80,7 @@ export class ZapSubscriber  {
      * Unbonds a given number of dots from a given oracle, returning Zap to this subscriber based on the bonding curve.
      * @param {string} provider The address of the oracle
      * @param {string} endpoint The endpoint that the client has already bonded to
-     * @param {number} dots The number of dots to unbond (redeem) from this provider and endpoint
+     * @param {string|number} dots The number of dots to unbond (redeem) from this provider and endpoint
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
     async unBond({provider, endpoint, dots}:UnbondType):Promise<any>{
@@ -154,7 +154,7 @@ export class ZapSubscriber  {
      * @param {number} zapRequired The number of zap to check for
      * @returns {Promise<boolean>} Returns a Promise that will eventually resolve into a true or false value
      */
-    async hasEnoughZap(zapRequired:BNType):Promise<boolean>{
+    async hasEnoughZap(zapRequired:string|BNType):Promise<boolean>{
         let balance = await this.zapToken.balanceOf(this.subscriberOwner);
         return balance >= zapRequired;
     }

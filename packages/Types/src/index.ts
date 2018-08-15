@@ -72,7 +72,7 @@ export interface NetworkProviderOptions {
 
 export type TransferType = {
     to:address,
-    amount:BigNumber,
+    amount:BigNumber|string,
     from:address,
     gas ?: number
 }

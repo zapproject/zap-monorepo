@@ -28,7 +28,7 @@ import {TransferType,address,txid,NetworkProviderOptions,BNType} from "@zapjs/ty
      * @param {address} address The Ethereum address to check
      * @returns {Promise<number>} Returns a Promise that will eventually resolve into a Zap balance (wei)
      */
-     async balanceOf(address:address) :Promise<BNType>{
+     async balanceOf(address:address) :Promise<string|BNType>{
         return await this.contract.methods.balanceOf(address).call();
     }
 

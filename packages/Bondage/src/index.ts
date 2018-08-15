@@ -89,9 +89,9 @@ export class ZapBondage extends BaseContract {
      * @param {address} subscriber Address of the data subscriber
      * @param {address} provider Address of the data provider
      * @param {string} endpoint Data endpoint of the provider
-     * @returns {Promise<number>} Returns a Promise that will eventually resolve into the number of bound dots to this provider's endpoint
+     * @returns {Promise<string|BigNumber>} Returns a Promise that will eventually resolve into the number of bound dots to this provider's endpoint
      */
-    public async getBoundDots({subscriber, provider, endpoint}: BondageArgs): Promise<number> {
+    public async getBoundDots({subscriber, provider, endpoint}: BondageArgs): Promise<string|BNType> {
         return await this.contract.methods.getBoundDots(
             subscriber,
             provider,
@@ -104,9 +104,9 @@ export class ZapBondage extends BaseContract {
      * @param {address} provider Address of the data provider
      * @param {string} endpoint Data endpoint of the provider
      * @param {number} dots Number of dots to calculate the price (in Zap) for
-     * @returns {Promise<number>} Returns a Promise that will eventually resolve into the price (in Zap) for the given number of dots
+     * @returns {Promise<string|BigNumber>} Returns a Promise that will eventually resolve into the price (in Zap) for the given number of dots
      */
-    public async calcZapForDots({provider, endpoint, dots}: BondageArgs): Promise<BNType> {
+    public async calcZapForDots({provider, endpoint, dots}: BondageArgs): Promise<string|BNType> {
         return await this.contract.methods.calcZapForDots(
             provider,
             utf8ToHex(endpoint),
@@ -118,9 +118,9 @@ export class ZapBondage extends BaseContract {
      * @param {address} provider Address of the data provider
      * @param {string} endpoint Data endpoint of the provider
      * @param {number} dots : dots that subscriber want to use
-     * @returns {Promise<number>} Returns a Promise that will eventually resolve into a price (in Zap wei)
+     * @returns {Promise<string|BigNumber>} Returns a Promise that will eventually resolve into a price (in Zap wei)
      */
-    public async currentCostOfDot({provider, endpoint, dots}: BondageArgs): Promise<number> {
+    public async currentCostOfDot({provider, endpoint, dots}: BondageArgs): Promise<string|BNType> {
         return this.contract.methods.currentCostOfDot(
             provider,
             utf8ToHex(endpoint),
@@ -132,9 +132,9 @@ export class ZapBondage extends BaseContract {
      * Gets the total number of dots that have been issued by a provider's endpoint.
      * @param {address} provider Address of the data provider
      * @param {string} endpoint Data endpoint of the provider
-     * @returns {Promise<number>} Returns a Promise that will eventually resolve into an integer number of dots
+     * @returns {Promise<string|BigNumber>} Returns a Promise that will eventually resolve into an number of dots
      */
-    public async getDotsIssued({provider, endpoint}: BondageArgs): Promise<number> {
+    public async getDotsIssued({provider, endpoint}: BondageArgs): Promise<string> {
         return await this.contract.methods.getDotsIssued(
             provider,
             utf8ToHex(endpoint)
@@ -148,7 +148,7 @@ export class ZapBondage extends BaseContract {
      * @param {string} endpoint Data endpoint of the provider
      * @returns {Promise<number>} Returns a Promise that will eventually resolve into an integer amount of Zap (wei)
      */
-    public async getZapBound({provider, endpoint}: BondageArgs ): Promise<number> {
+    public async getZapBound({provider, endpoint}: BondageArgs ): Promise<string|BNType> {
         return await this.contract.methods.getZapBound(
             provider,
             utf8ToHex(endpoint)
