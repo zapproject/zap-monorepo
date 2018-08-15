@@ -148,6 +148,14 @@ import {ZapArbiter} from "@zapjs/arbiter";
     }
 
     /**
+     * Get maximum dots an endpoint can issue
+     * @param endpoint
+     */
+    async getDotsLimit(endpoint:string):Promise<string|BNType>{
+        return this.zapBondage.getDotsLimit({provider:this.providerOwner,endpoint:endpoint})
+    }
+
+    /**
      * Gets the total amount of Zap required to bond x dots.
      * @param endpoint The endpoint identifier matching the desired endpoint
      * @param dots Number of dots that is desired.

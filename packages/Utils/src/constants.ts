@@ -8,7 +8,7 @@ const contractsDir = join(zapContractDirName,"contracts")
 const workingDir = zapContractDirName
 
 // y = 2x + x^2 from [1, 100]
-export const TEST_CURVE = [3, 0, 2, 1, 100];
+export const TEST_CURVE = [3, 0, 2, 1, 1000000000];
 
 
 export const  migrate = require("truffle-core/lib/commands/migrate.js");

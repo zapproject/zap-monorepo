@@ -95,8 +95,8 @@ import {BigNumber} from "bignumber.js";
      * @returns {Array<Array<BigNumber>>}
      */
      public convertToBNArrays(): BigNumber[] {
-         return this.values.map((item: number) => {
-             return toHex(item);
+         return this.values.map((item: number|string) => {
+             return new BigNumber(item);
          });
      }
      public valuesToString(): string[]{

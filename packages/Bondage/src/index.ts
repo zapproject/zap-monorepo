@@ -129,6 +129,15 @@ export class ZapBondage extends BaseContract {
     }
 
     /**
+     * Get Maximum dots that can be bound for an endpoint of a provider
+     * @param provider
+     * @param endpoint
+     */
+    public  async getDotsLimit({provider,endpoint}:BondageArgs):Promise<string|BNType>{
+        return await this.contract.methods.dotLimit(provider,utf8ToHex(endpoint)).call().valueOf()
+    }
+
+    /**
      * Gets the total number of dots that have been issued by a provider's endpoint.
      * @param {address} provider Address of the data provider
      * @param {string} endpoint Data endpoint of the provider
