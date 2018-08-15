@@ -136,6 +136,7 @@ export class ZapDispatch extends BaseContract {
      */
     listenOffchainResponse(filters:object={}, callback:Function):void{
         this.contract.events.OffchainResponse(filters, callback);
+        this.contract.events.OffchainResponseInt(filters, callback);
         this.contract.events.OffchainResult1(filters, callback);
         this.contract.events.OffchainResult2(filters, callback);
         this.contract.events.OffchainResult3(filters, callback);
