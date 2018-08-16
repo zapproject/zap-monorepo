@@ -83,19 +83,15 @@ describe('Zap Provider Test', () => {
     it('4. Should initiate provider', async()=> {
      let tx = await zapProvider.initiateProvider({
         public_key:testZapProvider.pubkey,
-        endpoint: testZapProvider.endpoint,
-        title: testZapProvider.title,
-        endpoint_params:testZapProvider.endpoint_params
+        title: testZapProvider.title
     })
      expect(tx).to.include.keys("events")
      expect(tx.events).to.include.keys("NewProvider")
      expect(tx.events.NewProvider).to.include.keys("returnValues");
      let returnValues = tx.events.NewProvider.returnValues;
-     expect(returnValues).to.include.keys("provider","title","endpoint")
+     expect(returnValues).to.include.keys("provider","title");
      expect(testZapProvider.title).to.equal(hexToUtf8(returnValues.title))
-     expect(returnValues.provider).to.equal(providerAddress);
-     expect(testZapProvider.endpoint).to.equal(hexToUtf8(returnValues.endpoint));
-
+     expect(returnValues.provider).to.equal(providerAddress);å
  });
     it("5. Should get provider title", async () => {
         let returnedTitle = await zapProvider.getTitle();

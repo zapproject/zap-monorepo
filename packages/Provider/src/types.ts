@@ -2,11 +2,12 @@ import {ZapDispatch} from "@zapjs/dispatch";
 import {ZapRegistry} from "@zapjs/registry";
 import {ZapBondage} from "@zapjs/bondage";
 import {ZapArbiter} from "@zapjs/arbiter";
-import {address,txid} from "@zapjs/types";
+import {address,txid, BNType} from "@zapjs/types";
 
 export type InitProvider = {
     public_key : string,
-    title :string
+    title :string,
+    gas ?: BNType
 }
 
 export type InitCurve = {

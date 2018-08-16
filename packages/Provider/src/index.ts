@@ -39,9 +39,9 @@ import {ZapArbiter} from "@zapjs/arbiter";
      * @param {string} title A descriptor describing what data this oracle provides
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-     async initiateProvider({public_key, title}:InitProvider):Promise<txid> {
+     async initiateProvider({public_key, title, gas=DEFAULT_GAS}:InitProvider):Promise<txid> {
         return await this.zapRegistry.initiateProvider(
-            {public_key, title, from:this.providerOwner});
+            {public_key, title, from: this.providerOwner, gas});
     }
 
     /**
