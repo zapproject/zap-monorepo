@@ -186,7 +186,7 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS} from "@zapjs/ty
      */
     async getProviderEndpoints(provider: string): Promise<string[]> {
         const endpoints = await this.contract.methods.getProviderEndpoints(provider).call();
-        return endpoints.map(utf8ToHex);
+        return endpoints.map(hexToUtf8);
     } 
 
     // ==== Events ====//
