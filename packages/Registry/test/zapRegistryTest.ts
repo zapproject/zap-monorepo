@@ -86,9 +86,9 @@ describe('Registry test', () => {
         expect(returnValues).to.include.keys("provider","endpoint","curve")
         expect(returnValues.provider).to.equal(accounts[0]);
         expect(testZapProvider.endpoint).to.equal(hexToUtf8(returnValues.endpoint));
-        expect(returnValues.curve).to.deep.equal(testZapProvider.curve.values.map((i:number)=>{return ''+i}))
-        const c = await registryWrapper.getProviderCurve(accounts[0], testZapProvider.endpoint);
-        await expect(c).to.deep.equal(thisCurve);
+        const a:string = JSON.stringify(returnValues.curve);
+        const b:string = JSON.stringify(testZapProvider.curve.values.map((i:number)=>{return ''+i}));
+        expect(a).to.be.equal(b);
     });
 
     it('Should set endpoint endpointParams in zap registry contract', async () => {
@@ -100,7 +100,6 @@ describe('Registry test', () => {
         });
 
     });
-
 
     after(function () {
         ganacheServer.close();

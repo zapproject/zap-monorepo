@@ -2,7 +2,7 @@ import {CurveType} from "@zapjs/curve"
 import {BigNumber} from 'bignumber.js';
 import {address,BNType} from "@zapjs/types"
 
-export type InitProvider  {
+export type InitProvider = {
   public_key : string,
   title :string,
   from: address,

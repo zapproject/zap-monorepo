@@ -14,7 +14,7 @@ import {Utils} from "@zapjs/utils";
 export async function bootstrap(zapProvider:any,accounts:Array<string>,zapRegistry:any, zapToken:any){
     let normalizedP = Utils.normalizeProvider(zapProvider);
     let defaultTx = {from:accounts[0], gas:Utils.Constants.DEFAULT_GAS};
-    await zapRegistry.contract.methods.initiateProvider(normalizedP.pubkey,normalizedP.title, normalizedP.endpoint, normalizedP.endpoint_params).send(defaultTx);
+    await zapRegistry.contract.methods.initiateProvider(normalizedP.pubkey,normalizedP.title).send(defaultTx);
     let convertedCurve = zapProvider.curve.convertToBNArrays();
     let tokenOwner = await zapToken.contract.methods.owner().call();
     await zapRegistry.initiateProviderCurve({endpoint:zapProvider.endpoint,term:zapProvider.curve.values,from:accounts[0]});
