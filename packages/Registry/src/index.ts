@@ -185,7 +185,8 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS} from "@zapjs/ty
      * @returns {Promise<string[]>} Returns a Promise that will be eventually resolved with the endpoints of the provider.
      */
     async getProviderEndpoints(provider: string): Promise<string[]> {
-        return await this.contract.methods.getProviderEndpoints(provider).call().map(utf8ToHex);
+        const endpoints = await this.contract.methods.getProviderEndpoints(provider).call();
+        return endpoints.map(utf8ToHex);
     } 
 
     // ==== Events ====//
