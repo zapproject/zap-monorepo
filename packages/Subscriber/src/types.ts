@@ -37,5 +37,7 @@ export type QueryArgs = {
   endpoint: string,
   query: string,
   endpointParams : Array<string>,
+  onchainProvider : boolean,
+  onchainSubscriber : boolean,
   gas: number
 }

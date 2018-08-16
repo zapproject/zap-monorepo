@@ -120,16 +120,18 @@ export class ZapSubscriber  {
      * @param {string} query Subscriber given query string to be handled by provider
      * @param {string} endpoint Data endpoint of provider, meant to determine how query is handled
      * @param {Array<string>} endpointParams Parameters passed to data provider's endpoint
+     * @param {boolean} onchainProvider True if provider is a smart contract
+     * @param {boolean} onchainSubscriber True if subscriber is a smart contract
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-    async queryData({provider, query, endpoint, endpointParams}: QueryArgs): Promise<any> {
+    async queryData({provider, query, endpoint, endpointParams, onchainProvider, onchainSubscriber}: QueryArgs): Promise<any> {
         let boundDots = await this.zapBondage.getBoundDots({provider,endpoint,subscriber:this.subscriberOwner})
         
         if ( !boundDots ) {
             throw new Error("Insufficient balance of bound dots to query")
         }
 
-        return await this.zapDispatch.queryData({provider, query, endpoint, endpointParams, from: this.subscriberOwner, gas: DEFAULT_GAS});
+        return await this.zapDispatch.queryData({provider, query, endpoint, endpointParams, onchainProvider, onchainSubscriber, from: this.subscriberOwner, gas: DEFAULT_GAS});
     }
 
 
