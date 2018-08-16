@@ -161,7 +161,7 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS} from "@zapjs/ty
      * @returns {Promise<string[]>} A promise that will be resolved with all the keys
      */
     async getAllProviderParams(provider: string): Promise<string[]> {
-        return await this.contract.method.getAllProviderParams(utf8ToHex).call();
+        return await this.contract.method.getAllProviderParams(provider).call().map(utf8ToHex);
     }
 
     /**
@@ -178,6 +178,15 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS} from "@zapjs/ty
 
         return params.map(hexToUtf8);
     }
+
+    /**
+     * Get the endpoints of a given provider
+     * @param {address} provider The address of this provider
+     * @returns {Promise<string[]>} Returns a Promise that will be eventually resolved with the endpoints of the provider.
+     */
+    async getProviderEndpoints(provider: string): Promise<string[]> {
+        return await this.contract.method.getProviderEndpoints(provider).call().map(utf8ToHex);
+    } 
 
     // ==== Events ====//
 

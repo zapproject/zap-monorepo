@@ -205,6 +205,15 @@ import {ZapArbiter} from "@zapjs/arbiter";
     }
 
     /**
+     * Get the endpoints of a given provider
+     * @param {address} provider The address of this provider
+     * @returns {Promise<string[]>} Returns a Promise that will be eventually resolved with the endpoints of the provider.
+     */
+    async getEndpoints(): Promise<string[]> {
+        return await this.zapRegistry.getProviderEndpoints(this.providerOwner);
+    }
+
+    /**
      * Responds to a specific query from the subscriber by identifying a
      * @param {string} queryId The query identifier to send this response to
      * @param {string[] | number[]} responseParams List of responses returned by provider. Length determines which dispatch response is called
