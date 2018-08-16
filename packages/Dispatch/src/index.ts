@@ -20,13 +20,11 @@ export class ZapDispatch extends BaseContract {
      * @param {string} query Subscriber given query string to be handled by provider
      * @param {string} endpoint Data endpoint of provider, meant to determine how query is handled
      * @param {Array<string>} endpointParams Parameters passed to data provider's endpoint
-     * @param {boolean} onchainProvider True if provider is a smart contract
-     * @param {boolean} onchainSubscriber True if subscriber is a smart contract
      * @param {address} from Address of the subscriber
      * @param {BigNumber} gas Set the gas limit for this transaction (optional)
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-    async queryData({provider, query, endpoint, endpointParams, onchainProvider, onchainSubscriber,from,gas=DEFAULT_GAS}:QueryArgs):Promise<txid>{
+    async queryData({provider, query, endpoint, endpointParams,from,gas=DEFAULT_GAS}:QueryArgs):Promise<txid>{
         if(endpointParams.length > 0) {
             for (let i in endpointParams) {
                 if (!endpointParams[i].startsWith('0x')) {
@@ -39,9 +37,8 @@ export class ZapDispatch extends BaseContract {
             provider,
             query,
             utf8ToHex(endpoint),
-            endpointParams, // endpoint-specific endpointParams
-            onchainProvider,
-            onchainSubscriber).send({from, gas});
+            endpointParams
+        ).send({from, gas});
     }
 
 

@@ -4,10 +4,8 @@ export type QueryArgs = {
   endpoint: string,
   query: string,
   endpointParams : Array<string>,
-  onchainProvider : boolean,
-  onchainSubscriber : boolean,
-    from:address,
-    gas: BNType
+  from:address,
+  gas: BNType
 }
 
 export interface ResponseArgs {
