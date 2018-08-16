@@ -1,5 +1,5 @@
 const assert = require("assert");
-import {InitProvider, InitCurve, Respond, ProviderConstructorType} from "./types";
+import {InitProvider, InitCurve, Respond, ProviderConstructorType, SetProviderParams} from "./types";
 import {txid,Filter,NetworkProviderOptions,DEFAULT_GAS,BNType} from "@zapjs/types";
 import {Curve,CurveType} from "@zapjs/curve"
 import {ZapDispatch} from "@zapjs/dispatch";
@@ -62,15 +62,12 @@ import {ZapArbiter} from "@zapjs/arbiter";
      * Set the parameter of a provider
      * @param {string} key The key to be set
      * @param {string} value The value to set the key to
-     * @param {BN} gas The amount of gas to use.
-
      */
-    async setProviderParameter({ key, value, gas=DEFAULT_GAS }: SetProviderParams): Promise<txid> {
+    async setProviderParameter({ key, value}: SetProviderParams): Promise<txid> {
         return await this.zapRegistry.setProviderParameter({
             key,
             value,
-            from: this.providerOwner,
-            gas
+            from: this.providerOwner
         });
     }
 
