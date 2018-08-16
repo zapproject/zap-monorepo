@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "ganache": "ganache-cli -p 8545 --networkId 5777",
-    "compile": "./node_modules/lerna run build",
+    "compile": "./node_modules/.bin/lerna run build",
     "build": "./node_modules/.bin/lerna bootstrap --hoist && ./node_modules/.bin/lerna run build",
     "test": "./node_modules/.bin/lerna exec npm run run_test --concurrency=1",
     "webpack": "./node_modules/.bin/lerna exec npm run webpack --scope='zapjs'",
@@ -48,7 +48,7 @@
     "web3": "^1.0.0-beta.34",
     "web3-utils": "^1.0.0-beta.34",
     "webpack-log": "^1.2.0",
-    "zap_contracts": "git+https://github.com/zapproject/zap-ethereum-api.git#RC2"
+    "zap_contracts": "git+https://github.com/zapproject/zap-ethereum-api.git#master"
   },
   "devDependencies": {
     "@types/node": "^10.7.1",

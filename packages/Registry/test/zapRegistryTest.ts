@@ -55,8 +55,6 @@ describe('Registry test', () => {
      let tx =  await registryWrapper.initiateProvider({
         public_key: testZapProvider.pubkey,
         title: testZapProvider.title,
-        endpoint: testZapProvider.endpoint,
-        endpoint_params: testZapProvider.endpoint_params,
         from: accounts[0],
         gas: 600000
     });
@@ -64,25 +62,14 @@ describe('Registry test', () => {
      expect(tx.events).to.include.keys("NewProvider")
      expect(tx.events.NewProvider).to.include.keys("returnValues");
      let returnValues = tx.events.NewProvider.returnValues;
-     expect(returnValues).to.include.keys("provider","title","endpoint")
+     expect(returnValues).to.include.keys("provider","title")
      expect(testZapProvider.title).to.equal(hexToUtf8(returnValues.title))
      expect(returnValues.provider).to.equal(accounts[0]);
-     expect(testZapProvider.endpoint).to.equal(hexToUtf8(returnValues.endpoint));
      const title = await registryWrapper.getProviderTitle(accounts[0]);
      await expect(title).to.be.equal(testZapProvider.title);
      const pubkey = await registryWrapper.getProviderPublicKey(accounts[0]);
      await expect(pubkey).to.be.equal(testZapProvider.pubkey);
-     const param1 = await registryWrapper.getNextEndpointParams({
-        provider:accounts[0],
-        endpoint:testZapProvider.endpoint,
-        index:0})
-     await expect(param1).to.be.equal(testZapProvider.endpoint_params[0]);
-     const param2 = await registryWrapper.getNextEndpointParams({
-        provider:accounts[0],
-        endpoint:testZapProvider.endpoint,
-        index:1})
-     await expect(param2).to.be.equal(testZapProvider.endpoint_params[1]);
- });
+    });
 
     it('Should initiate Provider curve in zap registry contract', async () => {
         let thisCurve = testZapProvider.curve;
