@@ -1,7 +1,7 @@
 {
   "name": "@zapjs/registry",
   "private": false,
-  "version": "2.0.12",
+  "version": "2.0.13",
   "description": "",
   "repository": "https://github.com/zapproject/Zap-monorepo",
   "main": "lib/src/index.js",
