@@ -72,8 +72,6 @@ describe('Zap Dispatch Test', () => {
                 query: query,
                 endpoint: testZapProvider.endpoint,
                 endpointParams: ['a'],
-                onchainProvider: false,
-                onchainSubscriber: false,
                 from: accounts[2], // account that used for bond in booststrap function
                 gas: Utils.Constants.DEFAULT_GAS
             });
@@ -86,7 +84,7 @@ describe('Zap Dispatch Test', () => {
         expect(queryData.query).to.equal(query)
     });
 
-    it("Should call query function in Dispatch smart contract for onchain provider", async () => {
+    it("Should call query function in Dispatch smart contract for onchain provider, which should revert", async () => {
         //let result:any
         try {
             queryData = await dispatchWrapper.queryData({
@@ -94,8 +92,6 @@ describe('Zap Dispatch Test', () => {
                 query: query,
                 endpoint: testZapProvider.endpoint,
                 endpointParams: ['a'],
-                onchainProvider: true,
-                onchainSubscriber: false,
                 from: accounts[2], // account that used for bond in booststrap function
                 gas: Utils.Constants.DEFAULT_GAS
             });
@@ -110,8 +106,6 @@ describe('Zap Dispatch Test', () => {
                 query: query,
                 endpoint: testZapProvider.endpoint,
                 endpointParams: ['a'],
-                onchainProvider: false,
-                onchainSubscriber: true,
                 from: accounts[2], // account that used for bond in booststrap function 
                 gas: Utils.Constants.DEFAULT_GAS
             });
@@ -122,8 +116,6 @@ describe('Zap Dispatch Test', () => {
         expect(queryData.subscriber).to.equal(accounts[2])
         expect(hexToUtf8(queryData.endpoint)).to.equal(testZapProvider.endpoint)
         expect(queryData.query).to.equal(query)
-
-
     });
 
     it("Should call query function in Dispatch smart contract for onchain subscriber and provider", async () => {
@@ -133,8 +125,6 @@ describe('Zap Dispatch Test', () => {
                     query: query,
                     endpoint: testZapProvider.endpoint,
                     endpointParams: ['a'],
-                    onchainProvider: true,
-                    onchainSubscriber: true,
                     from: accounts[2], // account that used for bond in booststrap function 
                     gas: Utils.Constants.DEFAULT_GAS
                 });

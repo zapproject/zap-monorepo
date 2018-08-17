@@ -2,20 +2,17 @@ import {ZapDispatch} from "@zapjs/dispatch";
 import {ZapRegistry} from "@zapjs/registry";
 import {ZapBondage} from "@zapjs/bondage";
 import {ZapArbiter} from "@zapjs/arbiter";
-import {address,txid} from "@zapjs/types";
+import {address,txid, BNType} from "@zapjs/types";
 
 export type InitProvider = {
     public_key : string,
     title :string,
-    endpoint: string,
-    endpoint_params ?: Array<string>,
-    gas ?: number
+    gas ?: BNType
 }
 
 export type InitCurve = {
     endpoint:string,
-    term: number[],
-    gas ?: number
+    term: number[]
 }
 
 export type UnsubscribeListen = {
@@ -42,4 +39,9 @@ export type ProviderConstructorType = {
     zapBondage?: ZapBondage,
     zapArbiter?: ZapArbiter,
     zapRegistry?: ZapRegistry,
+}
+
+export type SetProviderParams = {
+    key: string,
+    value: string,
 }

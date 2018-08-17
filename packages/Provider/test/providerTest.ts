@@ -83,19 +83,15 @@ describe('Zap Provider Test', () => {
     it('4. Should initiate provider', async()=> {
      let tx = await zapProvider.initiateProvider({
         public_key:testZapProvider.pubkey,
-        endpoint: testZapProvider.endpoint,
-        title: testZapProvider.title,
-        endpoint_params:testZapProvider.endpoint_params
+        title: testZapProvider.title
     })
      expect(tx).to.include.keys("events")
      expect(tx.events).to.include.keys("NewProvider")
      expect(tx.events.NewProvider).to.include.keys("returnValues");
      let returnValues = tx.events.NewProvider.returnValues;
-     expect(returnValues).to.include.keys("provider","title","endpoint")
+     expect(returnValues).to.include.keys("provider","title");
      expect(testZapProvider.title).to.equal(hexToUtf8(returnValues.title))
      expect(returnValues.provider).to.equal(providerAddress);
-     expect(testZapProvider.endpoint).to.equal(hexToUtf8(returnValues.endpoint));
-
  });
     it("5. Should get provider title", async () => {
         let returnedTitle = await zapProvider.getTitle();
@@ -122,7 +118,9 @@ describe('Zap Provider Test', () => {
     });
     it("8. Should get provider Curve", async () => {
         let returnedCurve = await zapProvider.getCurve(testZapProvider.endpoint)
-        expect(returnedCurve).to.deep.equal(testZapProvider.curve)
+        const a:string = JSON.stringify(returnedCurve.values);
+        const b:string = JSON.stringify(testZapProvider.curve.values);
+        expect(a).to.be.equal(b);
     })
     it("9. Should allow and bond subscriber to provider", async () => {
         let zapRequired = await zapProvider.getZapRequired({ endpoint: testZapProvider.endpoint, dots: DOTS })

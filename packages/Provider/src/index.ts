@@ -1,5 +1,5 @@
 const assert = require("assert");
-import {InitProvider, InitCurve, Respond, ProviderConstructorType} from "./types";
+import {InitProvider, InitCurve, Respond, ProviderConstructorType, SetProviderParams} from "./types";
 import {txid,Filter,NetworkProviderOptions,DEFAULT_GAS,BNType} from "@zapjs/types";
 import {Curve,CurveType} from "@zapjs/curve"
 import {ZapDispatch} from "@zapjs/dispatch";
@@ -37,14 +37,11 @@ import {ZapArbiter} from "@zapjs/arbiter";
      * Calls the Registry contract to initialize a new provider endpoint. This needs to be called for each endpoint.
      * @param {string} public_key A public identifier for this oracle
      * @param {string} title A descriptor describing what data this oracle provides
-     * @param {string} endpoint The endpoint identifier
-     * @param {Array<string>} endpoint_params The parameters that this endpoint accepts as query arguments
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-     async initiateProvider({public_key, title, endpoint, endpoint_params}:InitProvider):Promise<txid> {
-        assert(Array.isArray(endpoint_params), 'endpointParams need to be an array');
+     async initiateProvider({public_key, title, gas=DEFAULT_GAS}:InitProvider):Promise<txid> {
         return await this.zapRegistry.initiateProvider(
-            {public_key, title, endpoint, endpoint_params, from:this.providerOwner});
+            {public_key, title, from: this.providerOwner, gas});
     }
 
     /**
@@ -59,6 +56,19 @@ import {ZapArbiter} from "@zapjs/arbiter";
         assert(txid, 'Failed to init curve.');
         this.curves[endpoint] = curve;
         return txid;
+    }
+
+    /**
+     * Set the parameter of a provider
+     * @param {string} key The key to be set
+     * @param {string} value The value to set the key to
+     */
+    async setProviderParameter({ key, value}: SetProviderParams): Promise<txid> {
+        return await this.zapRegistry.setProviderParameter({
+            key,
+            value,
+            from: this.providerOwner
+        });
     }
 
     /**
@@ -163,6 +173,44 @@ import {ZapArbiter} from "@zapjs/arbiter";
      */
      async getZapRequired({endpoint, dots}:{endpoint:string,dots:number}):Promise<string|BNType> {
         return await this.zapBondage.calcZapForDots({provider: this.providerOwner, endpoint, dots});
+    }
+
+    /**
+     * Get a parameter from a provider
+     * @param {string} provider The address of the provider
+     * @param {string} key The key you're getting
+     * @returns {Promise<string>} A promise that will be resolved with the value of the key
+     */
+    async getProviderParam(key: string): Promise<string> {
+        return await this.zapRegistry.getProviderParam(this.providerOwner, key);
+    }
+
+    /**
+     * Get all the parameters of a provider
+     * @param {string} provider The address of the provider
+     * @returns {Promise<string[]>} A promise that will be resolved with all the keys
+     */
+    async getAllProviderParams(): Promise<string[]> {
+        return await this.zapRegistry.getAllProviderParams(this.providerOwner);
+    }
+
+    /**
+     * Get the endpoint params at a certain index of a provider's endpoint.
+     * @param {address} provider The address of this provider
+     * @param {string} endpoint Data endpoint of the provider
+     * @returns {Promise<string>} Returns a Promise that will eventually resolve into the endpoint's param at this index
+     */
+    async getEndpointParams(endpoint: string):Promise<string>{
+        return await this.zapRegistry.getEndpointParams({ provider: this.providerOwner, endpoint });
+    }
+
+    /**
+     * Get the endpoints of a given provider
+     * @param {address} provider The address of this provider
+     * @returns {Promise<string[]>} Returns a Promise that will be eventually resolved with the endpoints of the provider.
+     */
+    async getEndpoints(): Promise<string[]> {
+        return await this.zapRegistry.getProviderEndpoints(this.providerOwner);
     }
 
     /**

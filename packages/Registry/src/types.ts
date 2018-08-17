@@ -1,11 +1,10 @@
 import {CurveType} from "@zapjs/curve"
 import {BigNumber} from 'bignumber.js';
 import {address,BNType} from "@zapjs/types"
-export interface InitProvider  {
+
+export type InitProvider = {
   public_key : string,
   title :string,
-  endpoint: string,
-  endpoint_params ?: Array<string>,
   from: address,
   gas ?: BNType
 }
@@ -21,8 +20,7 @@ export type InitCurve = {
 
 export type NextEndpoint = {
   provider:address,
-  endpoint: string,
-  index:number
+  endpoint: string
 }
 
 export type EndpointParams = {
@@ -31,3 +29,10 @@ export type EndpointParams = {
   from: address,
   gas ?: BNType
 }
+
+export type SetProviderParams = {
+  key: string,
+  value: string,
+  from: address,
+  gas ?: BNType
+};
