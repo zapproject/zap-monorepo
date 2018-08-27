@@ -9,7 +9,7 @@ This repository provides utilities used in other @zapjs packages. This includes 
 - Typescript
 ```
 
-## Usage 
+## Usage
 ```
 npm install `@zapjs/utils`
 ```
@@ -26,14 +26,9 @@ Utils.normalizeProvider(ZapProvider)
 ### See more Usages of each packages :
 * [Provider](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Provider/README.md)
 * [Subscriber](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Subscriber/README.md)
-* [Register](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Register/README.md)
+* [Registry](https://github.com/zapproject/zap-monorepo/blob/master/packages/Registry/README.md)
 * [Bondage](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Bondage/README.md)
 * [Dispatch](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Dispatch/README.md)
 * [Arbiter](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Arbiter/README.md)
 * [ZapToken](https://github.com/zapproject/Zap-monorepo/tree/master/packages/ZapToken/README.md)
 * [Zapjs](https://github.com/zapproject/Zap-monorepo/tree/master/packages/ZapJs/README.md)
-
-
-
-
-

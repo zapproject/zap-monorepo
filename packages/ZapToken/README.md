@@ -16,11 +16,11 @@ npm install --save `@zapjs/zaptoken`
 ```
 import {ZaopToken} from '@zapjs/zaptoken';
 
-let myZapToken = new ZapToken(); 
+let myZapToken = new ZapToken();
 ```
 
 Custom configuration
-``` 
+```
 let myZapToken = new ZapToken({artifactDir,networkId,networkProvider})
 ```
 
@@ -42,7 +42,7 @@ await myZapToken.send({from,to,amount,gas})
 ### See more Usages of each packages :
 * [Provider](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Provider/README.md)
 * [Subscriber](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Subscriber/README.md)
-* [Register](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Register/README.md)
+* [Registry](https://github.com/zapproject/zap-monorepo/blob/master/packages/Registry/README.md)
 * [Bondage](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Bondage/README.md)
 * [Dispatch](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Dispatch/README.md)
 * [Arbiter](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Arbiter/README.md)
@@ -53,8 +53,7 @@ await myZapToken.send({from,to,amount,gas})
 ## Built With
 
 * [Lerna](https://lernajs.io/) - The tool to manage monorepo project
-* [Typescript](https://www.typescriptlang.org/) 
-* [Mocha](https://mochajs.org/) 
+* [Typescript](https://www.typescriptlang.org/)
+* [Mocha](https://mochajs.org/)
 * [Truffle](https://truffleframework.com/)
 * [Ganache](https://truffleframework.com/ganache)
-

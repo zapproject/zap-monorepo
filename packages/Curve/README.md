@@ -12,7 +12,7 @@ What things you need to install the software and how to install them
 
 ```
 - Nodejs and npm>=6.1.11
-- Lerna 
+- Lerna
 - Typescript
 ```
 
@@ -55,7 +55,7 @@ npm run build
 npm run test
 ```
 
-- Running build and test 
+- Running build and test
 
 ```
 npm run run_test
@@ -108,10 +108,10 @@ await myZapProvider.initiateProviderCurve({
 ```
 
 
-### See more Usages of each packages 
+### See more Usages of each packages
 * [Provider](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Provider/README.md)
 * [Subscriber](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Subscriber/README.md)
-* [Register](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Register/README.md)
+* [Registry](https://github.com/zapproject/zap-monorepo/blob/master/packages/Registry/README.md)
 * [Dispatch](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Dispatch/README.md)
 * [Arbiter](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Arbiter/README.md)
 * [ZapToken](https://github.com/zapproject/Zap-monorepo/tree/master/packages/ZapToken/README.md)
@@ -129,5 +129,3 @@ See also the list of [contributors](https://github.com/zapproject/Zap-monorepo/g
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-
