@@ -38,14 +38,15 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS} from "@zapjs/ty
      * Initializes a piecewise curve for a given provider's endpoint. Note: curve can only be set once per endpoint.
      * @param {string} endpoint Data endpoint of the provider
      * @param {CurveType} curve A curve object representing a piecewise curve
+     * @param {address} broker The address allowed to bond/unbond. If 0, any address allowed 
      * @param {address} from The address of the owner of this oracle 
      * @param {BigNumber} gas Sets the gas limit for this transaction (optional)
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-    async initiateProviderCurve({endpoint, term, from, gas=DEFAULT_GAS}:InitCurve):Promise<txid> {
+    async initiateProviderCurve({endpoint, term, broker, from, gas=DEFAULT_GAS}:InitCurve):Promise<txid> {
        let curve = new Curve(term);
         let convertedCurve = curve.convertToBNArrays()
-        return await this.contract.methods.initiateProviderCurve(utf8ToHex(endpoint), convertedCurve)
+        return await this.contract.methods.initiateProviderCurve(utf8ToHex(endpoint), convertedCurve, broker)
         .send({from, gas});
     }
 
@@ -87,6 +88,16 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS} from "@zapjs/ty
     async getProviderPublicKey(provider:address):Promise<number>{
         let pubKey:string =  await this.contract.methods.getProviderPublicKey(provider).call();
         return Number(pubKey.valueOf());
+    }
+
+    /**
+     * Get a provider endpoint's broker address 
+     * @param {address} provider The address of this provider
+     * @returns {Promise<string>} Returns a Promise that will eventually resolve into public key number
+     */
+    async getEndpointBroker(provider:address, endpoint:string ):Promise<string>{
+        let broker =  await this.contract.methods.getEndpointBroker(provider, endpoint).call();
+        return hexToUtf8(broker);
     }
 
     /**

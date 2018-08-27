@@ -42,7 +42,7 @@ export let  buildOptions ={
 /**
  * @ignore
  * Local test Zap provider information
- * @type {{pubkey: number; title: string; endpoint_params: string[]; endpoint: string; query: string; curve: Curve}}
+ * @type {{pubkey: number; title: string; endpoint_params: string[]; endpoint: string; query: string; curve: Curve, broker: string}}
  */
 export const testZapProvider:any = {
   pubkey: 111,
@@ -50,7 +50,8 @@ export const testZapProvider:any = {
   endpoint_params:  ["p1", "p2"],
   endpoint: "testEndpoint",
   query : "btcPrice",
-  curve : new Curve(TEST_CURVE)
+  curve : new Curve(TEST_CURVE),
+  broker: "0x0"
 
 }
 

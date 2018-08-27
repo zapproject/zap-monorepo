@@ -13,6 +13,7 @@ export type InitProvider = {
 export type InitCurve = {
   endpoint:string,
   term:CurveType,
+  broker: address,
   from: address,
   gas ?: BNType
 }

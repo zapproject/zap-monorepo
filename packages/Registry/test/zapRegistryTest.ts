@@ -76,6 +76,7 @@ describe('Registry test', () => {
         let tx = await registryWrapper.initiateProviderCurve({
             endpoint: testZapProvider.endpoint,
             term: testZapProvider.curve.values,
+            broker: testZapProvider.broker,
             from: accounts[0],
             gas: 3000000
         });
