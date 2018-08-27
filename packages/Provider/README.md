@@ -1,6 +1,6 @@
 # @zapjs/provider
 
-This package provides wrapper classes to onchain and offchains oracles on the Zap platform. 
+This package provides wrapper classes to onchain and offchains oracles on the Zap platform.
 
 ### Prerequisites
 
@@ -80,11 +80,9 @@ await myZapProvider.respond({queryId,responseParams,dynamic}); //string, array, 
 
 ### See more Usages of each packages :
 * [Subscriber](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Subscriber/README.md)
-* [Register](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Register/README.md)
+* [Registry](https://github.com/zapproject/zap-monorepo/blob/master/packages/Registry/README.md)
 * [Bondage](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Bondage/README.md)
 * [Dispatch](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Dispatch/README.md)
 * [Arbiter](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Arbiter/README.md)
 * [ZapToken](https://github.com/zapproject/Zap-monorepo/tree/master/packages/ZapToken/README.md)
 * [Zapjs](https://github.com/zapproject/Zap-monorepo/tree/master/packages/ZapJs/README.md)
-
-
