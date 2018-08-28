@@ -14,7 +14,7 @@
     "test": "./node_modules/.bin/lerna exec npm run run_test --concurrency=1",
     "webpack": "./node_modules/.bin/lerna exec npm run webpack --scope='zapjs'",
     "bundle": "run-s build webpack",
-    "generateDoc": "./node_modules/.bin/compodoc -p docstsconfig.json --watch --disableCoverage --hideGenerator --serve "
+    "generateDoc": "./node_modules/.bin/compodoc -p docstsconfig.json --disableCoverage --hideGenerator "
   },
   "dependencies": {
     "@compodoc/compodoc": "^1.1.3",

@@ -5,7 +5,7 @@ This repository provides an interface to the Zap Dispatch contract, enabling que
 ### Prerequisites
 
 ```
-- Nodejs and npm>=6.1.11 
+- Nodejs and npm>=6.1.11
 - Typescript
 ```
 
@@ -17,7 +17,7 @@ npm install `@zapjs/dispatch`
 ```
 ```
 import {ZapDispatch} from '@zapjs/dispatch';
-let myZapArbiter = new ZapArbiter(); 
+let myZapArbiter = new ZapArbiter();
 ```
 Custom configuration
 ```
@@ -39,16 +39,15 @@ Listen to Offchain response from provider:
 
 Listen to all events
 ```
-myZapDispatch.listen(callback) 
+myZapDispatch.listen(callback)
 ```
 
 
-### See more Usages of each packages 
+### See more Usages of each packages
 * [Provider](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Provider/README.md)
 * [Subscriber](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Subscriber/README.md)
-* [Register](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Register/README.md)
+* [Registry](https://github.com/zapproject/zap-monorepo/blob/master/packages/Registry/README.md)
 * [Dispatch](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Dispatch/README.md)
 * [Arbiter](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Arbiter/README.md)
 * [ZapToken](https://github.com/zapproject/Zap-monorepo/tree/master/packages/ZapToken/README.md)
 * [Zapjs](https://github.com/zapproject/Zap-monorepo/tree/master/packages/ZapJs/README.md)
-

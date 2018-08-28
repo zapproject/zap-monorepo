@@ -15,14 +15,14 @@ What things you need to install the software and how to install them
 
 ```
 - Nodejs and npm>=6.1.11
-- Lerna 
+- Lerna
 - Typescript
 ```
 
 ### Installing
 
 - Installs lerna (used for package bundling) and typescript, as well as all build dependencies.
-  
+
 ```
 npm install lerna typescript
 npm install
@@ -54,7 +54,7 @@ npm run build
 npm run test
 ```
 
-- Running build and test 
+- Running build and test
 
 ```
 npm run run_test
@@ -101,7 +101,7 @@ await myZapProvider.initiateProviderCurve({
 ### See more Usages of each packages :
 * [Provider](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Provider/README.md)
 * [Subscriber](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Subscriber/README.md)
-* [Register](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Register/README.md)
+* [Registry](https://github.com/zapproject/zap-monorepo/blob/master/packages/Registry/README.md)
 * [Bondage](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Bondage/README.md)
 * [Dispatch](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Dispatch/README.md)
 * [Arbiter](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Arbiter/README.md)
@@ -112,8 +112,8 @@ await myZapProvider.initiateProviderCurve({
 ## Built With
 
 * [Lerna](https://lernajs.io/) - The tool to manage monorepo project
-* [Typescript](https://www.typescriptlang.org/) 
-* [Mocha](https://mochajs.org/) 
+* [Typescript](https://www.typescriptlang.org/)
+* [Mocha](https://mochajs.org/)
 * [Truffle](https://truffleframework.com/)
 * [Ganache](https://truffleframework.com/ganache)
 
@@ -127,5 +127,3 @@ See also the list of [contributors](https://github.com/zapproject/Zap-monorepo/g
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-

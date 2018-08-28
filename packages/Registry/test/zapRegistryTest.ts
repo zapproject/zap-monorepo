@@ -71,12 +71,11 @@ describe('Registry test', () => {
      await expect(pubkey).to.be.equal(testZapProvider.pubkey);
     });
 
-    it('Should initiate Provider curve in zap registry contract', async () => {
+    it('Should initiate Provider curve  with 0x0 broker in zap registry contract', async () => {
         let thisCurve = testZapProvider.curve;
         let tx = await registryWrapper.initiateProviderCurve({
             endpoint: testZapProvider.endpoint,
             term: testZapProvider.curve.values,
-            broker: testZapProvider.broker,
             from: accounts[0],
             gas: 3000000
         });
@@ -84,8 +83,38 @@ describe('Registry test', () => {
         expect(tx.events).to.include.keys("NewCurve");
         expect(tx.events.NewCurve).to.include.keys("returnValues");
         let returnValues = tx.events.NewCurve.returnValues;
-        expect(returnValues).to.include.keys("provider","endpoint","curve")
+        expect(returnValues).to.include.keys("provider","endpoint","curve",'broker')
+        expect(returnValues.broker).to.equal(Utils.Constants.NULL_ADDRESS);
         expect(returnValues.provider).to.equal(accounts[0]);
+        expect(testZapProvider.endpoint).to.equal(hexToUtf8(returnValues.endpoint));
+        const a:string = JSON.stringify(returnValues.curve);
+        const b:string = JSON.stringify(testZapProvider.curve.values.map((i:number)=>{return ''+i}));
+        expect(a).to.be.equal(b);
+    });
+
+    it('Should initiate Provider curve  with valid broker address in zap registry contract', async () => {
+        const providerAddress = accounts[3]
+        const brokerAddress = accounts[4]
+        const initTx = await registryWrapper.initiateProvider({
+            public_key: testZapProvider.pubkey,
+            title: testZapProvider.title,
+            from: providerAddress,
+            gas: 600000
+        });
+        const initCurveTx = await registryWrapper.initiateProviderCurve({
+            endpoint: testZapProvider.endpoint,
+            term: testZapProvider.curve.values,
+            broker: brokerAddress,
+            from: providerAddress,
+            gas: 3000000
+        });
+        expect(initCurveTx).to.include.keys("events");
+        expect(initCurveTx.events).to.include.keys("NewCurve");
+        expect(initCurveTx.events.NewCurve).to.include.keys("returnValues");
+        let returnValues = initCurveTx.events.NewCurve.returnValues;
+        expect(returnValues).to.include.keys("provider","endpoint","curve","broker")
+        expect(returnValues.provider).to.equal(providerAddress);
+        expect(returnValues.broker).to.equal(brokerAddress);
         expect(testZapProvider.endpoint).to.equal(hexToUtf8(returnValues.endpoint));
         const a:string = JSON.stringify(returnValues.curve);
         const b:string = JSON.stringify(testZapProvider.curve.values.map((i:number)=>{return ''+i}));

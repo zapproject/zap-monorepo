@@ -16,11 +16,11 @@ npm install --save `@zapjs/bondage`
 ```
 import {ZapBondage} from '@zapjs/bondage';
 
-let myZapBondage = new ZapBondage(); 
+let myZapBondage = new ZapBondage();
 ```
 
 Custom configuration
-``` 
+```
 let myZapBondage = new ZapBondage({artifactDir,networkId,networkProvider})
 ```
 #### Methods
@@ -47,10 +47,10 @@ Listen to all events
 myZapBondate.listen(callback);
 ```
 
-### See more Usages of each packages 
+### See more Usages of each packages
 * [Provider](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Provider/README.md)
 * [Subscriber](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Subscriber/README.md)
-* [Register](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Register/README.md)
+* [Registry](https://github.com/zapproject/zap-monorepo/blob/master/packages/Registry/README.md)
 * [Dispatch](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Dispatch/README.md)
 * [Arbiter](https://github.com/zapproject/Zap-monorepo/tree/master/packages/Arbiter/README.md)
 * [ZapToken](https://github.com/zapproject/Zap-monorepo/tree/master/packages/ZapToken/README.md)
