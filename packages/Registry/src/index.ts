@@ -172,7 +172,8 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS} from "@zapjs/ty
      * @returns {Promise<string[]>} A promise that will be resolved with all the keys
      */
     async getAllProviderParams(provider: string): Promise<string[]> {
-        return await this.contract.methods.getAllProviderParams(provider).call().map(utf8ToHex);
+        const allParams =  await this.contract.methods.getAllProviderParams(provider).call()
+        return allParams
     }
 
     /**

@@ -87,7 +87,6 @@ describe('Zap Bondage Test', () => {
         });
 
     it("7) Should bond (without broker) required Zap to get 5 dots", async () => {
-            const preAmt = await deployedToken.contract.methods.balanceOf(accounts[2]).call().valueOf();
             requiredZap = await bondageWrapper.calcZapForDots({
                 provider: accounts[0],
                 endpoint: testZapProvider.endpoint,
@@ -101,7 +100,7 @@ describe('Zap Bondage Test', () => {
                 provider: accounts[0],
                 endpoint: testZapProvider.endpoint,
                 dots: 5,
-                subscriber: accounts[2]
+                from: accounts[2],
             });
             const numZap = bonded.events.Bound.returnValues.numZap;
             const numDots = bonded.events.Bound.returnValues.numDots;
@@ -111,16 +110,13 @@ describe('Zap Bondage Test', () => {
                 provider: accounts[0],
                 endpoint: testZapProvider.endpoint
             })
-            const postAmt = await deployedToken.contract.methods.balanceOf(accounts[2]).call();
-            const diff = new BigNumber(preAmt).minus(new BigNumber(postAmt)).toString();
-            console.log("dif in balance bonding without broker : ", diff)
-            expect(numZap).to.equal("85");
-            expect(numDots).to.equal("5");
-            return ;
+        console.log("bound dots :", boundDots )
+        expect(numZap).to.equal("85");
+        expect(numDots).to.equal("5");
+        return ;
         });
 
     it("8) Should bond (with broker) required Zap to get 5 dots", async () => {
-        const preAmt = await deployedToken.contract.methods.balanceOf(accounts[2]).call().valueOf();
         requiredZap = await bondageWrapper.calcZapForDots({
             provider: accounts[0],
             endpoint: endpointB,
@@ -132,12 +128,8 @@ describe('Zap Bondage Test', () => {
             provider: accounts[0],
             endpoint: endpointB,
             dots: 5,
-            broker: broker,
-            subscriber: accounts[2]
+            from: broker,
         });
-        const postAmt = await deployedToken.contract.methods.balanceOf(accounts[2]).call();
-        const diff = new BigNumber(preAmt).minus(new BigNumber(postAmt)).toString();
-        console.log("dif in balance bonding with broker : ", diff)
         const numZap = bonded.events.Bound.returnValues.numZap;
         const numDots = bonded.events.Bound.returnValues.numDots;
 
@@ -159,28 +151,43 @@ describe('Zap Bondage Test', () => {
                 provider: accounts[0],
                 endpoint: testZapProvider.endpoint,
                 dots: 1,
-                subscriber: accounts[2],
+                from: accounts[2],
             });
 
             const postAmt = await deployedToken.contract.methods.balanceOf(accounts[2]).call();
             const diff = new BigNumber(postAmt).minus(new BigNumber(preAmt)).toString();
             expect(diff).to.equal("35");
         });
-    it("10) Should unbond (with broker) 1 dots and return the right amount of zap", async () => {
-            const preAmt = await deployedToken.contract.methods.balanceOf(accounts[2]).call().valueOf();
-            console.log("pre amount : ",preAmt)
-            await bondageWrapper.unbond({
+    it("9) Should unbond (with broker) 1 dots and return the right amount of zap", async () => {
+        const preAmt = await deployedToken.contract.methods.balanceOf(accounts[2]).call().valueOf();
+        const preAmtBroker = await deployedToken.contract.methods.balanceOf(broker).call().valueOf();
+
+        const unbonded = await bondageWrapper.unbond({
+            provider: accounts[0],
+            endpoint: endpointB,
+            dots: 1,
+            from: broker,
+        });
+
+        const postAmt = await deployedToken.contract.methods.balanceOf(accounts[2]).call();
+        const postAmtBroker = await deployedToken.contract.methods.balanceOf(broker).call();
+        const diff = new BigNumber(postAmt).minus(new BigNumber(preAmt)).toString();
+        const brokerDiff = new BigNumber(postAmtBroker).minus(new BigNumber(preAmtBroker)).toString();
+        expect(diff).to.equal("0");
+        expect(brokerDiff).to.equal("35");
+    });
+    it("10) Should fail to unbond endpoint with broker from subscriber", async () => {
+            try{
+                await bondageWrapper.unbond({
                 provider: accounts[0],
                 endpoint: endpointB,
                 dots: 1,
-                broker: broker,
-                subscriber: accounts[2]
+                from: accounts[2],
             });
+            }catch(e){
+               expect(e).to.deep.equal(`Broker address ${broker} needs to call unbonding for this endpoint`)
+            }
 
-            const postAmt = await deployedToken.contract.methods.balanceOf(accounts[2]).call();
-            console.log("post amount : ",postAmt)
-            const diff = new BigNumber(postAmt).minus(new BigNumber(preAmt)).toString();
-            expect(diff).to.equal("35");
     });
 
     it("11) Check that issued dots will increase with every bond", async () => {

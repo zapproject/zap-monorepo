@@ -196,6 +196,14 @@ import {ZapArbiter} from "@zapjs/arbiter";
     }
 
     /**
+     * Get broker address of this endpoint
+     * @param endpoint
+     */
+    async getEndpointBroker(endpoint:string):Promise<string>{
+        return await this.zapRegistry.getEndpointBroker(this.providerOwner,endpoint);
+    }
+
+    /**
      * Get the endpoint params at a certain index of a provider's endpoint.
      * @param {address} provider The address of this provider
      * @param {string} endpoint Data endpoint of the provider

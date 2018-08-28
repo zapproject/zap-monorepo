@@ -32,29 +32,19 @@ export class ZapBondage extends BaseContract {
      * @param {address} provider Address of the data provider
      * @param {string} endpoint Data endpoint of the provider
      * @param {number} dots Number of dots to bond to this provider
-     * @param {address} subscriber's owner
-     * @param {address} broker Address (if endpoint has broker)
+     * @param {address} subscriber's owner (0 broker)  or broker's address
      * @param {number} gas Sets the gas limit for this transaction (optional)
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-    public async bond({provider, endpoint, dots, subscriber,broker, gas= DEFAULT_GAS}: BondArgs): Promise<txid> {
+    public async bond({provider, endpoint, dots, from, gas= DEFAULT_GAS}: BondArgs): Promise<txid> {
         assert(dots && dots > 0, "Dots to bond must be greater than 0.");
-        const savedBroker = await this.contract.methods.getEndpointBroker(provider,utf8ToHex(endpoint)).call()
-        let from :string;
-        console.log("broker: ", savedBroker)
-        if(broker && savedBroker!= NULL_ADDRESS){
-            if(savedBroker!==broker){
-                throw new Error(`Broker address ${broker} needs to call bonding`);
+        const broker = await this.contract.methods.getEndpointBroker(provider,utf8ToHex(endpoint)).call()
+        if(broker != NULL_ADDRESS){
+            if(from!==broker){
+                throw new Error(`Broker address ${broker} needs to call delegate bonding`);
             }
-            else{
-                from = broker
-            }
-        }
-        else{
-            from = subscriber
         }
         return await this.contract.methods.bond(
-            subscriber,
             provider,
             utf8ToHex(endpoint),
             toBN(dots))
@@ -74,6 +64,12 @@ export class ZapBondage extends BaseContract {
      */
     public async delegateBond({provider, endpoint, dots, subscriber, from, gas= DEFAULT_GAS}: DelegateBondArgs): Promise<txid> {
         assert(dots && dots > 0, "Dots to bond must be greater than 0.");
+         const broker = await this.contract.methods.getEndpointBroker(provider,utf8ToHex(endpoint)).call()
+         if(broker != NULL_ADDRESS){
+             if(from!==broker){
+                 throw new Error(`Broker address ${broker} needs to call delegate bonding for this endpoint`);
+             }
+         }
         return await this.contract.methods.delegateBond(
             subscriber,
             provider,
@@ -82,29 +78,23 @@ export class ZapBondage extends BaseContract {
             .send({from, gas});
     }
 
+
     /**
      * Unbonds a given number of dots from a provider's endpoint and transfers the appropriate amount of Zap to the subscriber.
      * @param {address} provider Address of the data provider
      * @param {string} endpoint Data endpoint of the provider
      * @param {number} dots The number of dots to unbond from the contract
-     * @param {address} subscriber Address
-     * @param {address} broker Address (if endpoint has broker)
+     * @param {address} from Address of the data subscriber
      * @param {number} gas Sets the gas limit for this transaction (optional)
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-    public async unbond({provider, endpoint, dots, subscriber,broker, gas= DEFAULT_GAS}: UnbondArgs): Promise<txid> {
-        let from:string;
+    public async unbond({provider, endpoint, dots, from, gas= DEFAULT_GAS}: UnbondArgs): Promise<txid> {
         assert(dots && dots>0,"Dots to unbond must be greater than 0");
-        const savedBroker = await this.contract.methods.getEndpointBroker(provider,utf8ToHex(endpoint)).call()
-        if(broker && savedBroker != NULL_ADDRESS){
-            if(savedBroker!==broker){
-                throw new Error(`Broker address ${broker} needs to call unbonding`);
+        const broker = await this.contract.methods.getEndpointBroker(provider,utf8ToHex(endpoint)).call()
+        if(broker != NULL_ADDRESS){
+            if(from!==broker){
+                throw `Broker address ${broker} needs to call unbonding for this endpoint`;
             }
-            else
-                from = broker;
-        }
-        else{
-            from = subscriber;
         }
         return await this.contract.methods.unbond(
             provider,

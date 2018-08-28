@@ -91,6 +91,10 @@ describe('Registry test', () => {
         const b:string = JSON.stringify(testZapProvider.curve.values.map((i:number)=>{return ''+i}));
         expect(a).to.be.equal(b);
     });
+    it("Should get all provider params", async()=>{
+        let params = await registryWrapper.getAllProviderParams(accounts[0])
+        console.log("All params : ",params)
+    })
 
     it('Should initiate Provider curve  with valid broker address in zap registry contract', async () => {
         const providerAddress = accounts[3]
