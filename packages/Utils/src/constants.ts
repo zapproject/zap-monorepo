@@ -42,7 +42,7 @@ export let  buildOptions ={
 /**
  * @ignore
  * Local test Zap provider information
- * @type {{pubkey: number; title: string; endpoint_params: string[]; endpoint: string; query: string; curve: Curve}}
+ * @type {{pubkey: number; title: string; endpoint_params: string[]; endpoint: string; query: string; curve: Curve, broker: string}}
  */
 export const testZapProvider:any = {
   pubkey: 111,
@@ -50,10 +50,11 @@ export const testZapProvider:any = {
   endpoint_params:  ["p1", "p2"],
   endpoint: "testEndpoint",
   query : "btcPrice",
-  curve : new Curve(TEST_CURVE)
-
+  curve : new Curve(TEST_CURVE),
+  broker: "0x0"
 }
 
+export const EndpointBroker = "EndpointBroker";
 export const ganacheProvider = new Web3.providers.HttpProvider('http://127.0.0.1:7545');
 //export const ganacheProvider = new Web3.providers.WebsocketProvider('ws://127.0.0.1:7545');
 
@@ -73,4 +74,6 @@ export const GAS_PRICE = 40000000
  * @type {string}
  */
 export const NETWORK = "ganache-gui"
+
+export const NULL_ADDRESS= '0x0000000000000000000000000000000000000000'
 

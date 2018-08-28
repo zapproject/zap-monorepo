@@ -34,12 +34,16 @@ describe('Zap Bondage Test', () => {
         networkId: Utils.Constants.ganacheServerOptions.network_id,
         networkProvider: Utils.Constants.ganacheProvider,
     };
+    let broker:string;
+    const endpointB = Utils.Constants.EndpointBroker;
+
 
     before(function(done) {
         configureEnvironment(async () => {
             ganacheServer = await Utils.startGanacheServer();
             web3 = new Web3(Utils.Constants.ganacheProvider);
             accounts = await web3.eth.getAccounts();
+            broker = accounts[5]
             // delete require.cache[require.resolve('/contracts')];
             await Utils.migrateContracts(buildDir);
             testArtifacts = Utils.getArtifacts(buildDir);
@@ -82,7 +86,7 @@ describe('Zap Bondage Test', () => {
             expect(requiredZap).to.equal('85');
         });
 
-    it("7) Should bond required Zap to get 5 dots", async () => {
+    it("7) Should bond (without broker) required Zap to get 5 dots", async () => {
             requiredZap = await bondageWrapper.calcZapForDots({
                 provider: accounts[0],
                 endpoint: testZapProvider.endpoint,
@@ -112,7 +116,35 @@ describe('Zap Bondage Test', () => {
         return ;
         });
 
-    it("8) Should unbond 1 dots and return the right amount of zap", async () => {
+    it("8) Should bond (with broker) required Zap to get 5 dots", async () => {
+        requiredZap = await bondageWrapper.calcZapForDots({
+            provider: accounts[0],
+            endpoint: endpointB,
+            dots:5
+        })
+        // approve
+        await deployedToken.contract.methods.approve(deployedBondage.contract._address, requiredZap).send({from: broker, gas: Utils.Constants.DEFAULT_GAS});
+        const bonded = await bondageWrapper.bond({
+            provider: accounts[0],
+            endpoint: endpointB,
+            dots: 5,
+            from: broker,
+        });
+        const numZap = bonded.events.Bound.returnValues.numZap;
+        const numDots = bonded.events.Bound.returnValues.numDots;
+
+        let boundDots = await bondageWrapper.getBoundDots({
+            subscriber : accounts[2],
+            provider: accounts[0],
+            endpoint: endpointB
+        })
+        expect(numZap).to.equal("85");
+        expect(numDots).to.equal("5");
+        return ;
+    });
+
+
+    it("9) Should unbond (without broker) 1 dots and return the right amount of zap", async () => {
             const preAmt = await deployedToken.contract.methods.balanceOf(accounts[2]).call().valueOf();
 
             const unbonded = await bondageWrapper.unbond({
@@ -126,18 +158,39 @@ describe('Zap Bondage Test', () => {
             const diff = new BigNumber(postAmt).minus(new BigNumber(preAmt)).toString();
             expect(diff).to.equal("35");
         });
+    it("9) Should unbond (with broker) 1 dots and return the right amount of zap", async () => {
+        const preAmt = await deployedToken.contract.methods.balanceOf(accounts[2]).call().valueOf();
+        const preAmtBroker = await deployedToken.contract.methods.balanceOf(broker).call().valueOf();
 
-    it("9) Should calculate the correct cost for another dot", async () => {
-            // const calcDots = await bondageWrapper.calcBondRate({
-            //     provider: accounts[0],
-            //     endpoint: testZapProvider.endpoint,
-            //     zapNum: 35,
-            // });
-            //
-            // expect(calcDots).to.equal(1);
+        const unbonded = await bondageWrapper.unbond({
+            provider: accounts[0],
+            endpoint: endpointB,
+            dots: 1,
+            from: broker,
         });
 
-    it("10) Check that issued dots will increase with every bond", async () => {
+        const postAmt = await deployedToken.contract.methods.balanceOf(accounts[2]).call();
+        const postAmtBroker = await deployedToken.contract.methods.balanceOf(broker).call();
+        const diff = new BigNumber(postAmt).minus(new BigNumber(preAmt)).toString();
+        const brokerDiff = new BigNumber(postAmtBroker).minus(new BigNumber(preAmtBroker)).toString();
+        expect(diff).to.equal("0");
+        expect(brokerDiff).to.equal("35");
+    });
+    it("10) Should fail to unbond endpoint with broker from subscriber", async () => {
+            try{
+                await bondageWrapper.unbond({
+                provider: accounts[0],
+                endpoint: endpointB,
+                dots: 1,
+                from: accounts[2],
+            });
+            }catch(e){
+               expect(e).to.deep.equal(`Broker address ${broker} needs to call unbonding for this endpoint`)
+            }
+
+    });
+
+    it("11) Check that issued dots will increase with every bond", async () => {
             const startDots = await bondageWrapper.getBoundDots({subscriber: accounts[2], provider: accounts[0], endpoint: testZapProvider.endpoint});
 
             await deployedToken.contract.methods.approve(deployedBondage.contract._address, 50).send({from: accounts[2], gas: Utils.Constants.DEFAULT_GAS});
@@ -152,7 +205,7 @@ describe('Zap Bondage Test', () => {
             expect(finalDots - startDots).to.equal(1);
         });
 
-    it("11) Check that issued dots will decrease with every unbond", async () => {
+    it("12) Check that issued dots will decrease with every unbond", async () => {
             const startDots = await bondageWrapper.getBoundDots({subscriber: accounts[2], provider: accounts[0], endpoint: testZapProvider.endpoint});
             const unbonded = await bondageWrapper.unbond({
                 provider: accounts[0],
@@ -165,7 +218,7 @@ describe('Zap Bondage Test', () => {
             expect(finalDots - startDots).to.equal(-1);
         });
 
-    it("12) Check that you cannot unbond more dots than you have", async () => {
+    it("13) Check that you cannot unbond more dots than you have", async () => {
         const startDots:number = await bondageWrapper.getBoundDots({
                 subscriber: accounts[2],
                 provider: accounts[0],
@@ -186,7 +239,7 @@ describe('Zap Bondage Test', () => {
 
         });
 
-    it("13) Check that you can delegateBond", async () => {
+    it("14) Check that you can delegateBond", async () => {
             const startDots = await bondageWrapper.getBoundDots({subscriber: accounts[1], provider: accounts[0], endpoint: testZapProvider.endpoint});
 
             await deployedToken.contract.methods.approve(deployedBondage.contract._address, 50).send({from: accounts[2], gas: Utils.Constants.DEFAULT_GAS});
@@ -201,7 +254,7 @@ describe('Zap Bondage Test', () => {
             const finalDots = await bondageWrapper.getBoundDots({subscriber: accounts[1], provider: accounts[0], endpoint: testZapProvider.endpoint});
             expect(finalDots - startDots).to.equal(1);
     });
-    it("14) Should be able to bond more than 10^23 wei zap", async () => {
+    it("15) Should be able to bond more than 10^23 wei zap", async () => {
         let dotsLimit = await bondageWrapper.getDotsLimit({
             provider:accounts[0],
             endpoint:testZapProvider.endpoint

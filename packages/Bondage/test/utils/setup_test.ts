@@ -17,9 +17,10 @@ export async function bootstrap(zapProvider: any, accounts: string[], deployedRe
     await deployedRegistry.contract.methods.initiateProvider(normalizedP.pubkey, normalizedP.title).send(defaultTx);
     const convertedCurve = zapProvider.curve.convertToBNArrays();
     const tokenOwner = await deployedToken.contract.methods.owner().call();
-    await deployedRegistry.contract.methods.initiateProviderCurve(normalizedP.endpoint, convertedCurve).send(defaultTx);
-    const providerCurve = await deployedRegistry.contract.methods.getProviderCurve(accounts[0], normalizedP.endpoint).call();
-    console.log("provider Curve:", providerCurve)
+    await deployedRegistry.contract.methods.initiateProviderCurve(normalizedP.endpoint,convertedCurve,null).send(defaultTx);
+    //Endpoint with broker address
+    await deployedRegistry.contract.methods.initiateProviderCurve(utf8ToHex(Utils.Constants.EndpointBroker),convertedCurve,accounts[5]).send(defaultTx);
+
     for (const account of accounts) {
         await deployedToken.contract.methods.allocate(account, Utils.toZapBase(100000000000000)).send({from: tokenOwner, gas: Utils.Constants.DEFAULT_GAS});
     }

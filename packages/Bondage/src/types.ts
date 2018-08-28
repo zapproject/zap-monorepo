@@ -1,6 +1,7 @@
 export type address = string;
 export type txid = string;
 import {BNType} from "@zapjs/types"
+export const NULL_ADDRESS='0x0000000000000000000000000000000000000000';
 export interface BondArgs {
     provider: address;
     endpoint: string;

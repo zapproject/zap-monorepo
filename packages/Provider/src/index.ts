@@ -47,12 +47,13 @@ import {ZapArbiter} from "@zapjs/arbiter";
     /**
      * Calls the Registry contract to initialize a new Curve for a given endpoint. See Curve for more information on encoding.
      * @param {string} endpoint The endpoint identifier matching the created endpoint
+     * @param {address} broker Address of broker allowed to bond/unbond. 0 means anyone can 
      * @param {number[]} term The curve array for this endpoint, setting the coefficients, powers, and domains for each piece.
      */
-     async initiateProviderCurve({endpoint, term}: InitCurve) :Promise<txid>{
+     async initiateProviderCurve({endpoint, term, broker}: InitCurve) :Promise<txid>{
         if(endpoint in this.curves) throw("Endpoint " + endpoint + " already exists");
         let curve = new Curve(term)
-        let txid = await this.zapRegistry.initiateProviderCurve({endpoint, term, from: this.providerOwner});
+        let txid = await this.zapRegistry.initiateProviderCurve({endpoint, term, broker, from: this.providerOwner});
         assert(txid, 'Failed to init curve.');
         this.curves[endpoint] = curve;
         return txid;
@@ -192,6 +193,14 @@ import {ZapArbiter} from "@zapjs/arbiter";
      */
     async getAllProviderParams(): Promise<string[]> {
         return await this.zapRegistry.getAllProviderParams(this.providerOwner);
+    }
+
+    /**
+     * Get broker address of this endpoint
+     * @param endpoint
+     */
+    async getEndpointBroker(endpoint:string):Promise<string>{
+        return await this.zapRegistry.getEndpointBroker(this.providerOwner,endpoint);
     }
 
     /**
