@@ -1,5 +1,5 @@
 import {BaseContract} from "@zapjs/basecontract";
-import {BondageArgs, BondArgs, CalcBondRateType,  UnbondArgs, DelegateBondArgs} from "./types";
+import {BondageArgs, BondArgs, CalcBondRateType, UnbondArgs, DelegateBondArgs, NULL_ADDRESS} from "./types";
 import {Filter,txid,NetworkProviderOptions,BNType} from "@zapjs/types"
 const {toBN, utf8ToHex} = require("web3-utils");
 const assert = require("assert");
@@ -32,12 +32,18 @@ export class ZapBondage extends BaseContract {
      * @param {address} provider Address of the data provider
      * @param {string} endpoint Data endpoint of the provider
      * @param {number} dots Number of dots to bond to this provider
-     * @param {address} from Address of the data subscriber
+     * @param {address} subscriber's owner (0 broker)  or broker's address
      * @param {number} gas Sets the gas limit for this transaction (optional)
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
     public async bond({provider, endpoint, dots, from, gas= DEFAULT_GAS}: BondArgs): Promise<txid> {
         assert(dots && dots > 0, "Dots to bond must be greater than 0.");
+        const broker = await this.contract.methods.getEndpointBroker(provider,utf8ToHex(endpoint)).call()
+        if(broker != NULL_ADDRESS){
+            if(from.toUpperCase()!=broker){
+                throw new Error(`Broker address ${broker} needs to call bonding`);
+            }
+        }
         return await this.contract.methods.bond(
             provider,
             utf8ToHex(endpoint),

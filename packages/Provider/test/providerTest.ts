@@ -102,12 +102,13 @@ describe('Zap Provider Test', () => {
         expect(returnedPubkey).to.equal(testZapProvider.pubkey)
     })
     it('7. Should initiate provider curve', async () => {
+        let tx:any;
         console.log(testZapProvider.curve.constants, testZapProvider.curve.parts, testZapProvider.curve.dividers)
-        let tx = await zapProvider.initiateProviderCurve({
+        tx = await zapProvider.initiateProviderCurve({
            endpoint: testZapProvider.endpoint,
            term: testZapProvider.curve.values,
-           term: testZapProvider.broker
-        })
+           broker: testZapProvider.broker
+        });
         expect(tx).to.include.keys("events");
         expect(tx.events).to.include.keys("NewCurve");
         expect(tx.events.NewCurve).to.include.keys("returnValues");

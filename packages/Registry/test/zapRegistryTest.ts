@@ -71,7 +71,7 @@ describe('Registry test', () => {
      await expect(pubkey).to.be.equal(testZapProvider.pubkey);
     });
 
-    it('Should initiate Provider curve in zap registry contract', async () => {
+    it('Should initiate Provider curve  with broker in zap registry contract', async () => {
         let thisCurve = testZapProvider.curve;
         let tx = await registryWrapper.initiateProviderCurve({
             endpoint: testZapProvider.endpoint,
