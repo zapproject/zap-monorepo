@@ -13,7 +13,7 @@ export type InitProvider = {
 export type InitCurve = {
     endpoint:string,
     term: number[],
-    broker: address,
+    broker?: address,
 }
 
 export type UnsubscribeListen = {

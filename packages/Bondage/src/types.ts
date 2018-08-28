@@ -6,7 +6,8 @@ export interface BondArgs {
     provider: address;
     endpoint: string;
     dots: string|number|BNType;
-    from: address;
+    subscriber: address;
+    broker ?:address,
     gas ?: number;
 }
 
@@ -14,7 +15,8 @@ export interface UnbondArgs {
 	provider: address;
     endpoint: string;
     dots: number|string;
-    from: address;
+    subscriber: address;
+    broker ?: address,
     gas ?: number;
 }
 

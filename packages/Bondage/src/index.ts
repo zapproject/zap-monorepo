@@ -32,19 +32,29 @@ export class ZapBondage extends BaseContract {
      * @param {address} provider Address of the data provider
      * @param {string} endpoint Data endpoint of the provider
      * @param {number} dots Number of dots to bond to this provider
-     * @param {address} subscriber's owner (0 broker)  or broker's address
+     * @param {address} subscriber's owner
+     * @param {address} broker Address (if endpoint has broker)
      * @param {number} gas Sets the gas limit for this transaction (optional)
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-    public async bond({provider, endpoint, dots, from, gas= DEFAULT_GAS}: BondArgs): Promise<txid> {
+    public async bond({provider, endpoint, dots, subscriber,broker, gas= DEFAULT_GAS}: BondArgs): Promise<txid> {
         assert(dots && dots > 0, "Dots to bond must be greater than 0.");
-        const broker = await this.contract.methods.getEndpointBroker(provider,utf8ToHex(endpoint)).call()
-        if(broker != NULL_ADDRESS){
-            if(from.toUpperCase()!=broker){
+        const savedBroker = await this.contract.methods.getEndpointBroker(provider,utf8ToHex(endpoint)).call()
+        let from :string;
+        console.log("broker: ", savedBroker)
+        if(broker && savedBroker!= NULL_ADDRESS){
+            if(savedBroker!==broker){
                 throw new Error(`Broker address ${broker} needs to call bonding`);
             }
+            else{
+                from = broker
+            }
+        }
+        else{
+            from = subscriber
         }
         return await this.contract.methods.bond(
+            subscriber,
             provider,
             utf8ToHex(endpoint),
             toBN(dots))
@@ -77,12 +87,25 @@ export class ZapBondage extends BaseContract {
      * @param {address} provider Address of the data provider
      * @param {string} endpoint Data endpoint of the provider
      * @param {number} dots The number of dots to unbond from the contract
-     * @param {address} from Address of the data subscriber
+     * @param {address} subscriber Address
+     * @param {address} broker Address (if endpoint has broker)
      * @param {number} gas Sets the gas limit for this transaction (optional)
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-    public async unbond({provider, endpoint, dots, from, gas= DEFAULT_GAS}: UnbondArgs): Promise<txid> {
+    public async unbond({provider, endpoint, dots, subscriber,broker, gas= DEFAULT_GAS}: UnbondArgs): Promise<txid> {
+        let from:string;
         assert(dots && dots>0,"Dots to unbond must be greater than 0");
+        const savedBroker = await this.contract.methods.getEndpointBroker(provider,utf8ToHex(endpoint)).call()
+        if(broker && savedBroker != NULL_ADDRESS){
+            if(savedBroker!==broker){
+                throw new Error(`Broker address ${broker} needs to call unbonding`);
+            }
+            else
+                from = broker;
+        }
+        else{
+            from = subscriber;
+        }
         return await this.contract.methods.unbond(
             provider,
             utf8ToHex(endpoint),
@@ -156,6 +179,15 @@ export class ZapBondage extends BaseContract {
         ).call();
     }
 
+
+    /**
+     * Get Broker address for this provider's endpoint, return NULL_ADDRESS if there is none
+     * @param provider
+     * @param endpoint
+     */
+    public async getBrokerAddress({provider,endpoint}:BondageArgs):Promise<string>{
+        return  await this.contract.methods.getEndpointBroker(provider,utf8ToHex(endpoint)).call();
+    }
     /**
      * Gets the total amount of Zap that has been bonded to a provider's endpoint.
      * @function
