@@ -561,6 +561,29 @@
       "constant": true,
       "inputs": [
         {
+          "name": "oracleAddress",
+          "type": "address"
+        },
+        {
+          "name": "endpoint",
+          "type": "bytes32"
+        }
+      ],
+      "name": "getEndpointBroker",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
           "name": "holderAddress",
           "type": "address"
         },
@@ -704,14 +727,20 @@
     "42": {
       "events": {},
       "links": {},
-      "address": "0xc7a1f161af0c67526f957436aff65e3e7b9e65f3",
-      "transactionHash": "0xb50e6e4f51b69130eb1272b842a8a7a3d29509ff574c4dbe50e1414d0f936a30"
+      "address": "0x3203634c927a84fd2ea08cb6b9a40550fe88c8c2",
+      "transactionHash": "0x5e29b9a847825fd0046e6af8ff58ec307f33ff2be6dfda64e3f53441bec3325b"
     },
     "4447": {
       "events": {},
       "links": {},
       "address": "0x1411cb266fced1587b0aa29e9d5a9ef3db64a9c5",
       "transactionHash": "0x18ebc195951627112daade0f2731820a23f3b0c208a355508ce9b75c9c587b69"
+    },
+    "development": {
+      "events": {},
+      "links": {},
+      "address": "0x1e918abeb37d45aed177e1821dd6a3ab14415ce3",
+      "transactionHash": "0xbf5c11d55267fc39e8d3c7cb1b8aac179c2141ec7dd26a98d03017cd4676b79e"
     }
   }
 }
