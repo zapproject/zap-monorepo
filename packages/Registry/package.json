@@ -1,7 +1,7 @@
 {
   "name": "@zapjs/registry",
   "private": false,
-  "version": "2.0.14",
+  "version": "2.0.15",
   "description": "",
   "repository": "https://github.com/zapproject/Zap-monorepo",
   "main": "lib/src/index.js",
@@ -19,7 +19,8 @@
     "@zapjs/basecontract": "^2.0.8",
     "@zapjs/curve": "^2.0.8",
     "@zapjs/types": "^2.0.6",
-    "bignumber.js": "^7.2.1"
+    "bignumber.js": "^7.2.1",
+    "web3-utils": "^1.0.0-beta.34"
   },
   "devDependencies": {
     "@types/chai": "^4.1.4",
@@ -35,7 +36,6 @@
     "path": "^0.12.7",
     "ts-node": "^7.0.0",
     "tslint": "^5.10.0",
-    "typescript": "^2.9.2",
-    "web3-utils": "^1.0.0-beta.34"
+    "typescript": "^2.9.2"
   }
 }
