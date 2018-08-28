@@ -1,7 +1,7 @@
 {
   "name": "zapjs",
   "private": false,
-  "version": "1.0.5",
+  "version": "1.0.6",
   "repository": "https://github.com/zapproject/Zap-monorepo",
   "dependencies": {
     "@types/node": "^10.7.0",
@@ -10,7 +10,7 @@
     "@zapjs/bondage": "^2.0.10",
     "@zapjs/curve": "^2.0.8",
     "@zapjs/dispatch": "^2.0.10",
-    "@zapjs/provider": "^2.0.9",
+    "@zapjs/provider": "^2.0.13",
     "@zapjs/registry": "^2.0.8",
     "@zapjs/subscriber": "^2.0.8",
     "@zapjs/types": "^2.0.6",
