@@ -46,7 +46,7 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS} from "@zapjs/ty
     async initiateProviderCurve({endpoint, term, broker, from, gas=DEFAULT_GAS}:InitCurve):Promise<txid> {
        let curve = new Curve(term);
         let convertedCurve = curve.convertToBNArrays()
-        return await this.contract.methods.initiateProviderCurve(utf8ToHex(endpoint), convertedCurve, broker)
+        return await this.contract.methods.initiateProviderCurve(utf8ToHex(endpoint), curve.valuesToString(convertedCurve), broker)
         .send({from, gas});
     }
 
