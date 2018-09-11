@@ -98,8 +98,8 @@ import {ZapArbiter} from "@zapjs/arbiter";
      * @returns {Promise<boolean>} Returns a Promise that will eventually resolve a true/false value.
      */
      async isEndpointCreated(endpoint:string):Promise<boolean> {
-        const notCreated:boolean = await this.zapRegistry.isEndpointSet(this.providerOwner, endpoint);
-        return !notCreated;
+        const created:boolean = await this.zapRegistry.isEndpointSet(this.providerOwner, endpoint);
+        return created;
     }
 
     /**
