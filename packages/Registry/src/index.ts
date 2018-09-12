@@ -6,13 +6,16 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS} from "@zapjs/ty
 
 /**
  * Manage Providers and Curves registration
- * @extends BaseContract
- * @param {any} artifactsDir Directory where contract ABIs are located
- * @param {any} networkId Select which network the contract is located on (mainnet, testnet, private)
- * @param {any} networkProvider Ethereum network provider (e.g. Infura)
  */
  export class ZapRegistry extends BaseContract {
 
+    /**
+     * @extends BaseContract
+     * @param {any} artifactsDir Directory where contract ABIs are located
+     * @param {any} networkId Select which network the contract is located on (mainnet, testnet, private)
+     * @param {any} networkProvider Ethereum network provider (e.g. Infura)
+     * @example new ZapRegistry({networkId : 42, networkProvider : web3})
+     */
     constructor(obj ?: NetworkProviderOptions){
         super(Object.assign(obj,{artifactName:"Registry"}));
     }
@@ -20,10 +23,11 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS} from "@zapjs/ty
 
     /**
      * Initializes a brand endpoint in the Registry contract, creating an Oracle entry if needed.
-     * @param {string} public_key A public identifier for this oracle
-     * @param {string} title A descriptor describing what data this oracle provides
-     * @param {address} from Ethereum Address of the account that is initializing this provider
-     * @param {BigNumber} gas Sets the gas limit for this transaction (optional)
+     * @param {InitProvider} i. {public_key, title, from, gas=DEFAULT_GAS}
+     * @param {string} i.public_key - A public identifier for this oracle
+     * @param {string} i.title - A descriptor describing what data this oracle provides
+     * @param {address} i.from - Ethereum Address of the account that is initializing this provider
+     * @param {BigNumber} i.gas - Sets the gas limit for this transaction (optional)
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
     async initiateProvider({public_key, title, from, gas=DEFAULT_GAS}:InitProvider): Promise<txid>{
@@ -36,11 +40,12 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS} from "@zapjs/ty
 
     /**
      * Initializes a piecewise curve for a given provider's endpoint. Note: curve can only be set once per endpoint.
-     * @param {string} endpoint Data endpoint of the provider
-     * @param {CurveType} curve A curve object representing a piecewise curve
-     * @param {address} broker The address allowed to bond/unbond. If 0, any address allowed 
-     * @param {address} from The address of the owner of this oracle 
-     * @param {BigNumber} gas Sets the gas limit for this transaction (optional)
+     * @param {InitCurve} i. {endpoint, term, broker, from, gas=DEFAULT_GAS}
+     * @param {string} i.endpoint - Data endpoint of the provider
+     * @param {CurveType} i.curve - A curve object representing a piecewise curve
+     * @param {address} i.broker - The address allowed to bond/unbond. If 0, any address allowed
+     * @param {address} i.from - The address of the owner of this oracle
+     * @param {BigNumber} i.gas - Sets the gas limit for this transaction (optional)
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
     async initiateProviderCurve({endpoint, term, broker, from, gas=DEFAULT_GAS}:InitCurve):Promise<txid> {
@@ -52,10 +57,11 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS} from "@zapjs/ty
 
     /**
      * Initialize endpoint params for an endpoint. Can only be called by the owner of this oracle.
-     * @param {string} endpoint Data endpoint of the provider
-     * @param {string[]} endpoint_params The parameters that this endpoint accepts as query arguments
-     * @param {address} from The address of the owner of this oracle 
-     * @param {BigNumber} gas Sets the gas limit for this transaction (optional)
+     * @param {EndpointParams} e. {endpoint, endpoint_params, from, gas=DEFAULT_GAS}
+     * @param {string} e.endpoint - Data endpoint of the provider
+     * @param {string[]} e.endpoint_params - The parameters that this endpoint accepts as query arguments
+     * @param {address} e.from - The address of the owner of this oracle
+     * @param {BigNumber} e.gas - Sets the gas limit for this transaction (optional)
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
     async setEndpointParams({endpoint, endpoint_params, from, gas=DEFAULT_GAS}:EndpointParams) :Promise<txid>{
@@ -67,10 +73,11 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS} from "@zapjs/ty
 
     /**
      * Set the parameter of a provider
-     * @param {string} key The key to be set
-     * @param {string} value The value to set the key to
-     * @param {address} from The address of the provider
-     * @param {BN} gas The amount of gas to use.
+     * @param {SetProviderParams} s. { key, value, from, gas=DEFAULT_GAS }
+     * @param {string} s.key - The key to be set
+     * @param {string} s.value - The value to set the key to
+     * @param {address} s.from - The address of the provider
+     * @param {BN} s.gas - The amount of gas to use.
      * @returns {Promise<txid>} Returns a Promise that will be eventually resolve into a transaction hash
      */
     async setProviderParameter({ key, value, from, gas=DEFAULT_GAS }: SetProviderParams): Promise<txid> {
@@ -82,7 +89,7 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS} from "@zapjs/ty
 
     /**
      * Get a provider's public key from the Registry contract.
-     * @param {address} provider The address of this provider
+     * @param {address} provider - The address of this provider
      * @returns {Promise<number>} Returns a Promise that will eventually resolve into public key number
      */
     async getProviderPublicKey(provider:address):Promise<number>{
@@ -93,6 +100,7 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS} from "@zapjs/ty
     /**
      * Get a provider endpoint's broker address 
      * @param {address} provider The address of this provider
+     * @param {string} endpoint - Endpoint to query broker's address
      * @returns {Promise<string>} Returns a Promise that will eventually resolve into public key number
      */
     async getEndpointBroker(provider:address, endpoint:string ):Promise<string>{
@@ -123,11 +131,12 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS} from "@zapjs/ty
     /**
      * Gets whether this endpoint and its corresponding curve have already been set
      * @param {address} provider The address of this provider
+     * @param {string} endpoint - Endpoint's string
      * @returns {Promise<boolean>} Returns a Promise that will eventually resolve a true/false value.
      */
     async isEndpointSet(provider:address, endpoint:string):Promise<boolean> {
-        const notCreated:boolean = await this.contract.methods.getCurveUnset(provider, endpoint);
-        return !notCreated;
+        const notCreated:boolean = await this.contract.methods.getCurveUnset(provider, endpoint).call();
+        return notCreated;
     }
 
 
@@ -147,9 +156,9 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS} from "@zapjs/ty
 
     /**
      * Get all providers in Registry contract.
-     * @returns {Promise<any>} Returns a Promise that will eventually resolve into a Provider object
+     * @returns {Promise<Object>} Returns a Promise that will eventually resolve into list of oracles
      */
-    async getAllProviders(): Promise<any> {
+    async getAllProviders(): Promise<Object> {
         return await this.contract.methods.getAllOracles().call();
     }
 

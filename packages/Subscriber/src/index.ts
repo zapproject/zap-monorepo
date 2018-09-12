@@ -21,6 +21,13 @@ export class ZapSubscriber  {
     zapRegistry:  ZapRegistry;
     zapToken: ZapToken;
 
+    /**
+     * @constructor
+     * @param {string} owner Susbcriber owner's address
+     * @param {NetworkProviderOptions} options network provider options
+     * @example new ZapSubscriber(owner,{networkId:42,networkProvider:web3})
+     *
+     */
     constructor(owner:string,options:NetworkProviderOptions) {
         assert(owner, 'owner address is required');
         this.subscriberOwner = owner;
@@ -39,6 +46,11 @@ export class ZapSubscriber  {
         return await this.zapToken.balanceOf(this.subscriberOwner);
     }
 
+    /**
+     * Approve number of zap to a provider
+     * @param {string} provider- Provider's address
+     * @param {number|BigNumber}zapNum - Number of Zap to approve
+     */
     async approveToBond(provider:address,zapNum:BNType):Promise<any>{
         let approve = await this.zapToken.approve({
             to: this.zapBondage.contract._address,
@@ -49,10 +61,11 @@ export class ZapSubscriber  {
         return approve
     }
     /**
-     * Bonds zapNum amount of Zap to the given provider's endpoint, yielding dots that enable this subscriber to send queries. 
-     * @param {string} provider The address of the oracle
-     * @param {string} endpoint The endpoint that this client wants to query from
-     * @param {number} zapNum The amount of Zap (in wei) to bond
+     * Bonds zapNum amount of Zap to the given provider's endpoint, yielding dots that enable this subscriber to send queries.
+     * @param {BondType} b. {provider, endpoint, dots}
+     * @param {string} b.provider - Provider's address
+     * @param {string} b.endpoint - Endpoint that this client wants to query from
+     * @param {number} b.zapNum - Amount of Zap (in wei) to bond
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
     async bond({provider, endpoint, dots}:BondType):Promise<any>{
@@ -78,9 +91,10 @@ export class ZapSubscriber  {
 
     /**
      * Unbonds a given number of dots from a given oracle, returning Zap to this subscriber based on the bonding curve.
-     * @param {string} provider The address of the oracle
-     * @param {string} endpoint The endpoint that the client has already bonded to
-     * @param {string|number} dots The number of dots to unbond (redeem) from this provider and endpoint
+     * @param {UnbondType} u. {provider, endpoint, dots}
+     * @param {string} u.provider - Oracle's address
+     * @param {string} u.endpoint - Endpoint that the client has already bonded to
+     * @param {string|number} u.dots - Number of dots to unbond (redeem) from this provider and endpoint
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
     async unBond({provider, endpoint, dots}:UnbondType):Promise<any>{
@@ -91,11 +105,12 @@ export class ZapSubscriber  {
     }
 
     /**
-     * Initializes a temporal subscription to an oracle, defined in terms of # of blocks. 
-     * @param {string} provider The address of the oracle
-     * @param {string} endpoint The endpoint that the client will query from
-     * @param {string[]} endpointParams The parameters passed to the oracle
-     * @param {number} dots The number of dots to subscribe for, determining the number of blocks this temporal subscription will last for
+     * Initializes a temporal subscription to an oracle, defined in terms of # of blocks.
+     * @param {SubscribeType} s. {provider, endpoint, endpointParams, dots}
+     * @param {string} s.provider - Oracle's address
+     * @param {string} s.endpoint - Endpoint that the client will query from
+     * @param {string[]} s.endpointParams - The parameters passed to the oracle
+     * @param {number} s.dots - Number of dots to subscribe for, determining the number of blocks this temporal subscription will last for
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
     async subscribe({provider, endpoint, endpointParams, dots}:SubscribeType):Promise<any> {
@@ -116,10 +131,11 @@ export class ZapSubscriber  {
 
    /**
      * Queries data from a subscriber to a given provider's endpoint, passing in a query string and endpoint parameters that will be processed by the oracle.
-     * @param {address} provider Address of the data provider
-     * @param {string} query Subscriber given query string to be handled by provider
-     * @param {string} endpoint Data endpoint of provider, meant to determine how query is handled
-     * @param {Array<string>} endpointParams Parameters passed to data provider's endpoint
+    * @param {QueryArgs} q. {provider, query, endpoint, endpointParams}
+     * @param {address} q.provider - Oracle's address
+     * @param {string} q.query - Query string given to be handled by provider
+     * @param {string} q.endpoint - Data endpoint of provider, meant to determine how query is handled
+     * @param {Array<string>} q.endpointParams - Parameters passed to data provider's endpoint
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
     async queryData({provider, query, endpoint, endpointParams}: QueryArgs): Promise<any> {
@@ -138,7 +154,7 @@ export class ZapSubscriber  {
      * @param filter
      * @param callback
      */
-    async listenToOffchainResponse(filter:Filter,callback:Function){
+    async listenToOffchainResponse(filter:Filter={},callback:Function){
         if(!filter['subscriber'])
             filter = {...filter,subscriber:this.subscriberOwner}
         this.zapDispatch.listenOffchainResponse(filter,callback)
@@ -149,7 +165,7 @@ export class ZapSubscriber  {
     // === Helpers ===//
     /**
      * Checks the Zap balance of the subscriber and compares it to a given amount.
-     * @param {number} zapRequired The number of zap to check for
+     * @param {number} zapRequired  - Number of zap to check for
      * @returns {Promise<boolean>} Returns a Promise that will eventually resolve into a true or false value
      */
     async hasEnoughZap(zapRequired:string|BNType):Promise<boolean>{

@@ -15,10 +15,12 @@ export class BaseContract{
 
     /**
      * Creates a contract class wrapper for a given contract.
-     * @param {string | null} artifactsDir Directory where contract ABIs are located
-     * @param {string} artifactName Contract name for this contract object
-     * @param {number | null} networkId Select which network the contract is located on (mainnet, testnet, private)
-     * @param {any | null} networkProvider Ethereum network provider (e.g. Infura)
+     * @constructor
+     * @param {BaseContractType} b. {artifactsDir,artifactName,networkId,networkProvider}
+     * @param {string | null} b.artifactsDir - Directory where contract ABIs are located
+     * @param {string} b.artifactName - Contract name for this contract object
+     * @param {number | null} b.networkId - Select which network the contract is located on (mainnet, testnet, private)
+     * @param {any | null} b.networkProvider - Ethereum network provider (e.g. Infura)
      */
     constructor({artifactsDir,artifactName,networkId,networkProvider}:BaseContractType) {
         let artifact:any = undefined;

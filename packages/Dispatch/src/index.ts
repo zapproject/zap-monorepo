@@ -4,24 +4,29 @@ import {NetworkProviderOptions, txid,Filter,DEFAULT_GAS} from "@zapjs/types"
 const {utf8ToHex, toBN} = require ("web3-utils");
 /**
  * Provides an interface to the Dispatch contract for enabling data queries and responses.
- * @extends BaseContract
- * @param {string} artifactsDir Directory where contract ABIs are located
- * @param {number} networkId Select which network the contract is located on (mainnet, testnet, private)
- * @param networkProvider Ethereum network provider (e.g. Infura)
  */
 export class ZapDispatch extends BaseContract {
+    /**
+     * @constructor
+     * @param {NetworkProviderOptions} net. {artifactsDir ?:string|undefined,networkId?: number|undefined,networkProvider: any}
+     * @param {string} net.artifactsDir - Directory where contract ABIs are located
+     * @param {string} net.networkId -Select which network the contract is located on (mainnet, testnet, private)
+     * @param  {Object} net.networkProvider - Ethereum network provider
+     * @example new ZapDispatch({networkId : 42, networkProvider : web3})
+     */
     constructor(obj ?: NetworkProviderOptions){
         super(Object.assign(obj, {artifactName:"Dispatch"}));
     }
 
    /**
      * Queries data from a subscriber to a given provider's endpoint, passing in a query string and endpoint parameters that will be processed by the oracle.
-     * @param {address} provider Address of the data provider
-     * @param {string} query Subscriber given query string to be handled by provider
-     * @param {string} endpoint Data endpoint of provider, meant to determine how query is handled
-     * @param {Array<string>} endpointParams Parameters passed to data provider's endpoint
-     * @param {address} from Address of the subscriber
-     * @param {BigNumber} gas Set the gas limit for this transaction (optional)
+     * @param {QueryArgs} q.  {provider, query, endpoint, endpointParams,from,gas=DEFAULT_GAS}
+     * @param {address} q.provider - Address of the data provider
+     * @param {string} q.query - Subscriber given query string to be handled by provider
+     * @param {string} q.endpoint - Data endpoint of provider, meant to determine how query is handled
+     * @param {Array<string>} q.endpointParams - Parameters passed to data provider's endpoint
+     * @param {address} q.from - Address of the subscriber
+     * @param {BigNumber} q.gas - Set the gas limit for this transaction (optional)
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
     async queryData({provider, query, endpoint, endpointParams,from,gas=DEFAULT_GAS}:QueryArgs):Promise<txid>{
@@ -44,11 +49,12 @@ export class ZapDispatch extends BaseContract {
 
     /**
      * Provider responds to a query it received
-     * @param {string} queryId A unique identifier for the query
-     * @param {Array<string | number>} responseParams List of responses returned by provider. Length determines which dispatch response is called
-     * @param {boolean} dynamic Determines if the IntArray/Bytes32Array dispatch response should be used
-     * @param {address} from Address of the provider calling the respond function
-     * @param {BigNumber} gas Set the gas limit for this transaction (optional)
+     * @param {ResponseArgs} r. {queryId, responseParams, dynamic, from,gas=DEFAULT_GAS}:ResponseArgs)
+     * @param {string} r.queryId - A unique identifier for the query
+     * @param {Array<string | number>} r.responseParams - List of responses returned by provider. Length determines which dispatch response is called
+     * @param {boolean} r.dynamic - Determines if the IntArray/Bytes32Array dispatch response should be used
+     * @param {address} r.from  - Address of the provider calling the respond function
+     * @param {BigNumber} r.gas - Set the gas limit for this transaction (optional)
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
     async respond({queryId, responseParams, dynamic, from,gas=DEFAULT_GAS}:ResponseArgs) :Promise<txid>{

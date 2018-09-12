@@ -11,6 +11,7 @@ export interface listenEvent {
     filter ?: Filter;
     callback: Function;
 }
+
 export interface Filter {
     fromBlock ?: number,
     toBlock ?: number,

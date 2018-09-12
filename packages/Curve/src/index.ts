@@ -1,14 +1,11 @@
-import {CurveTerm} from "./types";
-const {toHex}  = require("web3-utils");
 import {BigNumber} from "bignumber.js";
 
 /**
- * A class that represents a Zap piecewise curve. Provides the functionality to parse Zap's piecewise function encoding and calculate the price of dots at any given point on the curve.
+ * This class represents a Zap piecewise curve. Provides the functionality to parse Zap's piecewise function encoding and calculate the price of dots at any given point on the curve.
  */
  export class Curve {
-     /**@member */
      public values: number[];
-     public max: number = 0;
+    public max: number = 0;
 
     /**
      * Initializes a wrapper class for function and structurizes the provided curves. 
@@ -20,7 +17,7 @@ import {BigNumber} from "bignumber.js";
          this.checkValidity();
      }
 
-    /*
+    /**
      * Checks whether the piecewise curve encoding is valid and throws an error if invalid.
      */
      private checkValidity(): void {
@@ -48,7 +45,7 @@ import {BigNumber} from "bignumber.js";
 
     /**
      * Gets the price of the nth dot. e.g. the price of a single dot to a curve with no dots issued would be calculated at n=1. 
-     * @param {number} total_x n, where the new dot will be the nth dot to be bonded. 
+     * @param {number} total_x n - Where the new dot will be the nth dot to be bonded.
      * @returns {number} Returns the price (in Zap) of the nth dot.
      */
      public getPrice(total_x: number): number {
@@ -99,7 +96,11 @@ import {BigNumber} from "bignumber.js";
              return new BigNumber(item);
          });
      }
-     public valuesToString(): string[]{
+
+    /**
+     * @ignore
+     */
+    public valuesToString(): string[]{
          return this.values.map((item:number)=> {return ''+item})
      }
 

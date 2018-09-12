@@ -15,6 +15,7 @@ export class ZapArbiter extends BaseContract {
      * @param {string} artifactsDir Directory where contract ABIs are located
      * @param {string} networkId Select which network the contract is located on (mainnet, testnet, private)
      * @param  networkProvider Ethereum network provider (e.g. Infura)
+     * @example new ZapArbiter({networkId : 42, networkProvider : web3})
      */
     constructor(obj ?: NetworkProviderOptions){
         super(Object.assign(obj,{artifactName:"Arbiter"}))
@@ -22,13 +23,14 @@ export class ZapArbiter extends BaseContract {
 
     /**
      * Initializes a subscription with a given provider, endpoint, and endpoint parameters.
-     * @param {address} provider Address of the data provider
-     * @param {string} endpoint Data endpoint of the provider
-     * @param {Array<string>} endpoint_params Params passed to endpoint
-     * @param {number} blocks Number of blocks that the subscription will last for
-     * @param {number} provider Public key of provider
-     * @param {address} from Subscriber's address
-     * @param {number} gas Set the gas limit for this transaction (optional)
+     * @param {SubscriptionInit} r.  {provider, endpoint, endpoint_params, blocks, pubkey, from, gas=DEFAULT_GAS}
+     * @param {address} r.provider - Address of the data provider
+     * @param {string} r.endpoint - Data endpoint of the provider
+     * @param {Array<string>} r.endpoint_params - Params passed to endpoint
+     * @param {number} r.blocks - Number of blocks that the subscription will last for
+     * @param {number} r.provider - Public key of provider
+     * @param {address} r.from - Subscriber's address
+     * @param {number} r.gas - Set the gas limit for this transaction (optional)
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
     async initiateSubscription(
@@ -52,11 +54,12 @@ export class ZapArbiter extends BaseContract {
     }
 
     /**
-     * Pass parameters between parties 
-     * @param {address} receiver Address to receive parameters 
-     * @param {string} endpoint Data endpoint of the provider
-     * @param {Array<string>} params Params passed to reciever 
-     * @param {number} gas Gas limit of this transaction
+     * Pass parameters between parties
+     * @param {SubscriptionParams} s. {receiver, endpoint, params, from, gas=DEFAULT_GAS}
+     * @param {address} s.receiver - Address to receive parameters
+     * @param {string} s.endpoint - Data endpoint of the provider
+     * @param {Array<string>} s.params - Params passed to reciever
+     * @param {number} s.gas - Gas limit of this transaction
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
     async passParams({receiver, endpoint, params, from, gas=DEFAULT_GAS} : SubscriptionParams) :Promise<txid>{
@@ -78,10 +81,10 @@ export class ZapArbiter extends BaseContract {
 
     /**
      * Gets the subscription status for a given provider, subscriber, and endpoint.
-     * @func getSubscription 
-     * @param {address} provider Address of the data provider
-     * @param {address} subscriber Address of the subscriber
-     * @param {string} endpoint Data endpoint of the provider
+     * @param {SubscriptionType} s. {provider,subscriber,endpoint}
+     * @param {address} s.provider - Address of the data provider
+     * @param {address} s.subscriber - Address of the subscriber
+     * @param {string} s.endpoint - Data endpoint of the provider
      * @returns {Promise<string>} Returns a Promise that will eventually resolve into information on the currently active subscription
      */
     async getSubscription({provider,subscriber,endpoint}:SubscriptionType){
@@ -92,10 +95,11 @@ export class ZapArbiter extends BaseContract {
 
     /**
      * Ends a currently active subscription for a given subscriber and endpoint from the subscriber.
-     * @param {address} provider Address of the data provider
-     * @param {string} endpoint Data endpoint of the provider
-     * @param {address} from Address of the subscriber
-     * @param {number} gas Gas limit of this transaction
+     * @param {SubscriptionEnd} s. {provider, endpoint, from, gas=DEFAULT_GAS}
+     * @param {address} s.provider - Address of the data provider
+     * @param {string} s.endpoint - Data endpoint of the provider
+     * @param {address} s.from - Address of the subscriber
+     * @param {number} s.gas - Gas limit of this transaction
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
     async endSubscriptionSubscriber({provider, endpoint, from, gas=DEFAULT_GAS}:SubscriptionEnd) :Promise<txid>{
@@ -109,10 +113,11 @@ export class ZapArbiter extends BaseContract {
 
     /**
      * Ends a currently active subscription for a given subscriber and endpoint from the provider.
-     * @param {address} subscriber Address of the subscriber
-     * @param {string} endpoint Data endpoint of the provider
-     * @param {address} from Address of the provider
-     * @param {number} gas Gas limit of this transaction
+     * @param {SubscriptionEnd} s. {subscriber, endpoint, from, gas=DEFAULT_GAS}
+     * @param {address} s.subscriber - Address of the subscriber
+     * @param {string} s.endpoint - Data endpoint of the provider
+     * @param {address} s.from - Address of the provider
+     * @param {number} s.gas - Gas limit of this transaction
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
     async endSubscriptionProvider({subscriber, endpoint, from, gas=DEFAULT_GAS}:SubscriptionEnd) :Promise<txid>{
