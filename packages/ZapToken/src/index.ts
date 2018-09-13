@@ -2,14 +2,6 @@ import {BaseContract} from "@zapjs/basecontract";
 import {Util} from "./utils";
 import {TransferType,address,txid,NetworkProviderOptions,BNType} from "@zapjs/types";
 
-/**
- * ERC20 Tokens methods for Zap Tokens
- * @extends BaseContract
- * @param {?string} artifactsDir
- * @param {string} artifactName
- * @param {?string} networkId
- * @param {?string} networkProvider
- */
 
  /**
  * @class
@@ -18,6 +10,15 @@ import {TransferType,address,txid,NetworkProviderOptions,BNType} from "@zapjs/ty
 
  export class ZapToken extends BaseContract {
 
+     /**
+      * @constructor
+      * @param {NetworkProviderOptions} n. {artifactDir,networkId,networkProvider}
+      * @param {string} n.artifactsDir - Directory where contract ABIs are located
+      * @param {number|string} n.networkId - Select which network the contract is located on (mainnet, testnet, private)
+      * @param {any} n.networkProvider - Ethereum network provider (e.g. Infura)
+      * @example new ZapToken({networkId : 42, networkProvider : web3})
+      */
+
     constructor(obj ?: NetworkProviderOptions){
         super(Object.assign(obj,{artifactName:"ZapToken"}));
     }
@@ -25,7 +26,7 @@ import {TransferType,address,txid,NetworkProviderOptions,BNType} from "@zapjs/ty
 
     /**
      * Get the Zap Token balance of a given address.
-     * @param {address} address The Ethereum address to check
+     * @param {address} address  Address to check
      * @returns {Promise<number>} Returns a Promise that will eventually resolve into a Zap balance (wei)
      */
      async balanceOf(address:address) :Promise<string|BNType>{
@@ -34,10 +35,11 @@ import {TransferType,address,txid,NetworkProviderOptions,BNType} from "@zapjs/ty
 
     /**
      * Transfers Zap from an address to another address.
-     * @param {address} to The Ethereum address of the recipient
-     * @param {number} amount The amount of Zap to transfer (wei)
-     * @param {address} from The Ethereum address of the sender
-     * @param {number} gas Sets the gas limit for this transaction (optional)
+     * @param {TransferType} t. {to, amount, from,gas=Util.DEFAULT_GAS}
+     * @param {address} t.to - Address of the recipient
+     * @param {number} t.amount - Amount of Zap to transfer (wei)
+     * @param {address} t.from - Address of the sender
+     * @param {number} t.gas - Sets the gas limit for this transaction (optional)
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
      async send({to, amount, from,gas=Util.DEFAULT_GAS}:TransferType) :Promise<txid>{
@@ -46,10 +48,11 @@ import {TransferType,address,txid,NetworkProviderOptions,BNType} from "@zapjs/ty
 
     /**
      * Allocates Zap Token from the Zap contract owner to an address (ownerOnly).
-     * @param {address} to The Ethereum address of the recipient
-     * @param {number} amount The amount of Zap to allocate (wei)
-     * @param {address} from The Ethereum address of the sender (must be owner of the Zap contract)
-     * @param {number} gas Sets the gas limit for this transaction (optional)
+     * @param {TransferType} t. {to, amount, from,gas=Util.DEFAULT_GAS}
+     * @param {address} t.to - Address of the recipient
+     * @param {number} t.amount - Amount of Zap to allocate (wei)
+     * @param {address} t.from - Address of the sender (must be owner of the Zap contract)
+     * @param {number} t.gas - Sets the gas limit for this transaction (optional)
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
      async allocate({to, amount, from,gas=Util.DEFAULT_GAS}:TransferType):Promise<txid> {
@@ -58,10 +61,11 @@ import {TransferType,address,txid,NetworkProviderOptions,BNType} from "@zapjs/ty
 
     /**
      * Approves the transfer of Zap Token from a holder to another account. Enables the bondage contract to transfer Zap during the bondage process.
-     * @param {address} to The Ethereum address of the recipient
-     * @param {number} amount The amount of Zap to approve (wei)
-     * @param {address} from The Ethereum address of the sender
-     * @param {number} gas Sets the gas limit for this transaction (optional)
+     * @param {TransferType} t. {to, amount, from, gas=Util.DEFAULT_GAS}
+     * @param {address} t.to - Address of the recipient
+     * @param {number} t.amount - Amount of Zap to approve (wei)
+     * @param {address} t.from - Address of the sender
+     * @param {number} t.gas - Sets the gas limit for this transaction (optional)
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
      async approve({to, amount, from, gas=Util.DEFAULT_GAS}:TransferType):Promise<txid> {

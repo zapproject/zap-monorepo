@@ -14,6 +14,7 @@ export type InitCurve = {
     endpoint:string,
     term: number[],
     broker?: address,
+    gas ?: BNType
 }
 
 export type UnsubscribeListen = {

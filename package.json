@@ -14,10 +14,10 @@
     "test": "./node_modules/.bin/lerna exec npm run run_test --concurrency=1",
     "webpack": "./node_modules/.bin/lerna exec npm run webpack --scope='zapjs'",
     "bundle": "run-s build webpack",
-    "generateDoc": "./node_modules/.bin/compodoc -p docstsconfig.json --disableCoverage --hideGenerator "
+    "generateDoc": "./node_modules/.bin/compodoc -p docstsconfig.json --disableCoverage --hideGenerator --theme vagrant "
   },
   "dependencies": {
-    "@compodoc/compodoc": "^1.1.3",
+    "@compodoc/compodoc": "^1.1.5",
     "@types/chai": "^4.1.4",
     "@types/mocha": "^5.2.4",
     "awesome-typescript-loader": "^5.2.0",
@@ -46,7 +46,7 @@
     "typedoc-markdown-theme": "0.0.4",
     "typescript-docs": "^1.0.1",
     "web3": "^1.0.0-beta.34",
-    "web3-utils": "^1.0.0-beta.34",
+    "web3-utils": "1.0.0-beta.34",
     "webpack-log": "^1.2.0",
     "zap_contracts": "git+https://github.com/zapproject/zap-ethereum-api.git#master"
   },

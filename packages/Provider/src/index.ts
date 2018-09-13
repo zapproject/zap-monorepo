@@ -21,6 +21,13 @@ import {ZapArbiter} from "@zapjs/arbiter";
     title:string;
     pubkey:number|string;
 
+    /**
+     * @constructor
+     * @param {string} owner Provider owner's address
+     * @param {NetworkProviderOptions} options network provider options
+     * @example new ZapProvider(owner,{networkId:42,networkProvider:web3})
+     *
+     */
     constructor(owner:string,options:NetworkProviderOptions) {
         assert(owner, 'owner address is required');
         this.providerOwner = owner;
@@ -35,8 +42,9 @@ import {ZapArbiter} from "@zapjs/arbiter";
 
     /**
      * Calls the Registry contract to initialize a new provider endpoint. This needs to be called for each endpoint.
-     * @param {string} public_key A public identifier for this oracle
-     * @param {string} title A descriptor describing what data this oracle provides
+     * @param {InitProvider} i. {public_key, title, gas=DEFAULT_GAS}
+     * @param {string} i.public_key A public identifier for this oracle
+     * @param {string} i.title A descriptor describing what data this oracle provides
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
      async initiateProvider({public_key, title, gas=DEFAULT_GAS}:InitProvider):Promise<txid> {
@@ -46,11 +54,12 @@ import {ZapArbiter} from "@zapjs/arbiter";
 
     /**
      * Calls the Registry contract to initialize a new Curve for a given endpoint. See Curve for more information on encoding.
-     * @param {string} endpoint The endpoint identifier matching the created endpoint
-     * @param {address} broker Address of broker allowed to bond/unbond. 0 means anyone can 
-     * @param {number[]} term The curve array for this endpoint, setting the coefficients, powers, and domains for each piece.
+     * @param {InitCurve} i. {endpoint, term, broker,gas=DEFAULT_GAS}
+     * @param {string} i.endpoint - The endpoint identifier matching the created endpoint
+     * @param {address} i.broker - Address of broker allowed to bond/unbond. 0 means anyone can
+     * @param {number[]} i.term - The curve array for this endpoint, setting the coefficients, powers, and domains for each piece.
      */
-     async initiateProviderCurve({endpoint, term, broker}: InitCurve) :Promise<txid>{
+     async initiateProviderCurve({endpoint, term, broker,gas=DEFAULT_GAS}: InitCurve) :Promise<txid>{
         if(endpoint in this.curves) throw("Endpoint " + endpoint + " already exists");
         let curve = new Curve(term)
         let txid = await this.zapRegistry.initiateProviderCurve({endpoint, term, broker, from: this.providerOwner});
@@ -61,8 +70,9 @@ import {ZapArbiter} from "@zapjs/arbiter";
 
     /**
      * Set the parameter of a provider
-     * @param {string} key The key to be set
-     * @param {string} value The value to set the key to
+     * @param {SetProviderParams} s. { key, value}
+     * @param {string} s.key - The key to be set
+     * @param {string} s.value - The value to set the key to
      */
     async setProviderParameter({ key, value}: SetProviderParams): Promise<txid> {
         return await this.zapRegistry.setProviderParameter({
@@ -95,6 +105,7 @@ import {ZapArbiter} from "@zapjs/arbiter";
 
     /**
      * Gets whether this endpoint and its corresponding curve have already been set
+     * @param {string} endpoint - Endpoint identifier to check if it's created
      * @returns {Promise<boolean>} Returns a Promise that will eventually resolve a true/false value.
      */
      async isEndpointCreated(endpoint:string):Promise<boolean> {
@@ -115,7 +126,7 @@ import {ZapArbiter} from "@zapjs/arbiter";
 
     /**
      * Gets the Curve of a defined endpoint from the Registry contract.
-     * @param {string} endpoint The endpoint identifier matching the desired endpoint
+     * @param {string} endpoint - The endpoint identifier
      * @returns {Promise<CurveType>} Returns a Promise that will eventually resolve into the Curve of this provider's endpoint.
      */
      async getCurve(endpoint:string):Promise<Curve> {
@@ -127,7 +138,7 @@ import {ZapArbiter} from "@zapjs/arbiter";
 
     /**
      * Gets the total amount of Zap bound to a given endpoint.
-     * @param {string} endpoint The endpoint identifier matching the desired endpoint
+     * @param {string} endpoint The endpoint identifier
      * @returns {Promise<string|BigNumber>} Returns a Promise that will eventually resolve into an amount of Zap (wei).
      */
      async getZapBound(endpoint:string):Promise<string|BNType> {
@@ -138,8 +149,9 @@ import {ZapArbiter} from "@zapjs/arbiter";
 
     /**
      * Gets the amount of dots bound by a user
-     * @param {string} endpoint The endpoint identifier matching the desired endpoint
-     * @param {string} subscriber The subscriber that is being checked
+     * @param {Object} e. {endpoint, subscriber}
+     * @param {string} e.endpoint - The endpoint identifier
+     * @param {string} e.subscriber - The subscriber that is being checked
      * @returns {Promise<string|BigNumber>} Retunrs a Promise that will eventually resolve into an amount of dots
      */
     async getBoundDots({endpoint, subscriber}: {endpoint: string, subscriber: string}): Promise<string|BNType> {
@@ -150,7 +162,7 @@ import {ZapArbiter} from "@zapjs/arbiter";
 
     /**
      * Gets the total amount of DOTs issued
-     * @param {string} endpoint The endpoint identifier matching the desired endpoint
+     * @param {string} endpoint - The endpoint identifier
      * @returns {Promise<string|BigNumber>} Returns a Promise that will eventually be resolved into an integer amount of dots
      */
     async getDotsIssued(endpoint: string): Promise<string|BNType> {
@@ -160,7 +172,7 @@ import {ZapArbiter} from "@zapjs/arbiter";
 
     /**
      * Get maximum dots an endpoint can issue
-     * @param endpoint
+     * @param {string} endpoint -Endpoint identifier
      */
     async getDotsLimit(endpoint:string):Promise<string|BNType>{
         return this.zapBondage.getDotsLimit({provider:this.providerOwner,endpoint:endpoint})
@@ -168,8 +180,9 @@ import {ZapArbiter} from "@zapjs/arbiter";
 
     /**
      * Gets the total amount of Zap required to bond x dots.
-     * @param endpoint The endpoint identifier matching the desired endpoint
-     * @param dots Number of dots that is desired.
+     * @param {Object} e. {endpoint, dots}
+     * @param {string} e.endpoint - The endpoint identifier
+     * @param {number} e.dots - Number of dots
      * @returns {Promise<string|BigNumber>} Returns a Promise that will eventually resolve into an amount of Zap (wei).
      */
      async getZapRequired({endpoint, dots}:{endpoint:string,dots:number}):Promise<string|BNType> {
@@ -178,8 +191,7 @@ import {ZapArbiter} from "@zapjs/arbiter";
 
     /**
      * Get a parameter from a provider
-     * @param {string} provider The address of the provider
-     * @param {string} key The key you're getting
+     * @param {string} key The key for param
      * @returns {Promise<string>} A promise that will be resolved with the value of the key
      */
     async getProviderParam(key: string): Promise<string> {
@@ -188,7 +200,6 @@ import {ZapArbiter} from "@zapjs/arbiter";
 
     /**
      * Get all the parameters of a provider
-     * @param {string} provider The address of the provider
      * @returns {Promise<string[]>} A promise that will be resolved with all the keys
      */
     async getAllProviderParams(): Promise<string[]> {
@@ -197,7 +208,7 @@ import {ZapArbiter} from "@zapjs/arbiter";
 
     /**
      * Get broker address of this endpoint
-     * @param endpoint
+     * @param {string} endpoint- Endpoint identifier
      */
     async getEndpointBroker(endpoint:string):Promise<string>{
         return await this.zapRegistry.getEndpointBroker(this.providerOwner,endpoint);
@@ -205,8 +216,7 @@ import {ZapArbiter} from "@zapjs/arbiter";
 
     /**
      * Get the endpoint params at a certain index of a provider's endpoint.
-     * @param {address} provider The address of this provider
-     * @param {string} endpoint Data endpoint of the provider
+     * @param {string} endpoint - Endpoint identifier
      * @returns {Promise<string>} Returns a Promise that will eventually resolve into the endpoint's param at this index
      */
     async getEndpointParams(endpoint: string):Promise<string>{
@@ -215,7 +225,6 @@ import {ZapArbiter} from "@zapjs/arbiter";
 
     /**
      * Get the endpoints of a given provider
-     * @param {address} provider The address of this provider
      * @returns {Promise<string[]>} Returns a Promise that will be eventually resolved with the endpoints of the provider.
      */
     async getEndpoints(): Promise<string[]> {
@@ -224,21 +233,23 @@ import {ZapArbiter} from "@zapjs/arbiter";
 
     /**
      * Responds to a specific query from the subscriber by identifying a
-     * @param {string} queryId The query identifier to send this response to
-     * @param {string[] | number[]} responseParams List of responses returned by provider. Length determines which dispatch response is called
-     * @param {boolean} dynamic True if the response contains a dynamic bytes32 array
+     * @param {Respond} e. {queryId, responseParams, dynamic}
+     * @param {string} e.queryId - The query identifier to send this response to
+     * @param {string[] | number[]} e.responseParams - List of responses returned by provider. Length determines which dispatch response is called
+     * @param {boolean} e.dynamic - True if the response contains a dynamic bytes32 array
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
      async respond({queryId, responseParams, dynamic}:Respond):Promise<string>{
         return await this.zapDispatch.respond({queryId, responseParams, dynamic, from: this.providerOwner});
     }
 
+
     /**
      * Listen for start subscription events from the Arbiter contract.
-     * @param {Utils.Types.Filter}
-     * @param {Function} callback
+     * @param filters
+     * @param callback
      */
-    listenSubscribes(filters:Filter,callback:Function):void {
+    listenSubscribes(filters:Filter={},callback:Function):void {
         let thisFilters= Object.assign(filters,{
             provider : this.providerOwner
         })
@@ -248,23 +259,22 @@ import {ZapArbiter} from "@zapjs/arbiter";
 
     /**
      *Listen to unsubscription events emitted by the Arbiter contract.
-     * @param {Utils.Types.Filter} filters
-     * @param {Function} callback
+     * @param filters
+     * @param callback
      */
-    listenUnsubscribes(filters:Filter,callback:Function) :void{
+    listenUnsubscribes(filters:Filter={},callback:Function) :void{
         let thisFilters= Object.assign(filters,{
             provider : this.providerOwner
         })
         return this.zapArbiter.listenSubscriptionEnd(thisFilters,callback);
     }
 
-
     /**
      * Listen to Query events emitted by the Dispatch contract.
-     * @param {Utils.Types.Filter} filters
-     * @param {Function} callback
+     * @param filters
+     * @param callback
      */
-    listenQueries(filters:Filter,callback:Function) :void {
+    listenQueries(filters:Filter={},callback:Function) :void {
         let thisFilters= Object.assign(filters,{
             provider : this.providerOwner
         })
