@@ -33,7 +33,7 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS} from "@zapjs/ty
     async initiateProvider({public_key, title, from, gas=DEFAULT_GAS}:InitProvider): Promise<txid>{
         let params:Array<string>;
         return await this.contract.methods.initiateProvider(
-            toBN(public_key),
+            ""+toBN(public_key),
             utf8ToHex(title))
         .send({from,gas});
     }
