@@ -45,7 +45,7 @@ export class ZapBondage extends BaseContract {
         return await this.contract.methods.bond(
             provider,
             utf8ToHex(endpoint),
-            toBN(dots))
+            toBN(dots).toString())
             .send({from, gas});
 
     }
@@ -73,7 +73,7 @@ export class ZapBondage extends BaseContract {
             subscriber,
             provider,
             utf8ToHex(endpoint),
-            toBN(dots))
+            toBN(dots).toString())
             .send({from, gas});
     }
 
@@ -99,7 +99,7 @@ export class ZapBondage extends BaseContract {
         return await this.contract.methods.unbond(
             provider,
             utf8ToHex(endpoint),
-            toBN(dots))
+            toBN(dots).toString())
             .send({from, gas});
     }
 
@@ -131,7 +131,7 @@ export class ZapBondage extends BaseContract {
         return await this.contract.methods.calcZapForDots(
             provider,
             utf8ToHex(endpoint),
-            toBN(dots)).call();
+            toBN(dots).toString()).call();
     }
 
     /**
@@ -146,7 +146,7 @@ export class ZapBondage extends BaseContract {
         return this.contract.methods.currentCostOfDot(
             provider,
             utf8ToHex(endpoint),
-            toBN(dots)
+            toBN(dots).toString()
         ).call();
     }
 
