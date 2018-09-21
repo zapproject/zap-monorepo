@@ -1,6 +1,6 @@
 {
   "name": "@zapjs/provider",
-  "private": false,
+  "private": true,
   "version": "2.0.14",
   "description": "Zap Provider",
   "repository": "https://github.com/zapproject/Zap-monorepo",

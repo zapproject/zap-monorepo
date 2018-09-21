@@ -1,6 +1,6 @@
 {
   "name": "@zapjs/utils",
-  "private": false,
+  "private": true,
   "version": "2.0.9",
   "description": "Zap Utils",
   "repository": "https://github.com/zapproject/Zap-monorepo",

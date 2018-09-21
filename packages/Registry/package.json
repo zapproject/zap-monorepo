@@ -1,6 +1,6 @@
 {
   "name": "@zapjs/registry",
-  "private": false,
+  "private": true,
   "version": "2.0.16",
   "description": "",
   "repository": "https://github.com/zapproject/Zap-monorepo",

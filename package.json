@@ -1,5 +1,5 @@
 {
-  "private": false,
+  "private": true,
   "name": "ZapSDK",
   "engines": {
     "node": ">=6.12"
@@ -45,8 +45,8 @@
     "typedoc-clarity-theme": "^1.1.0",
     "typedoc-markdown-theme": "0.0.4",
     "typescript-docs": "^1.0.1",
-    "web3": "^1.0.0-beta.34",
-    "web3-utils": "1.0.0-beta.34",
+    "web3": "^1.0.0-beta.36",
+    "web3-utils": "^1.0.0-beta.36",
     "webpack-log": "^1.2.0",
     "zap_contracts": "git+https://github.com/zapproject/zap-ethereum-api.git#master"
   },
@@ -54,7 +54,7 @@
     "@types/node": "^10.7.1",
     "coveralls": "^3.0.2",
     "ganache-cli": "^6.1.8",
-    "lerna": "^3.1.4",
+    "lerna": "^3.4.0",
     "npm-run-all": "^4.1.3",
     "truffle-core": "^4.1.14",
     "typescript": "^2.9.2"
