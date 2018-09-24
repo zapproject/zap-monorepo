@@ -14,15 +14,14 @@ import {Utils} from "@zapjs/utils";
 export async function bootstrap(zapProvider: any, accounts: string[], deployedRegistry: any, deployedBondage: any, deployedToken: any) {
     const normalizedP = Utils.normalizeProvider(zapProvider);
     const defaultTx = {from: accounts[0], gas: Utils.Constants.DEFAULT_GAS};
-    await deployedRegistry.contract.methods.initiateProvider(normalizedP.pubkey, normalizedP.title).send(defaultTx);
+    await deployedRegistry.contract.methods.initiateProvider(normalizedP.pubkey.toString(), normalizedP.title).send(defaultTx);
     const convertedCurve = zapProvider.curve.convertToBNArrays();
     const tokenOwner = await deployedToken.contract.methods.owner().call();
-    await deployedRegistry.contract.methods.initiateProviderCurve(normalizedP.endpoint,convertedCurve,null).send(defaultTx);
+    await deployedRegistry.contract.methods.initiateProviderCurve(normalizedP.endpoint,zapProvider.curve.valuesToString(convertedCurve),"0x0000000000000000000000000000000000000000").send(defaultTx);
     //Endpoint with broker address
-    await deployedRegistry.contract.methods.initiateProviderCurve(utf8ToHex(Utils.Constants.EndpointBroker),convertedCurve,accounts[5]).send(defaultTx);
-
+    await deployedRegistry.contract.methods.initiateProviderCurve(utf8ToHex(Utils.Constants.EndpointBroker), zapProvider.curve.valuesToString(convertedCurve),accounts[5]).send(defaultTx);
     for (const account of accounts) {
-        await deployedToken.contract.methods.allocate(account, Utils.toZapBase(100000000000000)).send({from: tokenOwner, gas: Utils.Constants.DEFAULT_GAS});
+        await deployedToken.contract.methods.allocate(account, Utils.toZapBase(100000000000000).toString()).send({from: tokenOwner, gas: Utils.Constants.DEFAULT_GAS});
     }
 
     return "done";

@@ -43,7 +43,7 @@ import {TransferType,address,txid,NetworkProviderOptions,BNType} from "@zapjs/ty
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
      async send({to, amount, from,gas=Util.DEFAULT_GAS}:TransferType) :Promise<txid>{
-        return await this.contract.methods.transfer(to, amount).send({from,gas});
+        return await this.contract.methods.transfer(to, amount.toString()).send({from,gas});
     }
 
     /**
@@ -56,7 +56,7 @@ import {TransferType,address,txid,NetworkProviderOptions,BNType} from "@zapjs/ty
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
      async allocate({to, amount, from,gas=Util.DEFAULT_GAS}:TransferType):Promise<txid> {
-        return await this.contract.methods.allocate(to, amount).send({from,gas});
+        return await this.contract.methods.allocate(to, amount.toString()).send({from,gas});
     }
 
     /**
@@ -69,7 +69,7 @@ import {TransferType,address,txid,NetworkProviderOptions,BNType} from "@zapjs/ty
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
      async approve({to, amount, from, gas=Util.DEFAULT_GAS}:TransferType):Promise<txid> {
-        const success = await this.contract.methods.approve(to, amount).send({from,gas});
+        const success = await this.contract.methods.approve(to, amount.toString()).send({from,gas});
         if (!success) {
             throw new Error('Failed to approve Bondage transfer');
         }

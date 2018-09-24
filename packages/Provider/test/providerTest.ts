@@ -72,7 +72,7 @@ describe('Zap Provider Test', () => {
     it("2. Should allocate ZapToken to accounts",async ()=>{
         let zapTokenOwner = await zapToken.getContractOwner()
         for(let account of accounts){
-            await zapToken.allocate({to:account,amount:Utils.toZapBase(1000),from:zapTokenOwner})
+            await zapToken.allocate({to:account,amount:Utils.toZapBase(1000).toString(),from:zapTokenOwner})
         }
     });
     it("3. Should init zapProvider class",async ()=>{
@@ -126,7 +126,7 @@ describe('Zap Provider Test', () => {
     })
     it("9. Should allow and bond subscriber to provider", async () => {
         let zapRequired = await zapProvider.getZapRequired({ endpoint: testZapProvider.endpoint, dots: DOTS })
-        let approve = await zapToken.approve({ to: zapBondage.contract._address, amount: zapRequired, from: subscriberAddress })
+        let approve = await zapToken.approve({ to: zapBondage.contract._address, amount: zapRequired.toString(), from: subscriberAddress })
         let bond = await zapBondage.bond({
             provider: providerAddress,
             endpoint: testZapProvider.endpoint,

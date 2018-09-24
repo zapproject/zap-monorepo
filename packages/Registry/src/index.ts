@@ -33,7 +33,7 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS} from "@zapjs/ty
     async initiateProvider({public_key, title, from, gas=DEFAULT_GAS}:InitProvider): Promise<txid>{
         let params:Array<string>;
         return await this.contract.methods.initiateProvider(
-            toBN(public_key),
+            toBN(public_key).toString(),
             utf8ToHex(title))
         .send({from,gas});
     }
@@ -48,10 +48,10 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS} from "@zapjs/ty
      * @param {BigNumber} i.gas - Sets the gas limit for this transaction (optional)
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-    async initiateProviderCurve({endpoint, term, broker, from, gas=DEFAULT_GAS}:InitCurve):Promise<txid> {
+    async initiateProviderCurve({endpoint, term, broker="0x0000000000000000000000000000000000000000", from, gas=DEFAULT_GAS}:InitCurve):Promise<txid> {
        let curve = new Curve(term);
         let convertedCurve = curve.convertToBNArrays()
-        return await this.contract.methods.initiateProviderCurve(utf8ToHex(endpoint), curve.valuesToString(convertedCurve), broker)
+        return await this.contract.methods.initiateProviderCurve(utf8ToHex(endpoint), convertedCurve.map(x => String(x)), broker)
         .send({from, gas});
     }
 

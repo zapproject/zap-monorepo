@@ -1,6 +1,6 @@
 {
   "name": "@zapjs/basecontract",
-  "private": false,
+  "private": true,
   "version": "2.0.9",
   "description": "",
   "main": "lib/src/index.js",

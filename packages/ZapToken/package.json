@@ -1,6 +1,6 @@
 {
 	"name": "@zapjs/zaptoken",
-	"private": false,
+	"private": true,
 	"version": "2.0.10",
 	"description": "Zap Token",
 	"repository": "https://github.com/zapproject/Zap-monorepo",
