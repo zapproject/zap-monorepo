@@ -68,7 +68,7 @@ describe('Registry test', () => {
      const title = await registryWrapper.getProviderTitle(accounts[0]);
      await expect(title).to.be.equal(testZapProvider.title);
      const pubkey = await registryWrapper.getProviderPublicKey(accounts[0]);
-     await expect(pubkey).to.be.equal(testZapProvider.pubkey);
+     await expect(Number(pubkey)).to.be.equal(testZapProvider.pubkey);
     });
 
     it('Should initiate Provider curve  with 0x0 broker in zap registry contract', async () => {
@@ -93,7 +93,6 @@ describe('Registry test', () => {
     });
     it("Should get all provider params", async()=>{
         let params = await registryWrapper.getAllProviderParams(accounts[0])
-        console.log("All params : ",params)
     })
 
     it('Should initiate Provider curve  with valid broker address in zap registry contract', async () => {

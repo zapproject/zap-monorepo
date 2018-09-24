@@ -2,6 +2,8 @@ import {CurveType} from "@zapjs/curve"
 import {BigNumber} from 'bignumber.js';
 import {address,BNType} from "@zapjs/types"
 
+export const NULL_ADDRESS= '0x0000000000000000000000000000000000000000';
+
 export type InitProvider = {
   public_key : string,
   title :string,

@@ -58,7 +58,7 @@ export class Utils {
      * @returns {any}
      */
     static toZapBase(num: number) {
-        return web3.utils.toBN(num).mul(web3.utils.toBN(10).pow(web3.utils.toBN(18)));
+        return web3.utils.toBN(num).mul(web3.utils.toBN(10).pow(web3.utils.toBN(18))).toString();
     }
 
     /**
@@ -78,7 +78,7 @@ export class Utils {
     static normalizeProvider(provider: ZapProviderType): ZapProviderType {
         let normalize: any = {};
         normalize.title = utf8ToHex(provider.title);
-        normalize.pubkey = toBN(provider.pubkey);
+        normalize.pubkey = provider.pubkey;
         normalize.endpoint = utf8ToHex(provider.endpoint);
         normalize.endpoint_params = [];
         for (let i in provider.endpoint_params) {

@@ -4,9 +4,9 @@ export interface SubscriptionInit {
     endpoint :string,
     endpoint_params: Array<string>,
     blocks : number|string,
-    pubkey:number,
+    pubkey:number|string,
     from: address,
-    gas?: BNType|string
+    gas?: BNType|string|number
 }
 
 export interface SubscriptionEnd {
@@ -14,7 +14,7 @@ export interface SubscriptionEnd {
     subscriber ?:address,
     endpoint : string,
     from: address,
-    gas?:BNType|string
+    gas?:BNType|string|number
 }
 
 export interface SubscriptionType {
@@ -28,5 +28,5 @@ export interface SubscriptionParams {
     endpoint:string,
     params: Array<string>,
     from: address,
-    gas?: BNType|string
+    gas?: BNType|string|number
 }
