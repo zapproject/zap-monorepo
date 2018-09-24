@@ -1,11 +1,12 @@
 {
   "name": "@zapjs/types",
   "private": false,
-  "version": "2.0.6",
+  "version": "2.0.7",
   "repository": "https://github.com/zapproject/Zap-monorepo",
   "dependencies": {
     "bignumber.js": "^7.2.1",
-    "ethereum-types": "^1.0.3"
+    "ethereum-types": "^1.0.7",
+    "web3": "1.0.0-beta.36"
   },
   "scripts": {
     "webpack": "./node_modules/.bin/webpack",
@@ -16,10 +17,10 @@
   "author": "propulsor",
   "license": "MIT",
   "devDependencies": {
-    "awesome-typescript-loader": "^5.2.0",
+    "awesome-typescript-loader": "^5.2.1",
     "json-loader": "^0.5.7",
     "ts-loader": "^4.4.2",
-    "webpack": "^4.16.5",
+    "webpack": "^4.19.1",
     "webpack-command": "^0.4.1",
     "webpack-log": "^1.2.0"
   }

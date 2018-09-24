@@ -1,7 +1,7 @@
 {
   "name": "@zapjs/curve",
   "private": false,
-  "version": "2.0.8",
+  "version": "2.0.9",
   "description": "Zap Curve",
   "repository": "https://github.com/zapproject/Zap-monorepo",
   "main": "lib/src/index.js",
@@ -17,12 +17,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@zapjs/types": "^2.0.6"
+    "@zapjs/types": "^2.0.7",
+    "web3": "1.0.0-beta.36"
   },
   "devDependencies": {
-    "@types/chai": "^4.1.4",
+    "@types/chai": "^4.1.5",
     "@types/mocha": "^5.2.4",
-    "@types/node": "^10.5.2",
+    "@types/node": "^10.10.3",
     "bignumber.js": "^7.2.1",
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
@@ -30,11 +31,11 @@
     "make-promises-safe": "^1.1.0",
     "mocha": "^5.2.0",
     "path": "^0.12.7",
-    "ts-loader": "^4.4.2",
+    "ts-loader": "^4.5.0",
     "ts-node": "^7.0.0",
     "tslint": "^5.10.0",
     "typescript": "^2.9.2",
-    "web3-utils": "^1.0.0-beta.35"
+    "web3-utils": "1.0.0-beta.36"
   },
   "publishConfig": {
     "access": "public"
