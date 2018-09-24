@@ -90,7 +90,7 @@ describe('ZapToken, path to "/src/api/contracts/ZapToken"', () => {
 
     it('Should approve to transfer from one to the another account', async () => {
         await zapTokenWrapper.approve({
-            address: accounts[2],
+            to: accounts[2],
             amount: allocateAmount,
             from: accounts[0]
         });
