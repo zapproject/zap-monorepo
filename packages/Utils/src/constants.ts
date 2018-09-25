@@ -51,7 +51,7 @@ export const testZapProvider:any = {
   endpoint: "testEndpoint",
   query : "btcPrice",
   curve : new Curve(TEST_CURVE),
-  broker: "0x0"
+  broker: "0x0000000000000000000000000000000000000000"
 }
 
 export const EndpointBroker = "EndpointBroker";

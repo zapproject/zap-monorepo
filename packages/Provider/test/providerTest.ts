@@ -99,7 +99,7 @@ describe('Zap Provider Test', () => {
     });
     it("6. Should get provider pubkey", async () => {
         let returnedPubkey = await zapProvider.getPubkey()
-        expect(returnedPubkey).to.equal(testZapProvider.pubkey)
+        expect(Number(returnedPubkey)).to.equal(testZapProvider.pubkey)
     })
     it('7. Should initiate provider curve', async () => {
         let tx:any;

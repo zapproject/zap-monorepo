@@ -46,8 +46,8 @@ export class ZapArbiter extends BaseContract {
                 provider,
                 utf8ToHex(endpoint),
                 endpoint_params,
-                toBN(pubkey),
-                toBN(blocks)).send({from, gas});
+                pubkey,
+                blocks).send({from, gas});
         } catch (err) {
             throw err;
         }
