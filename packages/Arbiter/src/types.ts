@@ -1,20 +1,18 @@
-import {address,BNType} from "@zapjs/types"
-export interface SubscriptionInit {
+import {address,BNType, defaultTx} from "@zapjs/types"
+
+export interface SubscriptionInit extends defaultTx{
     provider:address,
     endpoint :string,
     endpoint_params: Array<string>,
     blocks : number|string,
     pubkey:number|string,
-    from: address,
-    gas?: BNType|string|number
+    from: address
 }
 
-export interface SubscriptionEnd {
+export interface SubscriptionEnd extends defaultTx{
     provider?:address,
     subscriber ?:address,
-    endpoint : string,
-    from: address,
-    gas?:BNType|string|number
+    endpoint : string
 }
 
 export interface SubscriptionType {
@@ -23,10 +21,8 @@ export interface SubscriptionType {
     endpoint:string
 }
 
-export interface SubscriptionParams {
+export interface SubscriptionParams  extends defaultTx{
     receiver:address,
     endpoint:string,
-    params: Array<string>,
-    from: address,
-    gas?: BNType|string|number
+    params: Array<string>
 }

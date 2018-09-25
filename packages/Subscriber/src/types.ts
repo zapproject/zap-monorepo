@@ -1,21 +1,17 @@
-import {ZapDispatch} from "@zapjs/dispatch";
-import{ZapToken} from '@zapjs/zaptoken';
-import {ZapBondage} from "@zapjs/bondage";
-import{ZapArbiter} from '@zapjs/arbiter';
-import {ZapRegistry} from "@zapjs/registry";
+import {defaultTx} from "@zapjs/types"
 
-export type BondType = {
+export interface BondType extends defaultTx {
     provider:string,
     endpoint:string,
     dots :number|string
 }
-export type UnbondType = {
+export interface UnbondType extends defaultTx{
     provider:string,
     endpoint:string,
     dots :number|string
 }
 
-export type SubscribeType = {
+export interface SubscribeType extends defaultTx {
     provider:string,
     endpoint:string,
     dots :number|string,
@@ -32,10 +28,9 @@ export interface SubscriberHandler{
     handleSubscription ?: Function
 }
 
-export type QueryArgs = {
+export interface QueryArgs extends defaultTx{
   provider: string,
   endpoint: string,
   query: string,
-  endpointParams : Array<string>,
-  gas: number
+  endpointParams : Array<string>
 }

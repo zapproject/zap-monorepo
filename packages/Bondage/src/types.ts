@@ -1,30 +1,24 @@
 export type address = string;
 export type txid = string;
-import {BNType} from "@zapjs/types"
-export const NULL_ADDRESS='0x0000000000000000000000000000000000000000';
-export interface BondArgs {
+import {BNType,defaultTx} from "@zapjs/types"
+
+export interface BondArgs extends defaultTx{
     provider: address;
     endpoint: string;
     dots: string|number|BNType;
-    from: address;
-    gas ?: number;
 }
 
-export interface UnbondArgs {
+export interface UnbondArgs extends defaultTx{
 	provider: address;
     endpoint: string;
     dots: number|string;
-    from: address;
-    gas ?: number;
 }
 
-export interface DelegateBondArgs {
+export interface DelegateBondArgs extends defaultTx{
     provider: address;
     endpoint: string;
     dots: number;
     subscriber: address;
-    from: address;
-    gas ?: number;
 }
 
 export interface BondageArgs {
@@ -32,7 +26,7 @@ export interface BondageArgs {
 	provider: address;
 	endpoint: string;
 	dots ?: number|string ;
-	zapNum ?: string|BNType;
+	zapNum ?: string|number;
 }
 export interface CalcBondRateType {
     provider: address;

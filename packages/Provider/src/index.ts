@@ -62,7 +62,7 @@ import {ZapArbiter} from "@zapjs/arbiter";
      async initiateProviderCurve({endpoint, term, broker,gas=DEFAULT_GAS}: InitCurve) :Promise<txid>{
         if(endpoint in this.curves) throw("Endpoint " + endpoint + " already exists");
         let curve = new Curve(term)
-        let txid = await this.zapRegistry.initiateProviderCurve({endpoint, term, broker, from: this.providerOwner});
+        let txid = await this.zapRegistry.initiateProviderCurve({endpoint, term, broker, from: this.providerOwner,gas});
         assert(txid, 'Failed to init curve.');
         this.curves[endpoint] = curve;
         return txid;
@@ -74,11 +74,12 @@ import {ZapArbiter} from "@zapjs/arbiter";
      * @param {string} s.key - The key to be set
      * @param {string} s.value - The value to set the key to
      */
-    async setProviderParameter({ key, value}: SetProviderParams): Promise<txid> {
+    async setProviderParameter({ key, value, gas=DEFAULT_GAS}: SetProviderParams): Promise<txid> {
         return await this.zapRegistry.setProviderParameter({
             key,
             value,
-            from: this.providerOwner
+            from: this.providerOwner,
+            gas
         });
     }
 
@@ -239,8 +240,8 @@ import {ZapArbiter} from "@zapjs/arbiter";
      * @param {boolean} e.dynamic - True if the response contains a dynamic bytes32 array
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-     async respond({queryId, responseParams, dynamic}:Respond):Promise<string>{
-        return await this.zapDispatch.respond({queryId, responseParams, dynamic, from: this.providerOwner});
+     async respond({queryId, responseParams, dynamic, gas=DEFAULT_GAS}:Respond):Promise<string>{
+        return await this.zapDispatch.respond({queryId, responseParams, dynamic, from: this.providerOwner,gas});
     }
 
 
