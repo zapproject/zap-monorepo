@@ -2,19 +2,18 @@ import {ZapDispatch} from "@zapjs/dispatch";
 import {ZapRegistry} from "@zapjs/registry";
 import {ZapBondage} from "@zapjs/bondage";
 import {ZapArbiter} from "@zapjs/arbiter";
-import {address,txid, BNType} from "@zapjs/types";
+import {address,txid, BNType, defaultTx} from "@zapjs/types";
+import extend = hbs.Utils.extend;
 
-export type InitProvider = {
+export interface InitProvider extends defaultTx  {
     public_key : string,
-    title :string,
-    gas ?: BNType
+    title :string
 }
 
-export type InitCurve = {
+export interface InitCurve extends defaultTx{
     endpoint:string,
     term: number[],
-    broker?: address,
-    gas ?: BNType
+    broker?: address
 }
 
 export type UnsubscribeListen = {
@@ -29,7 +28,7 @@ export type ListenQuery = {
     fromBlock : number
 }
 
-export type Respond = {
+export interface Respond extends defaultTx{
     queryId:string,
     responseParams : Array<string | number>,
     dynamic:boolean
@@ -40,10 +39,10 @@ export type ProviderConstructorType = {
     zapDispatch?:ZapDispatch,
     zapBondage?: ZapBondage,
     zapArbiter?: ZapArbiter,
-    zapRegistry?: ZapRegistry,
+    zapRegistry?: ZapRegistry
 }
 
-export type SetProviderParams = {
+export interface SetProviderParams extends defaultTx{
     key: string,
-    value: string,
+    value: string
 }

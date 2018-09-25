@@ -1,17 +1,14 @@
-import {address,BNType} from "@zapjs/types"
-export type QueryArgs = {
+import {address,BNType, defaultTx} from "@zapjs/types"
+
+export interface QueryArgs extends defaultTx{
   provider:address,
   endpoint: string,
   query: string,
-  endpointParams : Array<string>,
-  from:address,
-  gas: BNType
+  endpointParams : Array<string>
 }
 
-export interface ResponseArgs {
+export interface ResponseArgs extends defaultTx{
   queryId : string,
   responseParams: Array<string | number>,
-  dynamic : boolean,
-  from: address,
-    gas?:BNType
+  dynamic : boolean
 }

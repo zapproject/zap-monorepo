@@ -6,6 +6,10 @@ export type txid = string;
 export const  DEFAULT_GAS = new BigNumber(600000)
 export type BNType = BigNumber;
 
+export interface defaultTx{
+    from?:address,
+    gas?: string|number|BNType
+}
 
 export interface listenEvent {
     filter ?: Filter;
@@ -32,22 +36,18 @@ export interface Artifact {
 }
 
 //==Arbiter
-export interface SubscriptionInit {
+export interface SubscriptionInit extends defaultTx{
     provider:address,
     endpoint :string,
     endpoint_params: Array<string>,
     blocks : number,
-    pubkey:number,
-    from: address,
-    gas?: number
+    pubkey:number
 }
 
-export interface SubscriptionEnd {
+export interface SubscriptionEnd extends defaultTx{
     provider?:address,
     subscriber ?:address,
-    endpoint : string,
-    from: address,
-    gas?:number
+    endpoint : string
 }
 
 
@@ -71,30 +71,24 @@ export interface NetworkProviderOptions {
     networkProvider: any
 }
 
-export type TransferType = {
+export interface TransferType extends defaultTx{
     to:address,
-    amount:BigNumber|string,
-    from:address,
-    gas ?: number
+    amount:BigNumber|string
 }
 
-export type QueryArgs = {
+export interface QueryArgs extends defaultTx {
     provider:address,
     endpoint: string,
     query: string,
     endpointParams : Array<string>,
     onchainProvider : boolean,
-    onchainSubscriber : boolean,
-    from:address,
-    gas: BNType
+    onchainSubscriber : boolean
 }
 
-export interface ResponseArgs {
+export interface ResponseArgs extends defaultTx{
     queryId : string,
     responseParams: Array<string>,
-    dynamic : boolean,
-    from: address,
-    gas?:BNType
+    dynamic : boolean
 }
 
 

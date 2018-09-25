@@ -132,8 +132,8 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS,NULL_ADDRESS} fr
      * @returns {Promise<boolean>} Returns a Promise that will eventually resolve a true/false value.
      */
     async isEndpointSet(provider:address, endpoint:string):Promise<boolean> {
-        const notCreated:boolean = await this.contract.methods.getCurveUnset(provider, endpoint).call();
-        return notCreated;
+        const unset:boolean = await this.contract.methods.getCurveUnset(provider, endpoint).call();
+        return !unset;
     }
 
 

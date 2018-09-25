@@ -1,6 +1,6 @@
 import {BaseContract} from "@zapjs/basecontract";
-import {BondageArgs, BondArgs, CalcBondRateType, UnbondArgs, DelegateBondArgs, NULL_ADDRESS} from "./types";
-import {Filter,txid,NetworkProviderOptions,BNType} from "@zapjs/types"
+import {BondageArgs, BondArgs, UnbondArgs, DelegateBondArgs} from "./types";
+import {Filter,txid,NetworkProviderOptions,BNType,NULL_ADDRESS} from "@zapjs/types"
 const {toBN, utf8ToHex} = require("web3-utils");
 const assert = require("assert");
 const DEFAULT_GAS = 300000
