@@ -101,7 +101,7 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS,NULL_ADDRESS} fr
      * @returns {Promise<string>} Returns a Promise that will eventually resolve into public key number
      */
     async getEndpointBroker(provider:address, endpoint:string ):Promise<string>{
-        let broker =  await this.contract.methods.getEndpointBroker(provider, endpoint).call();
+        let broker =  await this.contract.methods.getEndpointBroker(provider, utf8ToHex(endpoint)).call();
         return hexToUtf8(broker);
     }
 
@@ -132,7 +132,7 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS,NULL_ADDRESS} fr
      * @returns {Promise<boolean>} Returns a Promise that will eventually resolve a true/false value.
      */
     async isEndpointSet(provider:address, endpoint:string):Promise<boolean> {
-        const unset:boolean = await this.contract.methods.getCurveUnset(provider, endpoint).call();
+        const unset:boolean = await this.contract.methods.getCurveUnset(provider, utf8ToHex(endpoint)).call();
         return !unset;
     }
 
