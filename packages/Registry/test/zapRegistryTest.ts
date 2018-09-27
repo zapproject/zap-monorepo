@@ -22,7 +22,7 @@ describe('Registry test', () => {
     testArtifacts,
     testZapProvider = Utils.Constants.testZapProvider,
     buildDir:string = join(__dirname,"contracts"),
-    options = {
+    options:any = {
         artifactsDir: buildDir,
         networkId: Utils.Constants.ganacheServerOptions.network_id,
         networkProvider: Utils.Constants.ganacheProvider
@@ -36,6 +36,7 @@ describe('Registry test', () => {
             //delete require.cache[require.resolve('/contracts')];
             await Utils.migrateContracts(join(__dirname,"contracts"));
             testArtifacts = Utils.getArtifacts(join(__dirname,"contracts"));
+            await Utils.delay(3000)
             done();
         });
     });
@@ -48,7 +49,16 @@ describe('Registry test', () => {
 
     it("should be able to create registryWrapper", async ()=>{
         registryWrapper = new ZapRegistry(options)
-    })
+        await Utils.delay(3000);
+        expect(registryWrapper).to.be.ok
+    });
+
+    it("should be able to create registryWrapper with coordinator", async ()=>{
+        options.coordinator = registryWrapper.coordinator._address
+        registryWrapper = new ZapRegistry(options)
+        await Utils.delay(3000);
+        expect(registryWrapper).to.be.ok
+    });
 
 
     it('Should initiate provider in zap registry contract', async () => {

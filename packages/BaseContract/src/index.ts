@@ -2,6 +2,7 @@ import  {Artifacts} from "@zapjs/artifacts";
 import {BaseContractType} from "@zapjs/types";
 import {Utils} from "./utils"
 const Web3 = require("web3")
+const CONTRACTS = ['ZAP_TOKEN','DISPATCH','ARBITER','BONDAGE','REGISTRY','DATABASE','ZAPCOORDINATOR']
 
 /**
  * Parent Class to Dispatch, Bondage, Arbiter, Token, Registry classes
@@ -12,6 +13,9 @@ export class BaseContract{
     web3:any;
     contract:any;
     networkId:number;
+    coordinator:any;
+    artifact:any;
+    name:string;
 
     /**
      * Creates a contract class wrapper for a given contract.
@@ -22,25 +26,48 @@ export class BaseContract{
      * @param {number | null} b.networkId - Select which network the contract is located on (mainnet, testnet, private)
      * @param {any | null} b.networkProvider - Ethereum network provider (e.g. Infura)
      */
-    constructor({artifactsDir,artifactName,networkId,networkProvider}:BaseContractType) {
-        let artifact:any = undefined;
+    constructor({artifactsDir,artifactName,networkId,networkProvider,coordinator}:BaseContractType) {
+        let coorArtifact:any=undefined;
+        this.name = artifactName;
+        if(!CONTRACTS.includes(artifactName.toUpperCase())){
+          throw "Contract name is invalid";
+        }
         try {
           if(!artifactsDir){
-            artifact = Artifacts[artifactName];
+            this.artifact = Artifacts[artifactName];
+            coorArtifact = Artifacts['ZAPCOORDINATOR']
           }
           else{
             let artifacts:any= Utils.getArtifacts(artifactsDir);
-            artifact = artifacts[artifactName];
+            this.artifact = artifacts[artifactName];
+            coorArtifact = artifacts['ZAPCOORDINATOR']
           }
           let currentProvider = networkProvider || new Web3.providers.HttpProvider("http://localhost:8545");
           this.provider = new Web3(currentProvider)
             //network id default to mainnet
           this.networkId = networkId || 1;
-          //console.log("Initialize contract: ",artifactName, artifactsDir, this.networkId, artifact.networks)
-          this.contract = new this.provider.eth.Contract(artifact.abi,artifact.networks[this.networkId].address)
+          if(coordinator){
+              console.log("GETTING CONTRACT FROM COORDINATOR")
+          }
+          this.coordinator = new this.provider.eth.Contract(coorArtifact.abi,coordinator||coorArtifact.networks[this.networkId].address);
+          this.contract = undefined;
+          if(coordinator) {
+              this.getContract()
+                  .then(console.log)
+                  .catch(console.error)
+          }
+          else {
+              this.contract = new this.provider.eth.Contract(this.artifact.abi,this.artifact.networks[this.networkId].address)
+          }
         } catch (err) {
             throw err;
         }
+    }
+
+     async getContract(){
+      let contractAddress = await this.coordinator.methods.getContract(this.name.toUpperCase()).call().valueOf();
+      this.contract = new this.provider.eth.Contract(this.artifact.abi,contractAddress)
+      return contractAddress
     }
 
     /**

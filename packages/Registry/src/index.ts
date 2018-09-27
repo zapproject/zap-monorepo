@@ -17,7 +17,7 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS,NULL_ADDRESS} fr
      * @example new ZapRegistry({networkId : 42, networkProvider : web3})
      */
     constructor(obj ?: NetworkProviderOptions){
-        super(Object.assign(obj,{artifactName:"Registry"}));
+        super(Object.assign(obj,{artifactName:"REGISTRY"}));
     }
 
 

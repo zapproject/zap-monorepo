@@ -1,7 +1,6 @@
 const Web3 = require('web3');
 import {Utils} from "@zapjs/utils";
 import {NULL_ADDRESS} from  "@zapjs/types"
-
 /**
  * Bootstrap for Dispatch tests, with accounts[0] = provider, accounts[2]=subscriber
  * @param {} zapProvider

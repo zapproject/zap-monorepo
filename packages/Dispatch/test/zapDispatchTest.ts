@@ -15,6 +15,8 @@ async function configureEnvironment(func:Function) {
     await func();
 }
 
+
+
 describe('Zap Dispatch Test', () => {
     let accounts :Array<string>= [],
     ganacheServer:any,
@@ -22,6 +24,7 @@ describe('Zap Dispatch Test', () => {
     deployedRegistry:any,
     deployedToken:any,
     deployedBondage:any,
+    coordinator:any,
     web3:any,
     testArtifacts,
     query="TestQuery",
@@ -43,9 +46,10 @@ describe('Zap Dispatch Test', () => {
             await Utils.migrateContracts(buildDir);
             console.log("Migration complete. ");
             testArtifacts = Utils.getArtifacts(buildDir);
-            deployedBondage = new BaseContract(Object.assign(options, {artifactName: "Bondage"}));
-            deployedRegistry = new BaseContract(Object.assign(options, {artifactName: "Registry"}));
-            deployedToken = new BaseContract(Object.assign(options, {artifactName: "ZapToken"}));
+            deployedBondage = new BaseContract(Object.assign(options, {artifactName: "BONDAGE"}));
+            deployedRegistry = new BaseContract(Object.assign(options, {artifactName: "REGISTRY"}));
+            deployedToken = new BaseContract(Object.assign(options, {artifactName: "ZAP_TOKEN"}));
+            await Utils.delay(3000)
             done();
         });
     });
@@ -61,10 +65,18 @@ describe('Zap Dispatch Test', () => {
      await expect(res).to.be.equal("done");
     });
 
-        it("Should initiate Dispatch Wrapper", async () => {
-            dispatchWrapper = new ZapDispatch(options);
-            expect(dispatchWrapper).to.be.ok;
-        });
+    it("Should initiate Dispatch Wrapper", async () => {
+        dispatchWrapper = new ZapDispatch(options);
+        await Utils.delay(3000)
+        expect(dispatchWrapper).to.be.ok;
+    });
+
+    it("Should initiate Dispatch Wrapper with coordinator address", async () => {
+        options.coordinator = dispatchWrapper.coordinator._address;
+        dispatchWrapper = new ZapDispatch(options);
+        await Utils.delay(3000)
+        expect(dispatchWrapper).to.be.ok;
+    });
 
     it("Should call query function in Dispatch smart contract", async () => {
         queryData = await dispatchWrapper.queryData({

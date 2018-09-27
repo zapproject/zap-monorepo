@@ -63,12 +63,14 @@ export interface BaseContractType  {
     artifactName: string,
     networkId?: number|undefined,
     networkProvider?: any|undefined,
-    contract ?: any
+    contract ?: any,
+    coordinator ?:string
 }
-export interface NetworkProviderOptions {
+export interface NetworkProviderOptions{
     artifactsDir ?:string|undefined,
     networkId?: number|undefined,
-    networkProvider: any
+    networkProvider: any,
+    coordinator ?:string
 }
 
 export interface TransferType extends defaultTx{

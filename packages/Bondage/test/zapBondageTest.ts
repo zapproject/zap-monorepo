@@ -47,9 +47,10 @@ describe('Zap Bondage Test', () => {
             // delete require.cache[require.resolve('/contracts')];
             await Utils.migrateContracts(buildDir);
             testArtifacts = Utils.getArtifacts(buildDir);
-            deployedBondage = new BaseContract(Object.assign(options, {artifactName: "Bondage"}));
-            deployedRegistry = new BaseContract(Object.assign(options, {artifactName: "Registry"}));
-            deployedToken = new BaseContract(Object.assign(options, {artifactName: "ZapToken"}));
+            deployedBondage = new BaseContract(Object.assign(options, {artifactName: "BONDAGE"}));
+            deployedRegistry = new BaseContract(Object.assign(options, {artifactName: "REGISTRY"}));
+            deployedToken = new BaseContract(Object.assign(options, {artifactName: "ZAP_TOKEN"}));
+            await Utils.delay(3000)
             done();
         });
     });
@@ -65,7 +66,17 @@ describe('Zap Bondage Test', () => {
         });
     it("2) Should initiate Bondage Wrapper", async () => {
             bondageWrapper = new ZapBondage(options);
-        });
+            await Utils.delay(3000)
+            expect(bondageWrapper).to.be.ok
+
+    });
+    it("2) Should initiate Bondage Wrapper through coordinator address", async () => {
+        options.coordinator = bondageWrapper.coordinator._address
+        bondageWrapper = new ZapBondage(options);
+        await Utils.delay(3000);
+        expect(bondageWrapper).to.be.ok
+    });
+
     it("3) Should have no bound dots for new provider", async () => {
             const boundDots = await bondageWrapper.getBoundDots({subscriber: accounts[2], provider: accounts[0], endpoint: testZapProvider.endpoint});
             expect(boundDots).to.equal('0');

@@ -15,7 +15,7 @@ export class ZapDispatch extends BaseContract {
      * @example new ZapDispatch({networkId : 42, networkProvider : web3})
      */
     constructor(obj ?: NetworkProviderOptions){
-        super(Object.assign(obj, {artifactName:"Dispatch"}));
+        super(Object.assign(obj, {artifactName:"DISPATCH"}));
     }
 
    /**
