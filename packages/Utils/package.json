@@ -1,7 +1,7 @@
 {
   "name": "@zapjs/utils",
   "private": false,
-  "version": "2.0.10",
+  "version": "2.0.11",
   "description": "Zap Utils",
   "repository": "https://github.com/zapproject/Zap-monorepo",
   "main": "./lib/src/index.js",
@@ -16,9 +16,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@zapjs/artifacts": "^2.0.15",
-    "@zapjs/curve": "^2.0.9",
-    "@zapjs/types": "^2.0.7",
+    "@zapjs/artifacts": "^2.0.16",
+    "@zapjs/curve": "^2.0.10",
+    "@zapjs/types": "^2.0.8",
     "ethereumjs-util": "^5.2.0",
     "ganache-core": "^2.2.1",
     "truffle-artifactor": "^3.0.7",
