@@ -35,12 +35,12 @@ export class BaseContract{
         try {
           if(!artifactsDir){
             this.artifact = Artifacts[artifactName];
-            coorArtifact = Artifacts['ZapCoordinator']
+            coorArtifact = Artifacts['ZAPCOORDINATOR']
           }
           else{
             let artifacts:any= Utils.getArtifacts(artifactsDir);
             this.artifact = artifacts[artifactName];
-            coorArtifact = artifacts['ZapCoordinator']
+            coorArtifact = artifacts['ZAPCOORDINATOR']
           }
           let currentProvider = networkProvider || new Web3.providers.HttpProvider("http://localhost:8545");
           this.provider = new Web3(currentProvider)
@@ -51,10 +51,14 @@ export class BaseContract{
           }
           this.coordinator = new this.provider.eth.Contract(coorArtifact.abi,coordinator||coorArtifact.networks[this.networkId].address);
           this.contract = undefined;
-          this.getContract()
-              .then(console.log)
-              .catch(console.error)
-        //  this.contract = new this.provider.eth.Contract(this.artifact.abi,this.artifact.networks[this.networkId].address)
+          if(coordinator) {
+              this.getContract()
+                  .then(console.log)
+                  .catch(console.error)
+          }
+          else {
+              this.contract = new this.provider.eth.Contract(this.artifact.abi,this.artifact.networks[this.networkId].address)
+          }
         } catch (err) {
             throw err;
         }

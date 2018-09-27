@@ -54,6 +54,13 @@ export class Utils {
     };
 
     /**
+     * Delay async
+     * @param ms
+     */
+    static delay = (ms:number) => new Promise(_ => setTimeout(_, ms));
+
+
+    /**
      * @param {number} num
      * @returns {any}
      */

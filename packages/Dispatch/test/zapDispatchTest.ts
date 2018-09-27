@@ -15,7 +15,6 @@ async function configureEnvironment(func:Function) {
     await func();
 }
 
-const delay = (ms:number) => new Promise(_ => setTimeout(_, ms));
 
 
 describe('Zap Dispatch Test', () => {
@@ -47,10 +46,10 @@ describe('Zap Dispatch Test', () => {
             await Utils.migrateContracts(buildDir);
             console.log("Migration complete. ");
             testArtifacts = Utils.getArtifacts(buildDir);
-            deployedBondage = new BaseContract(Object.assign(options, {artifactName: "Bondage"}));
-            deployedRegistry = new BaseContract(Object.assign(options, {artifactName: "Registry"}));
+            deployedBondage = new BaseContract(Object.assign(options, {artifactName: "BONDAGE"}));
+            deployedRegistry = new BaseContract(Object.assign(options, {artifactName: "REGISTRY"}));
             deployedToken = new BaseContract(Object.assign(options, {artifactName: "ZAP_TOKEN"}));
-            await delay(3000)
+            await Utils.delay(3000)
             done();
         });
     });
@@ -68,15 +67,14 @@ describe('Zap Dispatch Test', () => {
 
     it("Should initiate Dispatch Wrapper", async () => {
         dispatchWrapper = new ZapDispatch(options);
-        await delay(3000)
+        await Utils.delay(3000)
         expect(dispatchWrapper).to.be.ok;
     });
 
     it("Should initiate Dispatch Wrapper with coordinator address", async () => {
         options.coordinator = dispatchWrapper.coordinator._address;
-        console.log("coordinator address", options.coordinator)
         dispatchWrapper = new ZapDispatch(options);
-        await delay(3000)
+        await Utils.delay(3000)
         expect(dispatchWrapper).to.be.ok;
     });
 

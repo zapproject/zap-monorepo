@@ -48,15 +48,21 @@ describe('ZapToken, path to "/src/api/contracts/ZapToken"', () => {
             artifactsDir : buildDir,
             networkId: Utils.Constants.ganacheServerOptions.network_id,
             networkProvider: Utils.Constants.ganacheProvider});
+        await Utils.delay(3000)
+        expect(zapTokenWrapper).to.be.ok
         zapTokenOwner = await  zapTokenWrapper.getContractOwner()
     });
 
 
-    it('Should initiate wrapper', async () => {
+    it('Should initiate wrapper with coordinator ', async () => {
         zapTokenWrapper = new ZapToken({
             artifactsDir : buildDir,
             networkId: Utils.Constants.ganacheServerOptions.network_id,
-            networkProvider: Utils.Constants.ganacheProvider});
+            networkProvider: Utils.Constants.ganacheProvider,
+            coordinator:zapTokenWrapper.coordinator._address
+        });
+        await Utils.delay(3000)
+        expect(zapTokenWrapper).to.be.ok
         zapTokenOwner = await  zapTokenWrapper.getContractOwner()
     });
 

@@ -20,7 +20,7 @@ export class ZapBondage extends BaseContract {
      * @example new ZaBondage({networkId : 42, networkProvider : web3})
      */
     constructor(obj ?: NetworkProviderOptions){
-        super(Object.assign(obj,{artifactName:"Bondage"}));
+        super(Object.assign(obj,{artifactName:"BONDAGE"}));
     }
 
     /**
