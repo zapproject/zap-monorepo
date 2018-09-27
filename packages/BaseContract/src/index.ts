@@ -2,7 +2,7 @@ import  {Artifacts} from "@zapjs/artifacts";
 import {BaseContractType} from "@zapjs/types";
 import {Utils} from "./utils"
 const Web3 = require("web3")
-const CONTRACTS = ['ZAP_TOKEN','DISPATCH','ARBITER','BONDAGE','REGISTRY','DATABASE']
+const CONTRACTS = ['ZAP_TOKEN','DISPATCH','ARBITER','BONDAGE','REGISTRY','DATABASE','ZAPCOORDINATOR']
 
 /**
  * Parent Class to Dispatch, Bondage, Arbiter, Token, Registry classes
@@ -46,22 +46,24 @@ export class BaseContract{
           this.provider = new Web3(currentProvider)
             //network id default to mainnet
           this.networkId = networkId || 1;
-          this.coordinator = new this.provider.eth.Contract(coorArtifact.abi,coordinator||coorArtifact[this.networkId].address);
+          if(coordinator){
+              console.log("GETTING CONTRACT FROM COORDINATOR")
+          }
+          this.coordinator = new this.provider.eth.Contract(coorArtifact.abi,coordinator||coorArtifact.networks[this.networkId].address);
           this.contract = undefined;
           this.getContract()
-            .catch(e=>{
-              throw "Cant get contract : "+e
-            })
-          // this.contract = new this.provider.eth.Contract(artifact.abi,artifact.networks[this.networkId].address)
+              .then(console.log)
+              .catch(console.error)
+        //  this.contract = new this.provider.eth.Contract(this.artifact.abi,this.artifact.networks[this.networkId].address)
         } catch (err) {
             throw err;
         }
     }
 
-    async getContract(){
-      let contractAddress = await this.coordinator.methods.getcontract(this.name.toUpperCase()).call().valueOf();
+     async getContract(){
+      let contractAddress = await this.coordinator.methods.getContract(this.name.toUpperCase()).call().valueOf();
       this.contract = new this.provider.eth.Contract(this.artifact.abi,contractAddress)
-
+      return contractAddress
     }
 
     /**

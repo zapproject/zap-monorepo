@@ -14,11 +14,12 @@ export class Utils {
             Registry: require(join(buildDir,"Registry.json")),
             CurrentCost: require(join(buildDir,"CurrentCost.json")),
             PiecewiseLogic: require(join(buildDir,"PiecewiseLogic.json")),
-            ZapToken: require(join(buildDir,"ZapToken.json")),
+            ZAP_TOKEN: require(join(buildDir,"ZapToken.json")),
             Client1: require(join(buildDir,"Client1.json")),
             Client2: require(join(buildDir,"Client2.json")),
             Client3: require(join(buildDir,"Client3.json")),
             Client4: require(join(buildDir,"Client4.json")),
+            ZapCoordinator: require(join(buildDir,"ZapCoordinator.json"))
         }
         return artifacts
 

@@ -20,7 +20,7 @@ import {TransferType,address,txid,NetworkProviderOptions,BNType} from "@zapjs/ty
       */
 
     constructor(obj ?: NetworkProviderOptions){
-        super(Object.assign(obj,{artifactName:"ZapToken"}));
+        super(Object.assign(obj,{artifactName:"ZAP_TOKEN"}));
     }
 
 

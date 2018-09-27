@@ -15,6 +15,9 @@ async function configureEnvironment(func:Function) {
     await func();
 }
 
+const delay = (ms:number) => new Promise(_ => setTimeout(_, ms));
+
+
 describe('Zap Dispatch Test', () => {
     let accounts :Array<string>= [],
     ganacheServer:any,
@@ -22,6 +25,7 @@ describe('Zap Dispatch Test', () => {
     deployedRegistry:any,
     deployedToken:any,
     deployedBondage:any,
+    coordinator:any,
     web3:any,
     testArtifacts,
     query="TestQuery",
@@ -45,7 +49,8 @@ describe('Zap Dispatch Test', () => {
             testArtifacts = Utils.getArtifacts(buildDir);
             deployedBondage = new BaseContract(Object.assign(options, {artifactName: "Bondage"}));
             deployedRegistry = new BaseContract(Object.assign(options, {artifactName: "Registry"}));
-            deployedToken = new BaseContract(Object.assign(options, {artifactName: "ZapToken"}));
+            deployedToken = new BaseContract(Object.assign(options, {artifactName: "ZAP_TOKEN"}));
+            await delay(3000)
             done();
         });
     });
@@ -61,10 +66,19 @@ describe('Zap Dispatch Test', () => {
      await expect(res).to.be.equal("done");
     });
 
-        it("Should initiate Dispatch Wrapper", async () => {
-            dispatchWrapper = new ZapDispatch(options);
-            expect(dispatchWrapper).to.be.ok;
-        });
+    it("Should initiate Dispatch Wrapper", async () => {
+        dispatchWrapper = new ZapDispatch(options);
+        await delay(3000)
+        expect(dispatchWrapper).to.be.ok;
+    });
+
+    it("Should initiate Dispatch Wrapper with coordinator address", async () => {
+        options.coordinator = dispatchWrapper.coordinator._address;
+        console.log("coordinator address", options.coordinator)
+        dispatchWrapper = new ZapDispatch(options);
+        await delay(3000)
+        expect(dispatchWrapper).to.be.ok;
+    });
 
     it("Should call query function in Dispatch smart contract", async () => {
         queryData = await dispatchWrapper.queryData({
