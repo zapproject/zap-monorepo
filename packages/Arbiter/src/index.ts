@@ -18,7 +18,7 @@ export class ZapArbiter extends BaseContract {
      * @example new ZapArbiter({networkId : 42, networkProvider : web3})
      */
     constructor(obj ?: NetworkProviderOptions){
-        super(Object.assign(obj,{artifactName:"Arbiter"}))
+        super(Object.assign(obj,{artifactName:"ARBITER"}))
     }
 
     /**
