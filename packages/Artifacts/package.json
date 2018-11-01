@@ -13,7 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@zapjs/types": "^2.0.7",
+    "@zapjs/types": "^2.0.8",
     "bignumber.js": "^7.2.1",
     "path": "^0.12.7",
     "web3": "1.0.0-beta.36"

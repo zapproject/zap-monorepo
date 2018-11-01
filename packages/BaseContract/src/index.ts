@@ -46,14 +46,10 @@ export class BaseContract{
           this.provider = new Web3(currentProvider)
             //network id default to mainnet
           this.networkId = networkId || 1;
-          if(coordinator){
-              console.log("GETTING CONTRACT FROM COORDINATOR")
-          }
           this.coordinator = new this.provider.eth.Contract(coorArtifact.abi,coordinator||coorArtifact.networks[this.networkId].address);
           this.contract = undefined;
           if(coordinator) {
               this.getContract()
-                  .then(console.log)
                   .catch(console.error)
           }
           else {

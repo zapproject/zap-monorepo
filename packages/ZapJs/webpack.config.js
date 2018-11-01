@@ -33,6 +33,9 @@ module.exports = {
                     },
                     {
                         loader: "cache-loader"
+                    },
+                    {
+                        loader: "babel-loader"
                     }
                 ],
                 exclude: [
