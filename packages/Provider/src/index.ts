@@ -220,7 +220,7 @@ import {ZapArbiter} from "@zapjs/arbiter";
      * @param {string} endpoint - Endpoint identifier
      * @returns {Promise<string>} Returns a Promise that will eventually resolve into the endpoint's param at this index
      */
-    async getEndpointParams(endpoint: string):Promise<string>{
+    async getEndpointParams(endpoint: string):Promise<string[]>{
         return await this.zapRegistry.getEndpointParams({ provider: this.providerOwner, endpoint });
     }
 

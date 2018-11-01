@@ -1,4 +1,4 @@
-const {toHex,utf8ToHex,toBN, hexToUtf8} = require("web3-utils");
+const {utf8ToHex, toBN, hexToUtf8, bytesToHex, hexToBytes} = require("web3-utils");
 import {BaseContract} from "@zapjs/basecontract";
 import {Curve,CurveType} from "@zapjs/curve";
 import {InitProvider, InitCurve, NextEndpoint, EndpointParams, SetProviderParams} from "./types"
@@ -61,11 +61,12 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS,NULL_ADDRESS} fr
      * @param {BigNumber} e.gas - Sets the gas limit for this transaction (optional)
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-    async setEndpointParams({endpoint, endpoint_params, from, gas=DEFAULT_GAS}:EndpointParams) :Promise<txid>{
-      let params = endpoint_params ? endpoint_params.map(el =>{return utf8ToHex(el)}) : [];
+    async setEndpointParams({endpoint, endpoint_params = [], from, gas=DEFAULT_GAS}:EndpointParams): Promise<txid>{
+      const params = ZapRegistry.encodeParams(endpoint_params);
       return await this.contract.methods.setEndpointParams(
-        utf8ToHex(endpoint),
-        params).send({from, gas});
+            utf8ToHex(endpoint),
+            params
+        ).send({from, gas});
     }
 
     /**
@@ -95,7 +96,7 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS,NULL_ADDRESS} fr
     }
 
     /**
-     * Get a provider endpoint's broker address 
+     * Get a provider endpoint's broker address
      * @param {address} provider The address of this provider
      * @param {string} endpoint - Endpoint to query broker's address
      * @returns {Promise<string>} Returns a Promise that will eventually resolve into public key number
@@ -178,7 +179,7 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS,NULL_ADDRESS} fr
      * @returns {Promise<string[]>} A promise that will be resolved with all the keys
      */
     async getAllProviderParams(provider: string): Promise<string[]> {
-        const allParams =  await this.contract.methods.getAllProviderParams(provider).call()
+        const allParams = await this.contract.methods.getAllProviderParams(provider).call()
         return allParams
     }
 
@@ -186,15 +187,15 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS,NULL_ADDRESS} fr
      * Get the endpoint params at a certain index of a provider's endpoint.
      * @param {address} provider The address of this provider
      * @param {string} endpoint Data endpoint of the provider
-     * @returns {Promise<string>} Returns a Promise that will eventually resolve into the endpoint's param at this index
+     * @returns {Promise<string>} Returns a Promise that will eventually resolve into the endpoint's all params
      */
-    async getEndpointParams({provider, endpoint}:NextEndpoint):Promise<string>{
-        const params = await this.contract.methods.getEndpointParams(
+    async getEndpointParams({provider, endpoint}:NextEndpoint): Promise<string[]>{
+        const params: string[] = await this.contract.methods.getEndpointParams(
             provider,
             utf8ToHex(endpoint)
         ).call();
 
-        return params.map(hexToUtf8);
+        return ZapRegistry.decodeParams(params);
     }
 
     /**
@@ -205,7 +206,7 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS,NULL_ADDRESS} fr
     async getProviderEndpoints(provider: string): Promise<string[]> {
         const endpoints = await this.contract.methods.getProviderEndpoints(provider).call();
         return endpoints.map(hexToUtf8);
-    } 
+    }
 
     // ==== Events ====//
 
@@ -234,6 +235,60 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS,NULL_ADDRESS} fr
      */
     async listenNewCurve(filters:Filter, callback:Function):Promise<void>{
         this.contract.events.NewCurve(filters, callback);
+    }
+
+    private static encodeParams(endpointParams: string[] = []): string[] {
+        const hexParams = endpointParams.map(el => el.indexOf('0x') === 0 ? el : utf8ToHex(el));
+        const bytesParams: number[][] = hexParams.map(hexToBytes);
+        const params: string[] = [];
+        bytesParams.forEach((el: number[]) => {
+            if (el.length <= 32) {
+                params.push(bytesToHex(el));
+                return;
+            }
+            const chunksLength = Math.ceil((el.length + 2) / 32);
+            const paramBytesWithLength = [0, chunksLength].concat(el);
+            for (let i = 0; i < chunksLength; i++) {
+                let start = i * 32;
+                let end = start + 32;
+                params.push(bytesToHex(paramBytesWithLength.slice(start, end)));
+            }
+        });
+        return params;
+    }
+
+    private static decodeParams(rawParams: string[] = []): string[] {
+        const bytesParams: number[][] = rawParams.map(hexToBytes);
+        const params: string[] = [];
+        let i = 0;
+        const len = bytesParams.length;
+        while(i < len) {
+            // check if the first byte is 0, the second byte is number and is larger than 1 (chuncks count), and the length must be 32 bytes
+            const isStartOfChunks = bytesParams[i][0] === 0 && bytesParams[i][1] > 1 && bytesParams[i].length === 32;
+            if (!isStartOfChunks) {
+                params.push(bytesToHex(bytesParams[i]));
+                i++;
+                continue;
+            }
+            const chunksLength = bytesParams[i][1];
+            let end = i + chunksLength;
+            // strip zero byte and chunks length from the beginning
+            let bytes = bytesParams[i].slice(2);
+            i++;
+            while (i < end) {
+                bytes = bytes.concat(bytesParams[i]);
+                i++;
+            }
+            params.push(bytesToHex(bytes));
+        }
+        return params.map(hex => {
+            try {
+                return hexToUtf8(hex);
+            } catch(e) {
+                console.log(e);
+            }
+            return hex;
+        });
     }
 
 }
