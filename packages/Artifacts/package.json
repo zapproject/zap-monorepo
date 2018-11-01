@@ -1,7 +1,7 @@
 {
   "name": "@zapjs/artifacts",
   "private": false,
-  "version": "2.0.17",
+  "version": "2.0.18",
   "description": "ZapArtifacts",
   "main": "./lib/index.js",
   "repository": "https://github.com/zapproject/Zap-monorepo",
