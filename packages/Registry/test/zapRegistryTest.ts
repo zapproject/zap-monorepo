@@ -143,6 +143,24 @@ describe('Registry test', () => {
         });
 
     });
+    it('Should set endpoint endpointParams in chunks in zap registry contract', async () => {
+        let result = await registryWrapper.setEndpointParams({
+            endpoint: testZapProvider.endpoint,
+            endpoint_params: ["http://test_url_that_is_longer_than_32_bytes_oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo.com"],
+            from: accounts[0],
+            gas: 600000
+        });
+    });
+    it('Should get endpoint endpointParams in chunks in zap registry contract', async () => {
+        let result = await registryWrapper.getEndpointParams({
+            provider:accounts[0],
+            endpoint: testZapProvider.endpoint});
+        expect(result).to.be.ok
+        expect(result.length).to.be.equal(1)
+        expect(result[0]).to.equal("http://test_url_that_is_longer_than_32_bytes_oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo.com")
+    });
+
+
 
     after(function () {
         ganacheServer.close();
