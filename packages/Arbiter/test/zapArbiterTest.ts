@@ -43,9 +43,10 @@ describe('Arbiter Test', () => {
         //delete require.cache[require.resolve('/contracts')];
         await Utils.migrateContracts(buildDir);
         testArtifacts = Utils.getArtifacts(buildDir);
-        deployedBondage = new BaseContract(Object.assign(options, {artifactName: "Bondage"}));
-        deployedRegistry = new BaseContract(Object.assign(options, {artifactName: "Registry"}));
-        deployedToken = new BaseContract(Object.assign(options, {artifactName: "ZapToken"}));
+        deployedBondage = new BaseContract(Object.assign(options, {artifactName: "BONDAGE"}));
+        deployedRegistry = new BaseContract(Object.assign(options, {artifactName: "REGISTRY"}));
+        deployedToken = new BaseContract(Object.assign(options, {artifactName: "ZAP_TOKEN"}));
+        await Utils.delay(3000)
         done()
       });
   });
@@ -61,12 +62,17 @@ describe('Arbiter Test', () => {
         await expect(res).to.be.equal("done");
     });
 
-    it('Should initiate zapArbiter wrapper', function() {
+    it('Should initiate zapArbiter wrapper', async function() {
       arbiterWrapper = new ZapArbiter(options);
+      await Utils.delay(3000)
+        expect(arbiterWrapper).to.be.ok
     });
 
-  it('2) Should initiate zapArbiter wrapper', function() {
-    arbiterWrapper = new ZapArbiter(Object.assign(options, {artifactName:"Arbiter"}));
+  it('2) Should initiate zapArbiter wrapper with coordinator', async function() {
+      options.coordinator = arbiterWrapper.coordinator._address
+    arbiterWrapper = new ZapArbiter(Object.assign(options, {artifactName:"ARBITER"}));
+      await Utils.delay(3000)
+      expect(arbiterWrapper).to.be.ok
   });
 
   it('3) Should initiate subscription', async function() {

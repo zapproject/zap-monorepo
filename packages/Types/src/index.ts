@@ -75,7 +75,7 @@ export interface NetworkProviderOptions{
 
 export interface TransferType extends defaultTx{
     to:address,
-    amount:BigNumber|string
+    amount:BigNumber|string|number
 }
 
 export interface QueryArgs extends defaultTx {

@@ -1,0 +1,6 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 8 // or 2017
+  },
+  "rules": {}
+}
