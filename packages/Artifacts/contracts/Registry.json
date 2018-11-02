@@ -191,7 +191,7 @@
         },
         {
           "name": "value",
-          "type": "bytes32"
+          "type": "bytes"
         }
       ],
       "name": "setProviderParameter",
@@ -216,7 +216,7 @@
       "outputs": [
         {
           "name": "",
-          "type": "bytes32"
+          "type": "bytes"
         }
       ],
       "payable": false,
@@ -258,29 +258,6 @@
       "outputs": [],
       "payable": false,
       "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "constant": true,
-      "inputs": [
-        {
-          "name": "provider",
-          "type": "address"
-        },
-        {
-          "name": "endpoint",
-          "type": "bytes32"
-        }
-      ],
-      "name": "getEndpointParams",
-      "outputs": [
-        {
-          "name": "",
-          "type": "bytes32[]"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -455,7 +432,7 @@
           "type": "bytes32"
         }
       ],
-      "name": "getEndPointParams",
+      "name": "getEndpointParams",
       "outputs": [
         {
           "name": "",
@@ -550,20 +527,8 @@
     "42": {
       "events": {},
       "links": {},
-      "address": "0x7f441ac7a4b73d3d9f885439fc440eaf2981e8a8",
-      "transactionHash": "0xdb3319fc059a8265c1f6b5c8f16e255e271a54647f4edcf003a45056e3b46c7b"
-    },
-    "4447": {
-      "events": {},
-      "links": {},
-      "address": "0x98d9f9e8debd4a632682ba207670d2a5acd3c489",
-      "transactionHash": "0xcc00dae7619ff0856e3c9d0dd10810182ec7512f97ec11e6f46579201299c4da"
-    },
-    "development": {
-      "events": {},
-      "links": {},
-      "address": "0xc94401021fd7b2e86f15511c38fed5f8652340a1",
-      "transactionHash": "0x15ead9bbfc0b42b732d2d2482765ee3b3243194d8c6c4a79b0c77e1d357f0b5e"
+      "address": "0x6d6827fc29253a0233dca72e3c427780a6e647b5",
+      "transactionHash": "0x9e913c416007746fb8967fb52558117ec97fd174b9f5368af08c7b951ccbb54e"
     }
   }
 }
