@@ -1,11 +1,11 @@
-import {address,BNType, defaultTx, Filter} from "@zapjs/types"
+import {address,BNType, defaultTx, Filter,NumType} from "@zapjs/types"
 
 export interface SubscriptionInit extends defaultTx{
     provider:address,
     endpoint :string,
     endpoint_params: Array<string>,
-    blocks : number|string,
-    pubkey:number|string,
+    blocks : NumType,
+    pubkey:NumType,
     from: address
 }
 

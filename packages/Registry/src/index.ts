@@ -105,11 +105,11 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS,NULL_ADDRESS} fr
 
     /**
      * Get a parameter from a provider
-     * @param {string} provider The address of the provider
+     * @param {address} provider The address of the provider
      * @param {string} key The key you're getting
      * @returns {Promise<string>} A promise that will be resolved with the value of the key
      */
-    async getProviderParam(provider: string, key: string): Promise<string> {
+    async getProviderParam(provider: address, key: string): Promise<string> {
         return await this.contract.methods.getProviderParameter(
             provider,
             utf8ToHex(key)
@@ -118,10 +118,10 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS,NULL_ADDRESS} fr
 
     /**
      * Get all the parameters of a provider
-     * @param {string} provider The address of the provider
+     * @param {address} provider The address of the provider
      * @returns {Promise<string[]>} A promise that will be resolved with all the keys
      */
-    async getAllProviderParams(provider: string): Promise<string[]> {
+    async getAllProviderParams(provider: address): Promise<string[]> {
         const allParams = await this.contract.methods.getAllProviderParams(provider).call()
         return allParams
     }
@@ -131,7 +131,7 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS,NULL_ADDRESS} fr
      * @param {address} provider The address of this provider
      * @returns {Promise<string[]>} Returns a Promise that will be eventually resolved with the endpoints of the provider.
      */
-    async getProviderEndpoints(provider: string): Promise<string[]> {
+    async getProviderEndpoints(provider: address): Promise<string[]> {
         const endpoints = await this.contract.methods.getProviderEndpoints(provider).call();
         return endpoints.map(hexToUtf8);
     }

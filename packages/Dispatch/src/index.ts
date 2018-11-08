@@ -1,6 +1,6 @@
 import {BaseContract} from '@zapjs/basecontract';
-import {cancelQuery, QueryArgs, queryIdType, ResponseArgs} from './types'
-import {NetworkProviderOptions, txid,Filter,DEFAULT_GAS,address,BNType,OffchainResponse} from "@zapjs/types"
+import {cancelQuery, QueryArgs, ResponseArgs} from './types'
+import {NetworkProviderOptions, txid,Filter,DEFAULT_GAS,address,BNType,OffchainResponse,NumType} from "@zapjs/types"
 const {utf8ToHex,hexToUtf8} = require ("web3-utils");
 /**
  * Provides an interface to the Dispatch contract for enabling data queries and responses.
@@ -123,7 +123,7 @@ export class ZapDispatch extends BaseContract {
      * @param queryId
      * @returns promise<address> Provider's address
      */
-    async getQueryIdProvider(queryId:queryIdType): Promise<address>{
+    async getQueryIdProvider(queryId:NumType): Promise<address>{
         return await this.contract.methods.getProvider(queryId).call();
     }
 
@@ -132,7 +132,7 @@ export class ZapDispatch extends BaseContract {
      * @param queryId
      * @returns address
      */
-    async getSubscriber(queryId:queryIdType) : Promise<address>{
+    async getSubscriber(queryId:NumType) : Promise<address>{
         return await this.contract.methods.getSubscriber(queryId).call();
     }
 
@@ -141,7 +141,7 @@ export class ZapDispatch extends BaseContract {
      * @param queryId
      * @returns Endpoint string
      */
-    async getEndpoint(queryId:queryIdType):Promise<string>{
+    async getEndpoint(queryId:NumType):Promise<string>{
         let endpoint = await this.contract.methods.getEndpoint(queryId).call();
         return hexToUtf8(endpoint);
     }
@@ -151,7 +151,7 @@ export class ZapDispatch extends BaseContract {
      * @param queryId
      * @returns status of query Id
      */
-    async getStatus(queryId:queryIdType):Promise<number|string>{
+    async getStatus(queryId:NumType):Promise<number|string>{
         return await this.contract.methods.getStatus(queryId).call();
     }
 
@@ -160,7 +160,7 @@ export class ZapDispatch extends BaseContract {
      * @param queryId
      * @returns cancel status of query Id
      */
-    async getCancel(queryId:queryIdType):Promise<string|number>{
+    async getCancel(queryId:NumType):Promise<string|number>{
         return await this.contract.methods.getCancel(queryId).call();
     }
 
@@ -169,7 +169,7 @@ export class ZapDispatch extends BaseContract {
      * @param queryId
      * @returns User
      */
-    async getUserQuery(queryId:queryIdType):Promise<string>{
+    async getUserQuery(queryId:NumType):Promise<string>{
         return await this.contract.methods.getUserQuery(queryId).call();
     }
 
@@ -178,7 +178,7 @@ export class ZapDispatch extends BaseContract {
      * @param queryId
      * @returns boolean onchain
      */
-    async getSubscriberOnchain(queryId:queryIdType):Promise<boolean>{
+    async getSubscriberOnchain(queryId:NumType):Promise<boolean>{
         return await this.contract.methods.getSubscriberOnchain(queryId).call()
     }
 

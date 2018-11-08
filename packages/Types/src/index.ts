@@ -5,7 +5,7 @@ export type address = string;
 export type txid = string;
 export const  DEFAULT_GAS = new BigNumber(600000)
 export type BNType = BigNumber;
-
+export type NumType = string|number|BNType;
 export interface defaultTx{
     from?:address,
     gas?: string|number|BNType
@@ -22,6 +22,7 @@ export interface Filter {
     provider ?: address,
     subscriber ?:address,
     terminator ?:address,
+    endpoint ?:string,
     id ?: number|string|BNType
 }
 

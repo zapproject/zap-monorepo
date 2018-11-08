@@ -1,14 +1,14 @@
-import {address} from "@zapjs/types";
-
 const assert = require("assert");
 import {InitProvider, InitCurve, Respond, SetProviderParams} from "./types";
 import {txid,Filter,NetworkProviderOptions,DEFAULT_GAS,BNType,
     DataPurchaseEvent,
-    SubscriptionEndEvent} from "@zapjs/types";
+    SubscriptionEndEvent,
+    address,
+    NumType} from "@zapjs/types";
 import {Curve,CurveType} from "@zapjs/curve"
 import {ZapDispatch} from "@zapjs/dispatch";
 import {EndpointParams, ZapRegistry} from "@zapjs/registry";
-import {ZapBondage} from "@zapjs/bondage";
+import {BondageArgs, BondFilter, ZapBondage} from "@zapjs/bondage";
 import {ZapArbiter} from "@zapjs/arbiter";
 
 /**
@@ -49,7 +49,7 @@ import {ZapArbiter} from "@zapjs/arbiter";
      * @param {InitProvider} i. {public_key, title, gas=DEFAULT_GAS}
      * @param {string} i.public_key A public identifier for this oracle
      * @param {string} i.title A descriptor describing what data this oracle provides
-     * @returns {Promise<txid>}txid
+     * @returns {Promise<txid>} Transaction Hash
      */
      async initiateProvider({public_key, title, gas=DEFAULT_GAS}:InitProvider):Promise<txid> {
         return await this.zapRegistry.initiateProvider(
@@ -62,7 +62,7 @@ import {ZapArbiter} from "@zapjs/arbiter";
      * @param {string} i.endpoint - The endpoint identifier matching the created endpoint
      * @param {address} i.broker - Address of broker allowed to bond/unbond. 0 means anyone can
      * @param {number[]} i.term - The curve array for this endpoint, setting the coefficients, powers, and domains for each piece.
-     * @returns {Promise<txid>} txid
+     * @returns {Promise<txid>} Transaction hash
      */
      async initiateProviderCurve({endpoint, term, broker,gas=DEFAULT_GAS}: InitCurve) :Promise<txid>{
         if(endpoint in this.curves) throw("Endpoint " + endpoint + " already exists");
@@ -78,7 +78,7 @@ import {ZapArbiter} from "@zapjs/arbiter";
      * @param {SetProviderParams} s. { key, value}
      * @param {string} s.key - The key to be set
      * @param {string} s.value - The value to set the key to
-     * @returns {Promise<txid>} txid
+     * @returns {Promise<txid>} Transaction Hash
      */
     async setProviderParameter({ key, value, gas=DEFAULT_GAS}: SetProviderParams): Promise<txid> {
         return await this.zapRegistry.setProviderParameter({
@@ -94,7 +94,7 @@ import {ZapArbiter} from "@zapjs/arbiter";
      * @param endpoint
      * @param endpoint_params
      * @param gas
-     * @returns {Promise<txid>}
+     * @returns {Promise<txid>} Transaction Hash
      */
     async setEndpointParams({endpoint,endpoint_params=[],gas=DEFAULT_GAS}:EndpointParams):Promise<txid>{
         return await this.zapRegistry.setEndpointParams({
@@ -109,7 +109,7 @@ import {ZapArbiter} from "@zapjs/arbiter";
 
     /**
      * Gets the title of this provider from the Registry contract.
-     * @returns {Promise<string>} Promise of the title of this provider.
+     * @returns {Promise<string>} Title of this provider.
      */
      async getTitle():Promise<string> {
         let title:string;
@@ -162,60 +162,6 @@ import {ZapArbiter} from "@zapjs/arbiter";
     }
 
     /**
-     * Gets the total amount of Zap bound to a given endpoint.
-     * @param {string} endpoint The endpoint identifier
-     * @returns {Promise<string|BigNumber>} Promise of amount of bound Zap (wei).
-     */
-     async getZapBound(endpoint:string):Promise<string|BNType> {
-        assert(endpoint, 'endpoint required');
-        return await this.zapBondage.getZapBound({
-            provider: this.providerOwner, endpoint:endpoint});
-    }
-
-    /**
-     * Gets the amount of dots bound by a user
-     * @param {Object} e. {endpoint, subscriber}
-     * @param {string} e.endpoint - The endpoint identifier
-     * @param {string} e.subscriber - The subscriber that is being checked
-     * @returns {Promise<string|BigNumber>} Promise of an amount of dots
-     */
-    async getBoundDots({endpoint, subscriber}: {endpoint: string, subscriber: string}): Promise<string|BNType> {
-    	assert(endpoint, 'endpoint required');
-    	assert(subscriber, 'subscriber required');
-    	return await this.zapBondage.getBoundDots({ endpoint, subscriber, provider: this.providerOwner });
-    } 
-
-    /**
-     * Gets the total amount of DOTs issued
-     * @param {string} endpoint - The endpoint identifier
-     * @returns {Promise<string|BigNumber>} Amount of dots
-     */
-    async getDotsIssued(endpoint: string): Promise<string|BNType> {
-        assert(endpoint, 'endpoint required');
-        return await this.zapBondage.getDotsIssued({ provider: this.providerOwner, endpoint });
-    }
-
-    /**
-     * Get maximum dots an endpoint can issue
-     * @param {string} endpoint -Endpoint identifier
-     * @returns {Promise<string|Bignumber>} Maximum dots can be bound to this endpoint
-     */
-    async getDotsLimit(endpoint:string):Promise<string|BNType>{
-        return this.zapBondage.getDotsLimit({provider:this.providerOwner,endpoint:endpoint})
-    }
-
-    /**
-     * Gets the total amount of Zap required to bond x dots.
-     * @param {Object} e. {endpoint, dots}
-     * @param {string} e.endpoint - The endpoint identifier
-     * @param {number} e.dots - Number of dots
-     * @returns {Promise<string|BigNumber>} Amount of required Zap (wei)
-     */
-     async getZapRequired({endpoint, dots}:{endpoint:string,dots:number}):Promise<string|BNType> {
-        return await this.zapBondage.calcZapForDots({provider: this.providerOwner, endpoint, dots});
-    }
-
-    /**
      * Get a parameter from a provider
      * @param {string} key The key for param
      * @returns {Promise<string>} Value of the key param
@@ -257,7 +203,74 @@ import {ZapArbiter} from "@zapjs/arbiter";
     async getEndpoints(): Promise<string[]> {
         return await this.zapRegistry.getProviderEndpoints(this.providerOwner);
     }
+    /*************BONDAGE********************/
 
+    /**
+     * Gets the total amount of Zap bound to a given endpoint.
+     * @param {string} endpoint The endpoint identifier
+     * @returns {Promise<string|BigNumber>} Promise of amount of bound Zap (wei).
+     */
+     async getZapBound(endpoint:string):Promise<string|BNType> {
+        assert(endpoint, 'endpoint required');
+        return await this.zapBondage.getZapBound({
+            provider: this.providerOwner, endpoint:endpoint});
+    }
+
+    /**
+     * Gets the amount of dots bound by a user
+     * @param {Object} e. {endpoint, subscriber}
+     * @param {string} e.endpoint - The endpoint identifier
+     * @param {string} e.subscriber - The subscriber that is being checked
+     * @returns {Promise<string|BigNumber>} Promise of an amount of dots
+     */
+    async getBoundDots({endpoint, subscriber}: {endpoint: string, subscriber: string}): Promise<NumType> {
+    	assert(endpoint, 'endpoint required');
+    	assert(subscriber, 'subscriber required');
+    	return await this.zapBondage.getBoundDots({ endpoint, subscriber, provider: this.providerOwner });
+    } 
+
+    /**
+     * Gets the total amount of DOTs issued
+     * @param {string} endpoint - The endpoint identifier
+     * @returns {Promise<string|BigNumber>} Amount of dots
+     */
+    async getDotsIssued(endpoint: string): Promise<string|BNType> {
+        assert(endpoint, 'endpoint required');
+        return await this.zapBondage.getDotsIssued({ provider: this.providerOwner, endpoint });
+    }
+
+    /**
+     * Get maximum dots an endpoint can issue
+     * @param {string} endpoint -Endpoint identifier
+     * @returns {Promise<string|Bignumber>} Maximum dots can be bound to this endpoint
+     */
+    async getDotsLimit(endpoint:string):Promise<string|BNType>{
+        return this.zapBondage.getDotsLimit({provider:this.providerOwner,endpoint:endpoint})
+    }
+
+    /**
+     * Gets the total amount of Zap required to bond x dots.
+     * @param {Object} e. {endpoint, dots}
+     * @param {string} e.endpoint - The endpoint identifier
+     * @param {number} e.dots - Number of dots
+     * @returns {Promise<string|BigNumber>} Amount of required Zap (wei)
+     */
+     async getZapRequired({endpoint, dots}:{endpoint:string,dots:number}):Promise<string|BNType> {
+        return await this.zapBondage.calcZapForDots({provider: this.providerOwner, endpoint, dots});
+    }
+
+    /**
+     * Get Number of dots escrow
+     * @param provider
+     * @param endpoint
+     * @param subscriber
+     * @returns Number of escrow dots
+     */
+    async getNumEscrow({provider,endpoint,subscriber}:BondageArgs) :Promise<number|string>{
+        return await this.zapBondage.getNumEscrow({subscriber,provider,endpoint});
+    }
+
+    /********************* DISPATCH ***********************/
     /**
      * Responds to a specific query from the subscriber by identifying a
      * @param {Respond} e. {queryId, responseParams, dynamic}
@@ -270,6 +283,8 @@ import {ZapArbiter} from "@zapjs/arbiter";
         return await this.zapDispatch.respond({queryId, responseParams, dynamic, from: this.providerOwner,gas});
     }
 
+
+    /************************* EVENTS ***********************/
 
     /**
      * Listen for start subscription events from the Arbiter contract.
@@ -298,7 +313,7 @@ import {ZapArbiter} from "@zapjs/arbiter";
 
     /**
      * Listen to Query events emitted by the Dispatch contract.
-     * @param filters : { }
+     * @param filters : {subscriber:address, endpoint:string, fromBlock:number,toBlock:number}
      * @param callback
      */
     listenQueries(filters:Filter={},callback:Function) :void {
@@ -306,6 +321,26 @@ import {ZapArbiter} from "@zapjs/arbiter";
             provider : this.providerOwner
         })
         return this.zapDispatch.listenIncoming(thisFilters,callback);
+    }
+
+    /**
+     * Listen for "Bound" Bondage contract events
+     * @param {Filter} filters :{subsriber:address,endpoint:bytes32,dots:number|string, numZap:number|string}
+     * @param {Function} callback
+     */
+    public listenBound(filters: BondFilter = {}, callback: Function): void {
+        filters.provider = this.providerOwner;
+        this.zapBondage.listenBound(filters, callback);
+    }
+
+    /**
+     * Listen for "Unbond" Bondage contract events
+     * @param {Filter} filters :{subsriber:address,endpoint:bytes32,dots:number|string}
+     * @param {Function} callback
+     */
+    public listenUnbound(filters: BondFilter = {} , callback: Function): void {
+        filters.provider = this.providerOwner;
+        this.zapBondage.listenUnbound(filters, callback);
     }
 
 }

@@ -1,24 +1,29 @@
-import {defaultTx} from "@zapjs/types"
+import {defaultTx,address,BNType,NumType} from "@zapjs/types"
 
 export interface BondType extends defaultTx {
-    provider:string,
+    subscriber ?:address,
+    provider:address,
     endpoint:string,
-    dots :number|string
+    dots : NumType
+}
+
+export interface DelegateBondType extends BondType {
+    subscriber :address
 }
 export interface UnbondType extends defaultTx{
-    provider:string,
+    provider:address,
     endpoint:string,
-    dots :number|string
+    dots : NumType
 }
 
 export interface SubscribeType extends defaultTx {
-    provider:string,
+    provider:address,
     endpoint:string,
-    dots :number|string,
+    dots : NumType,
     endpointParams : string[]
 }
 export type SubscriberConstructorType = {
-  owner:string,
+  owner:address,
   handler ?: any
 }
 
@@ -29,7 +34,7 @@ export interface SubscriberHandler{
 }
 
 export interface QueryArgs extends defaultTx{
-  provider: string,
+  provider: address,
   endpoint: string,
   query: string,
   endpointParams : Array<string>

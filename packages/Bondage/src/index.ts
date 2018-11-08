@@ -1,6 +1,6 @@
 import {BaseContract} from "@zapjs/basecontract";
 import {BondageArgs, BondArgs, UnbondArgs, DelegateBondArgs, BondFilter} from "./types";
-import {Filter,txid,NetworkProviderOptions,BNType,NULL_ADDRESS} from "@zapjs/types"
+import {Filter,txid,NetworkProviderOptions,BNType,NULL_ADDRESS,NumType} from "@zapjs/types"
 const {utf8ToHex} = require("web3-utils");
 const assert = require("assert");
 const DEFAULT_GAS = 300000
@@ -114,7 +114,7 @@ export class ZapBondage extends BaseContract {
      * @param {string} bond.endpoint - Data endpoint of the provider
      * @returns {Promise<string|BigNumber>} Number of bound dots to this provider's endpoint
      */
-    public async getBoundDots({subscriber, provider, endpoint}: BondageArgs): Promise<string|BNType> {
+    public async getBoundDots({subscriber, provider, endpoint}: BondageArgs): Promise<NumType> {
         return await this.contract.methods.getBoundDots(
             subscriber,
             provider,
