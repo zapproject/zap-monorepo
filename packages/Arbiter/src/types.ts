@@ -1,4 +1,4 @@
-import {address,BNType, defaultTx} from "@zapjs/types"
+import {address,BNType, defaultTx, Filter} from "@zapjs/types"
 
 export interface SubscriptionInit extends defaultTx{
     provider:address,

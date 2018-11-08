@@ -2,7 +2,8 @@ import {Filter} from "@zapjs/types/lib";
 
 const assert = require('assert');
 import {BondType,UnbondType,SubscribeType,QueryArgs} from "./types";
-import {txid,address,NetworkProviderOptions,DEFAULT_GAS,BNType} from "@zapjs/types";
+import {txid,address,NetworkProviderOptions,DEFAULT_GAS,BNType,
+    OffchainResponse} from "@zapjs/types";
 import {ZapDispatch} from "@zapjs/dispatch";
 import {ZapRegistry} from "@zapjs/registry";
 import {ZapBondage} from "@zapjs/bondage";
@@ -157,7 +158,7 @@ export class ZapSubscriber  {
      * @param filter
      * @param callback
      */
-    async listenToOffchainResponse(filter:Filter={},callback:Function){
+    async listenToOffchainResponse(filter:OffchainResponse={},callback:Function){
         if(!filter['subscriber'])
             filter = {...filter,subscriber:this.subscriberOwner}
         this.zapDispatch.listenOffchainResponse(filter,callback)

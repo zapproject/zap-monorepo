@@ -1,7 +1,15 @@
 import  {BaseContract} from '@zapjs/basecontract';
-import {SubscriptionInit,SubscriptionEnd,SubscriptionType,SubscriptionParams} from "./types"
-import {Filter,txid,DEFAULT_GAS,NetworkProviderOptions} from "@zapjs/types"
-const {toBN,utf8ToHex,isHex} = require ('web3-utils');
+import {
+    SubscriptionInit,
+    SubscriptionEnd,
+    SubscriptionType,
+    SubscriptionParams
+} from "./types"
+import {Filter,txid,DEFAULT_GAS,NetworkProviderOptions,BNType,
+    DataPurchaseEvent,
+    SubscriptionEndEvent,
+    ParamsPassedEvent} from "@zapjs/types"
+const {utf8ToHex,isHex} = require ('web3-utils');
 /**
  * @class
  * Provides an interface to the Arbiter contract for managing temporal subscriptions to oracles.
@@ -31,66 +39,22 @@ export class ZapArbiter extends BaseContract {
      * @param {number} r.provider - Public key of provider
      * @param {address} r.from - Subscriber's address
      * @param {number} r.gas - Set the gas limit for this transaction (optional)
-     * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
+     * @returns {Promise<txid>} Transaction hash
      */
     async initiateSubscription(
         {provider, endpoint, endpoint_params, blocks, pubkey, from, gas=DEFAULT_GAS} : SubscriptionInit):Promise<txid> {
-        try {
-            endpoint_params = endpoint_params.map((i:string)=>{
-                if(!isHex(i)) {
-                    return utf8ToHex(i)
-                }
-                else return i;
-            })
-            return await this.contract.methods.initiateSubscription(
-                provider,
-                utf8ToHex(endpoint),
-                endpoint_params,
-                pubkey,
-                blocks).send({from, gas});
-        } catch (err) {
-            throw err;
-        }
-    }
-
-    /**
-     * Pass parameters between parties
-     * @param {SubscriptionParams} s. {receiver, endpoint, params, from, gas=DEFAULT_GAS}
-     * @param {address} s.receiver - Address to receive parameters
-     * @param {string} s.endpoint - Data endpoint of the provider
-     * @param {Array<string>} s.params - Params passed to reciever
-     * @param {number} s.gas - Gas limit of this transaction
-     * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
-     */
-    async passParams({receiver, endpoint, params, from, gas=DEFAULT_GAS} : SubscriptionParams) :Promise<txid>{
-        try {
-            params = params.map((i:string)=>{
-                if(!isHex(i)) {
-                    return utf8ToHex(i)
-                }
-                else return i;
-            })
-            return await this.contract.methods.passParams(
-                receiver,
-                utf8ToHex(endpoint),
-                params).send({from, gas});
-        } catch (err) {
-            throw err;
-        }
-    }
-
-    /**
-     * Gets the subscription status for a given provider, subscriber, and endpoint.
-     * @param {SubscriptionType} s. {provider,subscriber,endpoint}
-     * @param {address} s.provider - Address of the data provider
-     * @param {address} s.subscriber - Address of the subscriber
-     * @param {string} s.endpoint - Data endpoint of the provider
-     * @returns {Promise<string>} Returns a Promise that will eventually resolve into information on the currently active subscription
-     */
-    async getSubscription({provider,subscriber,endpoint}:SubscriptionType){
-        let subscription = await this.contract.methods.getSubscription(provider,subscriber,utf8ToHex(endpoint)).call();
-        //console.log("Subscription result : ",subscription)
-        return subscription
+        endpoint_params = endpoint_params.map((i:string)=>{
+            if(!isHex(i)) {
+                return utf8ToHex(i)
+            }
+            else return i;
+        })
+        return await this.contract.methods.initiateSubscription(
+            provider,
+            utf8ToHex(endpoint),
+            endpoint_params,
+            pubkey,
+            blocks).send({from, gas});
     }
 
     /**
@@ -100,7 +64,7 @@ export class ZapArbiter extends BaseContract {
      * @param {string} s.endpoint - Data endpoint of the provider
      * @param {address} s.from - Address of the subscriber
      * @param {number} s.gas - Gas limit of this transaction
-     * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
+     * @returns {Promise<txid>} Transaction hash
      */
     async endSubscriptionSubscriber({provider, endpoint, from, gas=DEFAULT_GAS}:SubscriptionEnd) :Promise<txid>{
         let unSubscription:any
@@ -118,7 +82,7 @@ export class ZapArbiter extends BaseContract {
      * @param {string} s.endpoint - Data endpoint of the provider
      * @param {address} s.from - Address of the provider
      * @param {number} s.gas - Gas limit of this transaction
-     * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
+     * @returns {Promise<txid>} Transaction hash
      */
     async endSubscriptionProvider({subscriber, endpoint, from, gas=DEFAULT_GAS}:SubscriptionEnd) :Promise<txid>{
         let unSubscription:any;
@@ -127,54 +91,113 @@ export class ZapArbiter extends BaseContract {
             utf8ToHex(endpoint))
             .send({from, gas});
         return unSubscription;
-}
-
-    /**
-     * Listen for "DataSubscriptionEnd" unsubscription events with an optional Filter, executing a callback function when it matches the filter.
-     * @param {Filter} filters Filters events based on certain key parameters (optional)
-     * @param {Function} callback Callback function that is called when subscription is ended
-     */
-    listenSubscriptionEnd(filters:Filter={}, callback:Function){
-        try {
-            // Specify filters and watch Incoming event
-            let filter = this.contract.events
-                .DataSubscriptionEnd(
-                    filters,
-                    { fromBlock: filters.fromBlock ? filters.fromBlock : 0, toBlock: 'latest' },
-                    callback);
-
-            return filter;
-        } catch (err) {
-            throw err;
-        }
     }
 
     /**
-     * Listen for "DataPurchase" subscription events with an optional Filter, executing a callback function when it matches the filter.
-     * @param {Filter} filters Filters events based on certain key parameters (optional)
-     * @param {Function} callback Callback function that is called when subscription is started
+     * broadcast parameters from sender to offchain receiver
+     * @param {SubscriptionParams} s. {receiver, endpoint, params, from, gas=DEFAULT_GAS}
+     * @param {address} s.receiver - Address to receive parameters
+     * @param {string} s.endpoint - Data endpoint of the provider
+     * @param {Array<string>} s.params - Params passed to reciever
+     * @param {number} s.gas - Gas limit of this transaction
+     * @returns {Promise<txid>} Transaction hash
      */
-    listenSubscriptionStart(filters:Filter ={}, callback:Function){
-        try {
-            // Specify filters and watch Incoming event
-            let filter = this.contract.events.DataPurchase(
-                filters,
-                { fromBlock: filters.fromBlock ? filters.fromBlock : 0, toBlock: 'latest' }, 
-                callback);
+    async passParams({receiver, endpoint, params, from, gas=DEFAULT_GAS} : SubscriptionParams) :Promise<txid>{
+        params = params.map((i:string)=>{
+            if(!isHex(i)) {
+                return utf8ToHex(i)
+            }
+            else return i;
+        })
+        return await this.contract.methods.passParams(receiver,utf8ToHex(endpoint),params).send({from, gas});
+    }
 
-            return filter;
-        } catch (err) {
-            throw err;
-        }
+    /************************* GETTERS *****************************/
+
+    /**
+     * Gets the subscription status for a given provider, subscriber, and endpoint.
+     * @param {SubscriptionType} s. {provider,subscriber,endpoint}
+     * @param {address} s.provider - Address of the data provider
+     * @param {address} s.subscriber - Address of the subscriber
+     * @param {string} s.endpoint - Data endpoint of the provider
+     * @returns {Promise<string>} Information on the currently active subscription (dots,blockStart,blockEnd)
+     */
+    async getSubscription({provider,subscriber,endpoint}:SubscriptionType):Promise<number[]|string[]>{
+        return  await this.contract.methods.getSubscription(provider,subscriber,utf8ToHex(endpoint)).call();
+    }
+
+    /**
+     * Get subscriber dots remaining for specified provider endpoint
+     * @param provider
+     * @param subscriber
+     * @param endpoint
+     * @returns {Promise<number|string>} Number of dots remaining
+     */
+    async getDots({provider,subscriber,endpoint}:SubscriptionType): Promise<number|string|BNType>{
+        return await this.contract.methods.getDots(provider,subscriber,endpoint).call();
+    }
+
+    /**
+     * Get first subscription block number
+     * @param provider
+     * @param subscriber
+     * @param endpoint
+     * @returns {Promise<number|string>} First subscribed block number
+     */
+    async getBlockStart({provider,subscriber,endpoint}:SubscriptionType): Promise<number|string|BNType>{
+        return await this.contract.methods.getBlockStart(provider,subscriber,endpoint).call();
+    }
+
+    /**
+     * Get subscription last block number
+     * @param provider
+     * @param subscriber
+     * @param endpoint
+     * @returns Block Number that subscription will end
+     */
+    async getPreBlockEnd({provider,subscriber,endpoint}:SubscriptionType): Promise<number|string|BNType>{
+        return await this.contract.methods.getPreBlockEnd(provider,subscriber,endpoint).call();
+    }
+
+
+
+    /******************************* EVENTS ************************************/
+
+    /**
+     * Listen for "DataSubscriptionEnd" unsubscription events
+     * @param {Filter} filters
+     * @param {Function} callback
+     */
+    listenSubscriptionEnd(filters:SubscriptionEndEvent={}, callback:Function):void{
+        this.contract.events.DataSubscriptionEnd(
+            filters,
+            { fromBlock: filters.fromBlock ? filters.fromBlock : 0, toBlock: 'latest' },
+            callback);
+    }
+
+    /**
+     * Listen for "DataPurchase" subscription events
+     * @param {Filter} filters
+     * @param {Function} callback
+     */
+    listenDataPurchase(filters:DataPurchaseEvent ={}, callback:Function):void{
+        this.contract.events.DataPurchase(
+            filters,
+            { fromBlock: filters.fromBlock ? filters.fromBlock : 0, toBlock: 'latest' },
+            callback);
+    }
+
+    listenParamsPassedEvent(filters:ParamsPassedEvent={},callback:Function):void{
+        this.contract.events.ParamsPassed(filters,callback);
     }
 
 
     /**
      * Listen for all Arbiter contract events based on a given filter.
-     * @param {Filter} filter Filters events based on certain key parameters
-     * @param {Function} callback Callback function that is called whenever an event is emitted
+     * @param {Filter} filter
+     * @param {Function} callback
      */
-    listen(callback:Function){
+    listen(filters:object={},callback:Function):void{
         return this.contract.events.allEvents({fromBlock: 0, toBlock: 'latest'}, callback);
     }
 

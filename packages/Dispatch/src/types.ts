@@ -12,3 +12,9 @@ export interface ResponseArgs extends defaultTx{
   responseParams: Array<string | number>,
   dynamic : boolean
 }
+
+export interface cancelQuery extends defaultTx{
+    queryId : queryIdType
+}
+export type queryIdType = string|number|BNType
+

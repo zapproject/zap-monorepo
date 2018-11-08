@@ -1,6 +1,6 @@
 export type address = string;
 export type txid = string;
-import {BNType,defaultTx} from "@zapjs/types"
+import {BNType,defaultTx,Filter} from "@zapjs/types"
 
 export interface BondArgs extends defaultTx{
     provider: address;
@@ -32,4 +32,9 @@ export interface CalcBondRateType {
     provider: address;
     endpoint: string;
     zapNum: number;
+}
+
+export interface BondFilter extends Filter{
+    numDots ?: number|string|BNType,
+    numZap ?: number|string|BNType
 }

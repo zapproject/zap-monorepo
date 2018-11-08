@@ -17,12 +17,12 @@ export interface listenEvent {
 }
 
 export interface Filter {
-    fromBlock ?: number,
-    toBlock ?: number,
+    fromBlock ?: number|BNType,
+    toBlock ?: number|BNType,
     provider ?: address,
     subscriber ?:address,
     terminator ?:address,
-    id ?: BNType
+    id ?: number|string|BNType
 }
 
 export interface Artifact {
@@ -44,10 +44,21 @@ export interface SubscriptionInit extends defaultTx{
     pubkey:number
 }
 
-export interface SubscriptionEnd extends defaultTx{
-    provider?:address,
-    subscriber ?:address,
-    endpoint : string
+export interface DataPurchaseEvent extends Filter{
+    publicKey ?: number|string|BNType,
+    amount ?: number|string|BNType,
+    endpoint ?: string,
+    endpointParams ?: string[]
+}
+export interface SubscriptionEndEvent extends Filter{
+    terminator ?: address
+}
+
+export interface ParamsPassedEvent {
+    sender ?: address,
+    receiver ?: address,
+    endpoint ?: string,
+    params ?: string
 }
 
 
@@ -92,7 +103,17 @@ export interface ResponseArgs extends defaultTx{
     responseParams: Array<string>,
     dynamic : boolean
 }
-
+//=============Dispatch
+export interface OffchainResponse{
+    id?: number|string,
+    subscriber?:address,
+    provider?: address ,
+    response?: string[]|number[],
+    response1?:string,
+    response2?:string,
+    response3?:string,
+    response4?:string
+}
 
 
 export const NULL_ADDRESS= '0x0000000000000000000000000000000000000000';
