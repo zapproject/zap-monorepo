@@ -1,7 +1,7 @@
 import {BaseContract} from "@zapjs/basecontract";
-import {BondageArgs, BondArgs, UnbondArgs, DelegateBondArgs} from "./types";
-import {Filter,txid,NetworkProviderOptions,BNType,NULL_ADDRESS} from "@zapjs/types"
-const {toBN, utf8ToHex} = require("web3-utils");
+import {BondageArgs, BondArgs, UnbondArgs, DelegateBondArgs, BondFilter} from "./types";
+import {Filter,txid,NetworkProviderOptions,BNType,NULL_ADDRESS,NumType} from "@zapjs/types"
+const {utf8ToHex} = require("web3-utils");
 const assert = require("assert");
 const DEFAULT_GAS = 300000
 
@@ -32,7 +32,7 @@ export class ZapBondage extends BaseContract {
      * @param {number} bond.dots Number of dots to bond to this provider
      * @param {address} bond.from - Subscriber's owner (0 broker)  or broker's address
      * @param {number} bond.gas - Sets the gas limit for this transaction (optional)
-     * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash.
+     * @returns {Promise<txid>} Transaction hash.
      */
     public async bond({provider, endpoint, dots, from, gas= DEFAULT_GAS}: BondArgs): Promise<txid> {
         assert(dots && dots > 0, "Dots to bond must be greater than 0.");
@@ -59,7 +59,7 @@ export class ZapBondage extends BaseContract {
      * @param {address} delegate.subscriber - Address of the intended holder of the dots (subscriber)
      * @param {address} delegate.from - Address of the data subscriber
      * @param {number} [delegate.gas] - Sets the gas limit for this transaction (optional)
-     * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
+     * @returns {Promise<txid>} Transaction hash
      */
     public async delegateBond({provider, endpoint, dots, subscriber, from, gas= DEFAULT_GAS}: DelegateBondArgs): Promise<txid> {
         assert(dots && dots > 0, "Dots to bond must be greater than 0.");
@@ -86,7 +86,7 @@ export class ZapBondage extends BaseContract {
      * @param {number} unbond.dots - The number of dots to unbond from the contract
      * @param {address} unbond.from  - Address of the data subscriber
      * @param {number} unbond.gas - Sets the gas limit for this transaction (optional)
-     * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
+     * @returns {Promise<txid>} Transaction hash
      */
     public async unbond({provider, endpoint, dots, from, gas= DEFAULT_GAS}: UnbondArgs): Promise<txid> {
         assert(dots && dots>0,"Dots to unbond must be greater than 0");
@@ -103,15 +103,18 @@ export class ZapBondage extends BaseContract {
             .send({from, gas});
     }
 
+
+    /************************* GETTERS ****************************/
+
     /**
      * Gets the number of dots that are bounded to a provider's endpoint for the current subscriber.
      * @param {BondageArgs} bond. {subscriber, provider, endpoint}
      * @param {address} bond.subscriber - Address of the data subscriber
      * @param {address} bond.provider  - Address of the data provider
      * @param {string} bond.endpoint - Data endpoint of the provider
-     * @returns {Promise<string|BigNumber>} Returns a Promise that will eventually resolve into the number of bound dots to this provider's endpoint
+     * @returns {Promise<string|BigNumber>} Number of bound dots to this provider's endpoint
      */
-    public async getBoundDots({subscriber, provider, endpoint}: BondageArgs): Promise<string|BNType> {
+    public async getBoundDots({subscriber, provider, endpoint}: BondageArgs): Promise<NumType> {
         return await this.contract.methods.getBoundDots(
             subscriber,
             provider,
@@ -125,7 +128,7 @@ export class ZapBondage extends BaseContract {
      * @param {address} bondage.provider - Address of the data provider
      * @param {string} bondage.endpoint - Endpoint to calculate zap
      * @param {number} bondage.dots - Number of dots to calculate the price (in Zap) for
-     * @returns {Promise<string|BigNumber>} Returns a Promise that will eventually resolve into the price (in Zap) for the given number of dots
+     * @returns {Promise<string|BigNumber>} Price (in Zap) for the given number of dots
      */
     public async calcZapForDots({provider, endpoint, dots}: BondageArgs): Promise<string|BNType> {
         return await this.contract.methods.calcZapForDots(
@@ -140,7 +143,7 @@ export class ZapBondage extends BaseContract {
      * @param {address} bondage.provider - Address of the data provider
      * @param {string} bondage.endpoint -Data endpoint of the provider
      * @param {number} bondage.dots - dots that subscriber want to use
-     * @returns {Promise<string|BigNumber>} Returns a Promise that will eventually resolve into a price (in Zap wei)
+     * @returns {Promise<string|BigNumber>} Price (in Zap wei) for next x dots to bond
      */
     public async currentCostOfDot({provider, endpoint, dots}: BondageArgs): Promise<string|BNType> {
         return this.contract.methods.currentCostOfDot(
@@ -155,6 +158,7 @@ export class ZapBondage extends BaseContract {
      * @param {BondageArgs} b. {provider,endpoint}
      * @param {string} b.provider - Provider's address
      * @param {string} b.endpoint - Provider's endpoint to get dots limit
+     * @returns {Promise<string|BigNumber>} Number of maximum dots that can be bound
      */
     public  async getDotsLimit({provider,endpoint}:BondageArgs):Promise<string|BNType>{
         return await this.contract.methods.dotLimit(provider,utf8ToHex(endpoint)).call().valueOf()
@@ -165,7 +169,7 @@ export class ZapBondage extends BaseContract {
      * @param {BondageArgs} b. {provider,endpoint}
      * @param {address} b.provider - Address of the data provider
      * @param {string} b.endpoint - Data endpoint of the provider
-     * @returns {Promise<string|BigNumber>} Returns a Promise that will eventually resolve into an number of dots
+     * @returns {Promise<string|BigNumber>} Number of dots issued
      */
     public async getDotsIssued({provider, endpoint}: BondageArgs): Promise<string> {
         return await this.contract.methods.getDotsIssued(
@@ -180,6 +184,7 @@ export class ZapBondage extends BaseContract {
      * @param {BondageArgs} b. {provider,endpoint}
      * @param {string} b.provider - Provider's Address
      * @param {string} b.endpoint - Provider's endpoint to get Broker's address
+     * @returns {Promise<string>} Broker's address for this endpoint, null address if none
      */
     public async getBrokerAddress({provider,endpoint}:BondageArgs):Promise<string>{
         return  await this.contract.methods.getEndpointBroker(provider,utf8ToHex(endpoint)).call();
@@ -189,58 +194,77 @@ export class ZapBondage extends BaseContract {
      * @param {BondageArgs} b. {provider,endpoint}
      * @param {address} b.provider - Address of the data provider
      * @param {string} b.endpoint  - Data endpoint of the provider
-     * @returns {Promise<number>} Returns a Promise that will eventually resolve into an integer amount of Zap (wei)
+     * @returns {Promise<number>} Amount of Zaps (wei) that are bound to this endpoint
      */
     public async getZapBound({provider, endpoint}: BondageArgs ): Promise<string|BNType> {
-        return await this.contract.methods.getZapBound(
-            provider,
-            utf8ToHex(endpoint)
-        ).call();
+        return await this.contract.methods.getZapBound(provider,utf8ToHex(endpoint)).call();
     }
 
+
     /**
-     * Listen for all Bondage contract events based on an optional filter, executing a callback function when it matches the filter.
-     * @param {?Filter} filters Filters events based on certain key parameters
-     * @param {Function} callback Callback function that is called whenever an event is emitted
+     * Get Number of dots escrow
+     * @param provider
+     * @param endpoint
+     * @param subscriber
+     * @returns Number of escrow dots
      */
-    public listen(filters: Filter = {}, callback: Function): void {
+    async getNumEscrow({provider,endpoint,subscriber}:BondageArgs) :Promise<number|string>{
+        return await this.contract.methods.getNumEscrow(subscriber,provider,endpoint).call();
+    }
+
+    /********************** EVENTS ***************************/
+    /**
+     * Listen for all Bondage contract events
+     * @param {Filter} filters :{provider:address,subsriber:address,endpoint:bytes32,dots:number|string, numZap:number|string}
+     * @param {Function} callback
+     */
+    public listen(filters: BondFilter = {}, callback: Function): void {
         this.contract.events.allEvents(filters, {fromBlock: 0, toBlock: "latest"}, callback);
     }
 
     /**
-     * Listen for "Bound" Bondage contract events based on an optional filter, executing a callback function when it matches the filter.
-     * @param {?Filter} filters Filters events based on certain key parameters
-     * @param {Function} callback Callback function that is called whenever an event is emitted
+     * Listen for "Bound" Bondage contract events
+     * @param {Filter} filters :{provider:address,subsriber:address,endpoint:bytes32,dots:number|string, numZap:number|string}
+     * @param {Function} callback
      */
-    public listenBound(filters: Filter = {}, callback: Function): void {
+    public listenBound(filters: BondFilter = {}, callback: Function): void {
         this.contract.events.Bound(filters, {toBlock: "latest"}, callback);
     }
 
     /**
-     * Listen for "Unbond" Bondage contract events based on an optional filter, executing a callback function when it matches the filter.
-     * @param {Filter} filters Filters events based on certain key parameters
-     * @param {Function} callback Callback function that is called whenever an event is emitted
+     * Listen for "Unbond" Bondage contract events
+     * @param {Filter} filters :{provider:address,subsriber:address,endpoint:bytes32,dots:number|string}
+     * @param {Function} callback
      */
-    public listenUnbound(filters: Filter = {} , callback: Function): void {
+    public listenUnbound(filters: BondFilter = {} , callback: Function): void {
         this.contract.events.Unbond(filters, {toBlock: "latest"}, callback);
     }
 
     /**
-     * Listen for "Escrow" Bondage contract events based on an optional filter, , executing a callback function when it matches the filter.
-     * @param {Filter} filters Filters events based on certain key parameters
-     * @param {Function} callback Callback function that is called whenever an event is emitted
+     * Listen for "Escrow" Bondage contract events
+     * @param {Filter} filters :{provider:address,subsriber:address,endpoint:bytes32,dots:number|string}
+     * @param {Function} callback
      */
-    public listenEscrowed(filters: Filter = {}, callback: Function): void {
+    public listenEscrowed(filters: BondFilter = {}, callback: Function): void {
         this.contract.events.Escrowed(filters, {toBlock: "latest"}, callback);
     }
 
     /**
-     * Listen for "Released" Bondage contract events based on an optional filter, executing a callback function when it matches the filter.
-     * @param {Filter} filters Filters events based on certain key parameters
-     * @param {Function} callback Callback function that is called whenever an event is emitted
+     * Listen for "Released" Bondage contract events
+     * @param {Filter} filters :{provider:address,subsriber:address,endpoint:bytes32,dots:number|string}
+     * @param {Function} callback
      */
-    public listenReleased(filters: Filter = {}, callback: Function): void {
+    public listenReleased(filters: BondFilter = {}, callback: Function): void {
         this.contract.events.Released(filters, {toBlock: "latest"}, callback);
+    }
+
+    /**
+     * Listen to "Returned" events when dots are returned from provider to subscriber
+     * @param filters
+     * @param callback
+     */
+    public listenReturned(filters: BondFilter={}, callback:Function):void{
+        this.contract.events.Returned(filters,{toBlock:'latest'},callback);
     }
 
 }

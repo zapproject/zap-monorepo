@@ -1,4 +1,4 @@
-import {address,BNType, defaultTx} from "@zapjs/types"
+import {address,BNType, defaultTx,NumType} from "@zapjs/types"
 
 export interface QueryArgs extends defaultTx{
   provider:address,
@@ -12,3 +12,8 @@ export interface ResponseArgs extends defaultTx{
   responseParams: Array<string | number>,
   dynamic : boolean
 }
+
+export interface cancelQuery extends defaultTx{
+    queryId : NumType
+}
+

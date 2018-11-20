@@ -20,6 +20,26 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS,NULL_ADDRESS} fr
         super(Object.assign(obj,{artifactName:"REGISTRY"}));
     }
 
+    /*************************** REGISTRY STORAGE CALLS FOR ALL PROVIDER *************************/
+
+    /**
+     * Get all providers in Registry contract.
+     * @returns {Promise<Object>} Returns a Promise that will eventually resolve into list of oracles
+     */
+    async getAllProviders(): Promise<Object> {
+        return await this.contract.methods.getAllOracles().call();
+    }
+
+    /**
+     * Look up provider's address by its index in registry storage
+     * @param index
+     * @returns Promise<address> address of indexed provider
+     */
+    async getProviderAddressByIndex(index:number|string):Promise<address>{
+        return await this.contract.methods.getOracleAddress(index).call();
+    }
+
+    /****************** PROVIDER SPECIFIC CALLS **********************/
 
     /**
      * Initializes a brand endpoint in the Registry contract, creating an Oracle entry if needed.
@@ -38,6 +58,89 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS,NULL_ADDRESS} fr
     }
 
     /**
+     * Get a provider's public key from the Registry contract.
+     * @param {address} provider - The address of this provider
+     * @returns {Promise<number>} Returns a Promise that will eventually resolve into public key number
+     */
+    async getProviderPublicKey(provider:address):Promise<number|string>{
+        let pubKey:string =  await this.contract.methods.getProviderPublicKey(provider).call();
+        return pubKey.valueOf(); //string
+    }
+
+    /**
+     * Get a provider's title from the Registry contract.
+     * @param {address} provider The address of this provider
+     * @returns {Promise<string>} Returns a Promise that will eventually resolve into a title string
+     */
+    async getProviderTitle(provider:address):Promise<string>{
+        let title = await this.contract.methods.getProviderTitle(provider).call();
+        return hexToUtf8(title)
+    }
+
+    /**
+     * Gets whether this provider has already been created
+     * @param {address} provider The address of this provider
+     * @returns {Promise<boolean>} Returns a Promise that will eventually resolve a true/false value.
+     */
+    async isProviderInitiated(provider:address):Promise<boolean> {
+        const created:boolean = await this.contract.methods.isProviderInitiated(provider);
+        return created;
+    }
+
+    /**
+     * Set the parameter of a provider
+     * @param {SetProviderParams} s. { key, value, from, gas=DEFAULT_GAS }
+     * @param {string} s.key - The key to be set
+     * @param {string} s.value - The value to set the key to
+     * @param {address} s.from - The address of the provider
+     * @param {BN} s.gas - The amount of gas to use.
+     * @returns {Promise<txid>} Returns a Promise that will be eventually resolve into a transaction hash
+     */
+    async setProviderParameter({ key, value, from, gas=DEFAULT_GAS }: SetProviderParams): Promise<txid> {
+        return await this.contract.methods.setProviderParameter(
+            utf8ToHex(key),
+            utf8ToHex(value)
+        ).send({ from, gas });
+    }
+
+    /**
+     * Get a parameter from a provider
+     * @param {address} provider The address of the provider
+     * @param {string} key The key you're getting
+     * @returns {Promise<string>} A promise that will be resolved with the value of the key
+     */
+    async getProviderParam(provider: address, key: string): Promise<string> {
+        return await this.contract.methods.getProviderParameter(
+            provider,
+            utf8ToHex(key)
+        ).call();
+    }
+
+    /**
+     * Get all the parameters of a provider
+     * @param {address} provider The address of the provider
+     * @returns {Promise<string[]>} A promise that will be resolved with all the keys
+     */
+    async getAllProviderParams(provider: address): Promise<string[]> {
+        const allParams = await this.contract.methods.getAllProviderParams(provider).call()
+        return allParams
+    }
+
+    /**
+     * Get the endpoints of a given provider
+     * @param {address} provider The address of this provider
+     * @returns {Promise<string[]>} Returns a Promise that will be eventually resolved with the endpoints of the provider.
+     */
+    async getProviderEndpoints(provider: address): Promise<string[]> {
+        const endpoints = await this.contract.methods.getProviderEndpoints(provider).call();
+        return endpoints.map(hexToUtf8);
+    }
+
+
+    /**********************PROVIDER'S SPECIFIC ENDPOINT CALLS ***************************/
+
+
+    /**
      * Initializes a piecewise curve for a given provider's endpoint. Note: curve can only be set once per endpoint.
      * @param {InitCurve} i. {endpoint, term, broker, from, gas=DEFAULT_GAS}
      * @param {string} i.endpoint - Data endpoint of the provider
@@ -49,7 +152,21 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS,NULL_ADDRESS} fr
      */
     async initiateProviderCurve({endpoint, term, broker=NULL_ADDRESS, from, gas=DEFAULT_GAS}:InitCurve):Promise<txid> {
         return await this.contract.methods.initiateProviderCurve(utf8ToHex(endpoint), term, broker)
-        .send({from, gas});
+            .send({from, gas});
+    }
+
+    /**
+     * Get a provider's endpoint's curve from the Registry contract.
+     * @param {string} provider The address of this provider
+     * @param {string} endpoint Data endpoint of the provider
+     * @returns {Promise<CurveType>} Returns a Promise that will eventually resolve into a Curve object
+     */
+    async getProviderCurve(provider:string,endpoint:string):Promise<Curve>{
+        const term:string[] =  await this.contract.methods.getProviderCurve(
+            provider,
+            utf8ToHex(endpoint)
+        ).call();
+        return new Curve(term.map((i:string)=>{return parseInt(i)}))
     }
 
     /**
@@ -70,36 +187,11 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS,NULL_ADDRESS} fr
     }
 
     /**
-     * Set the parameter of a provider
-     * @param {SetProviderParams} s. { key, value, from, gas=DEFAULT_GAS }
-     * @param {string} s.key - The key to be set
-     * @param {string} s.value - The value to set the key to
-     * @param {address} s.from - The address of the provider
-     * @param {BN} s.gas - The amount of gas to use.
-     * @returns {Promise<txid>} Returns a Promise that will be eventually resolve into a transaction hash
-     */
-    async setProviderParameter({ key, value, from, gas=DEFAULT_GAS }: SetProviderParams): Promise<txid> {
-        return await this.contract.methods.setProviderParameter(
-            utf8ToHex(key),
-            utf8ToHex(value)
-        ).send({ from, gas });
-    }
-
-    /**
-     * Get a provider's public key from the Registry contract.
-     * @param {address} provider - The address of this provider
-     * @returns {Promise<number>} Returns a Promise that will eventually resolve into public key number
-     */
-    async getProviderPublicKey(provider:address):Promise<number|string>{
-        let pubKey:string =  await this.contract.methods.getProviderPublicKey(provider).call();
-        return pubKey.valueOf(); //string
-    }
-
-    /**
      * Get a provider endpoint's broker address
      * @param {address} provider The address of this provider
      * @param {string} endpoint - Endpoint to query broker's address
-     * @returns {Promise<string>} Returns a Promise that will eventually resolve into public key number
+     * @returns {Promise<address>} Returns a Promise of broker's address or Null_address if there is
+     * no broker for this endpoint
      */
     async getEndpointBroker(provider:address, endpoint:string ):Promise<string>{
         let broker =  await this.contract.methods.getEndpointBroker(provider, utf8ToHex(endpoint)).call();
@@ -107,87 +199,21 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS,NULL_ADDRESS} fr
     }
 
     /**
-     * Get a provider's title from the Registry contract.
-     * @param {address} provider The address of this provider
-     * @returns {Promise<string>} Returns a Promise that will eventually resolve into a title string
-     */
-    async getProviderTitle(provider:address):Promise<string>{
-        let title = await this.contract.methods.getProviderTitle(provider).call();
-        return hexToUtf8(title)
-    }
-
-     /**
-     * Gets whether this provider has already been created
-     * @param {address} provider The address of this provider
-     * @returns {Promise<boolean>} Returns a Promise that will eventually resolve a true/false value.
-     */
-    async isProviderInitiated(provider:address):Promise<boolean> {
-        const created:boolean = await this.contract.methods.isProviderInitiated(provider);
-        return created;
-    }
-
-    /**
      * Gets whether this endpoint and its corresponding curve have already been set
      * @param {address} provider The address of this provider
      * @param {string} endpoint - Endpoint's string
-     * @returns {Promise<boolean>} Returns a Promise that will eventually resolve a true/false value.
+     * @returns {Promise<boolean>} Returns a Promise of a true/false value.
      */
     async isEndpointSet(provider:address, endpoint:string):Promise<boolean> {
         const unset:boolean = await this.contract.methods.getCurveUnset(provider, utf8ToHex(endpoint)).call();
         return !unset;
     }
 
-
-    /**
-     * Get a provider's endpoint's curve from the Registry contract.
-     * @param {string} provider The address of this provider
-     * @param {string} endpoint Data endpoint of the provider
-     * @returns {Promise<CurveType>} Returns a Promise that will eventually resolve into a Curve object
-     */
-    async getProviderCurve(provider:string,endpoint:string):Promise<Curve>{
-        const term:string[] =  await this.contract.methods.getProviderCurve(
-            provider,
-            utf8ToHex(endpoint)
-            ).call();
-        return new Curve(term.map((i:string)=>{return parseInt(i)}))
-    }
-
-    /**
-     * Get all providers in Registry contract.
-     * @returns {Promise<Object>} Returns a Promise that will eventually resolve into list of oracles
-     */
-    async getAllProviders(): Promise<Object> {
-        return await this.contract.methods.getAllOracles().call();
-    }
-
-    /**
-     * Get a parameter from a provider
-     * @param {string} provider The address of the provider
-     * @param {string} key The key you're getting
-     * @returns {Promise<string>} A promise that will be resolved with the value of the key
-     */
-    async getProviderParam(provider: string, key: string): Promise<string> {
-        return await this.contract.methods.getProviderParameter(
-            provider,
-            utf8ToHex(key)
-        ).call();
-    }
-
-    /**
-     * Get all the parameters of a provider
-     * @param {string} provider The address of the provider
-     * @returns {Promise<string[]>} A promise that will be resolved with all the keys
-     */
-    async getAllProviderParams(provider: string): Promise<string[]> {
-        const allParams = await this.contract.methods.getAllProviderParams(provider).call()
-        return allParams
-    }
-
     /**
      * Get the endpoint params at a certain index of a provider's endpoint.
      * @param {address} provider The address of this provider
      * @param {string} endpoint Data endpoint of the provider
-     * @returns {Promise<string>} Returns a Promise that will eventually resolve into the endpoint's all params
+     * @returns {Promise<string>} Returns a Promise of the endpoint's all params
      */
     async getEndpointParams({provider, endpoint}:NextEndpoint): Promise<string[]>{
         const params: string[] = await this.contract.methods.getEndpointParams(
@@ -199,44 +225,10 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS,NULL_ADDRESS} fr
     }
 
     /**
-     * Get the endpoints of a given provider
-     * @param {address} provider The address of this provider
-     * @returns {Promise<string[]>} Returns a Promise that will be eventually resolved with the endpoints of the provider.
+     * Used to encode params that has length more than 32 bytes
+     * Saved into indexed ordered array
+     * @param endpointParams
      */
-    async getProviderEndpoints(provider: string): Promise<string[]> {
-        const endpoints = await this.contract.methods.getProviderEndpoints(provider).call();
-        return endpoints.map(hexToUtf8);
-    }
-
-    // ==== Events ====//
-
-    /**
-     * Listen to all Registry contract events
-     * @param {Function} callback Callback function that is called whenever an event is emitted
-     * @returns {Promise<void>} Returns a Promise that will eventually resolve when the callback is set
-     */
-    async listen(callback:Function):Promise<void>{
-        this.contract.events.allEvents(callback);
-    }
-
-    /**
-     * Listen to Registry contracts events for new providers
-     * @param {Filter} filters Filters events based on certain key parameters
-     * @param {Promise<void>} callback Returns a Promise that will eventually resolve when the callback is set
-     */
-    async listenNewProvider(filters:Filter={}, callback:Function):Promise<void>{
-        this.contract.events.NewProvider(filters, callback);
-    }
-
-    /**
-     * Listen to Registry contract's events for new providers' curve
-     * @param {Filter} filters Filters events based on certain key parameters
-     * @param {Promise<void>} callback Returns a Promise that will eventually resolve when the callback is set
-     */
-    async listenNewCurve(filters:Filter, callback:Function):Promise<void>{
-        this.contract.events.NewCurve(filters, callback);
-    }
-
     private static encodeParams(endpointParams: string[] = []): string[] {
         const hexParams = endpointParams.map(el => el.indexOf('0x') === 0 ? el : utf8ToHex(el));
         const bytesParams: number[][] = hexParams.map(hexToBytes);
@@ -257,6 +249,11 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS,NULL_ADDRESS} fr
         return params;
     }
 
+    /**
+     * Used to decode params that is longer than 32 bytes
+     * Retrieve if the params is indexed ordered array
+     * @param rawParams
+     */
     private static decodeParams(rawParams: string[] = []): string[] {
         const bytesParams: number[][] = rawParams.map(hexToBytes);
         const params: string[] = [];
@@ -290,6 +287,37 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS,NULL_ADDRESS} fr
             return hex;
         });
     }
+
+
+
+    /********************** EVENTS ***************/
+
+    /**
+     * Listen to all Registry contract events
+     * @param {Function} callback Callback function that is called whenever an event is emitted
+     */
+    async listen(callback:Function):Promise<void>{
+        this.contract.events.allEvents(callback);
+    }
+
+    /**
+     * Listen to Registry contracts events for new providers
+     * @param filters : {provider:address,title:bytes32}
+     * @param callback function
+     */
+    async listenNewProvider(filters:Filter={}, callback:Function):Promise<void>{
+        this.contract.events.NewProvider(filters, callback);
+    }
+
+    /**
+     * Listen to Registry contract's events for new providers' curve
+     * @param filters : {provider:address, endpoint:bytes32, curve:int[], broker:address}
+     * @param callback
+     */
+    async listenNewCurve(filters:Filter, callback:Function):Promise<void>{
+        this.contract.events.NewCurve(filters, callback);
+    }
+
 
 }
 
