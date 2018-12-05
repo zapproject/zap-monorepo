@@ -21,7 +21,7 @@ let myZapRegistry = new ZapRegistry();
 
 Custom configuration
 ``` 
-let myZapRegistry = new ZapRegistry({artifactDir,networkId,networkProvider})
+let myZapRegistry = new ZapRegistry({networkId,networkProvider,coordinator})
 ```
 #### Methods
 Get methods

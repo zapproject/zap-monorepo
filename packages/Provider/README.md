@@ -22,11 +22,11 @@ let myZapProvider = new ZapProvider({owner:address});
 ```
 **Create Zap Provider**
 ```
-let myZapProvider = new zapProvider({owner})
+let myZapProvider = new zapProvider(owner)
 ```
 **With Custom configuration**
 ```
-let myZapProvider = new ZapProvider({owner,zapRegistry,zapDispatch,zapBondage,zapArbiter});
+let myZapProvider = new ZapProvider(owner,{networkId,networkProvider,coordinator});
 ```
 
 

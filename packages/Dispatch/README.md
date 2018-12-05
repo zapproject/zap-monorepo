@@ -21,7 +21,7 @@ let myZapArbiter = new ZapArbiter();
 ```
 Custom configuration
 ```
-let myZapDispatch = new zapDisPatch({artifactDir,networkId,networkProvider})
+let myZapDispatch = new zapDisPatch({networkId,networkProvider,coordinator})
 ```
 Listen to Incoming query events
 ```
