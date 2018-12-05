@@ -12,7 +12,7 @@ export interface InitProvider extends defaultTx{
 export interface InitCurve extends defaultTx{
   endpoint:string,
   term:CurveType,
-  broker?: address
+  broker?: address|undefined
 }
 
 

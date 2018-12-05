@@ -21,7 +21,7 @@ let myZapBondage = new ZapBondage();
 
 Custom configuration
 ```
-let myZapBondage = new ZapBondage({artifactDir,networkId,networkProvider})
+let myZapBondage = new ZapBondage({networkId,networkProvider,coordinator})
 ```
 #### Methods
 

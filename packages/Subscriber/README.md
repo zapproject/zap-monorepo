@@ -28,7 +28,7 @@ let myZapSubscriber = new ZapSubscriber({owner:address})
 ```
 **With Custom configuration**
 ```
-let myZapSubscriber = new myZapSubscriber({owner,zapRegistry,zapDispatch,zapBondage,zapArbiter});
+let myZapSubscriber = new myZapSubscriber(owner,{networkId,networkProvider,coordinator});
 ```
 **Methods**
 ```

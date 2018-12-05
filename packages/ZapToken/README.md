@@ -21,7 +21,7 @@ let myZapToken = new ZapToken();
 
 Custom configuration
 ```
-let myZapToken = new ZapToken({artifactDir,networkId,networkProvider})
+let myZapToken = new ZapToken({networkId,networkProvider,coordinator})
 ```
 
 get Zap balance of an addrss

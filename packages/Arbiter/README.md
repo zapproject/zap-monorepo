@@ -21,7 +21,7 @@ let myZapArbiter = new ZapArbiter();
 
 Custom configuration
 ```
-let myZapArbiter = new ZapArbiter({artifactDir,networkId,networkProvider})
+let myZapArbiter = new ZapArbiter({networkId,networkProvider,coordinator})
 ```
 Listen to new subscription events
 ```
