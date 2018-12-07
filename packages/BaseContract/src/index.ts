@@ -29,9 +29,6 @@ export class BaseContract{
     constructor({artifactsDir,artifactName,networkId,networkProvider,coordinator}:BaseContractType) {
         let coorArtifact:any=undefined;
         this.name = artifactName;
-        if(!CONTRACTS.includes(artifactName.toUpperCase())){
-          throw "Contract name is invalid";
-        }
         try {
           if(!artifactsDir){
             this.artifact = Artifacts[artifactName];
