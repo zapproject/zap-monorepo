@@ -1,5 +1,4 @@
 {
-  "contractName": "ZapCoordinatorInterface",
   "abi": [
     {
       "constant": true,
