@@ -1,5 +1,5 @@
 {
-  "name": "@zapjs/registry",
+  "name": "@zapjs/tokendot",
   "private": false,
   "version": "2.1.1",
   "description": "",
@@ -17,8 +17,12 @@
   "license": "ISC",
   "dependencies": {
     "@zapjs/basecontract": "^2.0.13",
+    "@zapjs/bondage": "^2.0.15",
     "@zapjs/curve": "^2.0.11",
+    "@zapjs/dispatch": "^2.0.17",
+    "@zapjs/registry": "^2.1.1",
     "@zapjs/types": "^2.0.9",
+    "@zapjs/zaptoken": "^2.0.15",
     "bignumber.js": "^7.2.1",
     "web3": "1.0.0-beta.36",
     "web3-utils": "1.0.0-beta.36"
