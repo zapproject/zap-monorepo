@@ -2,7 +2,7 @@ import  {Artifacts} from "@zapjs/artifacts";
 import {BaseContractType} from "@zapjs/types";
 import {Utils} from "./utils"
 const Web3 = require("web3")
-const CONTRACTS = ['ZAP_TOKEN','DISPATCH','ARBITER','BONDAGE','REGISTRY','DATABASE','ZAPCOORDINATOR']
+const CONTRACTS = ['ZAP_TOKEN','DISPATCH','ARBITER','BONDAGE','REGISTRY','DATABASE','ZAPCOORDINATOR','TOKENDOTFACTORY']
 
 /**
  * Parent Class to Dispatch, Bondage, Arbiter, Token, Registry classes
@@ -71,4 +71,3 @@ export class BaseContract{
         return await this.contract.methods.owner().call().valueOf()
     }
 }
-
