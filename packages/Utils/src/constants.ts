@@ -23,8 +23,8 @@ export const ganacheServerOptions={
      port: 7545,
      total_accounts: 10,
      ws: true,
-    gas: 6700000 ,
-    gasPrice: 20000000,
+    gas: 6721975 ,
+    gasPrice: 20000000000,
     network: "ganache-gui"
 };
 /**
@@ -55,7 +55,7 @@ export const testZapProvider:any = {
 }
 
 export const EndpointBroker = "EndpointBroker";
-export const ganacheProvider = new Web3.providers.HttpProvider('http://127.0.0.1:7545');
+export const ganacheProvider = new Web3.providers.HttpProvider('http://localhost:7545');
 //export const ganacheProvider = new Web3.providers.WebsocketProvider('ws://127.0.0.1:7545');
 
 
