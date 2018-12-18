@@ -1,5 +1,4 @@
 {
-  "contractName": "ZapCoordinator",
   "abi": [
     {
       "constant": true,
@@ -211,6 +210,5 @@
     "42": {
       "address": "0x0014f9acd4f4ad4ac65fec3dcee75736fd0a0230"
     }
-  },
-  "schemaVersion": "2.0.1"
+  }
 }
