@@ -8,7 +8,7 @@ const contractsDir = join(zapContractDirName,"contracts")
 const workingDir = zapContractDirName
 
 // y = 2x + x^2 from [1, 100]
-export const TEST_CURVE = [3, 0, 2, 1, 1000000000];
+export const TEST_CURVE = [3, 0, 2, 1, 1000000000000000000];
 
 
 export const  migrate = require("truffle-core/lib/commands/migrate.js");
@@ -76,4 +76,3 @@ export const GAS_PRICE = 40000000
 export const NETWORK = "ganache-gui"
 
 export const NULL_ADDRESS= '0x0000000000000000000000000000000000000000'
-
