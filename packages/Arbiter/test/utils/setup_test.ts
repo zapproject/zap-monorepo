@@ -1,7 +1,7 @@
 const Web3 = require('web3');
 import {Utils} from "@zapjs/utils";
 import {NULL_ADDRESS} from "@zapjs/types"
-
+const {toHex} = require("web3-utils")
 /**
  * Bootstrap for Dispatch tests, with accounts[0] = provider, accounts[2]=subscriber
  * @param {} zapProvider
@@ -16,16 +16,16 @@ export async function bootstrap(zapProvider:any,accounts:Array<string>,deployedR
     let defaultTx = {from:accounts[0],gas:Utils.Constants.DEFAULT_GAS};
     await deployedRegistry.contract.methods.initiateProvider(normalizedP.pubkey,normalizedP.title).send(defaultTx);
     let tokenOwner = await deployedToken.contract.methods.owner().call();
-    await deployedRegistry.contract.methods.initiateProviderCurve(normalizedP.endpoint,zapProvider.curve.values, NULL_ADDRESS).send(defaultTx);
+    await deployedRegistry.contract.methods.initiateProviderCurve(normalizedP.endpoint,zapProvider.curve.values.map((i:string)=>toHex(i)), NULL_ADDRESS).send(defaultTx);
     let providerCurve = await deployedRegistry.contract.methods.getProviderCurve(accounts[0],normalizedP.endpoint).call();
     let endpointBroker = await deployedRegistry.contract.methods.getEndpointBroker(accounts[0],normalizedP.endpoint).call();
- 
+
     console.log("provider curve", providerCurve);
     console.log("token owner : ", tokenOwner)
     console.log("endpoint broker: ", endpointBroker);
 
-    
-    
+
+
     for(let account of accounts) {
         await deployedToken.contract.methods.allocate(account,1000).send({from: tokenOwner,gas:Utils.Constants.DEFAULT_GAS});
     }

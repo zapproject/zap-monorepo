@@ -1,7 +1,7 @@
 import {BaseContract} from "@zapjs/basecontract";
 import {BondageArgs, BondArgs, UnbondArgs, DelegateBondArgs, BondFilter} from "./types";
 import {Filter,txid,NetworkProviderOptions,BNType,NULL_ADDRESS,NumType} from "@zapjs/types"
-const {utf8ToHex} = require("web3-utils");
+const {utf8ToHex,isHex,toHex} = require("web3-utils");
 const assert = require("assert");
 const DEFAULT_GAS = 300000
 
@@ -45,7 +45,7 @@ export class ZapBondage extends BaseContract {
         return await this.contract.methods.bond(
             provider,
             utf8ToHex(endpoint),
-            dots)
+            toHex(dots))
             .send({from, gas});
 
     }
@@ -63,6 +63,7 @@ export class ZapBondage extends BaseContract {
      */
     public async delegateBond({provider, endpoint, dots, subscriber, from, gas= DEFAULT_GAS}: DelegateBondArgs): Promise<txid> {
         assert(dots && dots > 0, "Dots to bond must be greater than 0.");
+        dots = toHex(dots)
          const broker = await this.contract.methods.getEndpointBroker(provider,utf8ToHex(endpoint)).call()
          if(broker != NULL_ADDRESS){
              if(from!==broker){
@@ -90,6 +91,7 @@ export class ZapBondage extends BaseContract {
      */
     public async unbond({provider, endpoint, dots, from, gas= DEFAULT_GAS}: UnbondArgs): Promise<txid> {
         assert(dots && dots>0,"Dots to unbond must be greater than 0");
+        dots = toHex(dots)
         const broker = await this.contract.methods.getEndpointBroker(provider,utf8ToHex(endpoint)).call()
         if(broker != NULL_ADDRESS){
             if(from!==broker){
@@ -131,10 +133,11 @@ export class ZapBondage extends BaseContract {
      * @returns {Promise<string|BigNumber>} Price (in Zap) for the given number of dots
      */
     public async calcZapForDots({provider, endpoint, dots}: BondageArgs): Promise<string|BNType> {
+      console.log("to hex dots",dots,toHex(dots))
         return await this.contract.methods.calcZapForDots(
             provider,
             utf8ToHex(endpoint),
-            dots).call();
+            toHex(dots)).call();
     }
 
     /**
@@ -146,6 +149,7 @@ export class ZapBondage extends BaseContract {
      * @returns {Promise<string|BigNumber>} Price (in Zap wei) for next x dots to bond
      */
     public async currentCostOfDot({provider, endpoint, dots}: BondageArgs): Promise<string|BNType> {
+        dots = toHex(dots)
         return this.contract.methods.currentCostOfDot(
             provider,
             utf8ToHex(endpoint),

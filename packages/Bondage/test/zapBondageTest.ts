@@ -4,6 +4,7 @@ const expect = require("chai")
 .use(require("chai-bignumber"))
 .expect;
 const Web3 = require("web3");
+const {toHex} = require("web3-utils")
 
 import {BigNumber} from "bignumber.js";
 
@@ -40,7 +41,7 @@ describe('Zap Bondage Test', () => {
 
     before(function(done) {
         configureEnvironment(async () => {
-            ganacheServer = await Utils.startGanacheServer();
+            // ganacheServer = await Utils.startGanacheServer();
             web3 = new Web3(Utils.Constants.ganacheProvider);
             accounts = await web3.eth.getAccounts();
             broker = accounts[5]
@@ -55,11 +56,11 @@ describe('Zap Bondage Test', () => {
         });
     });
 
-    after(function(){
-        console.log("Done running Bondage tests");
-        ganacheServer.close();
-        process.exit();
-    });
+    // after(function(){
+    //     console.log("Done running Bondage tests");
+    //     ganacheServer.close();
+    //     process.exit();
+    // });
 
     it("1) Should have all pre conditions set up for bondage to work", async () => {
             await bootstrap(testZapProvider, accounts, deployedRegistry, deployedBondage, deployedToken);
@@ -270,14 +271,17 @@ describe('Zap Bondage Test', () => {
             provider:accounts[0],
             endpoint:testZapProvider.endpoint
         })
+        console.log("dot limit:",dotsLimit)
         let dotsIssued = await bondageWrapper.getDotsIssued({provider:accounts[0],endpoint:testZapProvider.endpoint})
-        let availableDots = dotsLimit - dotsIssued-1
+        let availableDots = dotsIssued*1000000
+        console.log("availableDots",availableDots)
         let zapForDots:string = await bondageWrapper.calcZapForDots({
             provider:accounts[0],
             endpoint: testZapProvider.endpoint,
             dots : availableDots
         })
-        await deployedToken.contract.methods.approve(deployedBondage.contract._address, zapForDots).send({from: accounts[3], gas: Utils.Constants.DEFAULT_GAS});
+        console.log("zap for dots",zapForDots)
+        await deployedToken.contract.methods.approve(deployedBondage.contract._address, toHex(zapForDots)).send({from: accounts[3], gas: Utils.Constants.DEFAULT_GAS});
         let bond = await bondageWrapper.bond({
             provider: accounts[0],
             endpoint: testZapProvider.endpoint,

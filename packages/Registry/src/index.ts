@@ -1,4 +1,4 @@
-const {utf8ToHex, toBN, hexToUtf8, bytesToHex, hexToBytes} = require("web3-utils");
+const {utf8ToHex, toBN, hexToUtf8, bytesToHex, hexToBytes,toHex} = require("web3-utils");
 import {BaseContract} from "@zapjs/basecontract";
 import {Curve,CurveType} from "@zapjs/curve";
 import {InitProvider, InitCurve, NextEndpoint, EndpointParams, SetProviderParams} from "./types"
@@ -151,7 +151,12 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS,NULL_ADDRESS} fr
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
     async initiateProviderCurve({endpoint, term, broker=NULL_ADDRESS, from, gas=DEFAULT_GAS}:InitCurve):Promise<txid> {
-        return await this.contract.methods.initiateProviderCurve(utf8ToHex(endpoint), term, broker)
+        let hex_term:string[] = []
+        for(let i in term){
+          hex_term[i] = toHex(term[i])
+        }
+        console.log("term;",term)
+        return await this.contract.methods.initiateProviderCurve(utf8ToHex(endpoint), hex_term, broker)
             .send({from, gas});
     }
 

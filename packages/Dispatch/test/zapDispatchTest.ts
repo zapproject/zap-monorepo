@@ -40,7 +40,7 @@ describe('Zap Dispatch Test', () => {
 
     before(function (done) {
         configureEnvironment(async() => {
-            ganacheServer = await Utils.startGanacheServer();
+            // ganacheServer = await Utils.startGanacheServer();
             web3 = new Web3(Utils.Constants.ganacheProvider);
             accounts = await web3.eth.getAccounts();
             await Utils.migrateContracts(buildDir);
@@ -54,11 +54,11 @@ describe('Zap Dispatch Test', () => {
         });
     });
 
-    after(function(){
-        console.log("Done running Dispatch tests");
-        ganacheServer.close();
-        process.exit();
-    });
+    // after(function(){
+    //     console.log("Done running Dispatch tests");
+    //     ganacheServer.close();
+    //     process.exit();
+    // });
 
     it("Should have all pre conditions set up for dispatch to work", async () => {
      const res = await bootstrap(testZapProvider, accounts, deployedRegistry, deployedToken, deployedBondage);
@@ -118,7 +118,7 @@ describe('Zap Dispatch Test', () => {
                 query: query,
                 endpoint: testZapProvider.endpoint,
                 endpointParams: ['a'],
-                from: accounts[2], // account that used for bond in booststrap function 
+                from: accounts[2], // account that used for bond in booststrap function
                 gas: Utils.Constants.DEFAULT_GAS
             });
         expect(queryData).to.have.any.keys(["events"])
@@ -137,7 +137,7 @@ describe('Zap Dispatch Test', () => {
                     query: query,
                     endpoint: testZapProvider.endpoint,
                     endpointParams: ['a'],
-                    from: accounts[2], // account that used for bond in booststrap function 
+                    from: accounts[2], // account that used for bond in booststrap function
                     gas: Utils.Constants.DEFAULT_GAS
                 });
         } catch (e) {
@@ -148,8 +148,8 @@ describe('Zap Dispatch Test', () => {
     it('Should call respond function in Dispatch smart contract', async () => {
         try {
             await dispatchWrapper.respond({
-                queryId: queryData.id, 
-                responseParams: responses, 
+                queryId: queryData.id,
+                responseParams: responses,
                 dynamic: false,
                 from: accounts[2]
             });
@@ -161,8 +161,8 @@ describe('Zap Dispatch Test', () => {
     it("Should emit Respond events for offchain subscribers", async () => {
         try {
             await dispatchWrapper.respond({
-                queryId: queryData.id, 
-                responseParams: responses, 
+                queryId: queryData.id,
+                responseParams: responses,
                 dynamic: false,
                 from: accounts[2]
             });
@@ -171,10 +171,10 @@ describe('Zap Dispatch Test', () => {
         }
     });
 
-    after(() => {
-        ganacheServer.close();
-
-        // Hotfix for infinity running migration
-        process.exit();
-    });
+    // after(() => {
+    //     ganacheServer.close();
+    //
+    //     // Hotfix for infinity running migration
+    //     process.exit();
+    // });
 });
