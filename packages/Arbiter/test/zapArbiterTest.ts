@@ -37,7 +37,7 @@ describe('Arbiter Test', () => {
 
   before(function(done) {
     configureEnvironment(async() => {
-      ganacheServer = await Utils.startGanacheServer();
+      // ganacheServer = await Utils.startGanacheServer();
       web3 = new Web3(Utils.Constants.ganacheProvider);
       accounts = await web3.eth.getAccounts();
         //delete require.cache[require.resolve('/contracts')];
@@ -51,11 +51,11 @@ describe('Arbiter Test', () => {
       });
   });
 
-  after(function(){
-    console.log("Done running Arbiter tests");
-    ganacheServer.close();
-    process.exit();
-  });
+  // after(function(){
+  //   console.log("Done running Arbiter tests");
+  //   ganacheServer.close();
+  //   process.exit();
+  // });
 
     it("Should have all pre conditions set up for dispatch to work", async () => {
         const res = await bootstrap(testZapProvider, accounts, deployedRegistry, deployedToken, deployedBondage);

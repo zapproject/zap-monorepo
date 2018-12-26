@@ -30,7 +30,8 @@ describe('Registry test', () => {
 
     before(function (done) {
         configureEnvironment(async() => {
-            ganacheServer = await Utils.startGanacheServer();
+            await Utils.clearBuild(false,buildDir)
+            // ganacheServer = await Utils.startGanacheServer();
             web3 = new Web3(Utils.Constants.ganacheProvider);
             accounts = await web3.eth.getAccounts();
             //delete require.cache[require.resolve('/contracts')];
@@ -41,11 +42,11 @@ describe('Registry test', () => {
         });
     });
 
-    after(function(){
-        console.log("Done running Registry tests");
-        ganacheServer.close();
-        process.exit();
-    });
+    // after(function(){
+    //     console.log("Done running Registry tests");
+    //     ganacheServer.close();
+    //     process.exit();
+    // });
 
     it("should be able to create registryWrapper", async ()=>{
         registryWrapper = new ZapRegistry(options)
@@ -98,7 +99,9 @@ describe('Registry test', () => {
         expect(returnValues.provider).to.equal(accounts[0]);
         expect(testZapProvider.endpoint).to.equal(hexToUtf8(returnValues.endpoint));
         const a:string = JSON.stringify(returnValues.curve);
+        console.log("return value curve:",a)
         const b:string = JSON.stringify(testZapProvider.curve.values.map((i:number)=>{return ''+i}));
+        console.log("test curve",b)
         expect(a).to.be.equal(b);
     });
     it("Should get all provider params", async()=>{
@@ -162,10 +165,5 @@ describe('Registry test', () => {
 
 
 
-    after(function () {
-        ganacheServer.close();
-            // clearBuild(false);
-            console.log('Server stopped!');
-        })
+  
 });
-

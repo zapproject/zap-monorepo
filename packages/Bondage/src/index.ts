@@ -36,7 +36,6 @@ export class ZapBondage extends BaseContract {
      */
     public async bond({provider, endpoint, dots, from, gas= DEFAULT_GAS}: BondArgs): Promise<txid> {
         assert(dots && dots > 0, "Dots to bond must be greater than 0.");
-        dots = toHex(dots)
         const broker = await this.contract.methods.getEndpointBroker(provider,utf8ToHex(endpoint)).call()
         if(broker != NULL_ADDRESS){
             if(from!==broker){
@@ -46,7 +45,7 @@ export class ZapBondage extends BaseContract {
         return await this.contract.methods.bond(
             provider,
             utf8ToHex(endpoint),
-            dots)
+            toHex(dots))
             .send({from, gas});
 
     }
@@ -134,11 +133,11 @@ export class ZapBondage extends BaseContract {
      * @returns {Promise<string|BigNumber>} Price (in Zap) for the given number of dots
      */
     public async calcZapForDots({provider, endpoint, dots}: BondageArgs): Promise<string|BNType> {
-        dots = toHex(dots)
+      console.log("to hex dots",dots,toHex(dots))
         return await this.contract.methods.calcZapForDots(
             provider,
             utf8ToHex(endpoint),
-            dots).call();
+            toHex(dots)).call();
     }
 
     /**
