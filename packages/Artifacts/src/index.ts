@@ -4,7 +4,6 @@ export const Artifacts :{[index:string]:any} =  {
     "DISPATCH" : require("../contracts/Dispatch.json"),
     "REGISTRY" : require("../contracts/Registry.json"),
     "CurrentCost" : require("../contracts/CurrentCost.json"),
-    "PiecewiseLogic" : require("../contracts/PiecewiseLogic.json"),
     "ZAP_TOKEN" : require("../contracts/ZapToken.json"),
     "Client1" : require("../contracts/Client1.json"),
     "Client2" : require("../contracts/Client2.json"),

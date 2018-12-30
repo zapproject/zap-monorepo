@@ -138,7 +138,7 @@
         },
         {
           "name": "",
-          "type": "bytes32"
+          "type": "bytes"
         }
       ],
       "name": "setProviderParameter",
@@ -163,7 +163,7 @@
       "outputs": [
         {
           "name": "",
-          "type": "bytes32"
+          "type": "bytes"
         }
       ],
       "payable": false,
