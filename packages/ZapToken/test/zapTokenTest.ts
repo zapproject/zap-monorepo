@@ -27,7 +27,7 @@ describe('ZapToken, path to "/src/api/contracts/ZapToken"', () => {
 
     before(function (done) {
         configureEnvironment(async() => {
-            ganacheServer = await Utils.startGanacheServer();
+            // ganacheServer = await Utils.startGanacheServer();
             web3 = new Web3(Utils.Constants.ganacheProvider);
             accounts = await web3.eth.getAccounts();
             //delete require.cache[require.resolve('/contracts')];
@@ -36,12 +36,12 @@ describe('ZapToken, path to "/src/api/contracts/ZapToken"', () => {
             done();
         });
     });
-
-    after(function(){
-        console.log("Done running Token tests");
-        ganacheServer.close();
-        process.exit();
-    });
+    //
+    // after(function(){
+    //     console.log("Done running Token tests");
+    //     ganacheServer.close();
+    //     process.exit();
+    // });
 
     it('Should initiate wrapper', async () => {
         zapTokenWrapper = new ZapToken({

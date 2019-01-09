@@ -30,3 +30,12 @@ export interface SetProviderParams extends defaultTx {
   key: string,
   value: string
 };
+
+export interface SetProviderTitle extends defaultTx{
+    from:address,
+    title:string
+}
+
+export interface Endpoint extends defaultTx{
+    endpoint:string
+}
