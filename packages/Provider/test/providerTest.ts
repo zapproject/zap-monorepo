@@ -34,7 +34,9 @@ describe('Zap Provider Test', () => {
     buildDir = join(__dirname,"contracts"),
     providerAddress:string,subscriberAddress:string,
     testZapProvider = Utils.Constants.testZapProvider,
-    DOTS = 10;
+    DOTS = 10,
+    newTitle="NEWTITLE";
+
 
     const options:any = {
         artifactsDir: buildDir,
@@ -63,12 +65,12 @@ describe('Zap Provider Test', () => {
 
 
     it("1. Should initiate all the required contracts",async ()=>{
-     zapToken = new ZapToken(options);
-     zapRegistry = new ZapRegistry(options);
-     zapBondage = new ZapBondage(options);
-     zapDispatch = new ZapDispatch(options);
-     zapArbiter = new ZapArbiter(options);
- });
+         zapToken = new ZapToken(options);
+         zapRegistry = new ZapRegistry(options);
+         zapBondage = new ZapBondage(options);
+         zapDispatch = new ZapDispatch(options);
+         zapArbiter = new ZapArbiter(options);
+     });
     it("2. Should allocate ZapToken to accounts",async ()=>{
         let zapTokenOwner = await zapToken.getContractOwner()
         for(let account of accounts){
@@ -81,22 +83,29 @@ describe('Zap Provider Test', () => {
     })
 
     it('4. Should initiate provider', async()=> {
-     let tx = await zapProvider.initiateProvider({
-        public_key:testZapProvider.pubkey,
-        title: testZapProvider.title
-    })
-     expect(tx).to.include.keys("events")
-     expect(tx.events).to.include.keys("NewProvider")
-     expect(tx.events.NewProvider).to.include.keys("returnValues");
-     let returnValues = tx.events.NewProvider.returnValues;
-     expect(returnValues).to.include.keys("provider","title");
-     expect(testZapProvider.title).to.equal(hexToUtf8(returnValues.title))
-     expect(returnValues.provider).to.equal(providerAddress);
- });
+         let tx = await zapProvider.initiateProvider({
+            public_key:testZapProvider.pubkey,
+            title: testZapProvider.title
+        })
+         expect(tx).to.include.keys("events")
+         expect(tx.events).to.include.keys("NewProvider")
+         expect(tx.events.NewProvider).to.include.keys("returnValues");
+         let returnValues = tx.events.NewProvider.returnValues;
+         expect(returnValues).to.include.keys("provider","title");
+         expect(testZapProvider.title).to.equal(hexToUtf8(returnValues.title))
+         expect(returnValues.provider).to.equal(providerAddress);
+    });
     it("5. Should get provider title", async () => {
         let returnedTitle = await zapProvider.getTitle();
         expect(returnedTitle).to.equal(testZapProvider.title)
     });
+    it("5.a Should set new provider title",async()=>{
+        let txid = await zapProvider.setTitle({title:newTitle})
+    });
+    it("5.b should have new title",async ()=>{
+        const t = await zapProvider.getTitle()
+        expect(t).to.equal(newTitle)
+    })
     it("6. Should get provider pubkey", async () => {
         let returnedPubkey = await zapProvider.getPubkey()
         expect(Number(returnedPubkey)).to.equal(testZapProvider.pubkey)
@@ -315,5 +324,28 @@ describe('Zap Provider Test', () => {
             dynamic: true
         });
     });
+    it("22. Should not clear endpoint with bonds",async()=>{
+        try{
+            await zapProvider.clearEndpoint({
+                endpoint:testZapProvider.endpoint
+            })
+
+        }catch(e){
+            await expect(e.toString()).to.include('revert');
+        }
+    })
+    it("22. Should clear endpoint", async()=>{
+        const newEndpoint = "newEndpoint"
+        await zapProvider.initiateProviderCurve({
+            endpoint:newEndpoint,
+            term: testZapProvider.curve.values
+        })
+        await zapProvider.clearEndpoint({
+            endpoint:newEndpoint
+        })
+        const endpoints = await zapProvider.getEndpoints()
+        console.log("endpoints : ", endpoints)
+        expect(!endpoints.includes(newEndpoint))
+    })
 
 });

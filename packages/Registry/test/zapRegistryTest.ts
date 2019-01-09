@@ -108,6 +108,13 @@ describe('Registry test', () => {
         let params = await registryWrapper.getAllProviderParams(accounts[0])
     })
 
+    it("Should set new title",async()=>{
+        const title = "NEWTITLE"
+        await registryWrapper.setProviderTitle({from:accounts[0],title:title})
+        let newTitle = await registryWrapper.getProviderTitle(accounts[0])
+        expect(newTitle).to.equal(title)
+    })
+
     it('Should initiate Provider curve  with valid broker address in zap registry contract', async () => {
         const providerAddress = accounts[3]
         const brokerAddress = accounts[4]
@@ -162,8 +169,16 @@ describe('Registry test', () => {
         expect(result.length).to.be.equal(1)
         expect(result[0]).to.equal("http://test_url_that_is_longer_than_32_bytes_oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo.com")
     });
+    it("Should clear endpoint",async()=>{
+        await registryWrapper.clearEndpoint({
+            from:accounts[0],
+            endpoint:testZapProvider.endpoint
+        })
+        const eps = await registryWrapper.getProviderEndpoints(accounts[0])
+        console.log("endpoints in test : ", eps)
+        expect(eps.length).to.equal(0)
+    });
 
 
 
-  
 });

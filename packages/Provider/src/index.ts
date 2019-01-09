@@ -1,5 +1,5 @@
 const assert = require("assert");
-import {InitProvider, InitCurve, Respond, SetProviderParams} from "./types";
+import {InitProvider, InitCurve, Respond, SetProviderParams, SetProviderTitle, ClearEndpoint} from "./types";
 import {txid,Filter,NetworkProviderOptions,DEFAULT_GAS,BNType,
     DataPurchaseEvent,
     SubscriptionEndEvent,
@@ -22,7 +22,6 @@ import {ZapArbiter} from "@zapjs/arbiter";
     zapArbiter : ZapArbiter;
     zapRegistry:  ZapRegistry;
     curves:{[key:string]:Curve};
-    title:string;
     pubkey:number|string;
 
     /**
@@ -40,7 +39,6 @@ import {ZapArbiter} from "@zapjs/arbiter";
         this.zapArbiter = new ZapArbiter(options);
         this.zapRegistry = new ZapRegistry(options);
         this.curves = {};
-        this.title = "";
         this.pubkey = '';
     }
 
@@ -89,6 +87,10 @@ import {ZapArbiter} from "@zapjs/arbiter";
         });
     }
 
+    async setTitle({title,gas=DEFAULT_GAS}:SetProviderTitle):Promise<txid>{
+        return await this.zapRegistry.setProviderTitle({from:this.providerOwner,title,gas});
+    }
+
     /**
      * Set params for an endpoint
      * @param endpoint
@@ -105,6 +107,14 @@ import {ZapArbiter} from "@zapjs/arbiter";
         })
     }
 
+    async clearEndpoint({endpoint,gas=DEFAULT_GAS}:ClearEndpoint):Promise<txid>{
+        const endpoints = await this.zapRegistry.getProviderEndpoints(this.providerOwner);
+        if(!endpoints.includes(endpoint)){
+            throw "Endpoint is not valid"
+        }
+        return await this.zapRegistry.clearEndpoint({endpoint,from:this.providerOwner,gas})
+    }
+
     /******************GETTERS**************************/
 
     /**
@@ -113,9 +123,7 @@ import {ZapArbiter} from "@zapjs/arbiter";
      */
      async getTitle():Promise<string> {
         let title:string;
-        if (this.title) return this.title;
         title = await this.zapRegistry.getProviderTitle(this.providerOwner);
-        this.title = title;
         return title;
     }
 
@@ -227,7 +235,7 @@ import {ZapArbiter} from "@zapjs/arbiter";
     	assert(endpoint, 'endpoint required');
     	assert(subscriber, 'subscriber required');
     	return await this.zapBondage.getBoundDots({ endpoint, subscriber, provider: this.providerOwner });
-    } 
+    }
 
     /**
      * Gets the total amount of DOTs issued

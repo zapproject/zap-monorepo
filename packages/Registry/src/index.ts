@@ -1,7 +1,7 @@
 const {utf8ToHex, toBN, hexToUtf8, bytesToHex, hexToBytes,toHex} = require("web3-utils");
 import {BaseContract} from "@zapjs/basecontract";
 import {Curve,CurveType} from "@zapjs/curve";
-import {InitProvider, InitCurve, NextEndpoint, EndpointParams, SetProviderParams} from "./types"
+import {InitProvider, InitCurve, NextEndpoint, EndpointParams, SetProviderParams, SetProviderTitle,Endpoint} from "./types"
 import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS,NULL_ADDRESS} from "@zapjs/types";
 
 /**
@@ -78,6 +78,16 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS,NULL_ADDRESS} fr
     }
 
     /**
+    * Set new provider's title.
+    * @param {address} provider The address of this provider
+    * @param {string} title The new title of this provider
+    * @returns {Promise<string>} Transaction hash
+    */
+    async setProviderTitle({from,title,gas=DEFAULT_GAS}:SetProviderTitle):Promise<txid>{
+        return  await this.contract.methods.setProviderTitle(utf8ToHex(title)).send({from:from,gas});
+    }
+
+    /**
      * Gets whether this provider has already been created
      * @param {address} provider The address of this provider
      * @returns {Promise<boolean>} Returns a Promise that will eventually resolve a true/false value.
@@ -94,7 +104,7 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS,NULL_ADDRESS} fr
      * @param {string} s.value - The value to set the key to
      * @param {address} s.from - The address of the provider
      * @param {BN} s.gas - The amount of gas to use.
-     * @returns {Promise<txid>} Returns a Promise that will be eventually resolve into a transaction hash
+     * @returns {Promise<txid>} Transaction hash
      */
     async setProviderParameter({ key, value, from, gas=DEFAULT_GAS }: SetProviderParams): Promise<txid> {
         return await this.contract.methods.setProviderParameter(
@@ -132,8 +142,15 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS,NULL_ADDRESS} fr
      * @returns {Promise<string[]>} Returns a Promise that will be eventually resolved with the endpoints of the provider.
      */
     async getProviderEndpoints(provider: address): Promise<string[]> {
-        const endpoints = await this.contract.methods.getProviderEndpoints(provider).call();
-        return endpoints.map(hexToUtf8);
+        let endpoints = await this.contract.methods.getProviderEndpoints(provider).call();
+        let validEndpoints = []
+        endpoints = endpoints.map(hexToUtf8)
+        for(let e of endpoints){
+            if(e!=''){
+                validEndpoints.push(e)
+            }
+        }
+        return validEndpoints
     }
 
 
@@ -158,6 +175,16 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS,NULL_ADDRESS} fr
         console.log("term;",term)
         return await this.contract.methods.initiateProviderCurve(utf8ToHex(endpoint), hex_term, broker)
             .send({from, gas});
+    }
+
+    /**
+     * Clear endpoint
+     * @param {string} from The address of this provider
+     * @param {string} endpoint Data endpoint of the provider
+     * @returns {Promise<txid>} Transaction Hash
+     */
+    async clearEndpoint({endpoint,from,gas=DEFAULT_GAS}:Endpoint):Promise<txid>{
+        return await this.contract.methods.clearEndpoint(utf8ToHex(endpoint)).send({from,gas})
     }
 
     /**

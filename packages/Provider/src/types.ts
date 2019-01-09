@@ -46,3 +46,11 @@ export interface SetProviderParams extends defaultTx{
     key: string,
     value: string
 }
+
+export interface SetProviderTitle extends defaultTx{
+    title:string
+}
+
+export interface ClearEndpoint extends defaultTx{
+    endpoint:string
+}
