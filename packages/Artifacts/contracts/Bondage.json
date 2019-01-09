@@ -724,6 +724,12 @@
     }
   ],
   "networks": {
+    "1": {
+      "events": {},
+      "links": {},
+      "address": "0x188f79b0a8edc10ad53285c47c3feaa0d2716e83",
+      "transactionHash": "0x90ecc5e98202cfd1e20f824f7de9d3780ae665ee59527db2f199996a0ac6a523"
+    },
     "42": {
       "events": {},
       "links": {},
@@ -741,13 +747,6 @@
       "links": {},
       "address": "0x1e918abeb37d45aed177e1821dd6a3ab14415ce3",
       "transactionHash": "0xbf5c11d55267fc39e8d3c7cb1b8aac179c2141ec7dd26a98d03017cd4676b79e"
-    },
-    "1": {
-      "events": {},
-      "links": {},
-      "address": "0x188f79b0a8edc10ad53285c47c3feaa0d2716e83",
-      "transactionHash": "0x90ecc5e98202cfd1e20f824f7de9d3780ae665ee59527db2f199996a0ac6a523"
     }
-
   }
 }

@@ -157,6 +157,12 @@
     }
   ],
   "networks": {
+    "1": {
+      "events": {},
+      "links": {},
+      "address": "0xde775430f4e9f0df7887d6c7c3ce63b257300fca",
+      "transactionHash": "0x194246e0852f5bc02ec8d7659330ad7b6350ebef2876538e64769d8f2df7b8cb"
+    },
     "42": {
       "events": {},
       "links": {},
@@ -174,12 +180,6 @@
       "links": {},
       "address": "0xbad74deb746089130473f26a38d4b09a4dbc506d",
       "transactionHash": "0xc98b931b61a9770a49f1c71594c9b7a40421cb600b1378f14ce81957aa561041"
-    },
-    "1": {
-      "events": {},
-      "links": {},
-      "address": "0xde775430f4e9f0df7887d6c7c3ce63b257300fca",
-      "transactionHash": "0x194246e0852f5bc02ec8d7659330ad7b6350ebef2876538e64769d8f2df7b8cb"
     }
   }
 }

@@ -400,6 +400,11 @@
     }
   ],
   "networks": {
+    "1": {
+      "events": {},
+      "links": {},
+      "address": "0x6781a0f84c7e9e846dcb84a9a5bd49333067b104"
+    },
     "42": {
       "events": {},
       "links": {},
@@ -417,12 +422,6 @@
       "links": {},
       "address": "0x11616e60d1b62633e02f044f155c9e03ff843974",
       "transactionHash": "0x995123b07bdd859f0edfef77c6f2842b8b32f57c586d591a6f1fff258b2c11f8"
-    },
-    "1": {
-      "events": {},
-      "links": {},
-      "address": "0x6781a0f84c7e9e846dcb84a9a5bd49333067b104"
     }
-
   }
 }

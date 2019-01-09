@@ -207,12 +207,12 @@
     }
   ],
   "networks": {
+    "1": {
+      "address": "0xb007eca49763f31edff95623ed6c23c8c1924a16",
+      "transactionHash": "0xd303e8554e45b1cd598779ee6e72ea9c509dc6ed0830a2a32f772154a03571c1"
+    },
     "42": {
       "address": "0x0014f9acd4f4ad4ac65fec3dcee75736fd0a0230"
-    },
-        "1":{
-          "address": "0xb007eca49763f31edff95623ed6c23c8c1924a16",
-          "transactionHash": "0xd303e8554e45b1cd598779ee6e72ea9c509dc6ed0830a2a32f772154a03571c1"
-        }
+    }
   }
 }
