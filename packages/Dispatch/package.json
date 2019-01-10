@@ -10,6 +10,11 @@
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
+	"scripts": {
+   		"build": "./node_modules/.bin/tsc",
+   		"test": "./node_modules/.bin/mocha  -r ts-node/register test/*.ts --serial --bail",
+   		"run_test": "run-s build test"
+ 	},
 	"dependencies": {
 	  "@zapjs/basecontract": "^2.0.17",
 	  "@zapjs/types": "^2.0.10",

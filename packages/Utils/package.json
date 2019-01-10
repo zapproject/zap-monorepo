@@ -10,6 +10,11 @@
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
+	"scripts": {
+   		"build": "tsc",
+   		"test": "mocha  -r ts-node/register test/*.ts --serial --bail --exit",
+   		"run_test": "run-s build test"
+ 	},
 	"dependencies": {
 	   "@zapjs/artifacts": "^2.1.5",
 	   "@zapjs/curve": "^2.0.12",
