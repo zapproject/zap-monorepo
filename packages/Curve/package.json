@@ -10,6 +10,12 @@
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
+	"scripts": {
+   		"build": "tsc",
+   		"test": "mocha  -r ts-node/register test/*.ts --serial --bail --exit",
+   		"run_test": "run-s build test",
+   		"webpack": "./node_modules/.bin/webpack"
+ 	},
 	"dependencies": {
 	  "@zapjs/types": "^2.0.10",
 	  "web3": "1.0.0-beta.36"
