@@ -23,6 +23,7 @@ import {ZapArbiter} from "@zapjs/arbiter";
     zapRegistry:  ZapRegistry;
     curves:{[key:string]:Curve};
     pubkey:number|string;
+    title:string;
 
     /**
      * @constructor
@@ -40,6 +41,7 @@ import {ZapArbiter} from "@zapjs/arbiter";
         this.zapRegistry = new ZapRegistry(options);
         this.curves = {};
         this.pubkey = '';
+        this.title = '';
     }
 
     /**
@@ -122,9 +124,9 @@ import {ZapArbiter} from "@zapjs/arbiter";
      * @returns {Promise<string>} Title of this provider.
      */
      async getTitle():Promise<string> {
-        let title:string;
-        title = await this.zapRegistry.getProviderTitle(this.providerOwner);
-        return title;
+        this.title = await this.zapRegistry.getProviderTitle(this.providerOwner);
+
+        return this.title;
     }
 
     /**
