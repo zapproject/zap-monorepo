@@ -552,6 +552,12 @@
     }
   ],
   "networks": {
+    "42": {
+      "events": {},
+      "links": {},
+      "address": "0x321C850Bf38B96a942bED941A3E95E0b8DdC1F8E",
+      "transactionHash": "0x9e913c416007746fb8967fb52558117ec97fd174b9f5368af08c7b951ccbb54e"
+    },
     "1": {
       "events": {},
       "links": {},
