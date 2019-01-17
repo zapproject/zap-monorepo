@@ -112,6 +112,14 @@ import {ZapArbiter} from "@zapjs/arbiter";
         if(!endpoints.includes(endpoint)){
             throw "Endpoint is not valid"
         }
+        const zapBound = await this.zapBondage.getZapBound({
+            provider:this.providerOwner,
+            endpoint
+        })
+        console.log("zap bound : ", zapBound, typeof zapBound)
+        if(parseInt(zapBound.toString())>0){
+            throw "There are zap bound from subscribers, cant clear endpoint"
+        }
         return await this.zapRegistry.clearEndpoint({endpoint,from:this.providerOwner,gas})
     }
 

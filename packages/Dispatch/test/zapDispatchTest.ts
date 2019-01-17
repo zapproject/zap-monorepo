@@ -40,7 +40,7 @@ describe('Zap Dispatch Test', () => {
 
     before(function (done) {
         configureEnvironment(async() => {
-            ganacheServer = await Utils.startGanacheServer();
+            // ganacheServer = await Utils.startGanacheServer();
             web3 = new Web3(Utils.Constants.ganacheProvider);
             accounts = await web3.eth.getAccounts();
             await Utils.migrateContracts(buildDir);

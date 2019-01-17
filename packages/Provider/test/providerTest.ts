@@ -46,7 +46,7 @@ describe('Zap Provider Test', () => {
 
     before(function(done) {
         configureEnvironment(async () => {
-            ganacheServer = await Utils.startGanacheServer();
+            // ganacheServer = await Utils.startGanacheServer();
             web3 = new Web3(Utils.Constants.ganacheProvider);
             accounts = await web3.eth.getAccounts();
             providerAddress = accounts[0];
@@ -80,7 +80,7 @@ describe('Zap Provider Test', () => {
     it("3. Should init zapProvider class",async ()=>{
         zapProvider = new ZapProvider(accounts[0],options)
         expect(zapProvider.providerOwner).to.equal(accounts[0])
-    })
+    });
 
     it('4. Should initiate provider', async()=> {
          let tx = await zapProvider.initiateProvider({
@@ -331,7 +331,7 @@ describe('Zap Provider Test', () => {
             })
 
         }catch(e){
-            await expect(e.toString()).to.include('revert');
+            await expect(e.toString()).to.equal('There are zap bound from subscribers, cant clear endpoint');
         }
     })
     it("22. Should clear endpoint", async()=>{
