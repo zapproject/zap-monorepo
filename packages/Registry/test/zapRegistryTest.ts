@@ -31,7 +31,7 @@ describe('Registry test', () => {
     before(function (done) {
         configureEnvironment(async() => {
             await Utils.clearBuild(false,buildDir)
-            // ganacheServer = await Utils.startGanacheServer();
+            ganacheServer = await Utils.startGanacheServer();
             web3 = new Web3(Utils.Constants.ganacheProvider);
             accounts = await web3.eth.getAccounts();
             //delete require.cache[require.resolve('/contracts')];

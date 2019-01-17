@@ -59,7 +59,7 @@ describe('TokenDotFactory test', () => {
     before(function (done) {
         configureEnvironment(async() => {
             try {
-                // ganacheServer = await Utils.startGanacheServer();
+                ganacheServer = await Utils.startGanacheServer();
                 console.log("started");
                 web3 = new Web3(Utils.Constants.ganacheProvider);
                 accounts = await web3.eth.getAccounts();
@@ -151,5 +151,5 @@ describe('TokenDotFactory test', () => {
 
     });
 
-    
+
 });

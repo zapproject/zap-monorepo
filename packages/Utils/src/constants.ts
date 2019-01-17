@@ -25,7 +25,8 @@ export const ganacheServerOptions={
      ws: true,
     gas: 6700000 ,
     gasPrice: 20000000,
-    network: "ganache-gui"
+    network: "ganache-gui",
+    "solc":"0.4.25"
 };
 /**
  *@ignore

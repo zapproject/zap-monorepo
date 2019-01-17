@@ -46,7 +46,7 @@ describe('Zap Provider Test', () => {
 
     before(function(done) {
         configureEnvironment(async () => {
-            // ganacheServer = await Utils.startGanacheServer();
+            ganacheServer = await Utils.startGanacheServer();
             web3 = new Web3(Utils.Constants.ganacheProvider);
             accounts = await web3.eth.getAccounts();
             providerAddress = accounts[0];
