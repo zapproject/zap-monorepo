@@ -81,7 +81,7 @@ describe('Zap Subscriber Test', () => {
                 endpoint: testZapProvider.endpoint,
                 dots: 1
             });
-            const approve = await subscriber.approveToBond(accounts[0],zapRequired)
+            const approve = await subscriber.approveToBond({provider:accounts[0],zapNum:zapRequired})
             const res = await subscriber.bond({
                 provider: accounts[0],
                 endpoint: testZapProvider.endpoint,
@@ -100,6 +100,10 @@ describe('Zap Subscriber Test', () => {
         })
 
         it("4. Should subscribe to specified provider", async () => {
+            const approve = await subscriber.approveToBond({
+                provider:accounts[0],
+                zapNum: 1000000000
+            })
             const bound = await subscriber.bond({
                 provider:accounts[0],
                 endpoint:testZapProvider.endpoint,

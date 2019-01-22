@@ -64,7 +64,7 @@ export const ganacheProvider = new Web3.providers.HttpProvider('http://127.0.0.1
  *
  * @type {number}
  */
-export const DEFAULT_GAS = 6000000
+export const DEFAULT_GAS = 400000
 /**
  *
  * @type {number}

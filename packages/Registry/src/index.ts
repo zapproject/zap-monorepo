@@ -1,8 +1,8 @@
 const {utf8ToHex, toBN, hexToUtf8, bytesToHex, hexToBytes,toHex} = require("web3-utils");
 import {BaseContract} from "@zapjs/basecontract";
 import {Curve,CurveType} from "@zapjs/curve";
-import {InitProvider, InitCurve, NextEndpoint, EndpointParams, SetProviderParams, SetProviderTitle,Endpoint} from "./types"
-import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS,NULL_ADDRESS} from "@zapjs/types";
+import {InitProvider, InitCurve, NextEndpoint, EndpointParams, SetProviderParams, SetProviderTitle,Endpoint,
+    Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS,NULL_ADDRESS} from "@zapjs/types";
 
 /**
  * Manage Providers and Curves registration
@@ -352,5 +352,3 @@ import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS,NULL_ADDRESS} fr
 
 
 }
-
-export * from "./types" ;

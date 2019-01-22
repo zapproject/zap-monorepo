@@ -1,14 +1,12 @@
 import  {BaseContract} from '@zapjs/basecontract';
-import {
-    SubscriptionInit,
-    SubscriptionEnd,
-    SubscriptionType,
-    SubscriptionParams
-} from "./types"
 import {Filter,txid,DEFAULT_GAS,NetworkProviderOptions,BNType,
     DataPurchaseEvent,
     SubscriptionEndEvent,
-    ParamsPassedEvent} from "@zapjs/types"
+    ParamsPassedEvent,
+    SubscriptionInit,
+    SubscriptionEnd,
+    SubscriptionType,
+    SubscriptionParams} from "@zapjs/types"
 const {utf8ToHex,isHex} = require ('web3-utils');
 /**
  * @class
@@ -42,7 +40,7 @@ export class ZapArbiter extends BaseContract {
      * @returns {Promise<txid>} Transaction hash
      */
     async initiateSubscription(
-        {provider, endpoint, endpoint_params, blocks, pubkey, from, gas=DEFAULT_GAS} : SubscriptionInit):Promise<txid> {
+        {provider, endpoint, endpoint_params, blocks, pubkey, from, gasPrice, gas=DEFAULT_GAS} : SubscriptionInit):Promise<txid> {
         endpoint_params = endpoint_params.map((i:string)=>{
             if(!isHex(i)) {
                 return utf8ToHex(i)
@@ -54,7 +52,7 @@ export class ZapArbiter extends BaseContract {
             utf8ToHex(endpoint),
             endpoint_params,
             pubkey,
-            blocks).send({from, gas});
+            blocks).send({from, gas,gasPrice});
     }
 
     /**
@@ -66,12 +64,12 @@ export class ZapArbiter extends BaseContract {
      * @param {number} s.gas - Gas limit of this transaction
      * @returns {Promise<txid>} Transaction hash
      */
-    async endSubscriptionSubscriber({provider, endpoint, from, gas=DEFAULT_GAS}:SubscriptionEnd) :Promise<txid>{
+    async endSubscriptionSubscriber({provider, endpoint, from, gasPrice, gas=DEFAULT_GAS}:SubscriptionEnd) :Promise<txid>{
         let unSubscription:any
         unSubscription =  await this.contract.methods.endSubscriptionSubscriber(
             provider,
             utf8ToHex(endpoint))
-            .send({from, gas});
+            .send({from, gas,gasPrice});
         return unSubscription
     }
 
@@ -84,12 +82,12 @@ export class ZapArbiter extends BaseContract {
      * @param {number} s.gas - Gas limit of this transaction
      * @returns {Promise<txid>} Transaction hash
      */
-    async endSubscriptionProvider({subscriber, endpoint, from, gas=DEFAULT_GAS}:SubscriptionEnd) :Promise<txid>{
+    async endSubscriptionProvider({subscriber, endpoint, from, gasPrice, gas=DEFAULT_GAS}:SubscriptionEnd) :Promise<txid>{
         let unSubscription:any;
         unSubscription= await this.contract.methods.endSubscriptionProvider(
             subscriber,
             utf8ToHex(endpoint))
-            .send({from, gas});
+            .send({from, gas, gasPrice});
         return unSubscription;
     }
 
@@ -102,14 +100,14 @@ export class ZapArbiter extends BaseContract {
      * @param {number} s.gas - Gas limit of this transaction
      * @returns {Promise<txid>} Transaction hash
      */
-    async passParams({receiver, endpoint, params, from, gas=DEFAULT_GAS} : SubscriptionParams) :Promise<txid>{
+    async passParams({receiver, endpoint, params, from, gasPrice, gas=DEFAULT_GAS} : SubscriptionParams) :Promise<txid>{
         params = params.map((i:string)=>{
             if(!isHex(i)) {
                 return utf8ToHex(i)
             }
             else return i;
         })
-        return await this.contract.methods.passParams(receiver,utf8ToHex(endpoint),params).send({from, gas});
+        return await this.contract.methods.passParams(receiver,utf8ToHex(endpoint),params).send({from, gas, gasPrice});
     }
 
     /************************* GETTERS *****************************/
