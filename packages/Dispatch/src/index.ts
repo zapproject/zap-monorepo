@@ -1,6 +1,6 @@
 import {BaseContract} from '@zapjs/basecontract';
-import {cancelQuery, QueryArgs, ResponseArgs} from './types'
-import {NetworkProviderOptions, txid,Filter,DEFAULT_GAS,address,BNType,OffchainResponse,NumType} from "@zapjs/types"
+import {cancelQuery, QueryArgs, ResponseArgs,
+    NetworkProviderOptions, txid,Filter,DEFAULT_GAS,address,BNType,OffchainResponse,NumType} from "@zapjs/types"
 const {utf8ToHex,hexToUtf8} = require ("web3-utils");
 /**
  * Provides an interface to the Dispatch contract for enabling data queries and responses.
@@ -31,7 +31,7 @@ export class ZapDispatch extends BaseContract {
      * @param {BigNumber} q.gas - Set the gas limit for this transaction (optional)
      * @returns {Promise<txid>} Transaction hash
      */
-    async queryData({provider, query, endpoint, endpointParams,from,gas=DEFAULT_GAS}:QueryArgs):Promise<txid>{
+    async queryData({provider, query, endpoint, endpointParams,from,gasPrice, gas=DEFAULT_GAS}:QueryArgs):Promise<txid>{
         if(endpointParams.length > 0) {
             for (let i in endpointParams) {
                 if (!endpointParams[i].startsWith('0x')) {
@@ -44,7 +44,7 @@ export class ZapDispatch extends BaseContract {
             query,
             utf8ToHex(endpoint),
             endpointParams
-        ).send({from, gas});
+        ).send({from, gas,gasPrice});
     }
 
     /**
@@ -54,9 +54,9 @@ export class ZapDispatch extends BaseContract {
      * @param gas (optional)
      * @returns {Promise<number|string>} block number that query was successfully canceled. or 0 if failed
      */
-    async cancelQuery({queryId,from, gas=DEFAULT_GAS}:cancelQuery): Promise<number|string>{
+    async cancelQuery({queryId,from, gasPrice, gas=DEFAULT_GAS}:cancelQuery): Promise<number|string>{
         try {
-            await this.contract.methods.cancelQuery(queryId).send({from: from, gas});
+            await this.contract.methods.cancelQuery(queryId).send({from: from, gas, gasPrice});
         }catch(e){
             return 0;
         }
@@ -73,11 +73,11 @@ export class ZapDispatch extends BaseContract {
      * @param {BigNumber} r.gas - Set the gas limit for this transaction (optional)
      * @returns {Promise<txid>} Transaction hash
      */
-    async respond({queryId, responseParams, dynamic, from,gas=DEFAULT_GAS}:ResponseArgs) :Promise<txid>{
+    async respond({queryId, responseParams, dynamic, from,gasPrice, gas=DEFAULT_GAS}:ResponseArgs) :Promise<txid>{
         if (dynamic){
             if(typeof responseParams[0] === "number"){
                 const bignums = responseParams.map(x => Number(x).toLocaleString('fullwide', { useGrouping: false }));
-                return this.contract.methods.respondIntArray(queryId, bignums).send({from,gas});
+                return this.contract.methods.respondIntArray(queryId, bignums).send({from,gas,gasPrice});
             }
             return this.contract.methods.respondBytes32Array(
                 queryId,
@@ -244,5 +244,3 @@ export class ZapDispatch extends BaseContract {
     }
 
 }
-
-export * from "./types"

@@ -5,8 +5,8 @@ import {ZapBondage} from "@zapjs/bondage";
 import {ZapToken} from "@zapjs/zaptoken";
 import {ZapRegistry} from "@zapjs/registry";
 import  {Artifacts} from "@zapjs/artifacts";
-import {InitProvider, InitCurve, NextEndpoint, EndpointParams, SetProviderParams, InitTokenCurve} from "./types"
-import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS,NULL_ADDRESS} from "@zapjs/types";
+import {InitProvider, InitCurve, NextEndpoint, EndpointParams, SetProviderParams, InitTokenCurve,
+    Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS,NULL_ADDRESS} from "@zapjs/types";
 const Web3 = require("web3")
 
 export class TokenDotFactory extends BaseContract {
@@ -24,7 +24,7 @@ export class TokenDotFactory extends BaseContract {
 
     }
 
-    async initializeCurve({ specifier, ticker, term, from, gas=DEFAULT_GAS}:any): Promise<txid> {
+    async initializeCurve({ specifier, ticker, term, from, gasPrice, gas=DEFAULT_GAS}:any): Promise<txid> {
 
         let tx = await this.contract.methods.initializeCurve(
            utf8ToHex(specifier),
@@ -33,38 +33,40 @@ export class TokenDotFactory extends BaseContract {
         ).send({from:from, gas:gas});
 
         let curve = await this.zapRegistry.getProviderCurve(this.contract._address,specifier);
-        return tx; 
+        return tx;
     }
 
-    async bond({ specifier, dots, from, gas = DEFAULT_GAS }:any):  Promise<txid>  {
+    async bond({ specifier, dots, from, gasPrice, gas = DEFAULT_GAS }:any):  Promise<txid>  {
 
         let zapRequired = await this.zapBondage.calcZapForDots({ provider: this.contract._address, endpoint: specifier, dots: dots });
         let approve = await this.zapToken.approve({
             to: this.contract._address,
             amount: zapRequired,
-            from: from
+            from: from,
+            gas,
+            gasPrice
         });
-        return await this.contract.methods.bond( utf8ToHex(specifier), dots).send({from, gas});
+        return await this.contract.methods.bond( utf8ToHex(specifier), dots).send({from, gas,gasPrice});
     }
 
-    async approveBurn({ specifier, dots, from, gas = DEFAULT_GAS }:any): Promise<txid> {
+    async approveBurn({ specifier, dots, from, gasPrice, gas = DEFAULT_GAS }:any): Promise<txid> {
         let dotAddress = await this.contract.methods.getTokenAddress(utf8ToHex(specifier)).call();
         console.log('dot address ', dotAddress);
         let dotToken = new this.provider.eth.Contract(Artifacts['ZAP_TOKEN'].abi, dotAddress);
         let dotBalance = await dotToken.methods.balanceOf(from).call();
         console.log('dot balance ', dotBalance);
         //Approval hangs. Should be approving token.approve for dot-token which has just been created by initializeCurve. Currently hangs
-        return await dotToken.methods.approve(this.contract._address, 9999999999999).send({ from: from, gas: gas });
-    } 
+        return await dotToken.methods.approve(this.contract._address, 9999999999999).send({ from, gas,gasPrice });
+    }
 
-    async unbond({ specifier, dots, from, gas = DEFAULT_GAS }:any): Promise<txid> {
+    async unbond({ specifier, dots, from, gasPrice, gas = DEFAULT_GAS }:any): Promise<txid> {
         let dotAddress = await this.contract.methods.getTokenAddress(utf8ToHex(specifier)).call();
         console.log('dot address ', dotAddress);
 
         let dotToken = new this.provider.eth.Contract(Artifacts['ZAP_TOKEN'].abi, dotAddress);
         let approved = await dotToken.methods.allowance(from, this.contract._address).call();
         console.log('approved ', approved);
-        return await this.contract.methods.unbond(utf8ToHex(specifier), dots).send({ from: from, gas: gas });
+        return await this.contract.methods.unbond(utf8ToHex(specifier), dots).send({ from, gas, gasPrice });
     }
 
     async getDotAddress({ specifier}:any): Promise<txid> {
@@ -82,6 +84,3 @@ export class TokenDotFactory extends BaseContract {
         return dotBalance;
     }
 }
-
-export * from "./types" ;
-

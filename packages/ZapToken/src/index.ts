@@ -43,7 +43,7 @@ const {toHex} = require("web3-utils")
      * @param {number} t.gas - Sets the gas limit for this transaction (optional)
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-     async send({to, amount, from,gas=Util.DEFAULT_GAS}:TransferType) :Promise<txid>{
+     async send({to, amount, from,gasPrice, gas=Util.DEFAULT_GAS}:TransferType) :Promise<txid>{
         amount = toHex(amount)
         return await this.contract.methods.transfer(to, amount).send({from,gas});
     }
@@ -57,7 +57,7 @@ const {toHex} = require("web3-utils")
      * @param {number} t.gas - Sets the gas limit for this transaction (optional)
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-     async allocate({to, amount, from,gas=Util.DEFAULT_GAS}:TransferType):Promise<txid> {
+     async allocate({to, amount, from,gasPrice, gas=Util.DEFAULT_GAS}:TransferType):Promise<txid> {
         amount = toHex(amount)
         return await this.contract.methods.allocate(to, amount).send({from,gas});
     }
@@ -71,7 +71,7 @@ const {toHex} = require("web3-utils")
      * @param {number} t.gas - Sets the gas limit for this transaction (optional)
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-     async approve({to, amount, from, gas=Util.DEFAULT_GAS}:TransferType):Promise<txid> {
+     async approve({to, amount, from,gasPrice, gas=Util.DEFAULT_GAS}:TransferType):Promise<txid> {
         amount = toHex(amount)
         const success = await this.contract.methods.approve(to, amount).send({from,gas});
         if (!success) {

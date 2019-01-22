@@ -23,4 +23,4 @@ import {existsSync, mkdirSync} from 'fs'
 //     console.log("Closing server");
 //     process.exit();
 //   })
-})
+// })
