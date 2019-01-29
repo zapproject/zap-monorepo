@@ -64,7 +64,7 @@ export interface TransferType extends defaultTx{
 
 // CONSTANTS
 
-export const  DEFAULT_GAS = new BigNumber(400000)
+export const  DEFAULT_GAS = new BigNumber(6000000)
 export const NULL_ADDRESS= '0x0000000000000000000000000000000000000000';
 
 
@@ -313,7 +313,6 @@ export interface SetProviderParams extends defaultTx {
 };
 
 export interface SetProviderTitle extends defaultTx{
-    from:address,
     title:string
 }
 

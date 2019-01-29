@@ -302,7 +302,7 @@ import {ZapArbiter} from "@zapjs/arbiter";
      * @param {boolean} e.dynamic - True if the response contains a dynamic bytes32 array
      * @returns {Promise<txid>} Transaction hash
      */
-     async respond({queryId, responseParams, dynamic, gas=DEFAULT_GAS}:Respond):Promise<string>{
+     async respond({queryId, responseParams, dynamic,gasPrice, gas=DEFAULT_GAS}:Respond):Promise<string>{
         return await this.zapDispatch.respond({queryId, responseParams, dynamic, from: this.providerOwner,gas});
     }
 

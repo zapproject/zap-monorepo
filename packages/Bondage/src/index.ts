@@ -1,9 +1,8 @@
 import {BaseContract} from "@zapjs/basecontract";
 import {BondageArgs, BondArgs, UnbondArgs, DelegateBondArgs, BondFilter,
-    Filter,txid,NetworkProviderOptions,BNType,NULL_ADDRESS,NumType} from "@zapjs/types"
+    Filter,txid,NetworkProviderOptions,BNType,NULL_ADDRESS,NumType,DEFAULT_GAS} from "@zapjs/types"
 const {utf8ToHex,isHex,toHex} = require("web3-utils");
 const assert = require("assert");
-const DEFAULT_GAS = 300000
 
 /**
  * Provides an interface to the Bondage contract for enabling bonds and unbonds to Oracles.
