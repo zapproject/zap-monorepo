@@ -80,3 +80,45 @@ const {toHex} = require("web3-utils")
         return success;
     }
 }
+
+export class Erc1404 extends ZapToken {
+
+    constructor(obj?: NetworkProviderOptions) {
+        super(Object.assign(obj, { artifactName: "ZAP_ERC1404" }));
+    }
+
+    async detectTransferRestriction({ to, amount, from }: TransferType): Promise<string | BNType> {
+        amount = toHex(amount);
+        return await this.contract.methods.detectTransferRestriction(from, to, amount).call();
+    }
+
+    async messageForTransferRestriction(code: number): Promise<string> {
+        code = toHex(code);
+        return await this.contract.methods.messageForTransferRestriction(code).call();
+    }
+
+    async addToSendAllowed(operator: address, from: address, gas = Util.DEFAULT_GAS): Promise<txid> {
+        return await this.contract.methods.addToSendAllowed(operator).send({ from, gas });
+    }
+
+    async addToReceiveAllowed(operator: address, from: address, gas = Util.DEFAULT_GAS): Promise<txid> {
+        return await this.contract.methods.addToReceiveAllowed(operator).send({ from, gas });
+    }
+
+    async addToBothSendAndReceiveAllowed(operator: address, from: address, gas = Util.DEFAULT_GAS): Promise<txid> {
+        return await this.contract.methods.addToBothSendAndReceiveAllowed(operator).send({ from, gas });
+    }
+
+    async removeFromSendAllowed(operator: address, from: address, gas = Util.DEFAULT_GAS): Promise<txid> {
+        return await this.contract.methods.removeFromSendAllowed(operator).send({ from, gas });
+    }
+
+    async removeFromReceiveAllowed(operator: address, from: address, gas = Util.DEFAULT_GAS): Promise<txid> {
+        return await this.contract.methods.removeFromReceiveAllowed(operator).send({ from, gas });
+    }
+
+    async removeFromBothSendAndReceiveAllowed(operator: address, from: address, gas = Util.DEFAULT_GAS): Promise<txid> {
+        return await this.contract.methods.removeFromBothSendAndReceiveAllowed(operator).send({ from, gas });
+    }
+
+}

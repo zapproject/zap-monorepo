@@ -10,10 +10,10 @@
   ],
   "scripts": {
     "ganache": "ganache-cli -p 8545 --networkId 5777",
-    "compile": "./node_modules/.bin/lerna run build",
-    "build": "./node_modules/.bin/lerna bootstrap --hoist && ./node_modules/.bin/lerna run build",
-    "test": "./node_modules/.bin/lerna exec npm run run_test --concurrency=1",
-    "webpack": "./node_modules/.bin/lerna exec npm run webpack --scope='zapjs'",
+    "compile": "npx lerna run build",
+    "build": "npx lerna bootstrap --hoist && npx lerna run build",
+    "test": "npx lerna exec npm run run_test --concurrency=1",
+    "webpack": "npx lerna exec npm run webpack --scope='zapjs'",
     "bundle": "run-s build webpack",
     "generateDoc": "./node_modules/.bin/compodoc -p docstsconfig.json --disableCoverage --hideGenerator --theme vagrant "
   },

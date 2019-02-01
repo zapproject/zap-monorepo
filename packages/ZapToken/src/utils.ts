@@ -20,6 +20,7 @@ export class Util {
     static fromZapBase(num: number|string):number {
         return new BN(num).div(new BN(10).pow(new BN(18))).toNumber();
     }
+    
     static DEFAULT_GAS = 6000000;
 }
 
