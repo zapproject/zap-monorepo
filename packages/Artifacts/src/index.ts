@@ -10,7 +10,8 @@ export const Artifacts :{[index:string]:any} =  {
     "Client3" : require("../contracts/Client3.json"),
     "Client4" : require("../contracts/Client4.json"),
     "ZAPCOORDINATOR": require("../contracts/ZapCoordinator.json"),
-    "TOKENDOTFACTORY": require("../contracts/TokenDotFactory.json")
+    "TOKENDOTFACTORY": require("../contracts/TokenDotFactory.json"),
+    "ZAP_ERC1404": require("../contracts/SimpleRestrictedToken.json")
 }
 
 
