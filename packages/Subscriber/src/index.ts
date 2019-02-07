@@ -136,9 +136,6 @@ export class ZapSubscriber  {
     async subscribe({provider, endpoint, endpointParams, dots,gasPrice,gas=DEFAULT_GAS}:SubscribeType):Promise<any> {
         let providerPubkey = await this.zapRegistry.getProviderPublicKey(provider);
         let zapRequired = await this.zapBondage.calcZapForDots({provider, endpoint, dots});
-        let zapBalance = await this.zapToken.balanceOf(this.subscriberOwner);
-        if (zapBalance < zapRequired)
-            throw new Error(`Insufficient balance, require ${zapRequired} Zap for ${dots} dots`);
         let boundDots = await this.zapBondage.getBoundDots({provider, endpoint, subscriber: this.subscriberOwner});
         if(boundDots<dots)
             throw new Error(`Insufficient bound dots, please bond ${dots} dots to subscribe`)
