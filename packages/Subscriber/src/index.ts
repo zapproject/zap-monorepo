@@ -120,7 +120,7 @@ export class ZapSubscriber  {
      */
     async unBond({provider, endpoint, dots,gasPrice,gas=DEFAULT_GAS}:UnbondType):Promise<any>{
         let boundDots = await this.zapBondage.getBoundDots({subscriber: this.subscriberOwner, provider, endpoint});
-        assert(boundDots >= dots, 'dots to unbond is less than requested');
+        assert(parseInt(boundDots.toString()) >= parseInt(dots.toString()), 'dots to unbond is less than requested');
         return  await this.zapBondage.unbond({provider, endpoint, dots, from: this.subscriberOwner,gas,gasPrice});
     }
 
@@ -140,7 +140,7 @@ export class ZapSubscriber  {
         if (zapBalance < zapRequired)
             throw new Error(`Insufficient balance, require ${zapRequired} Zap for ${dots} dots`);
         let boundDots = await this.zapBondage.getBoundDots({provider, endpoint, subscriber: this.subscriberOwner});
-        if(boundDots<dots)
+        if(parseInt(boundDots.toString())<parseInt(dots.toString()))
             throw new Error(`Insufficient bound dots, please bond ${dots} dots to subscribe`)
         let blocks = dots;
         let sub = await this.zapArbiter.initiateSubscription(
