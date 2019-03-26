@@ -10,5 +10,6 @@ import { ZapRegistry } from "@zapjs/registry";
 import { ZapSubscriber } from "@zapjs/subscriber";
 import * as Types from '@zapjs/types';
 import { ZapToken } from "@zapjs/zaptoken";
+import { TokenDotFactory } from "@zapjs/tokendot";
 
-export { Artifacts, ZapRegistry, ZapArbiter, ZapDispatch, ZapBondage, Curve, ZapToken, ZapProvider, ZapSubscriber, Types };
+export { Artifacts, ZapRegistry, ZapArbiter, ZapDispatch, ZapBondage, Curve, ZapToken, ZapProvider, ZapSubscriber, Types, TokenDotFactory };
