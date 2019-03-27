@@ -249,7 +249,7 @@ export interface InitProvider extends defaultTx  {
 
 export interface InitCurve extends defaultTx{
     endpoint:string,
-    term: number[],
+    term: CurveType,
     broker?: address
 }
 
@@ -359,7 +359,7 @@ export interface SubscriberHandler{
 
 //########################## CURVE ######################
 
-export type CurveType = number[]
+export type CurveType = number[]|string[]
 
 export interface CurveTerm {
   fn: number;

@@ -112,6 +112,7 @@ describe('Zap Provider Test', () => {
     })
     it('7. Should initiate provider curve', async () => {
         let tx:any;
+        let bigAmountCurve = 
         console.log(testZapProvider.curve.constants, testZapProvider.curve.parts, testZapProvider.curve.dividers)
         tx = await zapProvider.initiateProviderCurve({
            endpoint: testZapProvider.endpoint,

@@ -1,12 +1,12 @@
 import {Curve} from "./../src";
-
+import {CurveType} from "@zapjs/types"
 const expect = require("chai")
 .use(require("chai-as-promised"))
 .use(require("chai-bignumber"))
 .expect;
 
 describe('Zap Curve Test', function() {
-    let terms: number[];
+    let terms: CurveType;
     let curve:Curve
 
 

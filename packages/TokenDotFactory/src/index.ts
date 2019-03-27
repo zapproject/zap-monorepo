@@ -1,12 +1,12 @@
 const {utf8ToHex, toBN, hexToUtf8, bytesToHex, hexToBytes} = require("web3-utils");
 import {BaseContract} from "@zapjs/basecontract";
-import {Curve,CurveType} from "@zapjs/curve";
+import {Curve} from "@zapjs/curve";
 import {ZapBondage} from "@zapjs/bondage";
 import {ZapToken} from "@zapjs/zaptoken";
 import {ZapRegistry} from "@zapjs/registry";
 import  {Artifacts} from "@zapjs/artifacts";
 import {InitProvider, InitCurve, NextEndpoint, EndpointParams, SetProviderParams, InitTokenCurve,
-    Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS,NULL_ADDRESS} from "@zapjs/types";
+    Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS,NULL_ADDRESS,CurveType} from "@zapjs/types";
 const Web3 = require("web3")
 
 export class TokenDotFactory extends BaseContract {
