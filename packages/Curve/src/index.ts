@@ -51,7 +51,7 @@ import {CurveType} from "@zapjs/types"
      * @param {number} total_x n - Where the new dot will be the nth dot to be bonded.
      * @returns {number} Returns the price (in Zap) of the nth dot.
      */
-     public getPrice(total_x: number|string): number|string {
+     public getPrice(total_x: number|string): number {
         total_x = Number(total_x)
         if (total_x <= 0 || total_x > Number(this.max)) {
             throw("Invalid curve supply position");
@@ -86,9 +86,9 @@ import {CurveType} from "@zapjs/types"
      public getZapRequired(a:number, n:number):number{
         var sum:number =0;
         for(var i:number = a; i<a+n; i++){
-            sum.plus(this.getPrice(i));
+            sum+=this.getPrice(i);
         }
-        return sum.toNumber();
+        return sum;
      }
 
     /**
