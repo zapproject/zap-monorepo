@@ -5,7 +5,7 @@ import {CurveType} from "@zapjs/types"
  */
  export class Curve {
      public values: CurveType;
-    public max: number|string = 0;
+    public max: number = 0;
 
     /**
      * Initializes a wrapper class for function and structurizes the provided curves.
@@ -44,7 +44,7 @@ import {CurveType} from "@zapjs/types"
             index += len + 2;
         }
         let max = new BigNumber(prevEnd);
-        this.max = max.toFixed(0)
+        this.max = max.toNumber()
     }
 
     /**
@@ -78,18 +78,18 @@ import {CurveType} from "@zapjs/types"
                 var coeff:number = Number(this.values[index + i + 1])
                 sum += coeff * Math.pow(total_x, i);
             }
-            return (new BigNumber(sum)).toFixed(0);
+            return Number(sum);
         }
         return -1;
      }
 
      // buying n dots starting at the ath dot
-     public getZapRequired(a:number, n:number):number|string{
+     public getZapRequired(a:number, n:number):number{
         var sum:BigNumber = new BigNumber(0);
         for(var i:number = a; i<a+n; i++){
             sum.plus(this.getPrice(i));
         }
-        return sum.toFixed(0);
+        return sum.toNumber();
      }
 
     /**
