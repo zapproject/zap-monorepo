@@ -8,7 +8,6 @@ import {InitProvider, InitCurve, Respond, SetProviderParams, SetProviderTitle, C
     EndpointParams,
     BondFilter,
     BondageArgs,
-    CurveType
 } from "@zapjs/types";
 import {Curve} from "@zapjs/curve"
 import {ZapDispatch} from "@zapjs/dispatch";
@@ -70,7 +69,12 @@ import {ZapArbiter} from "@zapjs/arbiter";
      */
      async initiateProviderCurve({endpoint, term, broker, gasPrice, gas=DEFAULT_GAS}: InitCurve) :Promise<txid>{
         if(endpoint in this.curves) throw("Endpoint " + endpoint + " already exists");
-        let curve = new Curve(term)
+        let values: number[] = [];
+        let index = term.length;
+        while (index--) {
+            values[index] = Number(term[index]);
+        }
+        let curve = new Curve(values);
         let txid = await this.zapRegistry.initiateProviderCurve({endpoint, term, broker, from: this.providerOwner,gas,gasPrice});
         assert(txid, 'Failed to init curve.');
         this.curves[endpoint] = curve;
