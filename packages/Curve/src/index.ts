@@ -43,8 +43,7 @@ import {CurveType} from "@zapjs/types"
             prevEnd = end;
             index += len + 2;
         }
-        let max = new BigNumber(prevEnd);
-        this.max = max.toNumber()
+        this.max = prevEnd
     }
 
     /**
@@ -85,7 +84,7 @@ import {CurveType} from "@zapjs/types"
 
      // buying n dots starting at the ath dot
      public getZapRequired(a:number, n:number):number{
-        var sum:BigNumber = new BigNumber(0);
+        var sum:number =0;
         for(var i:number = a; i<a+n; i++){
             sum.plus(this.getPrice(i));
         }
