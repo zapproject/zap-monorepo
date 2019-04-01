@@ -8,7 +8,7 @@ import {BigNumber} from "bignumber.js";
     public max: number = 0;
 
     /**
-     * Initializes a wrapper class for function and structurizes the provided curves. 
+     * Initializes a wrapper class for function and structurizes the provided curves.
      * @constructor
      * @param {Array<number>} values Curve array
      */
@@ -38,26 +38,26 @@ import {BigNumber} from "bignumber.js";
             if(end <= prevEnd) throw("Piece domains are overlapping");
 
             prevEnd = end;
-            index += len + 2; 
+            index += len + 2;
         }
         this.max = prevEnd;
     }
 
     /**
-     * Gets the price of the nth dot. e.g. the price of a single dot to a curve with no dots issued would be calculated at n=1. 
+     * Gets the price of the nth dot. e.g. the price of a single dot to a curve with no dots issued would be calculated at n=1.
      * @param {number} total_x n - Where the new dot will be the nth dot to be bonded.
      * @returns {number} Returns the price (in Zap) of the nth dot.
      */
      public getPrice(total_x: number): number {
-        if (total_x <= 0 || total_x > this.max) { 
+        if (total_x <= 0 || total_x > this.max) {
             throw("Invalid curve supply position");
-        } 
-        if (!this.values) { 
+        }
+        if (!this.values) {
             throw("Curve is not initialized");
-        } 
-        
+        }
+
         var index:number = 0;
-        while(index < this.values.length){ 
+        while(index < this.values.length){
             var len:number = this.values[index];
             var end:number = this.values[index + len + 1];
 
@@ -103,6 +103,166 @@ import {BigNumber} from "bignumber.js";
     public valuesToString(): string[]{
          return this.values.map((item:number)=> {return ''+item})
      }
+
+
+    /**
+     * Create a string representing a piecewise function
+     * @param curve The curve to be stringified
+     * @returns The stringified curve
+     */
+    public static curveToString(values: number[]): string {
+        return Curve.splitCurveToTerms(values).map(Curve.termToString).join(' & ');
+    }
+    private static splitCurveToTerms(curve: number[]): number[][] {
+        if (curve.length <= 0) return [];
+        const res = [];
+        let startIndex = 0;
+        let currentLength = curve[0];
+        let endIndex = currentLength + 2;
+        while (startIndex < curve.length) {
+            res.push(curve.slice(startIndex, endIndex));
+            startIndex += currentLength + 2;
+            currentLength = curve[endIndex];
+            endIndex = startIndex + currentLength + 2;
+        }
+        return res;
+    }
+    public static termToString(term: number[]): string {
+        const limit = term[term.length - 1];
+        const parts = [];
+        for (let i = 1; i <= term[0]; i++) {
+            if (term[i] === 0) continue;
+            if (term[i] === 1) {
+                parts.push('x^' + (i - 1));
+            } else {
+                parts.push(term[i] + '*' + 'x^' + (i - 1));
+            }
+        }
+        return parts.join('+') + '; limit = ' + limit;
+    }
+
+    /**
+     * TODO:
+     */
+    public static convertToCurve(end: number, curve: string): number[] {
+        if (!end || isNaN(end)) throw new Error('Start and end must be numbers');
+        const tokenRegex = /\s*(x|tether|gether|mether|kether|grand|kether|zap|ether|finney|milliether|milli|szabo|microether|micro|gwei|shannon|nanoether|nano|mwei|lovelace|picoether|kwei|babbage|femtoether|wei|[0-9]+|\S)\s*/gi;
+        const terms: string[] = curve.split('+').map(term => term.trim());
+        const current_curve: number[] = [];
+
+        for ( const term of terms ) {
+            let coef: number = 1;
+            let exp: number = 0;
+
+            const tokens: string[] = [];
+            let m;
+            while ( (m = tokenRegex.exec(term)) !== null ) {
+                tokens.push(m[1]);
+            }
+
+            for ( let i = 0; i < tokens.length; i++ ) {
+                const token = tokens[i];
+
+                if ( !isNaN(+token) ) {
+                    coef *= +token;
+
+                    if ( i < tokens.length - 1) {
+                        // https://web3js.readthedocs.io/en/1.0/web3-utils.html#fromwei
+                        switch (tokens[i + 1].toLowerCase()) {
+                            case 'tether':
+                                coef *= 1e30;
+                                i++;
+                                continue;
+                            case 'gether':
+                                coef *= 1e27;
+                                i++;
+                                continue;
+                            case 'mether':
+                                coef *= 1e24;
+                                i++;
+                                continue;
+                            case 'kether':
+                            case 'grand':
+                                coef *= 1e21;
+                                i++;
+                                continue;
+                            case 'kether':
+                                coef *= 1e21;
+                                i++;
+                                continue;
+                            case 'zap':
+                            case 'ether':
+                                coef *= 1e18;
+                                i++;
+                                continue;
+                            case 'finney':
+                            case 'milliether':
+                            case 'milli':
+                                coef *= 1e15;
+                                i++;
+                                continue;
+                            case 'szabo':
+                            case 'microether':
+                            case 'micro':
+                                coef *= 1e12;
+                                i++;
+                                continue;
+                            case 'gwei':
+                            case 'shannon':
+                            case 'nanoether':
+                            case 'nano':
+                                coef *= 1e9;
+                                i++;
+                                continue;
+                            case 'mwei':
+                            case 'lovelace':
+                            case 'picoether':
+                                coef *= 1e6;
+                                i++;
+                                continue;
+                            case 'kwei':
+                            case 'babbage':
+                            case 'femtoether':
+                                coef *= 1e3;
+                                i++;
+                                continue;
+                            case 'wei':
+                                coef *= 1;
+                                i++;
+                                continue;
+                        }
+                    }
+                }
+                else if ( token == 'x' ) {
+                    exp = 1;
+                }
+                else if ( token == '*' ) {
+                    continue;
+                }
+                else if ( token == '^' ) {
+                    if ( i == tokens.length - 1 ) {
+                        throw new Error('Must specify an exponent.');
+                    }
+
+                    const exponent: string = tokens[++i];
+
+                    if ( isNaN(+exponent) ) {
+                        throw new Error('Exponent must be a number');
+                    }
+
+                    exp = +exponent;
+                }
+            }
+
+            while ( current_curve.length < exp ) {
+                current_curve.push(0);
+            }
+
+            current_curve[exp] = coef;
+        }
+
+        return [current_curve.length, ...current_curve, end];
+    }
 
  }
 
