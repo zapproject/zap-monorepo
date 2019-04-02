@@ -15,7 +15,6 @@ export async function bootstrap(zapProvider:any,accounts:Array<string>,deployedR
     const dots = 10;
     let normalizedP = Utils.normalizeProvider(zapProvider);
     let defaultTx = {from:accounts[0], gas:Utils.Constants.DEFAULT_GAS};
-    console.log("HERE? ",zapProvider, normalizedP)
     await deployedRegistry.contract.methods.initiateProvider(zapProvider.pubkey,normalizedP.title).send(defaultTx);
     let tokenOwner = await deployedToken.contract.methods.owner().call();
     await deployedRegistry.contract.methods.initiateProviderCurve(normalizedP.endpoint,zapProvider.curve.values.map((i:string)=>toHex(i)),NULL_ADDRESS).send(defaultTx);

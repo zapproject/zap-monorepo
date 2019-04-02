@@ -1,6 +1,6 @@
 import {join} from "path";
 const Web3 = require('web3');
-const {utf8ToHex} = require("web3-utils");
+const {utf8ToHex, toWei, fromWei} = require("web3-utils");
 const expect = require('chai')
 .use(require('chai-as-promised'))
 .use(require('chai-bignumber'))
@@ -60,6 +60,7 @@ describe('TokenDotFactory test', () => {
                 // ganacheServer = await Utils.startGanacheServer();
                 console.log("started");
                 web3 = new Web3(Utils.Constants.ganacheProvider);
+                options.web3 = web3
                 accounts = await web3.eth.getAccounts();
                 account = accounts[0];
                 console.log("account: ", account);
@@ -72,23 +73,17 @@ describe('TokenDotFactory test', () => {
 
                 deployedToken = new BaseContract(Object.assign(options, {artifactName: "ZAP_TOKEN"}));
                 let tokenOwner = await deployedToken.contract.methods.owner().call();
-
-                let nonce = await web3.eth.getTransactionCount(account);
-                console.log("nonce = " + nonce);
-                await deployedToken.contract.methods.allocate(account, Utils.toZapBase(100000000000000)).send({
+                await deployedToken.contract.methods.allocate(account, toWei("100000000000000")).send({
                     from: tokenOwner,
                     gas: Utils.Constants.DEFAULT_GAS,
-                   // nonce: nonce
                 });
                 let bal = await deployedToken.contract.methods.balanceOf(account).call();
-                console.log("balance : ", bal);
-
-                nonce = await web3.eth.getTransactionCount(account);
-                console.log("nonce = " + nonce);
-                dotWrapper = new BaseContract(Object.assign(options, {artifactName: "TOKENDOTFACTORY"}));
+                console.log("balance : ", fromWei(bal));
                 deployedRegistry = new BaseContract(Object.assign(options, {artifactName: "REGISTRY"}));
-                let txid = await sendTransaction(account, deployedRegistry.contract.methods.initiateProvider(/*toBN(111).toString()*/111, utf8ToHex("title")));
-                console.log("initiate provider ", txid);
+                //deploy tokenDotContract
+
+                // let txid = await sendTransaction(account, deployedRegistry.contract.methods.initiateProvider(/*toBN(111).toString()*/111, utf8ToHex("title")));
+                // console.log("initiate provider ", txid);
                 //correct balance
 
                 dotWrapper = await new TokenDotFactory(options);

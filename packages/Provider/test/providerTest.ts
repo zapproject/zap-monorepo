@@ -10,7 +10,7 @@ import { ZapDispatch } from "@zapjs/dispatch";
 import { ZapArbiter } from "@zapjs/arbiter";
 import { ZapProvider } from "../src";
 const Web3 = require('web3');
-const { hexToUtf8 } = require("web3-utils");
+const { hexToUtf8 ,toWei} = require("web3-utils");
 import { join } from 'path';
 
 import {Utils} from "@zapjs/utils";
@@ -74,7 +74,7 @@ describe('Zap Provider Test', () => {
     it("2. Should allocate ZapToken to accounts",async ()=>{
         let zapTokenOwner = await zapToken.getContractOwner()
         for(let account of accounts){
-            await zapToken.allocate({to:account,amount:Utils.toZapBase(1000),from:zapTokenOwner})
+            await zapToken.allocate({to:account,amount:toWei("1000"),from:zapTokenOwner})
         }
     });
     it("3. Should init zapProvider class",async ()=>{

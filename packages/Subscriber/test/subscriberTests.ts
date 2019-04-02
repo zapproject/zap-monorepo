@@ -81,7 +81,7 @@ describe('Zap Subscriber Test', () => {
                 dots: 1
             });
             const allowance = await subscriber.getZapAllowance()
-            expect(allowance).to.be.equal(0)
+            expect(Number(allowance)).to.be.equal(0)
             const approve = await subscriber.approveToBond({provider:accounts[0],zapNum:zapRequired})
             const res = await subscriber.bond({
                 provider: accounts[0],
