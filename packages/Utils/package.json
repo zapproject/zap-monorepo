@@ -20,7 +20,6 @@
 		"@zapjs/curve": "^2.0.12",
 		"@zapjs/types": "^2.0.10",
 		"ethereumjs-util": "^5.2.0",
-		"truffle-core": "4.1.15",
 		"web3-utils": "^1.0.0-beta.36"
 	},
 	"devDependencies": {
@@ -41,6 +40,7 @@
 		"ts-node": "^7.0.0",
 		"tslint": "^5.10.0",
 		"typescript": "^2.9.2",
+		"truffle-core": "5.0.10",
 		"web3": "1.0.0-beta.37",
 		"zap_contracts": "git+https://github.com/zapproject/zap-ethereum-api.git"
 	}
