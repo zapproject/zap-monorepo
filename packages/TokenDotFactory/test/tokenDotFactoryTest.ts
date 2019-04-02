@@ -1,11 +1,10 @@
 import {join} from "path";
 const Web3 = require('web3');
-const {hexToUtf8,BN,utf8ToHex, toBN} = require("web3-utils");
+const {utf8ToHex} = require("web3-utils");
 const expect = require('chai')
 .use(require('chai-as-promised'))
 .use(require('chai-bignumber'))
 .expect;
-//import {bootstrap} from "./setup_test";
 const ganache = require("ganache-cli");
 
 
@@ -17,7 +16,6 @@ import {ZapRegistry} from '@zapjs/registry';
 import {ZapToken} from '@zapjs/zaptoken';
 import {TokenDotFactory} from '../src';
 
-console.log("23424234324324");
 
 async function configureEnvironment(func:Function) {
     await func();

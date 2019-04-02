@@ -1,5 +1,6 @@
 import {join} from "path";
 const Web3 = require('web3');
+Web3.providers.HttpProvider.prototype.sendAsync = Web3.providers.HttpProvider.prototype.send;
 const {hexToUtf8,BN,utf8ToHex} = require("web3-utils");
 const expect = require('chai')
 .use(require('chai-as-promised'))

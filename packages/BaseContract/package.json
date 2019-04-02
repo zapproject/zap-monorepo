@@ -18,7 +18,7 @@
   "dependencies": {
     "@zapjs/artifacts": "^2.1.5",
     "@zapjs/types": "^2.0.10",
-    "web3": "1.0.0-beta.36"
+    "web3": "1.0.0-beta.37"
   },
   "devDependencies": {
     "@types/chai": "^4.1.5",

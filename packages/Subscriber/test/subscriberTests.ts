@@ -74,13 +74,14 @@ describe('Zap Subscriber Test', () => {
             const res = await bootstrap(testZapProvider, accounts, registryWrapper, tokenWrapper);
             await expect(res).to.be.equal("done");
         })
-
         it("2. Should bond specified number of zap", async () => {
             let zapRequired:BNType = await bondageWrapper.calcZapForDots({
                 provider: accounts[0],
                 endpoint: testZapProvider.endpoint,
                 dots: 1
             });
+            const allowance = await subscriber.getZapAllowance()
+            expect(allowance).to.be.equal(0)
             const approve = await subscriber.approveToBond({provider:accounts[0],zapNum:zapRequired})
             const res = await subscriber.bond({
                 provider: accounts[0],

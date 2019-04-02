@@ -1,4 +1,3 @@
-const Web3 = require("web3");
 const {utf8ToHex, toBN,toHex} = require("web3-utils");
 import {Utils} from "@zapjs/utils";
 import {NULL_ADDRESS} from "@zapjs/types"

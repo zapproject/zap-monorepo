@@ -19,8 +19,7 @@
     "@zapjs/basecontract": "^2.0.17",
     "@zapjs/types": "^2.0.10",
     "bignumber.js": "^7.2.1",
-    "path": "^0.12.7",
-    "web3": "1.0.0-beta.36"
+    "path": "^0.12.7"
   },
   "devDependencies": {
     "@types/chai": "^4.1.5",
@@ -36,6 +35,8 @@
     "ts-node": "^7.0.0",
     "tslint": "^5.10.0",
     "typescript": "^2.9.2",
-    "web3-utils": "1.0.0-beta.36"
+    "web3-utils": "1.0.0-beta.37",
+    "web3": "1.0.0-beta.37"
+
   }
 }

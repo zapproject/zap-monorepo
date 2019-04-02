@@ -13,13 +13,13 @@
     "@zapjs/provider": "^2.0.19",
     "@zapjs/registry": "^2.1.2",
     "@zapjs/subscriber": "^2.0.15",
+    "@zapjs/tokendot": "2.1.9",
     "@zapjs/types": "^2.0.10",
     "@zapjs/zaptoken": "^2.0.16",
-    "@zapjs/tokendot": "2.1.9",
     "cache-loader": "^1.2.2",
     "ts-loader": "^4.5.0",
     "typescript": "^3.0.3",
-    "web3": "1.0.0-beta.36"
+    "web3": "1.0.0-beta.37"
   },
   "scripts": {
     "webpack": "./node_modules/.bin/webpack",
