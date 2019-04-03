@@ -58,4 +58,23 @@ describe('Zap Curve Test', function() {
 	it("7) Attempt to create curves with bad arguments", () => {
 
 	});
+
+	it("8) Attempt to convert curve values to string representation", () => {
+		const terms = [1,1,10,2,0,1,20,3,0,0,1,30,4,0,0,0,1,40,5,0,0,0,0,1,50];
+		const curveString = 'x^0; limit = 10 & x^1; limit = 20 & x^2; limit = 30 & x^3; limit = 40 & x^4; limit = 50';
+		expect(Curve.curveToString(terms)).to.equal(curveString);
+	});
+
+	it("9) Attempt to convert single curve term to string", () => {
+		const terms = [2,0,10000000000000000,7000000000000000000];
+		const curveString = '10000000000000000*x^1; limit = 7000000000000000000';
+		expect(Curve.termToString(terms)).to.equal(curveString);
+	});
+
+	it("10) Attempt to create Curve from string formula", () => {
+		const formula = '10+x^3';
+		const end = 100;
+		expect(Curve.convertToCurve(end, formula)).to.deep.equal([4,10,0,0,1,end]);
+	});
+
 });
