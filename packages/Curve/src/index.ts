@@ -146,7 +146,7 @@ import {BigNumber} from "bignumber.js";
      */
     public static convertToCurve(end: number, curve: string): number[] {
         if (!end || isNaN(end)) throw new Error('Start and end must be numbers');
-        const tokenRegex = /\s*(x|tether|gether|mether|kether|grand|kether|zap|ether|finney|milliether|milli|szabo|microether|micro|gwei|shannon|nanoether|nano|mwei|lovelace|picoether|kwei|babbage|femtoether|wei|[0-9]+|\S)\s*/gi;
+        const tokenRegex = /\s*(x|tether|gether|mether|kether|grand|kether|zap|ether|finney|milliether|milli|szabo|microether|micro|gwei|shannon|nanoether|nano|mwei|lovelace|picoether|kwei|babbage|femtoether|wei|[0-9.]+|\S)\s*/gi;
         const terms: string[] = curve.split('+').map(term => term.trim());
         const current_curve: number[] = [];
 
