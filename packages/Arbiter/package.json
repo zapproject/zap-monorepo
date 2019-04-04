@@ -1,7 +1,7 @@
 {
   "name": "@zapjs/arbiter",
   "private": false,
-  "version": "2.0.16",
+  "version": "2.0.17",
   "description": "Zap Arbiter",
   "main": "lib/src/index.js",
   "repository": "https://github.com/zapproject/Zap-monorepo",
@@ -24,7 +24,7 @@
     "@types/chai": "^4.1.5",
     "@types/mocha": "^5.2.4",
     "@types/node": "^10.10.3",
-    "@zapjs/utils": "^2.0.15",
+    "@zapjs/utils": "^2.0.16",
     "bignumber.js": "^7.2.1",
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
