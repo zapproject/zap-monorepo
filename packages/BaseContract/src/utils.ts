@@ -19,8 +19,8 @@ export class Utils {
             Client2: require(join(buildDir,"Client2.json")),
             Client3: require(join(buildDir,"Client3.json")),
             Client4: require(join(buildDir,"Client4.json")),
-            ZAPCOORDINATOR: require(join(buildDir,"ZapCoordinator.json"))
-            // TOKENDOTFACTORY: require(join(buildDir,"TokenDotFactory.json"))
+            ZAPCOORDINATOR: require(join(buildDir,"ZapCoordinator.json")),
+            TOKENDOTFACTORY: require(join(buildDir,"TokenDotFactory.json"))
         }
         return artifacts
 

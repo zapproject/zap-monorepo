@@ -1,5 +1,5 @@
 
-const {utf8ToHex, fromWei,toWei} = require("web3-utils");
+const {utf8ToHex, fromWei,toHex} = require("web3-utils");
 import {BaseContract} from "@zapjs/basecontract";
 import {ZapBondage} from "@zapjs/bondage";
 import {ZapToken} from "@zapjs/zaptoken";
@@ -15,7 +15,6 @@ export class TokenDotFactory extends BaseContract {
 
     constructor(options ?: NetworkProviderOptions){
         super(Object.assign(options,{artifactName:"TOKENDOTFACTORY"}));
-
         this.zapToken = new ZapToken(options);
         this.zapBondage = new ZapBondage(options);
         this.zapRegistry = new ZapRegistry(options);
@@ -23,7 +22,7 @@ export class TokenDotFactory extends BaseContract {
     }
 
     /**
-     * Initiate Token Endpoint, return address of the Token Contract
+     * Initiate Token Endpoint, return address of the new Token Contract
      * @param endpoint
      * @param symbol
      * @param term
@@ -32,16 +31,19 @@ export class TokenDotFactory extends BaseContract {
      * @param gas
      */
     async initializeTokenCurve({ endpoint, symbol, term, from, gasPrice, gas=DEFAULT_GAS}:InitDotTokenCurve): Promise<txid> {
-        let tx = await this.contract.methods.initializeCurve(
+        let hex_term:string[] = []
+        for(let i in term){
+            hex_term[i] = toHex(term[i])
+        }
+        return await this.contract.methods.initializeCurve(
            utf8ToHex(endpoint),
            utf8ToHex(symbol),
-           term
+           hex_term
         ).send({from, gas, gasPrice});
-        return tx;
     }
 
     /**
-     * Bond to Token Endpoint
+     * Bond to Token Dot Endpoint
      * @param endpoint
      * @param dots
      * @param from
@@ -58,7 +60,7 @@ export class TokenDotFactory extends BaseContract {
     }
 
     /**
-     * Approve big amount of token for burning
+     * Approve big amount of token for burning Dot Tokens
      * @param endpoint
      * @param from
      * @param gasPrice
@@ -73,7 +75,7 @@ export class TokenDotFactory extends BaseContract {
     }
 
     /**
-     * Unbond to Token Endpoint
+     * Unbond Dots from Token Endpoint
      * @param endpoint
      * @param dots
      * @param from

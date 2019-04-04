@@ -27,6 +27,7 @@ export const ganacheServerOptions={
     gas: 6700000 ,
     gasPrice: 20000000,
     network: "ganache-gui",
+    mnemonic:"solid giraffe crowd become skin deliver screen receive balcony ask manual current",
     solc:"0.4.24",
     compilers:{
          solc:{
