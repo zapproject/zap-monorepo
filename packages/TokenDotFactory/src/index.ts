@@ -41,7 +41,7 @@ export class TokenDotFactory extends BaseContract {
            utf8ToHex(endpoint),
            utf8ToHex(symbol),
            hex_term
-        ).send({from, gas, gasPrice});
+        ).send({from:from, gas, gasPrice});
     }
 
 

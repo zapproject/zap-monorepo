@@ -141,9 +141,8 @@ import {BigNumber} from "bignumber.js";
         return parts.join('+') + '; limit = ' + limit;
     }
 
-    /**
-     * TODO:
-     */
+
+
     public static convertToCurve(end: number, curve: string): number[] {
         if (!end || isNaN(end)) throw new Error('Start and end must be numbers');
         const tokenRegex = /\s*(x|tether|gether|mether|kether|grand|kether|zap|ether|finney|milliether|milli|szabo|microether|micro|gwei|shannon|nanoether|nano|mwei|lovelace|picoether|kwei|babbage|femtoether|wei|[0-9.]+|\S)\s*/gi;

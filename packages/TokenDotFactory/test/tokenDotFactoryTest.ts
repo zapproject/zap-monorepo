@@ -105,6 +105,8 @@ describe('TokenDotFactory test', () => {
         await Utils.delay(3000);
         expect(dotWrapper).to.be.ok;
         expect(dotWrapper.contract._address).to.be.ok
+        await Registry.initiateProvider({public_key:111,title:"title",from:providerAccount})
+        console.log("TITLE",await Registry.getProviderTitle(providerAccount))
 
     })
 
@@ -114,13 +116,12 @@ describe('TokenDotFactory test', () => {
 
             let tx: any = await dotWrapper.initializeTokenCurve({
                 endpoint: testProvider.endpoint,
-                symbol: "testTicker",
+                symbol: testProvider.endpoint,
                 term: testProvider.curve.values,
-                from: tokenDotAccount
+                from: providerAccount
             })
             let address = await dotWrapper.getDotAddress(testProvider.endpoint);
             expect(address).to.be.equal(tokenDotAccount)
-            console.log('tx ', tx);
             let isInit = await Registry.isProviderInitiated(contractAddress)
             expect(isInit).to.equal(true)
         }catch(e){
