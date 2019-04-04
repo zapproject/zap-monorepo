@@ -21,6 +21,7 @@
     "@zapjs/bondage": "^2.0.15",
     "@zapjs/curve": "^2.0.11",
     "@zapjs/dispatch": "^2.0.17",
+    "@zapjs/provider": "^2.0.22",
     "@zapjs/registry": "^2.1.1",
     "@zapjs/types": "^2.0.9",
     "@zapjs/zaptoken": "^2.0.15",

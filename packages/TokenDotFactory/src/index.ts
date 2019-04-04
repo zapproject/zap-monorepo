@@ -1,5 +1,6 @@
+import {ApproveType} from "@zapjs/types";
 
-const {utf8ToHex, fromWei,toHex} = require("web3-utils");
+const {utf8ToHex, fromWei,toHex,toBN,BN} = require("web3-utils");
 import {BaseContract} from "@zapjs/basecontract";
 import {ZapBondage} from "@zapjs/bondage";
 import {ZapToken} from "@zapjs/zaptoken";
@@ -31,7 +32,8 @@ export class TokenDotFactory extends BaseContract {
      * @param gas
      */
     async initializeTokenCurve({ endpoint, symbol, term, from, gasPrice, gas=DEFAULT_GAS}:InitDotTokenCurve): Promise<txid> {
-        let hex_term:string[] = []
+        console.log(endpoint,symbol,term,from)
+        let hex_term:any = []
         for(let i in term){
             hex_term[i] = toHex(term[i])
         }
@@ -40,6 +42,18 @@ export class TokenDotFactory extends BaseContract {
            utf8ToHex(symbol),
            hex_term
         ).send({from, gas, gasPrice});
+    }
+
+
+    /**
+     * Approve to bond as normal
+     * @param zapNum
+     * @param from
+     * @param gasPrice
+     * @param gas
+     */
+    async approveToBond({zapNum,from,gasPrice,gas=DEFAULT_GAS}:ApproveType):Promise<txid>{
+        return await this.zapToken.approve({to:this.contract._address,amount:zapNum,from,gas,gasPrice})
     }
 
     /**
@@ -107,7 +121,7 @@ export class TokenDotFactory extends BaseContract {
      * @param endpoint
      * @param from
      */
-    async getDotBalance({ endpoint, from }:{endpoint:string,from:address}): Promise<txid> {
+    async getDotTokenBalance({ endpoint, from }:{endpoint:string,from:address}): Promise<txid> {
         let dotAddress = await this.contract.methods.getTokenAddress(utf8ToHex(endpoint)).call();
         let dotToken = new this.provider.eth.Contract(Artifacts['ZAP_TOKEN'].abi, dotAddress);
         let dotBalance = await dotToken.methods.balanceOf(from).call();

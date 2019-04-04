@@ -4,7 +4,7 @@
   "version": "2.0.10",
   "repository": "https://github.com/zapproject/Zap-monorepo",
   "dependencies": {
-    "bignumber.js": "^7.2.1",
+    "bignumber.js": "^8.1.1",
     "ethereum-types": "^1.0.7"
   },
   "scripts": {
