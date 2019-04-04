@@ -1,7 +1,7 @@
 {
   "name": "@zapjs/basecontract",
   "private": false,
-  "version": "2.0.18",
+  "version": "2.2.0",
   "description": "",
   "main": "lib/src/index.js",
   "repository": "https://github.com/zapproject/Zap-monorepo",
@@ -16,8 +16,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@zapjs/artifacts": "^2.1.15",
-    "@zapjs/types": "^2.0.11",
+    "@zapjs/artifacts": "^2.2.0",
+    "@zapjs/types": "^2.2.0",
     "web3": "1.0.0-beta.37"
   },
   "devDependencies": {
