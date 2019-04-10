@@ -158,18 +158,18 @@ describe('Zap Dispatch Test', () => {
         }
     });
 
-    it("Should emit Respond events for offchain subscribers", async () => {
-        try {
-            await dispatchWrapper.respond({
-                queryId: queryData.id,
-                responseParams: responses,
-                dynamic: false,
-                from: accounts[2]
-            });
-        } catch(e) {
-            await expect(e.toString()).to.include('revert');
-        }
-    });
+    // it("Should emit Respond events for offchain subscribers", async () => {
+    //     try {
+    //         await dispatchWrapper.respond({
+    //             queryId: queryData.id,
+    //             responseParams: responses,
+    //             dynamic: false,
+    //             from: accounts[2]
+    //         });
+    //     } catch(e) {
+    //         await expect(e.toString()).to.include('revert');
+    //     }
+    // });
 
     // after(() => {
     //     ganacheServer.close();

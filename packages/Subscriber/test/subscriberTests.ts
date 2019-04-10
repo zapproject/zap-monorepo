@@ -46,7 +46,7 @@ describe('Zap Subscriber Test', () => {
 
     before(function (done) {
         configureEnvironment(async () => {
-            // ganacheServer = await Utils.startGanacheServer();
+            ganacheServer = await Utils.startGanacheServer();
             web3 = new Web3(Utils.Constants.ganacheProvider);
             accounts = await web3.eth.getAccounts();
 
@@ -64,11 +64,11 @@ describe('Zap Subscriber Test', () => {
         });
     });
 
-    // after(function(){
-    //     console.log("Done running Subscriber tests");
-    //     ganacheServer.close();
-    //     process.exit();
-    // });
+    after(function(){
+        console.log("Done running Subscriber tests");
+        ganacheServer.close();
+        process.exit();
+    });
 
         it("1. Should have all pre conditions set up for subscriber to work", async () => {
             const res = await bootstrap(testZapProvider, accounts, registryWrapper, tokenWrapper);

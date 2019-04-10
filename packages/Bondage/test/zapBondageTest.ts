@@ -41,7 +41,7 @@ describe('Zap Bondage Test', () => {
 
     before(function(done) {
         configureEnvironment(async () => {
-            // ganacheServer = await Utils.startGanacheServer();
+            ganacheServer = await Utils.startGanacheServer();
             web3 = new Web3(Utils.Constants.ganacheProvider);
             accounts = await web3.eth.getAccounts();
             broker = accounts[5]
@@ -56,11 +56,11 @@ describe('Zap Bondage Test', () => {
         });
     });
 
-    // after(function(){
-    //     console.log("Done running Bondage tests");
-    //     ganacheServer.close();
-    //     process.exit();
-    // });
+    after(function(){
+        console.log("Done running Bondage tests");
+        ganacheServer.close();
+        process.exit();
+    });
 
     it("1) Should have all pre conditions set up for bondage to work", async () => {
             await bootstrap(testZapProvider, accounts, deployedRegistry, deployedBondage, deployedToken);
