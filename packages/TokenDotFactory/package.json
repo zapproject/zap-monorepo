@@ -1,7 +1,7 @@
 {
   "name": "@zapjs/tokendot",
   "private": false,
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "",
   "repository": "https://github.com/zapproject/Zap-monorepo",
   "main": "lib/src/index.js",
@@ -18,13 +18,13 @@
   "dependencies": {
     "@zapjs/artifacts": "^2.2.0",
     "@zapjs/basecontract": "^2.2.0",
-    "@zapjs/bondage": "^2.2.0",
+    "@zapjs/bondage": "^2.2.1",
     "@zapjs/curve": "^2.2.0",
-    "@zapjs/dispatch": "^2.2.0",
-    "@zapjs/provider": "^2.2.0",
-    "@zapjs/registry": "^2.2.0",
+    "@zapjs/dispatch": "^2.2.1",
+    "@zapjs/provider": "^2.2.1",
+    "@zapjs/registry": "^2.2.1",
     "@zapjs/types": "^2.2.0",
-    "@zapjs/zaptoken": "^2.2.0",
+    "@zapjs/zaptoken": "^2.2.1",
     "bignumber.js": "^7.2.1",
     "web3-utils": "1.0.0-beta.37"
   },
