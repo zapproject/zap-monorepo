@@ -4,7 +4,7 @@
   "version": "2.2.0",
   "repository": "https://github.com/zapproject/Zap-monorepo",
   "dependencies": {
-    "@types/node": "^10.10.3",
+    "@types/node": "^11.13.2",
     "@zapjs/arbiter": "^2.2.0",
     "@zapjs/artifacts": "^2.2.0",
     "@zapjs/bondage": "^2.2.0",
@@ -17,6 +17,7 @@
     "@zapjs/types": "^2.2.0",
     "@zapjs/zaptoken": "^2.2.0",
     "cache-loader": "^1.2.2",
+    "mocha": "^6.1.2",
     "ts-loader": "^4.5.0",
     "typescript": "^3.0.3",
     "web3": "1.0.0-beta.37"
@@ -24,7 +25,7 @@
   "scripts": {
     "webpack": "./node_modules/.bin/webpack",
     "build": "tsc",
-    "run_test": "tsc"
+    "test": "mocha $PKG -r ts-node/register test/*.ts --serial --bail --exit"
   },
   "main": "src/index.js",
   "author": "propulsor",
@@ -39,6 +40,7 @@
     "babel-polyfill": "^6.26.0",
     "babel-preset-latest": "^6.24.1",
     "json-loader": "^0.5.7",
+    "mocha": "^6.1.2",
     "webpack": "^4.19.1",
     "webpack-command": "^0.4.1",
     "webpack-log": "^1.2.0"
