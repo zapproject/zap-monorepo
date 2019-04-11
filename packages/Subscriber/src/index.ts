@@ -72,9 +72,10 @@ export class ZapSubscriber  {
      * @param {string} b.provider - Provider's address
      * @param {string} b.endpoint - Endpoint that this client wants to query from
      * @param {number} b.dots - Amount of dots to bond
+     * @param {any} events - Callbacks for events
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-    async bond({provider, endpoint, dots,gasPrice, gas=DEFAULT_GAS}:BondType):Promise<any>{
+    async bond({provider, endpoint, dots,gasPrice, gas=DEFAULT_GAS}:BondType, events: any = {} ):Promise<any>{
        // assert.ok(this.hasEnoughZap(zapNum), 'Insufficient Balance');
         const bonded = await this.zapBondage.bond({
             provider,
@@ -83,7 +84,7 @@ export class ZapSubscriber  {
             gas,
             gasPrice,
             from: this.subscriberOwner
-        });
+        }, events);
         return bonded;
     }
 

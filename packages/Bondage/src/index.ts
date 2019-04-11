@@ -32,9 +32,10 @@ export class ZapBondage extends BaseContract {
      * @param {number} bond.dots Number of dots to bond to this provider
      * @param {address} bond.from - Subscriber's owner (0 broker)  or broker's address
      * @param {number} bond.gas - Sets the gas limit for this transaction (optional)
+     * @param {any} events - Callbacks for events
      * @returns {Promise<txid>} Transaction hash.
      */
-    public async bond({provider, endpoint, dots, from, gas= DEFAULT_GAS}: BondArgs): Promise<txid> {
+    public async bond({provider, endpoint, dots, from, gas= DEFAULT_GAS}: BondArgs, events: any = {}): Promise<txid> {
         assert(dots && dots > 0, "Dots to bond must be greater than 0.");
         const broker = await this.contract.methods.getEndpointBroker(provider,utf8ToHex(endpoint)).call()
         if(broker != NULL_ADDRESS){
@@ -42,12 +43,12 @@ export class ZapBondage extends BaseContract {
                 throw new Error(`Broker address ${broker} needs to call delegate bonding`);
             }
         }
-        return await this.contract.methods.bond(
-            provider,
-            utf8ToHex(endpoint),
-            toHex(dots))
-            .send({from, gas});
-
+        return this.contract.methods.bond(provider, utf8ToHex(endpoint), toHex(dots))
+        .send({ from, gas })
+        .on('transactionHash', events['transactionHash'] )
+        .on('receipt', events['receipt'])
+        .on('confirmation', events['confirmation'])
+        .on('error', events['error'])
     }
 
      /**
