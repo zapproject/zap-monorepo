@@ -141,7 +141,7 @@ describe('Zap Bondage Test', () => {
             endpoint: endpointB,
             dots: 5,
             from: broker,
-        });
+        },{ transactionHash: (bond_txid: any) => expect(bond_txid).to.be.defined });
         const numZap = bonded.events.Bound.returnValues.numZap;
         const numDots = bonded.events.Bound.returnValues.numDots;
 
