@@ -84,7 +84,7 @@ describe('Arbiter Test', () => {
       pubkey: Utils.Constants.testZapProvider.pubkey,
       from: accounts[2],
       gas: Utils.Constants.DEFAULT_GAS,
-    });
+    }, { transactionHash: (bond_txid: any) => expect(bond_txid).to.be.defined });
   });
   it("4) Should get subscription", async()=>{
     let subscription = await arbiterWrapper.getSubscription({
@@ -111,7 +111,7 @@ describe('Arbiter Test', () => {
         subscriber:accounts[2],
         endpoint : testZapProvider.endpoint,
         from:accounts[0]
-      })
+      }, { transactionHash: (bond_txid: any) => expect(bond_txid).to.be.defined })
       let event = unsubscription.events;
 
     })
@@ -124,11 +124,11 @@ describe('Arbiter Test', () => {
         pubkey: testZapProvider.pubkey,
         from: accounts[2],
         gas: Utils.Constants.DEFAULT_GAS,
-      });
+      }, { transactionHash: (bond_txid: any) => expect(bond_txid).to.be.defined });
       await arbiterWrapper.endSubscriptionSubscriber({
         provider: accounts[0],
         endpoint: testZapProvider.endpoint,
         from:accounts[2]
-      })
+      }, { transactionHash: (bond_txid: any) => expect(bond_txid).to.be.defined })
     })
   });

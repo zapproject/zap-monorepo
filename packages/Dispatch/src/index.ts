@@ -29,9 +29,10 @@ export class ZapDispatch extends BaseContract {
      * @param {Array<string>} q.endpointParams - Parameters passed to data provider's endpoint
      * @param {address} q.from - Address of the subscriber
      * @param {BigNumber} q.gas - Set the gas limit for this transaction (optional)
+     * @param {any} events - Callbacks for events
      * @returns {Promise<txid>} Transaction hash
      */
-    async queryData({provider, query, endpoint, endpointParams,from,gasPrice, gas=DEFAULT_GAS}:QueryArgs):Promise<txid>{
+    async queryData({provider, query, endpoint, endpointParams,from,gasPrice, gas=DEFAULT_GAS}:QueryArgs, events: any = {}):Promise<txid>{
         if(endpointParams.length > 0) {
             for (let i in endpointParams) {
                 if (!endpointParams[i].startsWith('0x')) {
@@ -39,12 +40,16 @@ export class ZapDispatch extends BaseContract {
                 }
             }
         }
-        return  await this.contract.methods.query(
+        const promiEvent = this.contract.methods.query(
             provider,
             query,
             utf8ToHex(endpoint),
             endpointParams
         ).send({from, gas,gasPrice});
+        for(let event in events) {
+            promiEvent.on(event, events[event]);
+        }
+        return promiEvent;
     }
 
     /**
@@ -71,39 +76,41 @@ export class ZapDispatch extends BaseContract {
      * @param {boolean} r.dynamic - Determines if the IntArray/Bytes32Array dispatch response should be used
      * @param {address} r.from  - Address of the provider calling the respond function
      * @param {BigNumber} r.gas - Set the gas limit for this transaction (optional)
+     * @param {any} events - Callbacks for events
      * @returns {Promise<txid>} Transaction hash
      */
-    async respond({queryId, responseParams, dynamic, from,gasPrice, gas=DEFAULT_GAS}:ResponseArgs) :Promise<txid>{
+    async respond({queryId, responseParams, dynamic, from,gasPrice, gas=DEFAULT_GAS}:ResponseArgs, events: any ={}) :Promise<txid>{
+        let promiEvent;
         if (dynamic){
             if(typeof responseParams[0] === "number"){
                 const bignums = responseParams.map(x => Number(x).toLocaleString('fullwide', { useGrouping: false }));
-                return this.contract.methods.respondIntArray(queryId, bignums).send({from,gas,gasPrice});
+                promiEvent = this.contract.methods.respondIntArray(queryId, bignums).send({from,gas,gasPrice});
             }
-            return this.contract.methods.respondBytes32Array(
+             promiEvent = this.contract.methods.respondBytes32Array(
                 queryId,
                 responseParams).send({from,gas});
-        }
-        switch (responseParams.length) {
+        } 
+        else switch (responseParams.length) {
             case 1: {
-                return this.contract.methods.respond1(
+                promiEvent = this.contract.methods.respond1(
                     queryId,
                     responseParams[0]).send({ from,gas});
             }
             case 2: {
-                return this.contract.methods.respond2(
+                const promiEvent = this.contract.methods.respond2(
                     queryId,
                     responseParams[0],
                     responseParams[1]).send({ from,gas });
             }
             case 3: {
-                return this.contract.methods.respond3(
+                promiEvent = this.contract.methods.respond3(
                     queryId,
                     responseParams[0],
                     responseParams[1],
                     responseParams[2]).send({ from,gas });
             }
             case 4: {
-                return this.contract.methods.respond4(
+                promiEvent = this.contract.methods.respond4(
                     queryId,
                     responseParams[0],
                     responseParams[1],
@@ -114,6 +121,11 @@ export class ZapDispatch extends BaseContract {
                 throw new Error('Invalid number of response parameters');
             }
         }
+        for(let event in events) {
+            promiEvent.on(event, events[event]);
+        }
+        return promiEvent;
+        
     }
 
     /*********** GETTERS *******************/

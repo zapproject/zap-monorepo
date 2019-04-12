@@ -86,7 +86,7 @@ describe('Zap Dispatch Test', () => {
                 endpointParams: ['a'],
                 from: accounts[2], // account that used for bond in booststrap function
                 gas: Utils.Constants.DEFAULT_GAS
-            });
+            }, { transactionHash: (bond_txid: any) => expect(bond_txid).to.be.defined });
         expect(queryData).to.have.any.keys(["events"])
         queryData = queryData.events.Incoming.returnValues;
         expect(queryData).to.have.any.keys(["provider","subscriber","query","endpoint","endpointParams","onchainSubscriber"])
@@ -165,7 +165,7 @@ describe('Zap Dispatch Test', () => {
                 responseParams: responses,
                 dynamic: false,
                 from: accounts[2]
-            });
+            }, { transactionHash: (bond_txid: any) => expect(bond_txid).to.be.defined });
         } catch(e) {
             await expect(e.toString()).to.include('revert');
         }

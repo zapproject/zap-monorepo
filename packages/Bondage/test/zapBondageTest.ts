@@ -113,7 +113,7 @@ describe('Zap Bondage Test', () => {
                 endpoint: testZapProvider.endpoint,
                 dots: 5,
                 from: accounts[2],
-            });
+            }, { transactionHash: (bond_txid: any) => expect(bond_txid).to.be.defined });
             const numZap = bonded.events.Bound.returnValues.numZap;
             const numDots = bonded.events.Bound.returnValues.numDots;
 
@@ -164,7 +164,7 @@ describe('Zap Bondage Test', () => {
                 endpoint: testZapProvider.endpoint,
                 dots: 1,
                 from: accounts[2],
-            });
+            }, { transactionHash: (bond_txid: any) => expect(bond_txid).to.be.defined });
 
             const postAmt = await deployedToken.contract.methods.balanceOf(accounts[2]).call();
             const diff = new BigNumber(postAmt).minus(new BigNumber(preAmt)).toString();
@@ -179,7 +179,7 @@ describe('Zap Bondage Test', () => {
             endpoint: endpointB,
             dots: 1,
             from: broker,
-        });
+        }, { transactionHash: (bond_txid: any) => expect(bond_txid).to.be.defined });
 
         const postAmt = await deployedToken.contract.methods.balanceOf(accounts[2]).call();
         const postAmtBroker = await deployedToken.contract.methods.balanceOf(broker).call();
@@ -261,7 +261,7 @@ describe('Zap Bondage Test', () => {
                 dots: 1,
                 subscriber: accounts[1],
                 from: accounts[2]
-            });
+            }, { transactionHash: (bond_txid: any) => expect(bond_txid).to.be.defined });
 
             const finalDots = await bondageWrapper.getBoundDots({subscriber: accounts[1], provider: accounts[0], endpoint: testZapProvider.endpoint});
             expect(finalDots - startDots).to.equal(1);

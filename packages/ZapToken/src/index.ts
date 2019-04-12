@@ -41,11 +41,16 @@ const {toHex} = require("web3-utils")
      * @param {number} t.amount - Amount of Zap to transfer (wei)
      * @param {address} t.from - Address of the sender
      * @param {number} t.gas - Sets the gas limit for this transaction (optional)
+     * @param {any} events - Callbacks for events
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-     async send({to, amount, from,gasPrice, gas=Util.DEFAULT_GAS}:TransferType) :Promise<txid>{
+     async send({to, amount, from,gasPrice, gas=Util.DEFAULT_GAS}:TransferType, events: any = {}) :Promise<txid>{
         amount = toHex(amount)
-        return await this.contract.methods.transfer(to, amount).send({from,gas});
+        const promiEvent = this.contract.methods.transfer(to, amount).send({from,gas});
+        for(let event in events) {
+            promiEvent.on(event, events[event]);
+        }
+        return promiEvent;
     }
 
     /**
@@ -55,11 +60,17 @@ const {toHex} = require("web3-utils")
      * @param {number} t.amount - Amount of Zap to allocate (wei)
      * @param {address} t.from - Address of the sender (must be owner of the Zap contract)
      * @param {number} t.gas - Sets the gas limit for this transaction (optional)
+     * @param {any} events - Callbacks for events
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-     async allocate({to, amount, from,gasPrice, gas=Util.DEFAULT_GAS}:TransferType):Promise<txid> {
+     async allocate({to, amount, from,gasPrice, gas=Util.DEFAULT_GAS}:TransferType, events: any = {}):Promise<txid> {
         amount = toHex(amount)
-        return await this.contract.methods.allocate(to, amount).send({from,gas});
+        const promiEvent = this.contract.methods.allocate(to, amount).send({from,gas});
+        for(let event in events) {
+            promiEvent.on(event, events[event]);
+        }
+        
+        return promiEvent;
     }
 
     /**
@@ -69,11 +80,16 @@ const {toHex} = require("web3-utils")
      * @param {number} t.amount - Amount of Zap to approve (wei)
      * @param {address} t.from - Address of the sender
      * @param {number} t.gas - Sets the gas limit for this transaction (optional)
+     * @param {any} events - Callbacks for events
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-     async approve({to, amount, from,gasPrice, gas=Util.DEFAULT_GAS}:TransferType):Promise<txid> {
+     async approve({to, amount, from,gasPrice, gas=Util.DEFAULT_GAS}:TransferType, events: any = {}):Promise<txid> {
         amount = toHex(amount)
-        const success = await this.contract.methods.approve(to, amount).send({from,gas});
+        const promiEvent = this.contract.methods.approve(to, amount).send({from,gas});
+        const success = await promiEvent;
+        for(let event in events) {
+            promiEvent.on(event, events[event]);
+        }
         if (!success) {
             throw new Error('Failed to approve Bondage transfer');
         }

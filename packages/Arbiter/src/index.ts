@@ -37,22 +37,27 @@ export class ZapArbiter extends BaseContract {
      * @param {number} r.provider - Public key of provider
      * @param {address} r.from - Subscriber's address
      * @param {number} r.gas - Set the gas limit for this transaction (optional)
+     * @param {any} events - Callbacks for events
      * @returns {Promise<txid>} Transaction hash
      */
     async initiateSubscription(
-        {provider, endpoint, endpoint_params, blocks, pubkey, from, gasPrice, gas=DEFAULT_GAS} : SubscriptionInit):Promise<txid> {
+        {provider, endpoint, endpoint_params, blocks, pubkey, from, gasPrice, gas=DEFAULT_GAS} : SubscriptionInit, events: any = {}):Promise<txid> {
         endpoint_params = endpoint_params.map((i:string)=>{
             if(!isHex(i)) {
                 return utf8ToHex(i)
             }
             else return i;
         })
-        return await this.contract.methods.initiateSubscription(
+        const promiEvent = this.contract.methods.initiateSubscription(
             provider,
             utf8ToHex(endpoint),
             endpoint_params,
             pubkey,
             blocks).send({from, gas,gasPrice});
+        for(let event in events) {
+            promiEvent.on(event, events[event]);
+        }
+        return promiEvent;
     }
 
     /**
@@ -62,15 +67,19 @@ export class ZapArbiter extends BaseContract {
      * @param {string} s.endpoint - Data endpoint of the provider
      * @param {address} s.from - Address of the subscriber
      * @param {number} s.gas - Gas limit of this transaction
+     * @param {any} events - Callbacks for events
      * @returns {Promise<txid>} Transaction hash
      */
-    async endSubscriptionSubscriber({provider, endpoint, from, gasPrice, gas=DEFAULT_GAS}:SubscriptionEnd) :Promise<txid>{
+    async endSubscriptionSubscriber({provider, endpoint, from, gasPrice, gas=DEFAULT_GAS}:SubscriptionEnd, events: any = {}) :Promise<txid>{
         let unSubscription:any
-        unSubscription =  await this.contract.methods.endSubscriptionSubscriber(
+        const promiEvent =  await this.contract.methods.endSubscriptionSubscriber(
             provider,
             utf8ToHex(endpoint))
             .send({from, gas,gasPrice});
-        return unSubscription
+        for(let event in events) {
+            promiEvent.on(event, events[event]);
+        }
+        return promiEvent;
     }
 
     /**
@@ -80,15 +89,19 @@ export class ZapArbiter extends BaseContract {
      * @param {string} s.endpoint - Data endpoint of the provider
      * @param {address} s.from - Address of the provider
      * @param {number} s.gas - Gas limit of this transaction
+     * @param {any} events - Callbacks for events
      * @returns {Promise<txid>} Transaction hash
      */
-    async endSubscriptionProvider({subscriber, endpoint, from, gasPrice, gas=DEFAULT_GAS}:SubscriptionEnd) :Promise<txid>{
+    async endSubscriptionProvider({subscriber, endpoint, from, gasPrice, gas=DEFAULT_GAS}:SubscriptionEnd, events: any = {}) :Promise<txid>{
         let unSubscription:any;
-        unSubscription= await this.contract.methods.endSubscriptionProvider(
+        const promiEvent = await this.contract.methods.endSubscriptionProvider(
             subscriber,
             utf8ToHex(endpoint))
             .send({from, gas, gasPrice});
-        return unSubscription;
+        for(let event in events) {
+            promiEvent.on(event, events[event]);
+        }
+        return promiEvent;
     }
 
     /**
@@ -98,16 +111,21 @@ export class ZapArbiter extends BaseContract {
      * @param {string} s.endpoint - Data endpoint of the provider
      * @param {Array<string>} s.params - Params passed to reciever
      * @param {number} s.gas - Gas limit of this transaction
+     * @param {any} events - Callbacks for events
      * @returns {Promise<txid>} Transaction hash
      */
-    async passParams({receiver, endpoint, params, from, gasPrice, gas=DEFAULT_GAS} : SubscriptionParams) :Promise<txid>{
+    async passParams({receiver, endpoint, params, from, gasPrice, gas=DEFAULT_GAS} : SubscriptionParams, events: any = {}) :Promise<txid>{
         params = params.map((i:string)=>{
             if(!isHex(i)) {
                 return utf8ToHex(i)
             }
             else return i;
         })
-        return await this.contract.methods.passParams(receiver,utf8ToHex(endpoint),params).send({from, gas, gasPrice});
+        const promiEvent = this.contract.methods.passParams(receiver,utf8ToHex(endpoint),params).send({from, gas, gasPrice});
+        for(let event in events) {
+            promiEvent.on(event, events[event]);
+        }
+        return promiEvent;
     }
 
     /************************* GETTERS *****************************/

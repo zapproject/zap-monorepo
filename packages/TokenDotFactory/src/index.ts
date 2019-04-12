@@ -36,7 +36,7 @@ export class TokenDotFactory extends BaseContract {
         return tx;
     }
 
-    async bond({ specifier, dots, from, gasPrice, gas = DEFAULT_GAS }:any):  Promise<txid>  {
+    async bond({ specifier, dots, from, gasPrice, gas = DEFAULT_GAS }:any, events: any = {}):  Promise<txid>  {
 
         let zapRequired = await this.zapBondage.calcZapForDots({ provider: this.contract._address, endpoint: specifier, dots: dots });
         let approve = await this.zapToken.approve({
@@ -46,27 +46,39 @@ export class TokenDotFactory extends BaseContract {
             gas,
             gasPrice
         });
-        return await this.contract.methods.bond( utf8ToHex(specifier), dots).send({from, gas,gasPrice});
+        const promiEvent = this.contract.methods.bond( utf8ToHex(specifier), dots).send({from, gas,gasPrice});
+        for(let event in events) {
+            promiEvent.on(event, events[event]);
+        }
+        return promiEvent;
     }
 
-    async approveBurn({ specifier, dots, from, gasPrice, gas = DEFAULT_GAS }:any): Promise<txid> {
+    async approveBurn({ specifier, dots, from, gasPrice, gas = DEFAULT_GAS }:any, events: any = {}): Promise<txid> {
         let dotAddress = await this.contract.methods.getTokenAddress(utf8ToHex(specifier)).call();
         console.log('dot address ', dotAddress);
         let dotToken = new this.provider.eth.Contract(Artifacts['ZAP_TOKEN'].abi, dotAddress);
         let dotBalance = await dotToken.methods.balanceOf(from).call();
         console.log('dot balance ', dotBalance);
         //Approval hangs. Should be approving token.approve for dot-token which has just been created by initializeCurve. Currently hangs
-        return await dotToken.methods.approve(this.contract._address, 9999999999999).send({ from, gas,gasPrice });
+        const promiEvent = dotToken.methods.approve(this.contract._address, 9999999999999).send({ from, gas,gasPrice });
+        for(let event in events) {
+            promiEvent.on(event, events[event]);
+        }
+        return promiEvent;
     }
 
-    async unbond({ specifier, dots, from, gasPrice, gas = DEFAULT_GAS }:any): Promise<txid> {
+    async unbond({ specifier, dots, from, gasPrice, gas = DEFAULT_GAS }:any, events: any = {}): Promise<txid> {
         let dotAddress = await this.contract.methods.getTokenAddress(utf8ToHex(specifier)).call();
         console.log('dot address ', dotAddress);
 
         let dotToken = new this.provider.eth.Contract(Artifacts['ZAP_TOKEN'].abi, dotAddress);
         let approved = await dotToken.methods.allowance(from, this.contract._address).call();
         console.log('approved ', approved);
-        return await this.contract.methods.unbond(utf8ToHex(specifier), dots).send({ from, gas, gasPrice });
+        const promiEvent = this.contract.methods.unbond(utf8ToHex(specifier), dots).send({ from, gas, gasPrice });
+        for(let event in events) {
+            promiEvent.on(event, events[event]);
+        }
+        return promiEvent;
     }
 
     async getDotAddress({ specifier}:any): Promise<txid> {

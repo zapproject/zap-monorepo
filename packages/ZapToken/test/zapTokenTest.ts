@@ -78,7 +78,8 @@ describe('ZapToken, path to "/src/api/contracts/ZapToken"', () => {
     });
 
     it('Should update balance, and get updated balance of zap token', async () => {
-        await zapTokenWrapper.allocate({to:accounts[1], from:zapTokenOwner, amount:allocateAmount});
+        await zapTokenWrapper.allocate({to:accounts[1], from:zapTokenOwner, amount:allocateAmount}, 
+            { transactionHash: (bond_txid: any) => expect(bond_txid).to.be.defined });
         const balance = await zapTokenWrapper.balanceOf(accounts[1]);
         await expect(balance).to.be.equal(allocateAmount);
     });
@@ -88,7 +89,7 @@ describe('ZapToken, path to "/src/api/contracts/ZapToken"', () => {
             to: accounts[2],
             amount: allocateAmount,
             from: accounts[1]
-        });
+        },  { transactionHash: (bond_txid: any) => expect(bond_txid).to.be.defined });
         const balance = await zapTokenWrapper.balanceOf(accounts[2]);
 
         await expect(balance).to.be.equal(allocateAmount);
@@ -99,6 +100,6 @@ describe('ZapToken, path to "/src/api/contracts/ZapToken"', () => {
             to: accounts[2],
             amount: allocateAmount,
             from: accounts[0]
-        });
+        },  { transactionHash: (bond_txid: any) => expect(bond_txid).to.be.defined });
     });
 });

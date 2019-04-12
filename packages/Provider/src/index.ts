@@ -53,11 +53,12 @@ import {ZapArbiter} from "@zapjs/arbiter";
      * @param {InitProvider} i. {public_key, title, gas=DEFAULT_GAS}
      * @param {string} i.public_key A public identifier for this oracle
      * @param {string} i.title A descriptor describing what data this oracle provides
+     * @param {any} events - Callbacks for events
      * @returns {Promise<txid>} Transaction Hash
      */
-     async initiateProvider({public_key, title, gasPrice, gas=DEFAULT_GAS}:InitProvider):Promise<txid> {
+     async initiateProvider({public_key, title, gasPrice, gas=DEFAULT_GAS}:InitProvider, events: any = {}):Promise<txid> {
         return await this.zapRegistry.initiateProvider(
-            {public_key, title, from: this.providerOwner, gas,gasPrice});
+            {public_key, title, from: this.providerOwner, gas,gasPrice}, events);
     }
 
     /**
@@ -66,12 +67,13 @@ import {ZapArbiter} from "@zapjs/arbiter";
      * @param {string} i.endpoint - The endpoint identifier matching the created endpoint
      * @param {address} i.broker - Address of broker allowed to bond/unbond. 0 means anyone can
      * @param {number[]} i.term - The curve array for this endpoint, setting the coefficients, powers, and domains for each piece.
+     * @param {any} events - Callbacks for events
      * @returns {Promise<txid>} Transaction hash
      */
-     async initiateProviderCurve({endpoint, term, broker, gasPrice, gas=DEFAULT_GAS}: InitCurve) :Promise<txid>{
+     async initiateProviderCurve({endpoint, term, broker, gasPrice, gas=DEFAULT_GAS}: InitCurve,  events: any = {}) :Promise<txid>{
         if(endpoint in this.curves) throw("Endpoint " + endpoint + " already exists");
         let curve = new Curve(term)
-        let txid = await this.zapRegistry.initiateProviderCurve({endpoint, term, broker, from: this.providerOwner,gas,gasPrice});
+        let txid = await this.zapRegistry.initiateProviderCurve({endpoint, term, broker, from: this.providerOwner,gas,gasPrice}, events);
         assert(txid, 'Failed to init curve.');
         this.curves[endpoint] = curve;
         return txid;
@@ -82,16 +84,17 @@ import {ZapArbiter} from "@zapjs/arbiter";
      * @param {SetProviderParams} s. { key, value}
      * @param {string} s.key - The key to be set
      * @param {string} s.value - The value to set the key to
+     * @param {any} events - Callbacks for events
      * @returns {Promise<txid>} Transaction Hash
      */
-    async setProviderParameter({ key, value, gasPrice, gas=DEFAULT_GAS}: SetProviderParams): Promise<txid> {
+    async setProviderParameter({ key, value, gasPrice, gas=DEFAULT_GAS}: SetProviderParams,  events: any = {}): Promise<txid> {
         return await this.zapRegistry.setProviderParameter({
             key,
             value,
             from: this.providerOwner,
             gas,
             gasPrice
-        });
+        }, events);
     }
 
     async setTitle({title, gasPrice, gas=DEFAULT_GAS}:SetProviderTitle):Promise<txid>{
@@ -103,19 +106,20 @@ import {ZapArbiter} from "@zapjs/arbiter";
      * @param endpoint
      * @param endpoint_params
      * @param gas
+     * @param {any} events - Callbacks for events
      * @returns {Promise<txid>} Transaction Hash
      */
-    async setEndpointParams({endpoint,endpoint_params=[], gasPrice, gas=DEFAULT_GAS}:EndpointParams):Promise<txid>{
+    async setEndpointParams({endpoint,endpoint_params=[], gasPrice, gas=DEFAULT_GAS}:EndpointParams,  events: any = {}):Promise<txid>{
         return await this.zapRegistry.setEndpointParams({
             endpoint,
             endpoint_params,
             from:this.providerOwner,
             gas,
             gasPrice
-        })
+        }, events)
     }
 
-    async clearEndpoint({endpoint, gasPrice, gas=DEFAULT_GAS}:ClearEndpoint):Promise<txid>{
+    async clearEndpoint({endpoint, gasPrice, gas=DEFAULT_GAS}:ClearEndpoint, events: any = {}):Promise<txid>{
         const endpoints = await this.zapRegistry.getProviderEndpoints(this.providerOwner);
         if(!endpoints.includes(endpoint)){
             throw "Endpoint is not valid"
@@ -128,7 +132,7 @@ import {ZapArbiter} from "@zapjs/arbiter";
         if(parseInt(zapBound.toString())>0){
             throw "There are zap bound from subscribers, cant clear endpoint"
         }
-        return await this.zapRegistry.clearEndpoint({endpoint,from:this.providerOwner,gas, gasPrice})
+        return await this.zapRegistry.clearEndpoint({endpoint,from:this.providerOwner,gas, gasPrice}, events)
     }
 
     /******************GETTERS**************************/
@@ -300,10 +304,11 @@ import {ZapArbiter} from "@zapjs/arbiter";
      * @param {string} e.queryId - The query identifier to send this response to
      * @param {string[] | number[]} e.responseParams - List of responses returned by provider. Length determines which dispatch response is called
      * @param {boolean} e.dynamic - True if the response contains a dynamic bytes32 array
+     * @param {any} events - Callbacks for events
      * @returns {Promise<txid>} Transaction hash
      */
-     async respond({queryId, responseParams, dynamic, gas=DEFAULT_GAS}:Respond):Promise<string>{
-        return await this.zapDispatch.respond({queryId, responseParams, dynamic, from: this.providerOwner,gas});
+     async respond({queryId, responseParams, dynamic, gas=DEFAULT_GAS}:Respond,  events: any = {}):Promise<string>{
+        return await this.zapDispatch.respond({queryId, responseParams, dynamic, from: this.providerOwner,gas}, events);
     }
 
 
