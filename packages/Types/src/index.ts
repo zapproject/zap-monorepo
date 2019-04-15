@@ -1,6 +1,5 @@
 import {BigNumber} from "bignumber.js"
-import {TransactionReceipt,TxData,ContractAbi} from "ethereum-types";
-
+import {ContractAbi} from "ethereum-types";
 export type address = string;
 export type txid = string;
 export type BNType = BigNumber;
@@ -46,14 +45,18 @@ export interface BaseContractType  {
     networkId?: number|undefined,
     networkProvider?: any|undefined,
     contract ?: any,
-    coordinator ?:string
+    coordinator ?:string,
+    address ?: string,
+    web3 ?: any
 }
 
 export interface NetworkProviderOptions{
     artifactsDir ?:string|undefined,
     networkId?: number|undefined,
     networkProvider: any,
-    coordinator ?:string
+    coordinator ?:string,
+    address ?: string,
+    web3 ?: any
 }
 
 export interface TransferType extends defaultTx{
@@ -121,7 +124,10 @@ export interface ParamsPassedEvent {
 
 //############### BONDAGE ###############
 
-
+export interface TokenBondType extends defaultTx{
+    endpoint:string,
+    dots : NumType
+}
 export interface BondType extends defaultTx {
     subscriber ?:address,
     provider:address,
@@ -253,6 +259,10 @@ export interface InitCurve extends defaultTx{
     broker?: address
 }
 
+export interface InitDotTokenCurve extends InitCurve{
+    symbol:string
+}
+
 export type UnsubscribeListen = {
     subscriber:address,
     terminator : address,
@@ -282,7 +292,7 @@ export interface SetProviderTitle extends defaultTx{
     title:string
 }
 
-export interface ClearEndpoint extends defaultTx{
+export interface EndpointMethods extends defaultTx{
     endpoint:string
 }
 

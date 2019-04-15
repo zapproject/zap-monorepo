@@ -1,9 +1,10 @@
 {
   "extends": "../../tsconfig",
   "compilerOptions": {
-    "target":"es6"
+    "target":"es6",
+    "outDir": "lib"
   },
-  "include": ["./src/**/*","./src/typings.d.ts","./src/contracts/*"],
+  "include": ["./src/**/*","./src/typings.d.ts","./src/contracts/*", "./test/*"],
   "exclude":[
     "node_modules"
   ]

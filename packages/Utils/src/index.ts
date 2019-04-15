@@ -1,9 +1,8 @@
 import {ZapProviderType} from "./types";
 import {clearBuild, getArtifacts, migrateContracts, startGanacheServer} from "./migrations";
-const {utf8ToHex,toBN} = require("web3-utils");
-const Web3 = require('web3');
-const web3 = new Web3();
-
+import BigNumber from "bignumber.js";
+const {utf8ToHex,fromWei,toWei} = require("web3-utils");
+const Web3 = require("web3")
 /**
  * @class
  * Utils
@@ -64,8 +63,8 @@ export class Utils {
      * @param {number} num
      * @returns {any}
      */
-    static toZapBase(num: number) {
-        return web3.utils.toBN(num).mul(web3.utils.toBN(10).pow(web3.utils.toBN(18))).toString();
+    static toZapBase(num: number|string|BigNumber) {
+        return toWei(num)
     }
 
     /**
@@ -74,7 +73,7 @@ export class Utils {
      * @returns {number}
      */
     static fromZapBase(num: number|string):number {
-        return web3.utils.toBN(num).div(web3.utils.toBN(10).pow(web3.utils.toBN(18))).toNumber();
+        return fromWei(num)
     }
 
     /**

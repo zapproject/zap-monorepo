@@ -2,7 +2,8 @@ import {Curve} from "@zapjs/curve"
 const Web3  = require('web3');
 import {join,dirname} from "path";
  Web3.providers.HttpProvider.prototype.sendAsync = Web3.providers.HttpProvider.prototype.send;
-const zapContractDirName = dirname(require.resolve("zap_contracts/truffle-config.js"))
+Web3.providers.WebsocketProvider.prototype.sendAsync = Web3.providers.WebsocketProvider.prototype.send;
+ const zapContractDirName = dirname(require.resolve("zap_contracts/truffle-config.js"))
 const  migrationDir = join(zapContractDirName,"migrations")
 const contractsDir = join(zapContractDirName,"contracts")
 const workingDir = zapContractDirName
@@ -10,7 +11,7 @@ const workingDir = zapContractDirName
 // y = 2x + x^2 from [1, 100]
 export const TEST_CURVE = [3, 0, 2, 1, 1000000000000000000];
 
-
+let env = require("truffle-core/lib/environment.js")
 export const  migrate = require("truffle-core/lib/commands/migrate.js");
 /**
  * @ignore
@@ -26,7 +27,13 @@ export const ganacheServerOptions={
     gas: 6700000 ,
     gasPrice: 20000000,
     network: "ganache-gui",
-    "solc":"0.4.25"
+    mnemonic:"solid giraffe crowd become skin deliver screen receive balcony ask manual current",
+    solc:"0.4.24",
+    compilers:{
+         solc:{
+             version:"0.4.24"
+         }
+    }
 };
 /**
  *@ignore
@@ -37,7 +44,8 @@ export let  buildOptions ={
     contracts_build_directory: __dirname,
     contracts_directory:contractsDir,
     working_directory: workingDir,
-    migrations_directory: migrationDir
+    migrations_directory: migrationDir,
+
 } ;
 
 /**
@@ -56,8 +64,9 @@ export const testZapProvider:any = {
 }
 
 export const EndpointBroker = "EndpointBroker";
-export const ganacheProvider = new Web3.providers.HttpProvider('http://127.0.0.1:7545');
+// export const ganacheProvider = new Web3.providers.HttpProvider('http://127.0.0.1:7545');
 //export const ganacheProvider = new Web3.providers.WebsocketProvider('ws://127.0.0.1:7545');
+export const ganacheProvider = 'http://127.0.0.1:7545';
 
 
 /**

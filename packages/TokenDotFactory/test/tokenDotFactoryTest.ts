@@ -1,23 +1,20 @@
 import {join} from "path";
 const Web3 = require('web3');
-const {hexToUtf8,BN,utf8ToHex, toBN} = require("web3-utils");
+import {ZapRegistry} from "@zapjs/registry"
+const {utf8ToHex, toWei, fromWei} = require("web3-utils");
 const expect = require('chai')
 .use(require('chai-as-promised'))
 .use(require('chai-bignumber'))
 .expect;
-//import {bootstrap} from "./setup_test";
 const ganache = require("ganache-cli");
 
-
-import {Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS,NULL_ADDRESS} from "@zapjs/types";
+import {ZapProvider} from "@zapjs/provider"
+import {ZapBondage} from "@zapjs/bondage";
 import {Curve} from "@zapjs/curve"
 import {Utils} from "@zapjs/utils";
 import {BaseContract} from "@zapjs/basecontract"
-import {ZapRegistry} from '@zapjs/registry';
-import {ZapToken} from '@zapjs/zaptoken';
 import {TokenDotFactory} from '../src';
 
-console.log("23424234324324");
 
 async function configureEnvironment(func:Function) {
     await func();
@@ -47,67 +44,36 @@ describe('TokenDotFactory test', () => {
     testProvider = Utils.Constants.testZapProvider,
     buildDir:string = join(__dirname,"contracts"),
     deployedToken: any,
-    deployedRegistry:any,
+    Registry:any,
+    Bondage:any,
     dotWrapper:any,
-    account:any,
+    tokenDotAccount:any,
+    providerAccount:any,
+    zapProvider:any,
+        userAccount:any,
+     contractAddress:any,
     options:any = {
         artifactsDir: buildDir,
         networkId: Utils.Constants.ganacheServerOptions.network_id,
         networkProvider: Utils.Constants.ganacheProvider
     };
-
     before(function (done) {
         configureEnvironment(async() => {
             try {
-                // ganacheServer = await Utils.startGanacheServer();
-                console.log("started");
+                ganacheServer = await Utils.startGanacheServer();
                 web3 = new Web3(Utils.Constants.ganacheProvider);
+                options.web3 = web3
                 accounts = await web3.eth.getAccounts();
-                account = accounts[0];
-                console.log("account: ", account);
-
-
-
-                await Utils.migrateContracts(join(__dirname, "contracts"));
+                tokenDotAccount = accounts[0];
+                providerAccount = accounts[1];
+                userAccount = accounts[3]
+                console.log("account: ", tokenDotAccount,providerAccount);
+                await Utils.migrateContracts(buildDir);
 
                 testArtifacts = Utils.getArtifacts(join(__dirname, "contracts"));
-
                 deployedToken = new BaseContract(Object.assign(options, {artifactName: "ZAP_TOKEN"}));
-                let tokenOwner = await deployedToken.contract.methods.owner().call();
-
-                let nonce = await web3.eth.getTransactionCount(account);
-                console.log("nonce = " + nonce);
-                await deployedToken.contract.methods.allocate(account, Utils.toZapBase(100000000000000)).send({
-                    from: tokenOwner,
-                    gas: Utils.Constants.DEFAULT_GAS,
-                   // nonce: nonce
-                });
-                let bal = await deployedToken.contract.methods.balanceOf(account).call();
-                console.log("balance : ", bal);
-
-                nonce = await web3.eth.getTransactionCount(account);
-                console.log("nonce = " + nonce);
-                dotWrapper = new BaseContract(Object.assign(options, {artifactName: "TOKENDOTFACTORY"}));
-                deployedRegistry = new BaseContract(Object.assign(options, {artifactName: "REGISTRY"}));
-                let txid = await sendTransaction(account, deployedRegistry.contract.methods.initiateProvider(/*toBN(111).toString()*/111, utf8ToHex("title")));
-                console.log("initiate provider ", txid);
-                //correct balance
-
-                dotWrapper = await new TokenDotFactory(options);
-                await Utils.delay(3000);
-                expect(dotWrapper).to.be.ok;
-
-
-                let p = {
-                    specifier: testProvider.endpoint,
-                    ticker: testProvider.endpoint,
-                    term: testProvider.curve.values ,
-                    from: account,
-                    gas:2000000,
-                };
-                console.log(dotWrapper.contract._address);
-                let tx = await sendTransaction(account, dotWrapper.contract.methods.initializeCurve(utf8ToHex(p.specifier), utf8ToHex(p.ticker), p.term));
-                console.log("init curve from dotwrapper");
+                Registry = new ZapRegistry(options)
+                Bondage = new ZapBondage(options)
                 done();
             } catch (e) {
                 console.log(e);
@@ -116,40 +82,80 @@ describe('TokenDotFactory test', () => {
         });
     });
 
+    after(function(){
+        console.log("Done running Token tests");
+        ganacheServer.close();
+        process.exit();
+    });
+
+    it("1. Should init TokenDot class",async ()=>{
+        let tokenOwner = await deployedToken.contract.methods.owner().call();
+        const ZAP_ALLOCATE = toWei("100000000000000")
+        for(let account of accounts) {
+            await deployedToken.contract.methods.allocate(account,ZAP_ALLOCATE ).send({
+                from: tokenOwner,
+                gas: Utils.Constants.DEFAULT_GAS,
+            });
+        }
+        let bal = await deployedToken.contract.methods.balanceOf(tokenDotAccount).call();
+        expect(bal).equal(ZAP_ALLOCATE)
+        //check if tokenDotAccount has been initalized
+        dotWrapper = await new TokenDotFactory(options);
+        contractAddress = dotWrapper.contract._address
+        await deployedToken.contract.methods.allocate(contractAddress, ZAP_ALLOCATE).send({
+            from: tokenOwner,
+            gas: Utils.Constants.DEFAULT_GAS,
+        });
+       let title = await Registry.getProviderTitle(contractAddress)
+        expect(title).to.be.ok
+        await Utils.delay(3000);
+        expect(dotWrapper).to.be.ok;
+        expect(dotWrapper.contract._address).to.be.ok
+        await Registry.initiateProvider({public_key:111,title:"title",from:providerAccount})
+        console.log("TITLE",await Registry.getProviderTitle(providerAccount))
+
+    })
+
     // async initializeCurve({ specifier, ticker, term, from, gas=gas}:InitTokenCurve): Promise<txid> {
-    it('Should initialize token curve', async () => {
+    it('1. Should initialize token curve', async () => {
+        try {
 
-        // dotWrapper = await new TokenDotFactory(options)
-        // await Utils.delay(3000);
-        // expect(dotWrapper).to.be.ok
-        //
-        // let extraGas =toBN(DEFAULT_GAS).mul(toBN(10));
-        //
-        // let p = {
-        //     specifier: testProvider.endpoint,
-        //     ticker: testProvider.endpoint,
-        //     term: testProvider.curve.values ,
-        //     from: account,
-        //     gas:extraGas
-        // };
-        // console.log(p)
-      //   console.log(dotWrapper.contract.methods.initializeCurve)
-      //    let tx = await dotWrapper.contract.methods.initializeCurve(
-      //       utf8ToHex(p.specifier),
-      //       utf8ToHex(p.ticker),
-      //       p.term
-      //   ).send({from:p.from, gas:Utils.Constants.DEFAULT_GAS});
-      //
-      // //let tx =  await dotWrapper.initializeCurve(p);
-      //   console.log('tx ', tx);
-
-        // let address = await dotWrapper.contract.methods.getTokenAddress(utf8ToHex(p.specifier));
-        // console.log('address ', address);
-        // let approveTokens = new toBN("1000e18");
-        // deployedToken.contract.methods.approve(dotWrapper.contract.address, approveTokens).send({from:p.from, gas:p.gas});
-        // await dotWrapper.contract.bond(utf8ToHex(p.specifier), 1).send({from:p.from, gas:p.gas});
+            let tx: any = await dotWrapper.initializeTokenCurve({
+                endpoint: testProvider.endpoint,
+                symbol: testProvider.endpoint,
+                term: testProvider.curve.values,
+                from: providerAccount
+            })
+            let tokenAddress = await dotWrapper.getDotAddress(testProvider.endpoint);
+            expect(tokenAddress).to.be.ok
+            let isInit = await Registry.isProviderInitiated(contractAddress)
+            expect(isInit).to.equal(true)
+        }catch(e){
+            console.error(e)
+        }
+    });
+    it.skip("2. Should be able to bond to tokendot Endpoint",async()=>{
+        let approveTokens = toWei("100");
+        dotWrapper.approveToBond({from:userAccount, zapNum:approveTokens});
+        let tx = await dotWrapper.bondTokenDot({endpoint:testProvider.endpoint,dots:1,from:userAccount})
+        expect(tx).to.be.ok
+        let boundDots = await Bondage.getBoundDots({provider:contractAddress,subscriber:userAccount,endpoint:testProvider.endpoint})
+        expect(boundDots).to.equal(1)
+        let dotsBalance = await dotWrapper.getDotTokenBalance({endpoint:testProvider.endpoint,from:userAccount})
+        expect(dotsBalance).to.equal(1)
+    });
+    it.skip("3. Should be able to approve to burn", async()=>{
+        let tx = await dotWrapper.approveToBurn({endpoint:testProvider.endpoint,from:userAccount})
 
     });
+    it.skip("4. Should be able to unbond from endpoint",async()=>{
+        let tx = await dotWrapper.unbondTokenDot({endpoint:testProvider.endpoint,dots:1,from:userAccount})
+        let boundDots = await Bondage.getBoundDots({endpoint:testProvider.endpoint,from:userAccount,provider:contractAddress})
+        expect(boundDots).to.equal(0)
+        let tokenBalance = await dotWrapper.getDotTokenBalance({endpoint:testProvider,from:userAccount})
+        expect(tokenBalance).to.equal(0)
+    })
+
 
 
 });

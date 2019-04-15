@@ -1,7 +1,7 @@
 {
 	"name": "@zapjs/curve",
 	"private": false,
-	"version": "2.0.12",
+	"version": "2.2.0",
 	"description": "Zap Curve",
 	"repository": "https://github.com/zapproject/Zap-monorepo",
 	"main": "lib/src/index.js",
@@ -11,31 +11,32 @@
 	"author": "",
 	"license": "ISC",
 	"scripts": {
-   		"build": "tsc",
-   		"test": "mocha  -r ts-node/register test/*.ts --serial --bail --exit",
-   		"run_test": "run-s build test",
-   		"webpack": "./node_modules/.bin/webpack"
- 	},
+		"build": "tsc",
+		"test": "mocha  -r ts-node/register test/*.ts --serial --bail --exit",
+		"run_test": "run-s build test",
+		"webpack": "./node_modules/.bin/webpack"
+	},
 	"dependencies": {
-	  "@zapjs/types": "^2.0.10",
-	  "web3": "1.0.0-beta.36"
+		"@zapjs/types": "^2.2.0",
+		"web3": "1.0.0-beta.37"
 	},
 	"devDependencies": {
-	  "@types/chai": "^4.1.5",
-	  "@types/mocha": "^5.2.4",
-	  "@types/node": "^10.10.3",
-	  "bignumber.js": "^7.2.1",
-	  "chai": "^4.1.2",
-	  "chai-as-promised": "^7.1.1",
-	  "chai-bignumber": "^2.0.2",
-	  "make-promises-safe": "^1.1.0",
-	  "mocha": "^5.2.0",
-	  "path": "^0.12.7",
-	  "ts-loader": "^4.5.0",
-	  "ts-node": "^7.0.0",
-	  "tslint": "^5.10.0",
-	  "typescript": "^2.9.2",
-	  "web3-utils": "1.0.0-beta.36"
+		"@types/chai": "^4.1.5",
+		"@types/mocha": "^5.2.4",
+		"@types/node": "^10.10.3",
+		"bignumber.js": "^7.2.1",
+		"chai": "^4.1.2",
+		"chai-as-promised": "^7.1.1",
+		"chai-bignumber": "^2.0.2",
+		"make-promises-safe": "^1.1.0",
+		"mocha": "^5.2.0",
+		"path": "^0.12.7",
+		"ts-loader": "^4.5.0",
+		"ts-node": "^7.0.0",
+		"tslint": "^5.10.0",
+		"typescript": "^2.9.2",
+		"web3": "1.0.0-beta.37",
+		"web3-utils": "1.0.0-beta.37"
 	},
 	"publishConfig": {
 		"access": "public"

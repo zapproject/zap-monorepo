@@ -97,7 +97,7 @@ const asyncMigrate = promisify(migrate.run);
   try {
     clearBuild(false, buildDir);
     //console.log("running all");
-    await asyncMigrate(options);
+    await asyncMigrate(options)
     return true;
   } catch (err) {
     console.error(err)

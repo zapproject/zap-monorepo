@@ -1,5 +1,6 @@
 import {join} from "path";
 const Web3 = require('web3');
+Web3.providers.HttpProvider.prototype.sendAsync = Web3.providers.HttpProvider.prototype.send;
 const {hexToUtf8,BN,utf8ToHex} = require("web3-utils");
 const expect = require('chai')
 .use(require('chai-as-promised'))
@@ -31,7 +32,7 @@ describe('Registry test', () => {
     before(function (done) {
         configureEnvironment(async() => {
             await Utils.clearBuild(false,buildDir)
-            // ganacheServer = await Utils.startGanacheServer();
+            ganacheServer = await Utils.startGanacheServer();
             web3 = new Web3(Utils.Constants.ganacheProvider);
             accounts = await web3.eth.getAccounts();
             //delete require.cache[require.resolve('/contracts')];
@@ -42,11 +43,11 @@ describe('Registry test', () => {
         });
     });
 
-    // after(function(){
-    //     console.log("Done running Registry tests");
-    //     ganacheServer.close();
-    //     process.exit();
-    // });
+    after(function(){
+        console.log("Done running Registry tests");
+        ganacheServer.close();
+        process.exit();
+    });
 
     it("should be able to create registryWrapper", async ()=>{
         registryWrapper = new ZapRegistry(options)

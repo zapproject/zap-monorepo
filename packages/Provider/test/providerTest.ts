@@ -10,7 +10,7 @@ import { ZapDispatch } from "@zapjs/dispatch";
 import { ZapArbiter } from "@zapjs/arbiter";
 import { ZapProvider } from "../src";
 const Web3 = require('web3');
-const { hexToUtf8 } = require("web3-utils");
+const { hexToUtf8 ,toWei} = require("web3-utils");
 import { join } from 'path';
 
 import {Utils} from "@zapjs/utils";
@@ -46,7 +46,7 @@ describe('Zap Provider Test', () => {
 
     before(function(done) {
         configureEnvironment(async () => {
-            // ganacheServer = await Utils.startGanacheServer();
+            ganacheServer = await Utils.startGanacheServer();
             web3 = new Web3(Utils.Constants.ganacheProvider);
             accounts = await web3.eth.getAccounts();
             providerAddress = accounts[0];
@@ -57,11 +57,11 @@ describe('Zap Provider Test', () => {
             });
     });
 
-    // after(function(){
-    //     console.log("Done running Provider tests");
-    //     ganacheServer.close();
-    //     process.exit();
-    // });
+    after(function(){
+        console.log("Done running Provider tests");
+        ganacheServer.close();
+        process.exit();
+    });
 
 
     it("1. Should initiate all the required contracts",async ()=>{
@@ -74,7 +74,7 @@ describe('Zap Provider Test', () => {
     it("2. Should allocate ZapToken to accounts",async ()=>{
         let zapTokenOwner = await zapToken.getContractOwner()
         for(let account of accounts){
-            await zapToken.allocate({to:account,amount:Utils.toZapBase(1000),from:zapTokenOwner})
+            await zapToken.allocate({to:account,amount:toWei("1000"),from:zapTokenOwner})
         }
     });
     it("3. Should init zapProvider class",async ()=>{

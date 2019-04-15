@@ -52,6 +52,14 @@ export class ZapSubscriber  {
     }
 
     /**
+      * Gets the Zap allowance of the current ZapSubscriber to Bondage
+      * @returns {Promise<string|BigNumber>} Zap Allowance in wei
+      */
+    async getZapAllowance(): Promise<string|BNType>{
+        return await this.zapToken.contract.methods.allowance(this.subscriberOwner, this.zapBondage.contract._address).call()
+    }
+
+    /**
      * Approve number of zap to a provider
      * @param {string} provider- Provider's address
      * @param {number|BigNumber}zapNum - Number of Zap to approve

@@ -1,5 +1,4 @@
-const Web3 = require("web3");
-const {utf8ToHex, toBN,toHex} = require("web3-utils");
+const {utf8ToHex, toWei,toHex} = require("web3-utils");
 import {Utils} from "@zapjs/utils";
 import {NULL_ADDRESS} from "@zapjs/types"
 
@@ -22,7 +21,7 @@ export async function bootstrap(zapProvider: any, accounts: string[], deployedRe
     await deployedRegistry.contract.methods.initiateProviderCurve(utf8ToHex(Utils.Constants.EndpointBroker),zapProvider.curve.values.map((i:string)=>toHex(i)),accounts[5]).send(defaultTx);
 
     for (const account of accounts) {
-        await deployedToken.contract.methods.allocate(account, Utils.toZapBase(100000000000000)).send({from: tokenOwner, gas: Utils.Constants.DEFAULT_GAS});
+        await deployedToken.contract.methods.allocate(account, toWei("100000000000000")).send({from: tokenOwner, gas: Utils.Constants.DEFAULT_GAS});
     }
 
     return "done";

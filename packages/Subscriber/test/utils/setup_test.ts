@@ -24,7 +24,7 @@ export async function bootstrap(zapProvider:any,accounts:Array<string>,zapRegist
     console.log("provider curve", providerCurve);
     console.log("endpoint broker: ", endpointBroker);
     for(let account of accounts) {
-        await zapToken.contract.methods.allocate(account, Utils.toZapBase(1000)).send({from: tokenOwner,gas:Utils.Constants.DEFAULT_GAS});
+        await zapToken.contract.methods.allocate(account, Utils.toZapBase("1000")).send({from: tokenOwner,gas:Utils.Constants.DEFAULT_GAS});
     }
     return "done";
 }

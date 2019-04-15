@@ -46,7 +46,7 @@ describe('Zap Subscriber Test', () => {
 
     before(function (done) {
         configureEnvironment(async () => {
-            // ganacheServer = await Utils.startGanacheServer();
+            ganacheServer = await Utils.startGanacheServer();
             web3 = new Web3(Utils.Constants.ganacheProvider);
             accounts = await web3.eth.getAccounts();
 
@@ -64,23 +64,24 @@ describe('Zap Subscriber Test', () => {
         });
     });
 
-    // after(function(){
-    //     console.log("Done running Subscriber tests");
-    //     ganacheServer.close();
-    //     process.exit();
-    // });
+    after(function(){
+        console.log("Done running Subscriber tests");
+        ganacheServer.close();
+        process.exit();
+    });
 
         it("1. Should have all pre conditions set up for subscriber to work", async () => {
             const res = await bootstrap(testZapProvider, accounts, registryWrapper, tokenWrapper);
             await expect(res).to.be.equal("done");
         })
-
         it("2. Should bond specified number of zap", async () => {
             let zapRequired:BNType = await bondageWrapper.calcZapForDots({
                 provider: accounts[0],
                 endpoint: testZapProvider.endpoint,
                 dots: 1
             });
+            const allowance = await subscriber.getZapAllowance()
+            expect(Number(allowance)).to.be.equal(0)
             const approve = await subscriber.approveToBond({provider:accounts[0],zapNum:zapRequired})
             const res = await subscriber.bond({
                 provider: accounts[0],
