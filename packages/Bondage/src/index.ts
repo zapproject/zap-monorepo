@@ -32,23 +32,30 @@ export class ZapBondage extends BaseContract {
      * @param {number} bond.dots Number of dots to bond to this provider
      * @param {address} bond.from - Subscriber's owner (0 broker)  or broker's address
      * @param {number} bond.gas - Sets the gas limit for this transaction (optional)
+     * @param {any} events - Callbacks for events
      * @returns {Promise<txid>} Transaction hash.
      */
-    public async bond({provider, endpoint, dots, from, gas= DEFAULT_GAS}: BondArgs): Promise<txid> {
+    public async bond({provider, endpoint, dots, from, gas= DEFAULT_GAS}: BondArgs,  events: any = {}): Promise<txid> {
         assert(dots && dots > 0, "Dots to bond must be greater than 0.");
+
+
         const broker = await this.contract.methods.getEndpointBroker(provider,utf8ToHex(endpoint)).call()
         if(broker != NULL_ADDRESS){
             if(from!==broker){
                 throw new Error(`Broker address ${broker} needs to call delegate bonding`);
             }
         }
-        return await this.contract.methods.bond(
+        const promiEvent = this.contract.methods.bond(
             provider,
             utf8ToHex(endpoint),
             toHex(dots))
-            .send({from, gas});
-
+            .send({ from, gas });
+        for(let event in events) {
+            promiEvent.on(event, events[event]);
+        }
+        return promiEvent;
     }
+
 
      /**
      * Bonds a given number of dots from an account to a subscriber. This would be used to bond to a provider on behalf of another account, such as a smart contract.

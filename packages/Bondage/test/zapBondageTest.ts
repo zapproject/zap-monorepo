@@ -113,7 +113,7 @@ describe('Zap Bondage Test', () => {
                 endpoint: testZapProvider.endpoint,
                 dots: 5,
                 from: accounts[2],
-            });
+            }, {transactionHash: (bond_txid: any) =>  expect(bond_txid).to.be.a('string')});
             const numZap = bonded.events.Bound.returnValues.numZap;
             const numDots = bonded.events.Bound.returnValues.numDots;
 
@@ -141,7 +141,7 @@ describe('Zap Bondage Test', () => {
             endpoint: endpointB,
             dots: 5,
             from: broker,
-        });
+        }, {transactionHash: (bond_txid: any) => expect(bond_txid).to.be.a('string')});
         const numZap = bonded.events.Bound.returnValues.numZap;
         const numDots = bonded.events.Bound.returnValues.numDots;
 
@@ -149,7 +149,7 @@ describe('Zap Bondage Test', () => {
             subscriber : accounts[2],
             provider: accounts[0],
             endpoint: endpointB
-        })
+        },)
         expect(numZap).to.equal("85");
         expect(numDots).to.equal("5");
         return ;
