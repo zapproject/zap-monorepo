@@ -113,7 +113,7 @@ describe('Zap Bondage Test', () => {
                 endpoint: testZapProvider.endpoint,
                 dots: 5,
                 from: accounts[2],
-            });
+            }, (err: any, txid: string) => expect(txid).to.be.a('string'));
             const numZap = bonded.events.Bound.returnValues.numZap;
             const numDots = bonded.events.Bound.returnValues.numDots;
 
