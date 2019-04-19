@@ -29,9 +29,10 @@ export class ZapDispatch extends BaseContract {
      * @param {Array<string>} q.endpointParams - Parameters passed to data provider's endpoint
      * @param {address} q.from - Address of the subscriber
      * @param {BigNumber} q.gas - Set the gas limit for this transaction (optional)
+     * @param {Function} cb - Callback for transactionHash event
      * @returns {Promise<txid>} Transaction hash
      */
-    async queryData({provider, query, endpoint, endpointParams,from,gasPrice, gas=DEFAULT_GAS}:QueryArgs):Promise<txid>{
+    async queryData({provider, query, endpoint, endpointParams,from,gasPrice, gas=DEFAULT_GAS}:QueryArgs, cb?: Function):Promise<txid>{
         if(endpointParams.length > 0) {
             for (let i in endpointParams) {
                 if (!endpointParams[i].startsWith('0x')) {
@@ -39,12 +40,19 @@ export class ZapDispatch extends BaseContract {
                 }
             }
         }
-        return  await this.contract.methods.query(
+        const promiEvent = this.contract.methods.query(
             provider,
             query,
             utf8ToHex(endpoint),
             endpointParams
         ).send({from, gas,gasPrice});
+
+        if (cb) {
+            promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
+            promiEvent.on('error', (error: any) => cb(error));
+        }
+            
+        return promiEvent;
     }
 
     /**
@@ -71,6 +79,7 @@ export class ZapDispatch extends BaseContract {
      * @param {boolean} r.dynamic - Determines if the IntArray/Bytes32Array dispatch response should be used
      * @param {address} r.from  - Address of the provider calling the respond function
      * @param {BigNumber} r.gas - Set the gas limit for this transaction (optional)
+     * @param {Function} cb - Callback for transactionHash event
      * @returns {Promise<txid>} Transaction hash
      */
     async respond({queryId, responseParams, dynamic, from,gasPrice, gas=DEFAULT_GAS}:ResponseArgs) :Promise<txid>{

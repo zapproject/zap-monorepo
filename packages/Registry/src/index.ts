@@ -48,13 +48,20 @@ import {InitProvider, InitCurve, NextEndpoint, EndpointParams, SetProviderParams
      * @param {string} i.title - A descriptor describing what data this oracle provides
      * @param {address} i.from - Ethereum Address of the account that is initializing this provider
      * @param {BigNumber} i.gas - Sets the gas limit for this transaction (optional)
+     * @param {Function} cb - Callback for transactionHash event
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-    async initiateProvider({public_key, title, from, gas=DEFAULT_GAS}:InitProvider): Promise<txid>{
-        return await this.contract.methods.initiateProvider(
+    async initiateProvider({public_key, title, from, gas=DEFAULT_GAS}:InitProvider, cb?: Function): Promise<txid>{
+        const promiEvent = this.contract.methods.initiateProvider(
             toBN(public_key).toString(),
             utf8ToHex(title))
         .send({from,gas});
+        if (cb) {
+            promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
+            promiEvent.on('error', (error: any) => cb(error));
+        }
+            
+        return promiEvent;
     }
 
     /**
@@ -81,10 +88,18 @@ import {InitProvider, InitCurve, NextEndpoint, EndpointParams, SetProviderParams
     * Set new provider's title.
     * @param {address} provider The address of this provider
     * @param {string} title The new title of this provider
+    * @param {Function} cb - Callback for transactionHash event
     * @returns {Promise<string>} Transaction hash
     */
-    async setProviderTitle({from,title,gas=DEFAULT_GAS}:SetProviderTitle):Promise<txid>{
-        return  await this.contract.methods.setProviderTitle(utf8ToHex(title)).send({from:from,gas});
+    async setProviderTitle({from,title,gas=DEFAULT_GAS}:SetProviderTitle, cb?: Function):Promise<txid>{
+        const promiEvent = this.contract.methods.setProviderTitle(utf8ToHex(title)).send({from:from,gas});
+        if (cb) {
+            promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
+            promiEvent.on('error', (error: any) => cb(error));
+        }
+            
+        return promiEvent;
+
     }
 
     /**
@@ -165,26 +180,40 @@ import {InitProvider, InitCurve, NextEndpoint, EndpointParams, SetProviderParams
      * @param {address} i.broker - The address allowed to bond/unbond. If 0, any address allowed
      * @param {address} i.from - The address of the owner of this oracle
      * @param {BigNumber} i.gas - Sets the gas limit for this transaction (optional)
+     * @param {Function} cb - Callback for transactionHash event
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-    async initiateProviderCurve({endpoint, term, broker=NULL_ADDRESS, from, gas=DEFAULT_GAS}:InitCurve):Promise<txid> {
+    async initiateProviderCurve({endpoint, term, broker=NULL_ADDRESS, from, gas=DEFAULT_GAS}:InitCurve, cb?: Function):Promise<txid> {
         let hex_term:string[] = []
         for(let i in term){
           hex_term[i] = toHex(term[i])
         }
         console.log("term;",term)
-        return await this.contract.methods.initiateProviderCurve(utf8ToHex(endpoint), hex_term, broker)
+        const promiEvent = this.contract.methods.initiateProviderCurve(utf8ToHex(endpoint), hex_term, broker)
             .send({from, gas});
+        if (cb) {
+            promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
+            promiEvent.on('error', (error: any) => cb(error));
+        }
+                
+        return promiEvent;
     }
 
     /**
      * Clear endpoint
      * @param {string} from The address of this provider
      * @param {string} endpoint Data endpoint of the provider
+     * @param {Function} cb - Callback for transactionHash event
      * @returns {Promise<txid>} Transaction Hash
      */
-    async clearEndpoint({endpoint,from,gas=DEFAULT_GAS}:Endpoint):Promise<txid>{
-        return await this.contract.methods.clearEndpoint(utf8ToHex(endpoint)).send({from,gas})
+    async clearEndpoint({endpoint,from,gas=DEFAULT_GAS}:Endpoint, cb?: Function):Promise<txid>{
+        const promiEvent = this.contract.methods.clearEndpoint(utf8ToHex(endpoint)).send({from,gas})
+        if (cb) {
+            promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
+            promiEvent.on('error', (error: any) => cb(error));
+        }
+            
+        return promiEvent;
     }
 
     /**
@@ -208,14 +237,21 @@ import {InitProvider, InitCurve, NextEndpoint, EndpointParams, SetProviderParams
      * @param {string[]} e.endpoint_params - The parameters that this endpoint accepts as query arguments
      * @param {address} e.from - The address of the owner of this oracle
      * @param {BigNumber} e.gas - Sets the gas limit for this transaction (optional)
+     * @param {Function} cb - Callback for transactionHash event
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-    async setEndpointParams({endpoint, endpoint_params = [], from, gas=DEFAULT_GAS}:EndpointParams): Promise<txid>{
+    async setEndpointParams({endpoint, endpoint_params = [], from, gas=DEFAULT_GAS}:EndpointParams, cb?: Function): Promise<txid>{
       const params = ZapRegistry.encodeParams(endpoint_params);
-      return await this.contract.methods.setEndpointParams(
+      const promiEvent = this.contract.methods.setEndpointParams(
             utf8ToHex(endpoint),
             params
         ).send({from, gas});
+      if (cb) {
+          promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
+          promiEvent.on('error', (error: any) => cb(error));
+      }
+            
+      return promiEvent;
     }
 
     /**

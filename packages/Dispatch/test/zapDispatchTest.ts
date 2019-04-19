@@ -40,7 +40,7 @@ describe('Zap Dispatch Test', () => {
 
     before(function (done) {
         configureEnvironment(async() => {
-            // ganacheServer = await Utils.startGanacheServer();
+            ganacheServer = await Utils.startGanacheServer();
             web3 = new Web3(Utils.Constants.ganacheProvider);
             accounts = await web3.eth.getAccounts();
             await Utils.migrateContracts(buildDir);
@@ -86,7 +86,7 @@ describe('Zap Dispatch Test', () => {
                 endpointParams: ['a'],
                 from: accounts[2], // account that used for bond in booststrap function
                 gas: Utils.Constants.DEFAULT_GAS
-            });
+            }, (err: any, txid: string) => expect(txid).to.be.a('string'));
         expect(queryData).to.have.any.keys(["events"])
         queryData = queryData.events.Incoming.returnValues;
         expect(queryData).to.have.any.keys(["provider","subscriber","query","endpoint","endpointParams","onchainSubscriber"])
@@ -152,7 +152,7 @@ describe('Zap Dispatch Test', () => {
                 responseParams: responses,
                 dynamic: false,
                 from: accounts[2]
-            });
+            }, (err: any, txid: string) => expect(txid).to.be.a('string'));
         } catch(e) {
             await expect(e.toString()).to.include('revert');
         }

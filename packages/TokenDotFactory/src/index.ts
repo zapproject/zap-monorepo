@@ -44,15 +44,23 @@ export class TokenDotFactory extends BaseContract {
     from,
     gasPrice,
     gas = DEFAULT_GAS
-  }: InitDotTokenCurve): Promise<txid> {
+  }: InitDotTokenCurve, cb?: Function): Promise<txid> {
     console.log(endpoint, symbol, term, from);
     let hex_term: any = [];
     for (let i in term) {
       hex_term[i] = toHex(term[i]);
     }
-    return this.contract.methods
+
+    const promiEvent = this.contract.methods
       .initializeCurve(utf8ToHex(endpoint), utf8ToHex(symbol), hex_term)
       .send({ from: from, gas, gasPrice });
+      
+    if (cb) {
+      promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
+      promiEvent.on('error', (error: any) => cb(error));
+    }
+        
+    return promiEvent;
   }
 
   /**
@@ -91,7 +99,7 @@ export class TokenDotFactory extends BaseContract {
     from,
     gasPrice,
     gas = DEFAULT_GAS
-  }: TokenBondType): Promise<txid> {
+  }: TokenBondType, cb?: Function): Promise<txid> {
     let zapRequired = await this.zapBondage.calcZapForDots({
       provider: this.contract._address,
       endpoint: endpoint,
@@ -104,9 +112,16 @@ export class TokenDotFactory extends BaseContract {
     if (fromWei(zapRequired, "ether") < fromWei(allowance, "ether")) {
       throw "Allowance is smaller than amount Zap required";
     }
-    return this.contract.methods
+    const promiEvent = this.contract.methods
       .bond(utf8ToHex(endpoint), dots)
       .send({ from, gas, gasPrice });
+
+    if (cb) {
+      promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
+      promiEvent.on('error', (error: any) => cb(error));
+    }
+        
+    return promiEvent;
   }
 
   /**
@@ -121,7 +136,7 @@ export class TokenDotFactory extends BaseContract {
     from,
     gasPrice,
     gas = DEFAULT_GAS
-  }: EndpointMethods): Promise<txid> {
+  }: EndpointMethods, cb?: Function): Promise<txid> {
     let dotAddress = await this.contract.methods
       .getTokenAddress(utf8ToHex(endpoint))
       .call();
@@ -131,9 +146,16 @@ export class TokenDotFactory extends BaseContract {
     );
     let dotBalance = await dotToken.methods.balanceOf(from).call();
     //Approval hangs. Should be approving token.approve for dot-token which has just been created by initializeCurve. Currently hangs
-    return dotToken.methods
+    const promiEvent = dotToken.methods
       .approve(this.contract._address, 9999999999999)
       .send({ from, gas, gasPrice });
+
+    if (cb) {
+      promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
+      promiEvent.on('error', (error: any) => cb(error));
+    }
+        
+    return promiEvent;
   }
 
   /**
@@ -150,7 +172,7 @@ export class TokenDotFactory extends BaseContract {
     from,
     gasPrice,
     gas = DEFAULT_GAS
-  }: TokenBondType): Promise<txid> {
+  }: TokenBondType, cb?: Function): Promise<txid> {
     let dotAddress = await this.contract.methods
       .getTokenAddress(utf8ToHex(endpoint))
       .call();
@@ -164,9 +186,15 @@ export class TokenDotFactory extends BaseContract {
       .allowance(from, this.contract._address)
       .call();
     console.log("approved ", approved);
-    return this.contract.methods
+    const promiEvent = this.contract.methods
       .unbond(utf8ToHex(endpoint), dots)
       .send({ from, gas, gasPrice });
+    if (cb) {
+      promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
+      promiEvent.on('error', (error: any) => cb(error));
+    }
+        
+    return promiEvent;
   }
 
   /**

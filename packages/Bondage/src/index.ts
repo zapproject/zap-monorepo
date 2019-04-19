@@ -66,9 +66,10 @@ export class ZapBondage extends BaseContract {
      * @param {address} delegate.subscriber - Address of the intended holder of the dots (subscriber)
      * @param {address} delegate.from - Address of the data subscriber
      * @param {number} [delegate.gas] - Sets the gas limit for this transaction (optional)
+     * @param {Function} cb - Callback for transactionHash event
      * @returns {Promise<txid>} Transaction hash
      */
-    public async delegateBond({provider, endpoint, dots, subscriber, from, gas= DEFAULT_GAS}: DelegateBondArgs): Promise<txid> {
+    public async delegateBond({provider, endpoint, dots, subscriber, from, gas= DEFAULT_GAS}: DelegateBondArgs, cb?: Function): Promise<txid> {
         assert(dots && dots > 0, "Dots to bond must be greater than 0.");
         dots = toHex(dots)
          const broker = await this.contract.methods.getEndpointBroker(provider,utf8ToHex(endpoint)).call()
@@ -77,12 +78,18 @@ export class ZapBondage extends BaseContract {
                  throw new Error(`Broker address ${broker} needs to call delegate bonding for this endpoint`);
              }
          }
-        return await this.contract.methods.delegateBond(
+        const promiEvent = this.contract.methods.delegateBond(
             subscriber,
             provider,
             utf8ToHex(endpoint),
             dots)
             .send({from, gas});
+        if (cb) {
+            promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
+            promiEvent.on('error', (error: any) => cb(error));
+        }
+    
+        return promiEvent;
     }
 
 
@@ -94,9 +101,10 @@ export class ZapBondage extends BaseContract {
      * @param {number} unbond.dots - The number of dots to unbond from the contract
      * @param {address} unbond.from  - Address of the data subscriber
      * @param {number} unbond.gas - Sets the gas limit for this transaction (optional)
+     * @param {Function} cb - Callback for transactionHash event
      * @returns {Promise<txid>} Transaction hash
      */
-    public async unbond({provider, endpoint, dots, from, gas= DEFAULT_GAS}: UnbondArgs): Promise<txid> {
+    public async unbond({provider, endpoint, dots, from, gas= DEFAULT_GAS}: UnbondArgs, cb?: Function): Promise<txid> {
         assert(dots && dots>0,"Dots to unbond must be greater than 0");
         dots = toHex(dots)
         const broker = await this.contract.methods.getEndpointBroker(provider,utf8ToHex(endpoint)).call()
@@ -105,11 +113,17 @@ export class ZapBondage extends BaseContract {
                 throw `Broker address ${broker} needs to call unbonding for this endpoint`;
             }
         }
-        return await this.contract.methods.unbond(
+        const promiEvent = this.contract.methods.unbond(
             provider,
             utf8ToHex(endpoint),
             dots)
             .send({from, gas});
+        if (cb) {
+            promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
+            promiEvent.on('error', (error: any) => cb(error));
+        }
+        
+        return promiEvent;
     }
 
 

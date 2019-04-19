@@ -303,10 +303,11 @@ export class ZapProvider {
      * @param {string} e.queryId - The query identifier to send this response to
      * @param {string[] | number[]} e.responseParams - List of responses returned by provider. Length determines which dispatch response is called
      * @param {boolean} e.dynamic - True if the response contains a dynamic bytes32 array
+	 * @param {Function} cb - Callback for transactionHash event
      * @returns {Promise<txid>} Transaction hash
      */
-	async respond({ queryId, responseParams, dynamic, gas = DEFAULT_GAS }: Respond): Promise<string> {
-		return await this.zapDispatch.respond({ queryId, responseParams, dynamic, from: this.providerOwner, gas });
+	async respond({ queryId, responseParams, dynamic, gas = DEFAULT_GAS }: Respond, cb?: Function): Promise<string> {
+		return await this.zapDispatch.respond({ queryId, responseParams, dynamic, from: this.providerOwner, gas }, cb);
 	}
 
 

@@ -111,10 +111,17 @@ export class ZapSubscriber  {
      * @param {address} b.subscriber - subscriber's address that will bond with provider's endpoint
      * @param {string} b.endpoint - Endpoint that this client wants to query from
      * @param {number} b.dots - Amount of dots to bond
+     * @param {Function} cb - Callback for transactionHash event
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-    async delegateBond({provider, subscriber,endpoint, dots,gasPrice, gas=DEFAULT_GAS}:DelegateBondType):Promise<any>{
+    async delegateBond({provider, subscriber,endpoint, dots,gasPrice, gas=DEFAULT_GAS}:DelegateBondType, cb?: Function):Promise<any>{
         // assert.ok(this.hasEnoughZap(zapNum), 'Insufficient Balance');
+        const approved = utils.toBN(await this.zapToken.contract.methods.allowance(this.subscriberOwner, this.zapBondage.contract._address).call());
+        const required = utils.toBN(await this.zapBondage.calcZapForDots({ provider, endpoint, dots }));
+        const zapBalance = utils.toBN(await this.getZapBalance());
+       
+        assert(approved.gte(required), 'You don\'t have enough ZAP approved.');
+        assert(zapBalance.gte(required), 'Balance insufficent.');
         const bonded = await this.zapBondage.delegateBond({
             provider,
             endpoint,
@@ -123,7 +130,7 @@ export class ZapSubscriber  {
             from: this.subscriberOwner,
             gas,
             gasPrice
-        });
+        }, cb);
         return bonded;
     }
 
@@ -133,12 +140,13 @@ export class ZapSubscriber  {
      * @param {string} u.provider - Oracle's address
      * @param {string} u.endpoint - Endpoint that the client has already bonded to
      * @param {string|number} u.dots - Number of dots to unbond (redeem) from this provider and endpoint
+     * @param {Function} cb - Callback for transactionHash event
      * @returns {Promise<txid>} Transaction hash
      */
-    async unBond({provider, endpoint, dots,gasPrice,gas=DEFAULT_GAS}:UnbondType):Promise<any>{
+    async unBond({provider, endpoint, dots,gasPrice,gas=DEFAULT_GAS}:UnbondType, cb?: Function):Promise<any>{
         let boundDots = await this.zapBondage.getBoundDots({subscriber: this.subscriberOwner, provider, endpoint});
         assert(parseInt(boundDots.toString()) >= parseInt(dots.toString()), 'dots to unbond is less than requested');
-        return  await this.zapBondage.unbond({provider, endpoint, dots, from: this.subscriberOwner,gas,gasPrice});
+        return  await this.zapBondage.unbond({provider, endpoint, dots, from: this.subscriberOwner,gas,gasPrice}, cb);
     }
 
     /**

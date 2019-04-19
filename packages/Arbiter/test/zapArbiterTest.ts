@@ -69,10 +69,10 @@ describe('Arbiter Test', () => {
     });
 
   it('2) Should initiate zapArbiter wrapper with coordinator', async function() {
-      options.coordinator = arbiterWrapper.coordinator._address
+    options.coordinator = arbiterWrapper.coordinator._address
     arbiterWrapper = new ZapArbiter(Object.assign(options, {artifactName:"ARBITER"}));
-      await Utils.delay(3000)
-      expect(arbiterWrapper).to.be.ok
+    await Utils.delay(3000)
+    expect(arbiterWrapper).to.be.ok
   });
 
   it('3) Should initiate subscription', async function() {
@@ -84,7 +84,7 @@ describe('Arbiter Test', () => {
       pubkey: Utils.Constants.testZapProvider.pubkey,
       from: accounts[2],
       gas: Utils.Constants.DEFAULT_GAS,
-    });
+    }, (err: any, txid: string) => expect(txid).to.be.a('string'));
   });
   it("4) Should get subscription", async()=>{
     let subscription = await arbiterWrapper.getSubscription({
@@ -111,7 +111,7 @@ describe('Arbiter Test', () => {
         subscriber:accounts[2],
         endpoint : testZapProvider.endpoint,
         from:accounts[0]
-      })
+      }, (err: any, txid: string) => expect(txid).to.be.a('string'))
       let event = unsubscription.events;
 
     })
@@ -124,11 +124,11 @@ describe('Arbiter Test', () => {
         pubkey: testZapProvider.pubkey,
         from: accounts[2],
         gas: Utils.Constants.DEFAULT_GAS,
-      });
+      }, (err: any, txid: string) => expect(txid).to.be.a('string'));
       await arbiterWrapper.endSubscriptionSubscriber({
         provider: accounts[0],
         endpoint: testZapProvider.endpoint,
         from:accounts[2]
-      })
+      }, (err: any, txid: string) => expect(txid).to.be.a('string'))
     })
   });

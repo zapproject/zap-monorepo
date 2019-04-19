@@ -87,7 +87,7 @@ describe('Zap Subscriber Test', () => {
                 provider: accounts[0],
                 endpoint: testZapProvider.endpoint,
                 dots: 1
-            });
+            }, (err: any, txid: string) => expect(txid).to.be.a('string'));
             await expect(res.events.Bound.event).to.be.equal('Bound');
         })
 
@@ -96,7 +96,7 @@ describe('Zap Subscriber Test', () => {
                 provider: accounts[0],
                 endpoint: testZapProvider.endpoint,
                 dots: 1
-            });
+            }, (err: any, txid: string) => expect(txid).to.be.a('string'));
             await expect(res.events.Unbound.event).to.be.equal('Unbound');
         })
 
