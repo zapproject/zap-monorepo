@@ -41,11 +41,18 @@ const {toHex} = require("web3-utils")
      * @param {number} t.amount - Amount of Zap to transfer (wei)
      * @param {address} t.from - Address of the sender
      * @param {number} t.gas - Sets the gas limit for this transaction (optional)
+     * @param {Function} cb - Callback for transactionHash event
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-     async send({to, amount, from,gasPrice, gas=Util.DEFAULT_GAS}:TransferType) :Promise<txid>{
+     async send({to, amount, from,gasPrice, gas=Util.DEFAULT_GAS}:TransferType, cb?: Function) :Promise<txid>{
         amount = toHex(amount)
-        return await this.contract.methods.transfer(to, amount).send({from,gas});
+        const promiEvent = this.contract.methods.transfer(to, amount).send({from,gas});
+        if (cb) {
+            promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
+            promiEvent.on('error', (error: any) => cb(error));
+        }
+            
+        return promiEvent;
     }
 
     /**
@@ -55,11 +62,19 @@ const {toHex} = require("web3-utils")
      * @param {number} t.amount - Amount of Zap to allocate (wei)
      * @param {address} t.from - Address of the sender (must be owner of the Zap contract)
      * @param {number} t.gas - Sets the gas limit for this transaction (optional)
+     * @param {Function} cb - Callback for transactionHash event
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-     async allocate({to, amount, from,gasPrice, gas=Util.DEFAULT_GAS}:TransferType):Promise<txid> {
+     async allocate({to, amount, from,gasPrice, gas=Util.DEFAULT_GAS}:TransferType, cb?: Function):Promise<txid> {
         amount = toHex(amount)
-        return await this.contract.methods.allocate(to, amount).send({from,gas});
+        const promiEvent = this.contract.methods.allocate(to, amount).send({from,gas});
+        
+        if (cb) {
+            promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
+            promiEvent.on('error', (error: any) => cb(error));
+        }
+            
+        return promiEvent;
     }
 
     /**
@@ -69,14 +84,25 @@ const {toHex} = require("web3-utils")
      * @param {number} t.amount - Amount of Zap to approve (wei)
      * @param {address} t.from - Address of the sender
      * @param {number} t.gas - Sets the gas limit for this transaction (optional)
+     * @param {Function} cb - Callback for transactionHash event
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-     async approve({to, amount, from,gasPrice, gas=Util.DEFAULT_GAS}:TransferType):Promise<txid> {
+     async approve({to, amount, from,gasPrice, gas=Util.DEFAULT_GAS}:TransferType, cb?: Function):Promise<txid> {
         amount = toHex(amount)
-        const success = await this.contract.methods.approve(to, amount).send({from,gas});
+
+        const _success = this.contract.methods.approve(to, amount).send({from,gas});
+        
+        if (cb) {
+            _success.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
+            _success.on('error', (error: any) => cb(error));
+        }
+
+        const success = await _success;
+
         if (!success) {
             throw new Error('Failed to approve Bondage transfer');
         }
+            
         return success;
     }
 }

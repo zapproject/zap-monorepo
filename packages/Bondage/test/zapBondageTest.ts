@@ -113,7 +113,7 @@ describe('Zap Bondage Test', () => {
                 endpoint: testZapProvider.endpoint,
                 dots: 5,
                 from: accounts[2],
-            });
+            }, (err: any, txid: string) => expect(txid).to.be.a('string'));
             const numZap = bonded.events.Bound.returnValues.numZap;
             const numDots = bonded.events.Bound.returnValues.numDots;
 
@@ -141,7 +141,7 @@ describe('Zap Bondage Test', () => {
             endpoint: endpointB,
             dots: 5,
             from: broker,
-        });
+        }, (err: any, txid: string) => expect(txid).to.be.a('string'));
         const numZap = bonded.events.Bound.returnValues.numZap;
         const numDots = bonded.events.Bound.returnValues.numDots;
 
@@ -164,7 +164,7 @@ describe('Zap Bondage Test', () => {
                 endpoint: testZapProvider.endpoint,
                 dots: 1,
                 from: accounts[2],
-            });
+            }, (err: any, txid: string) => expect(txid).to.be.a('string'));
 
             const postAmt = await deployedToken.contract.methods.balanceOf(accounts[2]).call();
             const diff = new BigNumber(postAmt).minus(new BigNumber(preAmt)).toString();
@@ -179,7 +179,7 @@ describe('Zap Bondage Test', () => {
             endpoint: endpointB,
             dots: 1,
             from: broker,
-        });
+        }, (err: any, txid: string) => expect(txid).to.be.a('string'));
 
         const postAmt = await deployedToken.contract.methods.balanceOf(accounts[2]).call();
         const postAmtBroker = await deployedToken.contract.methods.balanceOf(broker).call();

@@ -69,7 +69,7 @@ describe('Registry test', () => {
         title: testZapProvider.title,
         from: accounts[0],
         gas: 600000
-    });
+    }, (err: any, txid: string) => expect(txid).to.be.a('string'));
      expect(tx).to.include.keys("events")
      expect(tx.events).to.include.keys("NewProvider")
      expect(tx.events.NewProvider).to.include.keys("returnValues");
@@ -124,14 +124,14 @@ describe('Registry test', () => {
             title: testZapProvider.title,
             from: providerAddress,
             gas: 600000
-        });
+        }, (err: any, txid: string) => expect(txid).to.be.a('string'));
         const initCurveTx = await registryWrapper.initiateProviderCurve({
             endpoint: testZapProvider.endpoint,
             term: testZapProvider.curve.values,
             broker: brokerAddress,
             from: providerAddress,
             gas: 3000000
-        });
+        }, (err: any, txid: string) => expect(txid).to.be.a('string'));
         expect(initCurveTx).to.include.keys("events");
         expect(initCurveTx.events).to.include.keys("NewCurve");
         expect(initCurveTx.events.NewCurve).to.include.keys("returnValues");
@@ -151,7 +151,7 @@ describe('Registry test', () => {
             endpoint_params: testZapProvider.endpoint_params,
             from: accounts[0],
             gas: 600000
-        });
+        }, (err: any, txid: string) => expect(txid).to.be.a('string'));
 
     });
     it('Should set endpoint endpointParams in chunks in zap registry contract', async () => {
@@ -174,7 +174,7 @@ describe('Registry test', () => {
         await registryWrapper.clearEndpoint({
             from:accounts[0],
             endpoint:testZapProvider.endpoint
-        })
+        }, (err: any, txid: string) => expect(txid).to.be.a('string'))
         const eps = await registryWrapper.getProviderEndpoints(accounts[0])
         console.log("endpoints in test : ", eps)
         expect(eps.length).to.equal(0)
