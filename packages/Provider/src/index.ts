@@ -306,8 +306,8 @@ export class ZapProvider {
 	 * @param {Function} cb - Callback for transactionHash event
      * @returns {Promise<txid>} Transaction hash
      */
-	async respond({ queryId, responseParams, dynamic, gas = DEFAULT_GAS }: Respond, cb?: Function): Promise<string> {
-		return await this.zapDispatch.respond({ queryId, responseParams, dynamic, from: this.providerOwner, gas }, cb);
+	async respond({ queryId, responseParams, dynamic, gas = DEFAULT_GAS }: Respond): Promise<string> {
+		return await this.zapDispatch.respond({ queryId, responseParams, dynamic, from: this.providerOwner, gas });
 	}
 
 
