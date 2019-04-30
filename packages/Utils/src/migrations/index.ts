@@ -6,7 +6,7 @@ import { promisify } from 'util';
 import {ganacheServerOptions,DEFAULT_GAS,GAS_PRICE,buildOptions,migrate} from '../constants';
 import {serverOptionsType,buildOptionsType} from "../types";
 const asyncMigrate = promisify(migrate.run);
-
+async function sleep(ms:number){return new Promise(resolve=>setTimeout(resolve,ms))}
 
 /**
  * @ignore
@@ -15,18 +15,23 @@ const asyncMigrate = promisify(migrate.run);
  */
  export function startGanacheServer(_serverOptions ?: any){
   return new Promise((resolve,reject)=>{
-    let serverOptions = _serverOptions || ganacheServerOptions;
-    const ganacheServer = server(serverOptions);
-    ganacheServer.listen(serverOptions.port, (err:any, blockchain:any) => {
-      if (err) {
-        console.error(err)
-        console.log("server might already is created from other tests");
-        ganacheServer.close()
-        return reject(err)
-      }
-      console.log('Ganache server started on port: ' + serverOptions.port);
-      return resolve(ganacheServer)
-    });
+    try{
+      let serverOptions = _serverOptions || ganacheServerOptions;
+      const ganacheServer = server(serverOptions);
+      ganacheServer.listen(serverOptions.port, (err:any, blockchain:any) => {
+        if (err) {
+          console.error(err)
+          console.log("server might already is created from other tests");
+          ganacheServer.close()
+          return reject(err)
+        }
+        console.log('Ganache server started on port: ' + serverOptions.port);
+        return resolve(ganacheServer)
+      });
+    }catch(e){
+      console.error(`Failed to start ganache sever, retrying `)
+      setTimeout(()=>{startGanacheServer(_serverOptions)},1000)
+    }
   })
 }
 
@@ -97,7 +102,8 @@ const asyncMigrate = promisify(migrate.run);
   try {
     clearBuild(false, buildDir);
     //console.log("running all");
-    await asyncMigrate(options)
+    migrate.run(options)
+    await sleep(20*1000)
     return true;
   } catch (err) {
     console.error(err)

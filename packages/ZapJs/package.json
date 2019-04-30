@@ -1,7 +1,7 @@
 {
   "name": "zapjs",
   "private": false,
-  "version": "2.2.1",
+  "version": "2.2.2",
   "repository": "https://github.com/zapproject/Zap-monorepo",
   "dependencies": {
     "@types/node": "^11.13.2",
