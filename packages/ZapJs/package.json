@@ -1,7 +1,7 @@
 {
   "name": "zapjs",
   "private": false,
-  "version": "2.2.2",
+  "version": "2.2.3",
   "repository": "https://github.com/zapproject/Zap-monorepo",
   "dependencies": {
     "@types/node": "^11.13.2",
@@ -27,8 +27,8 @@
     "build": "tsc",
     "test": "mocha $PKG -r ts-node/register test/*.ts --serial --bail --exit"
   },
-  "main": "src/index.js",
-  "author": "propulsor",
+  "main": "lib/index.js",
+  "author": "propulsor.ichimoku@gmail.com",
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.1.2",

@@ -145,6 +145,12 @@ describe('Registry test', () => {
         expect(a).to.be.equal(b);
     });
 
+    it("Should get endpoint broker address correctly",async ()=>{
+      const providerAddress = accounts[3]
+      let endpointBroker = await registryWrapper.getEndpointBroker(providerAddress,testZapProvider.endpoint)
+      console.log(endpointBroker)
+    })
+
     it('Should set endpoint endpointParams in zap registry contract', async () => {
         let result = await registryWrapper.setEndpointParams({
             endpoint: testZapProvider.endpoint,

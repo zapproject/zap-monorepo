@@ -263,7 +263,7 @@ import {InitProvider, InitCurve, NextEndpoint, EndpointParams, SetProviderParams
      */
     async getEndpointBroker(provider:address, endpoint:string ):Promise<string>{
         let broker =  await this.contract.methods.getEndpointBroker(provider, utf8ToHex(endpoint)).call();
-        return hexToUtf8(broker);
+        return broker;
     }
 
     /**
