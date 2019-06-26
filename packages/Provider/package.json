@@ -1,7 +1,7 @@
 {
 	"name": "@zapjs/provider",
 	"private": false,
-	"version": "2.2.1",
+	"version": "2.2.2",
 	"description": "Zap Provider",
 	"repository": "https://github.com/zapproject/Zap-monorepo",
 	"main": "lib/src/index.js",
@@ -11,14 +11,14 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
-		"@zapjs/arbiter": "^2.2.1",
-		"@zapjs/basecontract": "^2.2.0",
-		"@zapjs/bondage": "^2.2.1",
-		"@zapjs/curve": "^2.2.0",
-		"@zapjs/dispatch": "^2.2.1",
-		"@zapjs/registry": "^2.2.1",
-		"@zapjs/types": "^2.2.0",
-		"@zapjs/zaptoken": "^2.2.1"
+		"@zapjs/arbiter": "^2.2.2",
+		"@zapjs/basecontract": "^2.2.1",
+		"@zapjs/bondage": "^2.2.2",
+		"@zapjs/curve": "^2.2.1",
+		"@zapjs/dispatch": "^2.2.2",
+		"@zapjs/registry": "^2.2.2",
+		"@zapjs/types": "^2.2.1",
+		"@zapjs/zaptoken": "^2.2.2"
 	},
 	"scripts": {
 		"build": "tsc",
@@ -30,7 +30,7 @@
 		"@types/chai": "^4.1.5",
 		"@types/mocha": "^5.2.4",
 		"@types/node": "^10.10.3",
-		"@zapjs/utils": "^2.2.0",
+		"@zapjs/utils": "^2.2.1",
 		"bignumber.js": "^7.2.1",
 		"chai": "^4.1.2",
 		"chai-as-promised": "^7.1.1",

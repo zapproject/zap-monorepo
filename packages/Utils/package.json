@@ -1,7 +1,7 @@
 {
 	"name": "@zapjs/utils",
 	"private": false,
-	"version": "2.2.0",
+	"version": "2.2.1",
 	"description": "Zap Utils",
 	"repository": "https://github.com/zapproject/Zap-monorepo",
 	"main": "./lib/src/index.js",
@@ -16,9 +16,9 @@
 		"run_test": "run-s build test"
 	},
 	"dependencies": {
-		"@zapjs/artifacts": "^2.2.0",
-		"@zapjs/curve": "^2.2.0",
-		"@zapjs/types": "^2.2.0",
+		"@zapjs/artifacts": "^2.2.1",
+		"@zapjs/curve": "^2.2.1",
+		"@zapjs/types": "^2.2.1",
 		"ethereumjs-util": "^5.2.0",
 		"web3-utils": "^1.0.0-beta.36"
 	},
