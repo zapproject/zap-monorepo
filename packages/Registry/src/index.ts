@@ -60,7 +60,7 @@ import {InitProvider, InitCurve, NextEndpoint, EndpointParams, SetProviderParams
             promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
             promiEvent.on('error', (error: any) => cb(error));
         }
-            
+
         return promiEvent;
     }
 
@@ -97,7 +97,7 @@ import {InitProvider, InitCurve, NextEndpoint, EndpointParams, SetProviderParams
             promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
             promiEvent.on('error', (error: any) => cb(error));
         }
-            
+
         return promiEvent;
 
     }
@@ -183,19 +183,19 @@ import {InitProvider, InitCurve, NextEndpoint, EndpointParams, SetProviderParams
      * @param {Function} cb - Callback for transactionHash event
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-    async initiateProviderCurve({endpoint, term, broker=NULL_ADDRESS, from, gas=DEFAULT_GAS}:InitCurve, cb?: Function):Promise<txid> {
+    async initiateProviderCurve({endpoint, term, broker=NULL_ADDRESS, from, gasPrice, gas=DEFAULT_GAS}:InitCurve, cb?: Function):Promise<txid> {
         let hex_term:string[] = []
         for(let i in term){
           hex_term[i] = toHex(term[i])
         }
         console.log("term;",term)
         const promiEvent = this.contract.methods.initiateProviderCurve(utf8ToHex(endpoint), hex_term, broker)
-            .send({from, gas});
+            .send({from, gas, gasPrice});
         if (cb) {
             promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
             promiEvent.on('error', (error: any) => cb(error));
         }
-                
+
         return promiEvent;
     }
 
@@ -206,13 +206,13 @@ import {InitProvider, InitCurve, NextEndpoint, EndpointParams, SetProviderParams
      * @param {Function} cb - Callback for transactionHash event
      * @returns {Promise<txid>} Transaction Hash
      */
-    async clearEndpoint({endpoint,from,gas=DEFAULT_GAS}:Endpoint, cb?: Function):Promise<txid>{
-        const promiEvent = this.contract.methods.clearEndpoint(utf8ToHex(endpoint)).send({from,gas})
+    async clearEndpoint({endpoint,from,gasPrice,gas=DEFAULT_GAS}:Endpoint, cb?: Function):Promise<txid>{
+        const promiEvent = this.contract.methods.clearEndpoint(utf8ToHex(endpoint)).send({from,gas,gasPrice})
         if (cb) {
             promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
             promiEvent.on('error', (error: any) => cb(error));
         }
-            
+
         return promiEvent;
     }
 
@@ -240,17 +240,17 @@ import {InitProvider, InitCurve, NextEndpoint, EndpointParams, SetProviderParams
      * @param {Function} cb - Callback for transactionHash event
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-    async setEndpointParams({endpoint, endpoint_params = [], from, gas=DEFAULT_GAS}:EndpointParams, cb?: Function): Promise<txid>{
+    async setEndpointParams({endpoint, endpoint_params = [], from, gasPrice,gas=DEFAULT_GAS}:EndpointParams, cb?: Function): Promise<txid>{
       const params = ZapRegistry.encodeParams(endpoint_params);
       const promiEvent = this.contract.methods.setEndpointParams(
             utf8ToHex(endpoint),
             params
-        ).send({from, gas});
+        ).send({from, gas, gasPrice});
       if (cb) {
           promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
           promiEvent.on('error', (error: any) => cb(error));
       }
-            
+
       return promiEvent;
     }
 

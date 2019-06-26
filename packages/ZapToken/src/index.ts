@@ -46,12 +46,12 @@ const {toHex} = require("web3-utils")
      */
      async send({to, amount, from,gasPrice, gas=Util.DEFAULT_GAS}:TransferType, cb?: Function) :Promise<txid>{
         amount = toHex(amount)
-        const promiEvent = this.contract.methods.transfer(to, amount).send({from,gas});
+        const promiEvent = this.contract.methods.transfer(to, amount).send({from,gas,gasPrice});
         if (cb) {
             promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
             promiEvent.on('error', (error: any) => cb(error));
         }
-            
+
         return promiEvent;
     }
 
@@ -67,13 +67,13 @@ const {toHex} = require("web3-utils")
      */
      async allocate({to, amount, from,gasPrice, gas=Util.DEFAULT_GAS}:TransferType, cb?: Function):Promise<txid> {
         amount = toHex(amount)
-        const promiEvent = this.contract.methods.allocate(to, amount).send({from,gas});
-        
+        const promiEvent = this.contract.methods.allocate(to, amount).send({from,gas,gasPrice});
+
         if (cb) {
             promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
             promiEvent.on('error', (error: any) => cb(error));
         }
-            
+
         return promiEvent;
     }
 
@@ -90,8 +90,8 @@ const {toHex} = require("web3-utils")
      async approve({to, amount, from,gasPrice, gas=Util.DEFAULT_GAS}:TransferType, cb?: Function):Promise<txid> {
         amount = toHex(amount)
 
-        const _success = this.contract.methods.approve(to, amount).send({from,gas});
-        
+        const _success = this.contract.methods.approve(to, amount).send({from,gas,gasPrice});
+
         if (cb) {
             _success.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
             _success.on('error', (error: any) => cb(error));
@@ -102,7 +102,7 @@ const {toHex} = require("web3-utils")
         if (!success) {
             throw new Error('Failed to approve Bondage transfer');
         }
-            
+
         return success;
     }
 }

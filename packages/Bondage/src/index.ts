@@ -35,7 +35,7 @@ export class ZapBondage extends BaseContract {
      * @param {Function} cb - Callback for transactionHash event
      * @returns {Promise<txid>} Transaction hash.
      */
-    public async bond({provider, endpoint, dots, from, gas= DEFAULT_GAS}: BondArgs, cb?: Function): Promise<txid> {
+    public async bond({provider, endpoint, dots, from, gasPrice, gas= DEFAULT_GAS}: BondArgs, cb?: Function): Promise<txid> {
         assert(dots && dots > 0, "Dots to bond must be greater than 0.");
         const broker = await this.contract.methods.getEndpointBroker(provider,utf8ToHex(endpoint)).call()
         if(broker != NULL_ADDRESS){
@@ -48,7 +48,7 @@ export class ZapBondage extends BaseContract {
             provider,
             utf8ToHex(endpoint),
             toHex(dots))
-            .send({from, gas});
+            .send({from, gas, gasPrice});
         if (cb) {
             promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
             promiEvent.on('error', (error: any) => cb(error));
@@ -69,7 +69,7 @@ export class ZapBondage extends BaseContract {
      * @param {Function} cb - Callback for transactionHash event
      * @returns {Promise<txid>} Transaction hash
      */
-    public async delegateBond({provider, endpoint, dots, subscriber, from, gas= DEFAULT_GAS}: DelegateBondArgs, cb?: Function): Promise<txid> {
+    public async delegateBond({provider, endpoint, dots, subscriber, from, gasPrice, gas= DEFAULT_GAS}: DelegateBondArgs, cb?: Function): Promise<txid> {
         assert(dots && dots > 0, "Dots to bond must be greater than 0.");
         dots = toHex(dots)
          const broker = await this.contract.methods.getEndpointBroker(provider,utf8ToHex(endpoint)).call()
@@ -83,12 +83,12 @@ export class ZapBondage extends BaseContract {
             provider,
             utf8ToHex(endpoint),
             dots)
-            .send({from, gas});
+            .send({from, gas, gasPrice});
         if (cb) {
             promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
             promiEvent.on('error', (error: any) => cb(error));
         }
-    
+
         return promiEvent;
     }
 
@@ -104,7 +104,7 @@ export class ZapBondage extends BaseContract {
      * @param {Function} cb - Callback for transactionHash event
      * @returns {Promise<txid>} Transaction hash
      */
-    public async unbond({provider, endpoint, dots, from, gas= DEFAULT_GAS}: UnbondArgs, cb?: Function): Promise<txid> {
+    public async unbond({provider, endpoint, dots, from, gasPrice, gas= DEFAULT_GAS}: UnbondArgs, cb?: Function): Promise<txid> {
         assert(dots && dots>0,"Dots to unbond must be greater than 0");
         dots = toHex(dots)
         const broker = await this.contract.methods.getEndpointBroker(provider,utf8ToHex(endpoint)).call()
@@ -117,12 +117,12 @@ export class ZapBondage extends BaseContract {
             provider,
             utf8ToHex(endpoint),
             dots)
-            .send({from, gas});
+            .send({from, gas, gasPrice});
         if (cb) {
             promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
             promiEvent.on('error', (error: any) => cb(error));
         }
-        
+
         return promiEvent;
     }
 

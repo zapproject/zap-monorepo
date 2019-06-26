@@ -51,7 +51,7 @@ export class ZapDispatch extends BaseContract {
             promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
             promiEvent.on('error', (error: any) => cb(error));
         }
-            
+
         return promiEvent;
     }
 
@@ -86,30 +86,30 @@ export class ZapDispatch extends BaseContract {
         if (dynamic){
             if(typeof responseParams[0] === "number"){
                 const bignums = responseParams.map(x => Number(x).toLocaleString('fullwide', { useGrouping: false }));
-                return this.contract.methods.respondIntArray(queryId, bignums).send({from,gas,gasPrice});
+                return this.contract.methods.respondIntArray(queryId, bignums).send({from, gas, gasPrice});
             }
             return this.contract.methods.respondBytes32Array(
                 queryId,
-                responseParams).send({from,gas});
+                responseParams).send({from, gas, gasPrice});
         }
         switch (responseParams.length) {
             case 1: {
                 return this.contract.methods.respond1(
                     queryId,
-                    responseParams[0]).send({ from,gas});
+                    responseParams[0]).send({ from, gas, gasPrice});
             }
             case 2: {
                 return this.contract.methods.respond2(
                     queryId,
                     responseParams[0],
-                    responseParams[1]).send({ from,gas });
+                    responseParams[1]).send({ from, gas });
             }
             case 3: {
                 return this.contract.methods.respond3(
                     queryId,
                     responseParams[0],
                     responseParams[1],
-                    responseParams[2]).send({ from,gas });
+                    responseParams[2]).send({ from, gas, gasPrice });
             }
             case 4: {
                 return this.contract.methods.respond4(
@@ -117,7 +117,7 @@ export class ZapDispatch extends BaseContract {
                     responseParams[0],
                     responseParams[1],
                     responseParams[2],
-                    responseParams[3]).send({ from,gas });
+                    responseParams[3]).send({ from, gas, gasPrice });
             }
             default: {
                 throw new Error('Invalid number of response parameters');

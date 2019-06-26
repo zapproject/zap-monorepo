@@ -73,7 +73,7 @@ export const ganacheProvider = 'http://127.0.0.1:7545';
  *
  * @type {number}
  */
-export const DEFAULT_GAS = 400000
+export const DEFAULT_GAS = null
 /**
  *
  * @type {number}
