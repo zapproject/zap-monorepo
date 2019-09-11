@@ -90,19 +90,11 @@ const {toHex} = require("web3-utils")
      async approve({to, amount, from,gasPrice, gas=Util.DEFAULT_GAS}:TransferType, cb?: Function):Promise<txid> {
         amount = toHex(amount)
 
-        const _success = this.contract.methods.approve(to, amount).send({from,gas,gasPrice});
-
-        if (cb) {
-            _success.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
-            _success.on('error', (error: any) => cb(error));
-        }
-
-        const success = await _success;
-
-        if (!success) {
-            throw new Error('Failed to approve Bondage transfer');
-        }
-
-        return success;
+        return new Promise((resolve, reject) => {
+            this.contract.methods.approve(to, amount)
+            .send({from,gas,gasPrice})
+            .on('transactionHash', (transactionHash: string) => resolve(transactionHash))
+            .on('error',  (error: any) => reject(error))
+        });
     }
 }
