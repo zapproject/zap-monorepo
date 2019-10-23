@@ -110,6 +110,11 @@
           "indexed": true,
           "name": "broker",
           "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "token",
+          "type": "address"
         }
       ],
       "name": "NewCurve",
@@ -172,6 +177,37 @@
         }
       ],
       "name": "initiateProviderCurve",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "endpoint",
+          "type": "bytes32"
+        },
+        {
+          "name": "curve",
+          "type": "int256[]"
+        },
+        {
+          "name": "broker",
+          "type": "address"
+        },
+        {
+          "name": "token",
+          "type": "address"
+        }
+      ],
+      "name": "initiateCustomCurve",
       "outputs": [
         {
           "name": "",
@@ -376,6 +412,29 @@
       "constant": true,
       "inputs": [
         {
+          "name": "provider",
+          "type": "address"
+        },
+        {
+          "name": "endpoint",
+          "type": "bytes32"
+        }
+      ],
+      "name": "getCurveToken",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
           "name": "oracleAddress",
           "type": "address"
         }
@@ -552,17 +611,11 @@
     }
   ],
   "networks": {
-    "1": {
-      "events": {},
-      "links": {},
-      "address": "0xc7ab7ffc4fc2f3c75ffb621f574d4b9c861330f0",
-      "transactionHash": "0x7df43935228e58c48f6d2b172ac082373b3b1781fd6c2715952933aab227fbea"
-    },
     "42": {
       "events": {},
       "links": {},
-      "address": "0x513846a568407ebd16bc29d238c364702963377d",
-      "transactionHash": "0x9e913c416007746fb8967fb52558117ec97fd174b9f5368af08c7b951ccbb54e"
+      "address": "0xd96f178190738b0a331e8c41f1d1ca03c47dc790",
+      "transactionHash": "0xb9002ad7bd0090480e99a47e1a87b6551026dc10d1ffde9796bb980107c56fb9"
     }
   }
 }

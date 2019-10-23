@@ -1,0 +1,981 @@
+{
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "name": "curve_creators",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "status",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "name": "beneficiaries",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "ttl",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "name": "curves",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "oracle",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "coord",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "redeemed",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "winValue",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "winner",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "tokenFactory",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "curves_list",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "reserveToken",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "redeemed_list",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "name": "coordinator",
+          "type": "address"
+        },
+        {
+          "name": "factory",
+          "type": "address"
+        },
+        {
+          "name": "providerPubKey",
+          "type": "uint256"
+        },
+        {
+          "name": "providerTitle",
+          "type": "bytes32"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "tokenAddress",
+          "type": "address"
+        }
+      ],
+      "name": "DotTokenCreated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "endpoint",
+          "type": "bytes32"
+        },
+        {
+          "indexed": true,
+          "name": "numDots",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "name": "sender",
+          "type": "address"
+        }
+      ],
+      "name": "Bonded",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "endpoint",
+          "type": "bytes32"
+        },
+        {
+          "indexed": true,
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "name": "sender",
+          "type": "address"
+        }
+      ],
+      "name": "Unbonded",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "oracle",
+          "type": "address"
+        }
+      ],
+      "name": "Initialized",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [],
+      "name": "Closed",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "winner",
+          "type": "bytes32"
+        }
+      ],
+      "name": "Judged",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "winnerAddress",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "winnerEndpoint",
+          "type": "bytes32"
+        }
+      ],
+      "name": "Settled",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "endpoint",
+          "type": "bytes32"
+        },
+        {
+          "indexed": true,
+          "name": "totalDots",
+          "type": "uint256"
+        }
+      ],
+      "name": "Expired",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [],
+      "name": "Reset",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "previousOwner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnershipTransferred",
+      "type": "event"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "oracleAddress",
+          "type": "address"
+        },
+        {
+          "name": "_ttl",
+          "type": "uint256"
+        }
+      ],
+      "name": "initializeContest",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "endpoint",
+          "type": "bytes32"
+        },
+        {
+          "name": "symbol",
+          "type": "bytes32"
+        },
+        {
+          "name": "curve",
+          "type": "int256[]"
+        }
+      ],
+      "name": "initializeCurve",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "endpoint",
+          "type": "bytes32"
+        },
+        {
+          "name": "numDots",
+          "type": "uint256"
+        }
+      ],
+      "name": "bond",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "endpoint",
+          "type": "bytes32"
+        }
+      ],
+      "name": "judge",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "settle",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "reset",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "endpoint",
+          "type": "bytes32"
+        }
+      ],
+      "name": "unbond",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "endpoint",
+          "type": "bytes32"
+        }
+      ],
+      "name": "getTokenAddress",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "getEndpoints",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bytes32[]"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "getStatus",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "_endpoint",
+          "type": "bytes32"
+        }
+      ],
+      "name": "isEndpointValid",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "endpoint",
+          "type": "bytes32"
+        },
+        {
+          "name": "b",
+          "type": "address"
+        }
+      ],
+      "name": "setBeneficiary",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "x",
+          "type": "address"
+        }
+      ],
+      "name": "toBytes",
+      "outputs": [
+        {
+          "name": "b",
+          "type": "bytes"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "x",
+          "type": "bytes32"
+        }
+      ],
+      "name": "bytes32ToString",
+      "outputs": [
+        {
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "b",
+          "type": "bytes"
+        }
+      ],
+      "name": "bytesToAddr",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "pure",
+      "type": "function"
+    }
+  ],
+  "networks": {
+    "1": {
+      "events": {
+        "0x6c98c7e1fb155d4c2c1f008682fd94fb74d1c9667207aaaa9ab65cee2b38ea7a": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "tokenAddress",
+              "type": "address"
+            }
+          ],
+          "name": "DotTokenCreated",
+          "type": "event"
+        },
+        "0x9738427d867a8b08540015120042d5a5ab1244297c70f40cb29fa7ba34587153": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "endpoint",
+              "type": "bytes32"
+            },
+            {
+              "indexed": true,
+              "name": "numDots",
+              "type": "uint256"
+            },
+            {
+              "indexed": true,
+              "name": "sender",
+              "type": "address"
+            }
+          ],
+          "name": "Bonded",
+          "type": "event"
+        },
+        "0x11a44cb23d594705c95aa35553bec5a6572ef7d08fbd468f29c5392ee1d214e3": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "endpoint",
+              "type": "bytes32"
+            },
+            {
+              "indexed": true,
+              "name": "amount",
+              "type": "uint256"
+            },
+            {
+              "indexed": true,
+              "name": "sender",
+              "type": "address"
+            }
+          ],
+          "name": "Unbonded",
+          "type": "event"
+        },
+        "0x908408e307fc569b417f6cbec5d5a06f44a0a505ac0479b47d421a4b2fd6a1e6": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "oracle",
+              "type": "address"
+            }
+          ],
+          "name": "Initialized",
+          "type": "event"
+        },
+        "0x1cdde67b72a90f19919ac732a437ac2f7a10fc128d28c2a6e525d89ce5cd9d3a": {
+          "anonymous": false,
+          "inputs": [],
+          "name": "Closed",
+          "type": "event"
+        },
+        "0x1dc269042eebc624dd61bda8673af110f6d520b8e508c5a05aff5b324ff80bc0": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "winner",
+              "type": "bytes32"
+            }
+          ],
+          "name": "Judged",
+          "type": "event"
+        },
+        "0x8ea402f48673759ee811b90a27c0fa3565987c03f82dfc52fbf315cb27681eb9": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "winnerAddress",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "name": "winnerEndpoint",
+              "type": "bytes32"
+            }
+          ],
+          "name": "Settled",
+          "type": "event"
+        },
+        "0x95fc3df7bdf26aa8215762b0d95a56e3fbec5b3121e4418b7f01a7099ea0b246": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "endpoint",
+              "type": "bytes32"
+            },
+            {
+              "indexed": true,
+              "name": "totalDots",
+              "type": "uint256"
+            }
+          ],
+          "name": "Expired",
+          "type": "event"
+        },
+        "0x6423db340205c829eeb91151b1c5d1dc6d7a2b8708b1621494e89ba90c87081e": {
+          "anonymous": false,
+          "inputs": [],
+          "name": "Reset",
+          "type": "event"
+        },
+        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "previousOwner",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "name": "newOwner",
+              "type": "address"
+            }
+          ],
+          "name": "OwnershipTransferred",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0xe29fc5bb9255c625b3315042d0f48ec19e3d0903",
+      "transactionHash": "0xe58fd23700cf195ee4c3a89f9b560cf865437fe0fcc12e7f807832d4e5598b42"
+    },
+    "42": {
+      "events": {
+        "0x6c98c7e1fb155d4c2c1f008682fd94fb74d1c9667207aaaa9ab65cee2b38ea7a": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "tokenAddress",
+              "type": "address"
+            }
+          ],
+          "name": "DotTokenCreated",
+          "type": "event"
+        },
+        "0x9738427d867a8b08540015120042d5a5ab1244297c70f40cb29fa7ba34587153": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "endpoint",
+              "type": "bytes32"
+            },
+            {
+              "indexed": true,
+              "name": "numDots",
+              "type": "uint256"
+            },
+            {
+              "indexed": true,
+              "name": "sender",
+              "type": "address"
+            }
+          ],
+          "name": "Bonded",
+          "type": "event"
+        },
+        "0x11a44cb23d594705c95aa35553bec5a6572ef7d08fbd468f29c5392ee1d214e3": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "endpoint",
+              "type": "bytes32"
+            },
+            {
+              "indexed": true,
+              "name": "amount",
+              "type": "uint256"
+            },
+            {
+              "indexed": true,
+              "name": "sender",
+              "type": "address"
+            }
+          ],
+          "name": "Unbonded",
+          "type": "event"
+        },
+        "0x908408e307fc569b417f6cbec5d5a06f44a0a505ac0479b47d421a4b2fd6a1e6": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "oracle",
+              "type": "address"
+            }
+          ],
+          "name": "Initialized",
+          "type": "event"
+        },
+        "0x1cdde67b72a90f19919ac732a437ac2f7a10fc128d28c2a6e525d89ce5cd9d3a": {
+          "anonymous": false,
+          "inputs": [],
+          "name": "Closed",
+          "type": "event"
+        },
+        "0x1dc269042eebc624dd61bda8673af110f6d520b8e508c5a05aff5b324ff80bc0": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "winner",
+              "type": "bytes32"
+            }
+          ],
+          "name": "Judged",
+          "type": "event"
+        },
+        "0x8ea402f48673759ee811b90a27c0fa3565987c03f82dfc52fbf315cb27681eb9": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "winnerAddress",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "name": "winnerEndpoint",
+              "type": "bytes32"
+            }
+          ],
+          "name": "Settled",
+          "type": "event"
+        },
+        "0x95fc3df7bdf26aa8215762b0d95a56e3fbec5b3121e4418b7f01a7099ea0b246": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "endpoint",
+              "type": "bytes32"
+            },
+            {
+              "indexed": true,
+              "name": "totalDots",
+              "type": "uint256"
+            }
+          ],
+          "name": "Expired",
+          "type": "event"
+        },
+        "0x6423db340205c829eeb91151b1c5d1dc6d7a2b8708b1621494e89ba90c87081e": {
+          "anonymous": false,
+          "inputs": [],
+          "name": "Reset",
+          "type": "event"
+        },
+        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "previousOwner",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "name": "newOwner",
+              "type": "address"
+            }
+          ],
+          "name": "OwnershipTransferred",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0xefe043e674f0af3ce79542bc8b3a6a519c1ef64c",
+      "transactionHash": "0x3ad57e4ab595f9a142e868e26eea9f91528e03c94fe8e3314b27966dc1cf9280"
+    }
+  }
+}

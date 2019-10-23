@@ -34,6 +34,34 @@
       "type": "function"
     },
     {
+      "constant": true,
+      "inputs": [],
+      "name": "coord",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "tokenFactory",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
       "constant": false,
       "inputs": [
         {
@@ -45,6 +73,39 @@
       "outputs": [],
       "payable": false,
       "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "curves_list",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "reserveToken",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -80,6 +141,50 @@
         }
       ],
       "name": "DotTokenCreated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "specifier",
+          "type": "bytes32"
+        },
+        {
+          "indexed": true,
+          "name": "numDots",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "name": "sender",
+          "type": "address"
+        }
+      ],
+      "name": "Bonded",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "specifier",
+          "type": "bytes32"
+        },
+        {
+          "indexed": true,
+          "name": "numDots",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "name": "sender",
+          "type": "address"
+        }
+      ],
+      "name": "Unbonded",
       "type": "event"
     },
     {
@@ -189,7 +294,7 @@
       "constant": true,
       "inputs": [
         {
-          "name": "specifier",
+          "name": "endpoint",
           "type": "bytes32"
         }
       ],
@@ -198,6 +303,20 @@
         {
           "name": "",
           "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "getEndpoints",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bytes32[]"
         }
       ],
       "payable": false,
@@ -266,14 +385,14 @@
     "1": {
       "events": {},
       "links": {},
-      "address": "0x2416002d127175bc2d627faefdaa4186c7c49833",
-      "transactionHash": "0x51b6453a7bb6b8b1284063efe839a3ec2ae8cf5e52efa24ae8fd88b7ca6a7fee"
+      "address": "0xb2125398969090f19f15f7334577694850a91442",
+      "transactionHash": "0x595065b437ba1c65d24bd85196582f4d19e8239fdc8276008c25bb57b88769fb"
     },
     "42": {
       "events": {},
       "links": {},
-      "address": "0xf108237201E6EE3906f19390C699dA4d1495040F",
-      "transactionHash": "0x52a4cdc19fdb99c432317d14b4b27254c430998fc8baa4c9a56bcc6e9915f1eb"
+      "address": "0x6fc3e2abbbc1a88f33a16d89bc80e0a46bd93f62",
+      "transactionHash": "0x98835ccb4d96ad4b5ce6e942cbe30274826019222eeeab50c71f1f57cd2f97c8"
     }
   }
 }
