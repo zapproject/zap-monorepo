@@ -89,7 +89,7 @@ export class ZapSubscriber  {
        const approved = utils.toBN(await this.zapToken.contract.methods.allowance(this.subscriberOwner, this.zapBondage.contract._address).call());
        const required = utils.toBN(await this.zapBondage.calcZapForDots({ provider, endpoint, dots }));
        const zapBalance = utils.toBN(await this.getZapBalance());
-       
+
        assert(approved.gte(required), 'You don\'t have enough ZAP approved.');
        assert(zapBalance.gte(required), 'Balance insufficent.');
 
@@ -119,7 +119,7 @@ export class ZapSubscriber  {
         const approved = utils.toBN(await this.zapToken.contract.methods.allowance(this.subscriberOwner, this.zapBondage.contract._address).call());
         const required = utils.toBN(await this.zapBondage.calcZapForDots({ provider, endpoint, dots }));
         const zapBalance = utils.toBN(await this.getZapBalance());
-       
+
         assert(approved.gte(required), 'You don\'t have enough ZAP approved.');
         assert(zapBalance.gte(required), 'Balance insufficent.');
         const bonded = await this.zapBondage.delegateBond({

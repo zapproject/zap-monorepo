@@ -70,10 +70,10 @@ export class ZapProvider {
      * @param {number[]} i.term - The curve array for this endpoint, setting the coefficients, powers, and domains for each piece.
      * @returns {Promise<txid>} Transaction hash
      */
-	async initiateProviderCurve({ endpoint, term, broker, gasPrice, gas = DEFAULT_GAS }: InitCurve): Promise<txid> {
+	async initiateProviderCurve({ endpoint, term, broker, token, gasPrice, gas = DEFAULT_GAS }: InitCurve): Promise<txid> {
 		if (endpoint in this.curves) throw ("Endpoint " + endpoint + " already exists");
 		let curve = new Curve(term)
-		let txid = await this.zapRegistry.initiateProviderCurve({ endpoint, term, broker, from: this.providerOwner, gas, gasPrice });
+		let txid = await this.zapRegistry.initiateProviderCurve({ endpoint, term, broker, token, from: this.providerOwner, gas, gasPrice });
 		assert(txid, 'Failed to init curve.');
 		this.curves[endpoint] = curve;
 		return txid;

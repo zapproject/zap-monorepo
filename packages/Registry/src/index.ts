@@ -183,14 +183,20 @@ import {InitProvider, InitCurve, NextEndpoint, EndpointParams, SetProviderParams
      * @param {Function} cb - Callback for transactionHash event
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-    async initiateProviderCurve({endpoint, term, broker=NULL_ADDRESS, from, gasPrice, gas=DEFAULT_GAS}:InitCurve, cb?: Function):Promise<txid> {
+    async initiateProviderCurve({endpoint, term, broker=NULL_ADDRESS, token=null, from, gasPrice, gas=DEFAULT_GAS}:InitCurve, cb?: Function):Promise<txid> {
         let hex_term:string[] = []
         for(let i in term){
           hex_term[i] = toHex(term[i])
         }
         console.log("term;",term)
-        const promiEvent = this.contract.methods.initiateProviderCurve(utf8ToHex(endpoint), hex_term, broker)
-            .send({from, gas, gasPrice});
+        let method;
+        if (!token) {
+            method = this.contract.methods.initiateProviderCurve(utf8ToHex(endpoint), hex_term, broker)
+        } else {
+            method = this.contract.methods.initiateCustomCurve(utf8ToHex(endpoint), hex_term, broker, token)
+        }
+        const promiEvent = method.send({from, gas, gasPrice})
+
         if (cb) {
             promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
             promiEvent.on('error', (error: any) => cb(error));
@@ -252,6 +258,18 @@ import {InitProvider, InitCurve, NextEndpoint, EndpointParams, SetProviderParams
       }
 
       return promiEvent;
+    }
+
+    /**
+     * Get a provider endpoint's token address
+     * @param {address} provider The address of this provider
+     * @param {string} endpoint - Endpoint to query token's address
+     * @returns {Promise<address>} Returns a Promise of token's address or Null_address if there is
+     * no token for this endpoint
+     */
+    async getEndpointToken(provider:address, endpoint:string ):Promise<string>{
+        let token =  await this.contract.methods.getCurveToken(provider, utf8ToHex(endpoint)).call();
+        return hexToUtf8(token);
     }
 
     /**

@@ -256,7 +256,8 @@ export interface InitProvider extends defaultTx  {
 export interface InitCurve extends defaultTx{
     endpoint:string,
     term: number[],
-    broker?: address
+    broker?: address,
+    token?: address,
 }
 
 export interface InitDotTokenCurve extends InitCurve{
