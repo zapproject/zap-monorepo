@@ -24,6 +24,7 @@
 		"build": "tsc",
 		"test": "mocha  -r ts-node/register test/*.ts --serial --bail --exit",
 		"run_test": "run-s build test",
+		"pack": "npm pack",
 		"webpack": "./node_modules/.bin/webpack"
 	},
 	"devDependencies": {

@@ -12,6 +12,7 @@
 	"license": "ISC",
 	"scripts": {
 		"build": "./node_modules/.bin/tsc",
+		"pack": "npm pack",
 		"test": "./node_modules/.bin/mocha  -r ts-node/register test/*.ts --serial --bail",
 		"run_test": "run-s build test"
 	},

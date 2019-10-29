@@ -10,6 +10,7 @@
   "scripts": {
     "webpack": "./node_modules/.bin/webpack",
     "build": "tsc --module commonjs",
+    "pack": "npm pack",
     "run_test": "tsc"
   },
   "main": "lib/index.js",

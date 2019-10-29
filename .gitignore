@@ -31,6 +31,8 @@ packages/*/test/**/*.js
 packages/*/test/**/*.d.ts
 packages/*/test/**/*.js.map
 
+packages/*/*.tgz
+
 
 packages/Types/lib/
 

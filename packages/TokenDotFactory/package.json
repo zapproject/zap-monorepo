@@ -9,6 +9,7 @@
   "typings": "lib/src",
   "scripts": {
     "build": "tsc",
+    "pack": "npm pack",
     "test": "mocha $PKG -r ts-node/register test/*.ts --serial --bail --exit",
     "run_test": "run-s build test"
   },

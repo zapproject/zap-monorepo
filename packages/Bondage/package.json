@@ -10,6 +10,7 @@
   "scripts": {
     "build": "tsc",
     "test": "mocha -r ts-node/register test/*.ts --serial --bail --exit",
+    "pack": "npm pack",
     "run_test": "run-s build test"
   },
   "keywords": [],
