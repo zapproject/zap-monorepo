@@ -41,7 +41,8 @@ export class TokenDotFactory extends BaseContract {
     endpoint,
     symbol,
     term,
-    from,
+		token='0x0',
+		from,
     gasPrice,
     gas = DEFAULT_GAS
   }: InitDotTokenCurve, cb?: Function): Promise<txid> {
@@ -52,7 +53,7 @@ export class TokenDotFactory extends BaseContract {
     }
 
     const promiEvent = this.contract.methods
-      .initializeCurve(utf8ToHex(endpoint), utf8ToHex(symbol), hex_term)
+      .initializeCurve(utf8ToHex(endpoint), utf8ToHex(symbol), hex_term, token)
       .send({ from: from, gas, gasPrice });
       
     if (cb) {
@@ -66,17 +67,34 @@ export class TokenDotFactory extends BaseContract {
   /**
    * Approve to bond as normal
    * @param zapNum
+   * @param endpoint 
    * @param from
    * @param gasPrice
    * @param gas
    */
   async approveToBond({
     zapNum,
-    from,
+		endpoint=null,
+		from,
     gasPrice,
     gas = DEFAULT_GAS
-  }: ApproveType): Promise<txid> {
-    return this.zapToken.approve({
+  }: any): Promise<txid> {
+		let reserveAddress;
+		if ( endpoint ) {
+			reserveAddress = await this.contract.methods
+				.getReserveAddress(utf8ToHex(endpoint))
+				.call();
+		}
+		else {
+			reserveAddress = Artifacts["ZAP_TOKEN"].address; 
+		}
+
+		let reserveToken = new this.provider.eth.Contract(
+			Artifacts["ZAP_TOKEN"].abi,
+			reserveAddress
+		);
+
+		return reserveToken.approve({
       to: this.contract._address,
       amount: zapNum,
       from,
@@ -105,9 +123,19 @@ export class TokenDotFactory extends BaseContract {
       endpoint: endpoint,
       dots: dots
     });
-    let allowance = await this.zapToken.contract.methods.allowance(
+
+		let reserveAddress = await this.contract.methods
+      .getReserveAddress(utf8ToHex(endpoint))
+      .call();
+
+		let reserveToken = new this.provider.eth.Contract(
+      Artifacts["ZAP_TOKEN"].abi,
+     	reserveAddress 
+    );
+		
+		let allowance = await reserveToken.contract.methods.allowance(
       from,
-      this.zapBondage.contract._address
+     	this.contract.address 
     );
     if (fromWei(zapRequired, "ether") < fromWei(allowance, "ether")) {
       throw "Allowance is smaller than amount Zap required";
@@ -210,6 +238,18 @@ export class TokenDotFactory extends BaseContract {
   }
 
   /**
+   * Get Address of token required for bonding 
+   * @param endpoint
+   */
+  async getReserveAddress(endpoint: string): Promise<txid> {
+    let reserveAddress = await this.contract.methods
+      .getReserveAddress(utf8ToHex(endpoint))
+      .call();
+    console.log("reserve address ", reserveAddress);
+    return reserveAddress;
+  }
+
+  /**
    * Get Token Dot balance
    * @param endpoint
    * @param from
@@ -231,5 +271,31 @@ export class TokenDotFactory extends BaseContract {
     let dotBalance = await dotToken.methods.balanceOf(from).call();
     console.log("dot balance ", dotBalance);
     return dotBalance;
+  }
+
+  /**
+   * Get reserve token balance
+   * @param endpoint
+   * @param from
+   */
+  async getReserveTokenBalance({
+    endpoint,
+    from
+  }: {
+    endpoint: string;
+    from: address;
+  }): Promise<txid> {
+
+		let reserveAddress = await this.contract.methods
+      .getReserveAddress(utf8ToHex(endpoint))
+      .call();
+    let reserveToken = new this.provider.eth.Contract(
+      Artifacts["ZAP_TOKEN"].abi,
+     	reserveAddress 
+    );
+
+    let reserveBalance = await reserveToken.methods.balanceOf(from).call();
+    console.log("dot balance ", reserveBalance);
+    return reserveBalance;
   }
 }
