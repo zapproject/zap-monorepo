@@ -183,7 +183,7 @@ import {InitProvider, InitCurve, NextEndpoint, EndpointParams, SetProviderParams
      * @param {Function} cb - Callback for transactionHash event
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-    async initiateProviderCurve({endpoint, term, broker=NULL_ADDRESS, token=null, from, gasPrice, gas=DEFAULT_GAS}:InitCurve, cb?: Function):Promise<txid> {
+    async initiateProviderCurve({endpoint, term, broker=NULL_ADDRESS, token='', from, gasPrice, gas=DEFAULT_GAS}:InitCurve, cb?: Function):Promise<txid> {
         let hex_term:string[] = []
         for(let i in term){
           hex_term[i] = toHex(term[i])
