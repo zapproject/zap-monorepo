@@ -1,0 +1,47 @@
+{
+  "abi": [
+    {
+      "inputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_name",
+          "type": "string"
+        },
+        {
+          "name": "_symbol",
+          "type": "string"
+        }
+      ],
+      "name": "create",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "networks": {
+    "1": {
+      "events": {},
+      "links": {},
+      "address": "0xbec82f21e31b7fa6008892313357cd51a7733d7f",
+      "transactionHash": "0x9b799a6b9c7bc18c49bed6c972175323514c46436770dabafed8670a10ff6308"
+    },
+    "42": {
+      "events": {},
+      "links": {},
+      "address": "0x1be319f44743a1f079a5580ead4ec6f12712e961",
+      "transactionHash": "0xa72c88ba7077099ce75680349e10bc99980040b37272946f2a0774acfb337ea8"
+    }
+  }
+}
