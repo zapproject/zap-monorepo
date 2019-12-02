@@ -2,6 +2,34 @@
   "abi": [
     {
       "constant": true,
+      "inputs": [],
+      "name": "currentCost",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "db",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
       "inputs": [
         {
           "name": "",
@@ -23,6 +51,20 @@
       "constant": true,
       "inputs": [],
       "name": "owner",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "bondage",
       "outputs": [
         {
           "name": "",
@@ -88,20 +130,6 @@
         {
           "name": "",
           "type": "bytes32"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "constant": true,
-      "inputs": [],
-      "name": "reserveToken",
-      "outputs": [
-        {
-          "name": "",
-          "type": "address"
         }
       ],
       "payable": false,
@@ -218,6 +246,10 @@
         {
           "name": "curve",
           "type": "int256[]"
+        },
+        {
+          "name": "token",
+          "type": "address"
         }
       ],
       "name": "initializeCurve",
@@ -229,6 +261,25 @@
       ],
       "payable": false,
       "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "endpoint",
+          "type": "bytes32"
+        }
+      ],
+      "name": "getReserveAddress",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -382,17 +433,11 @@
     }
   ],
   "networks": {
-    "1": {
-      "events": {},
-      "links": {},
-      "address": "0xb2125398969090f19f15f7334577694850a91442",
-      "transactionHash": "0x595065b437ba1c65d24bd85196582f4d19e8239fdc8276008c25bb57b88769fb"
-    },
     "42": {
       "events": {},
       "links": {},
-      "address": "0x6fc3e2abbbc1a88f33a16d89bc80e0a46bd93f62",
-      "transactionHash": "0x98835ccb4d96ad4b5ce6e942cbe30274826019222eeeab50c71f1f57cd2f97c8"
+      "address": "0xe0e8b5258999a862dda5237357317a9a31aa38db",
+      "transactionHash": "0x950a5d54ceac682f5bc03e5e519d2f56501ef57607cb54293287fc55700bf488"
     }
   }
 }
