@@ -1,4 +1,4 @@
-export type CurveType = number[]
+export type CurveType = number[];
 
 export interface CurveTerm {
   fn: number;

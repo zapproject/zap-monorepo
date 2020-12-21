@@ -1,12 +1,12 @@
-import {Curve} from "@zapjs/curve";
+import {Curve} from '@zapjs/curve';
 export type serverOptionsType = {
-    network: string ,
+    network: string,
     network_id: number,
     hostname: string,
     port: number,
     gas: number,
     gasPrice: number
-}
+};
 
 export type buildOptionsType = {
     logger: any,
@@ -14,7 +14,7 @@ export type buildOptionsType = {
     contracts_directory:string,
     working_directory: string,
     migrations_directory: string,
-}
+};
 
 export interface ZapProviderType {
     provider: string,

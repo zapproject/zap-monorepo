@@ -1,5 +1,5 @@
-import {BigNumber} from "bignumber.js"
-import {ContractAbi} from "ethereum-types";
+import {BigNumber} from 'bignumber.js';
+import {ContractAbi} from 'ethereum-types';
 export type address = string;
 export type txid = string;
 export type BNType = BigNumber;
@@ -13,7 +13,7 @@ export interface defaultTx{
 
 export interface listenEvent {
     filter ?: Filter;
-    callback: Function;
+    callback: ()=>void;
 }
 
 export interface Filter {
@@ -39,7 +39,7 @@ export interface Artifact {
 
 
 //== Base contract
-export interface BaseContractType  {
+export interface BaseContractType {
     artifactsDir ?:string|undefined,
     artifactName: string,
     networkId?: number|undefined,
@@ -67,13 +67,8 @@ export interface TransferType extends defaultTx{
 
 // CONSTANTS
 
-export const  DEFAULT_GAS = new BigNumber(400000)
-export const NULL_ADDRESS= '0x0000000000000000000000000000000000000000';
-
-
-
-
-
+export const DEFAULT_GAS = new BigNumber(400000);
+export const NULL_ADDRESS = '0x0000000000000000000000000000000000000000';
 
 
 //######### ARBITER ################
@@ -97,7 +92,7 @@ export interface SubscriptionType {
     endpoint:string
 }
 
-export interface SubscriptionParams  extends defaultTx{
+export interface SubscriptionParams extends defaultTx{
     receiver:address,
     endpoint:string,
     params: Array<string>
@@ -153,9 +148,9 @@ export interface SubscribeType extends defaultTx {
 
 
 export interface SubscriberHandler{
-    handleResponse : Function,
-    handleUnsubscription ?: Function,
-    handleSubscription ?: Function
+    handleResponse : ()=>void,
+    handleUnsubscription ?: ()=>void,
+    handleSubscription ?: ()=>void
 }
 
 
@@ -236,7 +231,7 @@ export interface ResponseArgs extends defaultTx{
 export interface OffchainResponse{
     id?: number|string,
     subscriber?:address,
-    provider?: address ,
+    provider?: address,
     response?: string[]|number[],
     response1?:string,
     response2?:string,
@@ -248,7 +243,7 @@ export interface OffchainResponse{
 //############################### PROVIDER #########################333
 
 
-export interface InitProvider extends defaultTx  {
+export interface InitProvider extends defaultTx {
     public_key : string,
     title :string
 }
@@ -267,13 +262,13 @@ export type UnsubscribeListen = {
     subscriber:address,
     terminator : address,
     fromBlock : number
-}
+};
 
 export type ListenQuery = {
     queryId: string,
     subscriber :address,
     fromBlock : number
-}
+};
 
 export interface Respond extends defaultTx{
     queryId:string,
@@ -320,7 +315,7 @@ export interface EndpointParams extends defaultTx{
 export interface SetProviderParams extends defaultTx {
   key: string,
   value: string
-};
+}
 
 export interface SetProviderTitle extends defaultTx{
     from:address,
@@ -360,16 +355,16 @@ export interface SubscribeType extends defaultTx {
 
 
 export interface SubscriberHandler{
-    handleResponse : Function,
-    handleUnsubscription ?: Function,
-    handleSubscription ?: Function
+    handleResponse : ()=>void,
+    handleUnsubscription ?: ()=>void,
+    handleSubscription ?: ()=>void
 }
 
 
 
 //########################## CURVE ######################
 
-export type CurveType = number[]
+export type CurveType = number[];
 
 export interface CurveTerm {
   fn: number;
@@ -399,7 +394,7 @@ export interface InitCurve extends defaultTx{
 export type NextEndpoint = {
   provider:address,
   endpoint: string
-}
+};
 
 export interface EndpointParams extends defaultTx{
   endpoint:string,
@@ -409,4 +404,8 @@ export interface EndpointParams extends defaultTx{
 export interface SetProviderParams extends defaultTx {
   key: string,
   value: string
-};
+}
+
+export type TransactionCallback =
+    (error: string|null,
+    hash: string|null)=>void;

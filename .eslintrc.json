@@ -1,0 +1,45 @@
+{
+  "env": {
+    "es6": true,
+    "node": true
+  },
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "extends": [
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "parserOptions": {
+    "sourceType": "module"
+  },
+  "rules": {
+    "quote-props": [ "error", "consistent" ],
+    "@typescript-eslint/semi": [ "error", "always" ],
+    "no-mixed-operators": "warn",
+    "no-useless-escape": "warn",
+
+    // enable additional rules
+    "indent": ["error", 4],
+    "linebreak-style": ["error", "unix"],
+    "quotes": ["error", "single"],
+    "semi": ["error", "always"],
+    "no-trailing-spaces": "error",
+    "space-in-parens": "error",
+    "no-multi-spaces": "error",
+    "space-unary-ops": "error",
+    "semi-spacing": "error",
+    "space-infix-ops": "error",
+    "comma-spacing": "error",
+    "block-spacing": "error",
+    "array-bracket-spacing": "error",
+    "keyword-spacing": "error",
+    "key-spacing": "error",
+    // override default options for rules from base configurations
+    "comma-dangle": "error",
+    "no-cond-assign": "error",
+
+    // disable rules from base configurations
+    "no-console": "off"
+  }
+}

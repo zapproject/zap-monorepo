@@ -1,20 +1,20 @@
-import { ApproveType } from "@zapjs/types";
+import { ApproveType } from '@zapjs/types';
 
-import { utf8ToHex, fromWei, toHex} from "web3"
-import { BaseContract } from "@zapjs/basecontract";
-import { ZapBondage } from "@zapjs/bondage";
-import { ZapToken } from "@zapjs/zaptoken";
-import { ZapRegistry } from "@zapjs/registry";
-import { Artifacts } from "@zapjs/artifacts";
+import { utf8ToHex, fromWei, toHex} from 'web3';
+import { BaseContract } from '@zapjs/basecontract';
+import { ZapBondage } from '@zapjs/bondage';
+import { ZapToken } from '@zapjs/zaptoken';
+import { ZapRegistry } from '@zapjs/registry';
+import { Artifacts } from '@zapjs/artifacts';
 import {
-  InitDotTokenCurve,
-  txid,
-  address,
-  NetworkProviderOptions,
-  DEFAULT_GAS,
-  EndpointMethods,
-  TokenBondType
-} from "@zapjs/types";
+    InitDotTokenCurve,
+    txid,
+    address,
+    NetworkProviderOptions,
+    DEFAULT_GAS,
+    EndpointMethods,
+    TokenBondType
+} from '@zapjs/types';
 
 export class TokenDotFactory extends BaseContract {
   zapBondage: ZapBondage;
@@ -22,10 +22,10 @@ export class TokenDotFactory extends BaseContract {
   zapRegistry: ZapRegistry;
 
   constructor(options?: NetworkProviderOptions) {
-    super(Object.assign(options, { artifactName: "TOKENDOTFACTORY" }));
-    this.zapToken = new ZapToken(options);
-    this.zapBondage = new ZapBondage(options);
-    this.zapRegistry = new ZapRegistry(options);
+      super(Object.assign(options, { artifactName: 'TOKENDOTFACTORY' }));
+      this.zapToken = new ZapToken(options);
+      this.zapBondage = new ZapBondage(options);
+      this.zapRegistry = new ZapRegistry(options);
   }
 
   /**
@@ -38,29 +38,29 @@ export class TokenDotFactory extends BaseContract {
    * @param gas
    */
   async initializeTokenCurve({
-    endpoint,
-    symbol,
-    term,
-    from,
-    gasPrice,
-    gas = DEFAULT_GAS
+      endpoint,
+      symbol,
+      term,
+      from,
+      gasPrice,
+      gas = DEFAULT_GAS
   }: InitDotTokenCurve, cb?: Function): Promise<txid> {
-    console.log(endpoint, symbol, term, from);
-    let hex_term: any = [];
-    for (let i in term) {
-      hex_term[i] = toHex(term[i]);
-    }
+      console.log(endpoint, symbol, term, from);
+      const hex_term: any = [];
+      for (const i in term) {
+          hex_term[i] = toHex(term[i]);
+      }
 
-    const promiEvent = this.contract.methods
-      .initializeCurve(utf8ToHex(endpoint), utf8ToHex(symbol), hex_term)
-      .send({ from: from, gas, gasPrice });
+      const promiEvent = this.contract.methods
+          .initializeCurve(utf8ToHex(endpoint), utf8ToHex(symbol), hex_term)
+          .send({ from: from, gas, gasPrice });
 
-    if (cb) {
-      promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
-      promiEvent.on('error', (error: any) => cb(error));
-    }
+      if (cb) {
+          promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
+          promiEvent.on('error', (error: any) => cb(error));
+      }
 
-    return promiEvent;
+      return promiEvent;
   }
 
   /**
@@ -71,18 +71,18 @@ export class TokenDotFactory extends BaseContract {
    * @param gas
    */
   async approveToBond({
-    zapNum,
-    from,
-    gasPrice,
-    gas = DEFAULT_GAS
-  }: ApproveType): Promise<txid> {
-    return this.zapToken.approve({
-      to: this.contract._address,
-      amount: zapNum,
+      zapNum,
       from,
-      gas,
-      gasPrice
-    });
+      gasPrice,
+      gas = DEFAULT_GAS
+  }: ApproveType): Promise<txid> {
+      return this.zapToken.approve({
+          to: this.contract._address,
+          amount: zapNum,
+          from,
+          gas,
+          gasPrice
+      });
   }
 
   /**
@@ -94,34 +94,34 @@ export class TokenDotFactory extends BaseContract {
    * @param gas
    */
   async bondTokenDot({
-    endpoint,
-    dots,
-    from,
-    gasPrice,
-    gas = DEFAULT_GAS
-  }: TokenBondType, cb?: Function): Promise<txid> {
-    let zapRequired = await this.zapBondage.calcZapForDots({
-      provider: this.contract._address,
-      endpoint: endpoint,
-      dots: dots
-    });
-    let allowance = await this.zapToken.contract.methods.allowance(
+      endpoint,
+      dots,
       from,
-      this.zapBondage.contract._address
-    );
-    if (fromWei(zapRequired, "ether") < fromWei(allowance, "ether")) {
-      throw "Allowance is smaller than amount Zap required";
-    }
-    const promiEvent = this.contract.methods
-      .bond(utf8ToHex(endpoint), dots)
-      .send({ from, gas, gasPrice });
+      gasPrice,
+      gas = DEFAULT_GAS
+  }: TokenBondType, cb?: Function): Promise<txid> {
+      const zapRequired = await this.zapBondage.calcZapForDots({
+          provider: this.contract._address,
+          endpoint: endpoint,
+          dots: dots
+      });
+      const allowance = await this.zapToken.contract.methods.allowance(
+          from,
+          this.zapBondage.contract._address
+      );
+      if (fromWei(zapRequired, 'ether') < fromWei(allowance, 'ether')) {
+          throw 'Allowance is smaller than amount Zap required';
+      }
+      const promiEvent = this.contract.methods
+          .bond(utf8ToHex(endpoint), dots)
+          .send({ from, gas, gasPrice });
 
-    if (cb) {
-      promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
-      promiEvent.on('error', (error: any) => cb(error));
-    }
+      if (cb) {
+          promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
+          promiEvent.on('error', (error: any) => cb(error));
+      }
 
-    return promiEvent;
+      return promiEvent;
   }
 
   /**
@@ -132,30 +132,30 @@ export class TokenDotFactory extends BaseContract {
    * @param gas
    */
   async approveBurnTokenDot({
-    endpoint,
-    from,
-    gasPrice,
-    gas = DEFAULT_GAS
+      endpoint,
+      from,
+      gasPrice,
+      gas = DEFAULT_GAS
   }: EndpointMethods, cb?: Function): Promise<txid> {
-    let dotAddress = await this.contract.methods
-      .getTokenAddress(utf8ToHex(endpoint))
-      .call();
-    let dotToken = new this.provider.eth.Contract(
-      Artifacts["ZAP_TOKEN"].abi,
-      dotAddress
-    );
-    let dotBalance = await dotToken.methods.balanceOf(from).call();
-    //Approval hangs. Should be approving token.approve for dot-token which has just been created by initializeCurve. Currently hangs
-    const promiEvent = dotToken.methods
-      .approve(this.contract._address, 9999999999999)
-      .send({ from, gas, gasPrice });
+      const dotAddress = await this.contract.methods
+          .getTokenAddress(utf8ToHex(endpoint))
+          .call();
+      const dotToken = new this.provider.eth.Contract(
+          Artifacts['ZAP_TOKEN'].abi,
+          dotAddress
+      );
+      const dotBalance = await dotToken.methods.balanceOf(from).call();
+      //Approval hangs. Should be approving token.approve for dot-token which has just been created by initializeCurve. Currently hangs
+      const promiEvent = dotToken.methods
+          .approve(this.contract._address, 9999999999999)
+          .send({ from, gas, gasPrice });
 
-    if (cb) {
-      promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
-      promiEvent.on('error', (error: any) => cb(error));
-    }
+      if (cb) {
+          promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
+          promiEvent.on('error', (error: any) => cb(error));
+      }
 
-    return promiEvent;
+      return promiEvent;
   }
 
   /**
@@ -167,34 +167,34 @@ export class TokenDotFactory extends BaseContract {
    * @param gas
    */
   async unbondTokenDot({
-    endpoint,
-    dots,
-    from,
-    gasPrice,
-    gas = DEFAULT_GAS
+      endpoint,
+      dots,
+      from,
+      gasPrice,
+      gas = DEFAULT_GAS
   }: TokenBondType, cb?: Function): Promise<txid> {
-    let dotAddress = await this.contract.methods
-      .getTokenAddress(utf8ToHex(endpoint))
-      .call();
-    console.log("dot address ", dotAddress);
+      const dotAddress = await this.contract.methods
+          .getTokenAddress(utf8ToHex(endpoint))
+          .call();
+      console.log('dot address ', dotAddress);
 
-    let dotToken = new this.provider.eth.Contract(
-      Artifacts["ZAP_TOKEN"].abi,
-      dotAddress
-    );
-    let approved = await dotToken.methods
-      .allowance(from, this.contract._address)
-      .call();
-    console.log("approved ", approved);
-    const promiEvent = this.contract.methods
-      .unbond(utf8ToHex(endpoint), dots)
-      .send({ from, gas, gasPrice });
-    if (cb) {
-      promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
-      promiEvent.on('error', (error: any) => cb(error));
-    }
+      const dotToken = new this.provider.eth.Contract(
+          Artifacts['ZAP_TOKEN'].abi,
+          dotAddress
+      );
+      const approved = await dotToken.methods
+          .allowance(from, this.contract._address)
+          .call();
+      console.log('approved ', approved);
+      const promiEvent = this.contract.methods
+          .unbond(utf8ToHex(endpoint), dots)
+          .send({ from, gas, gasPrice });
+      if (cb) {
+          promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
+          promiEvent.on('error', (error: any) => cb(error));
+      }
 
-    return promiEvent;
+      return promiEvent;
   }
 
   /**
@@ -202,11 +202,11 @@ export class TokenDotFactory extends BaseContract {
    * @param endpoint
    */
   async getDotAddress(endpoint: string): Promise<txid> {
-    let dotAddress = await this.contract.methods
-      .getTokenAddress(utf8ToHex(endpoint))
-      .call();
-    console.log("dot address ", dotAddress);
-    return dotAddress;
+      const dotAddress = await this.contract.methods
+          .getTokenAddress(utf8ToHex(endpoint))
+          .call();
+      console.log('dot address ', dotAddress);
+      return dotAddress;
   }
 
   /**
@@ -215,21 +215,21 @@ export class TokenDotFactory extends BaseContract {
    * @param from
    */
   async getDotTokenBalance({
-    endpoint,
-    from
+      endpoint,
+      from
   }: {
     endpoint: string;
     from: address;
   }): Promise<txid> {
-    let dotAddress = await this.contract.methods
-      .getTokenAddress(utf8ToHex(endpoint))
-      .call();
-    let dotToken = new this.provider.eth.Contract(
-      Artifacts["ZAP_TOKEN"].abi,
-      dotAddress
-    );
-    let dotBalance = await dotToken.methods.balanceOf(from).call();
-    console.log("dot balance ", dotBalance);
-    return dotBalance;
+      const dotAddress = await this.contract.methods
+          .getTokenAddress(utf8ToHex(endpoint))
+          .call();
+      const dotToken = new this.provider.eth.Contract(
+          Artifacts['ZAP_TOKEN'].abi,
+          dotAddress
+      );
+      const dotBalance = await dotToken.methods.balanceOf(from).call();
+      console.log('dot balance ', dotBalance);
+      return dotBalance;
   }
 }

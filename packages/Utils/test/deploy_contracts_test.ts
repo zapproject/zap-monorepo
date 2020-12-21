@@ -1,10 +1,10 @@
 const expect = require('chai')
-.use(require('chai-as-promised'))
-.use(require('chai-bignumber'))
-.expect;
-import {migrateContracts,ganacheServerOptions,startGanacheServer} from "./../src/migrations"
-import {join} from 'path'
-import {existsSync, mkdirSync} from 'fs'
+    .use(require('chai-as-promised'))
+    .use(require('chai-bignumber'))
+    .expect;
+import {migrateContracts, ganacheServerOptions, startGanacheServer} from './../src/migrations';
+import {join} from 'path';
+import {existsSync, mkdirSync} from 'fs';
 // describe("Testing deployment of test contracts",()=>{
 //   let ganacheServer: any ;
 //   it("Should start ganache server",async ()=>{
