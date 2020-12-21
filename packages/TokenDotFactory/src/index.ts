@@ -1,6 +1,6 @@
 import { ApproveType } from "@zapjs/types";
 
-const { utf8ToHex, fromWei, toHex, toBN, BN } = require("web3-utils");
+import { utf8ToHex, fromWei, toHex} from "web3"
 import { BaseContract } from "@zapjs/basecontract";
 import { ZapBondage } from "@zapjs/bondage";
 import { ZapToken } from "@zapjs/zaptoken";
@@ -54,12 +54,12 @@ export class TokenDotFactory extends BaseContract {
     const promiEvent = this.contract.methods
       .initializeCurve(utf8ToHex(endpoint), utf8ToHex(symbol), hex_term)
       .send({ from: from, gas, gasPrice });
-      
+
     if (cb) {
       promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
       promiEvent.on('error', (error: any) => cb(error));
     }
-        
+
     return promiEvent;
   }
 
@@ -120,7 +120,7 @@ export class TokenDotFactory extends BaseContract {
       promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
       promiEvent.on('error', (error: any) => cb(error));
     }
-        
+
     return promiEvent;
   }
 
@@ -154,7 +154,7 @@ export class TokenDotFactory extends BaseContract {
       promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
       promiEvent.on('error', (error: any) => cb(error));
     }
-        
+
     return promiEvent;
   }
 
@@ -193,7 +193,7 @@ export class TokenDotFactory extends BaseContract {
       promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
       promiEvent.on('error', (error: any) => cb(error));
     }
-        
+
     return promiEvent;
   }
 

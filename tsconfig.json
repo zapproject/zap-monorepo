@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "target": "es2018",
+    "module": "esnext",
+    "target": "esnext",
     "lib": [
-      "es2017",
+      "esnext",
       "dom"
     ],
     "sourceMap": true,
@@ -12,6 +12,13 @@
     "noImplicitReturns": true,
     "pretty": true,
     "skipLibCheck": true,
-    "strict": true
+    "strict": true,
+    "declarationMap": true,
+    "emitDeclarationOnly": true,
+    "composite": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "resolveJsonModule": true
   }
 }

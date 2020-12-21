@@ -16,11 +16,13 @@
 		"run_test": "run-s build test"
 	},
 	"dependencies": {
+		"@truffle/core": "^5.1.58",
 		"@zapjs/artifacts": "^2.2.1",
 		"@zapjs/curve": "^2.2.1",
 		"@zapjs/types": "^2.2.1",
 		"ethereumjs-util": "^5.2.0",
-		"web3-utils": "^1.0.0-beta.36"
+		"web3": "^1.3.1",
+		"web3-utils": "^1.3.1"
 	},
 	"devDependencies": {
 		"@types/chai": "^4.1.5",
@@ -39,9 +41,7 @@
 		"truffle-migrate": "^2.0.8",
 		"truffle-resolver": "^4.0.4",
 		"ts-node": "^7.0.0",
-		"tslint": "^5.10.0",
 		"typescript": "^2.9.2",
-		"web3": "1.0.0-beta.37",
 		"zap_contracts": "git+https://github.com/zapproject/zap-ethereum-api.git"
 	}
 }
