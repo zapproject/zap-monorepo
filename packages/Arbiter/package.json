@@ -3,10 +3,10 @@
   "private": false,
   "version": "2.2.2",
   "description": "Zap Arbiter",
-  "main": "lib/src/index.js",
+  "main": "lib/index.js",
   "repository": "https://github.com/zapproject/Zap-monorepo",
-  "type": "lib/src/types.d.ts",
-  "typings": "lib/src",
+  "type": "lib/types.d.ts",
+  "typings": "lib",
   "scripts": {
     "build": "tsc --module commonjs",
     "test": "mocha  -r ts-node/register test/*.ts --serial --bail --exit",
@@ -18,7 +18,6 @@
   "dependencies": {
     "@zapjs/basecontract": "^2.2.1",
     "@zapjs/types": "^2.2.1",
-    "web3": "^1.3.1",
     "web3-utils": "^1.3.1"
   },
   "devDependencies": {
@@ -34,6 +33,7 @@
     "mocha": "^5.2.0",
     "npm-run-all": "^4.1.3",
     "ts-node": "^7.0.1",
-    "typescript": "^4.1.3"
+    "typescript": "^4.1.3",
+    "web3": "^1.3.1"
   }
 }

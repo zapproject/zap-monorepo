@@ -1,6 +1,8 @@
 import {BaseContract } from '@zapjs/basecontract';
-import {cancelQuery, QueryArgs, ResponseArgs,
-    NetworkProviderOptions, txid, Filter, DEFAULT_GAS, address, BNType, OffchainResponse, NumType } from '@zapjs/types';
+import {
+    cancelQuery, QueryArgs, ResponseArgs,
+    NetworkProviderOptions, txid, Filter, DEFAULT_GAS, address, OffchainResponse, NumType, TransactionCallback
+} from '@zapjs/types';
 import {utf8ToHex, hexToUtf8 } from 'web3-utils';
 /**
  * Provides an interface to the Dispatch contract for enabling data queries and responses.
@@ -32,7 +34,7 @@ export class ZapDispatch extends BaseContract {
      * @param {Function} cb - Callback for transactionHash event
      * @returns {Promise<txid>} Transaction hash
      */
-    async queryData({provider, query, endpoint, endpointParams, from, gasPrice, gas = DEFAULT_GAS }:QueryArgs, cb?: Function):Promise<txid>{
+    async queryData({provider, query, endpoint, endpointParams, from, gasPrice, gas = DEFAULT_GAS }:QueryArgs, cb?: TransactionCallback):Promise<txid>{
         if (endpointParams.length > 0) {
             for (const i in endpointParams) {
                 if (!endpointParams[i].startsWith('0x')) {
@@ -62,7 +64,7 @@ export class ZapDispatch extends BaseContract {
      * @param gas (optional)
      * @returns {Promise<number|string>} block number that query was successfully canceled. or 0 if failed
      */
-    async cancelQuery({queryId, from, gasPrice, gas = DEFAULT_GAS }:cancelQuery): Promise<number|string>{
+    async cancelQuery({queryId, from, gasPrice, gas = DEFAULT_GAS }:cancelQuery): Promise<string|number>{
         try {
             await this.contract.methods.cancelQuery(queryId).send({from: from, gas, gasPrice });
         } catch (e){
@@ -160,7 +162,7 @@ export class ZapDispatch extends BaseContract {
      * @param queryId
      * @returns status of query Id
      */
-    async getStatus({queryId }:{queryId:NumType}):Promise<number|string>{
+    async getStatus({queryId }:{queryId:NumType}):Promise<NumType>{
         return await this.contract.methods.getStatus(queryId).call();
     }
 
@@ -169,7 +171,7 @@ export class ZapDispatch extends BaseContract {
      * @param queryId
      * @returns cancel status of query Id
      */
-    async getCancel({queryId }:{queryId:NumType}):Promise<string|number>{
+    async getCancel({queryId }:{queryId:NumType}):Promise<NumType>{
         return await this.contract.methods.getCancel(queryId).call();
     }
 
@@ -200,7 +202,7 @@ export class ZapDispatch extends BaseContract {
      * @param {Filter} filters :{}
      * @param {Function} callback function for events
      */
-    listen(filters :Filter = {}, callback:Function):void {
+    listen(filters :Filter = {}, callback:TransactionCallback):void {
         this.contract.events.allEvents(
             filters,
             { fromBlock: filters.fromBlock ? filters.fromBlock : 0, toBlock: 'latest' },
@@ -214,7 +216,7 @@ export class ZapDispatch extends BaseContract {
      * id:number|string,query:string, endpoint:bytes32, endpointParams:bytes32[], onchainSubscriber:boolean}
      * @param {Function} callback
      */
-    listenIncoming(filters:Filter = {}, callback:()=>void):void{
+    listenIncoming(filters:Filter = {}, callback:TransactionCallback):void{
         this.contract.events.Incoming(filters, callback);
     }
 
@@ -231,9 +233,9 @@ export class ZapDispatch extends BaseContract {
      * Listen for all Offchain responses Dispatch contract events based on an optional filter
      * @param {object} filters {id: number|string,subscriber:address, provider: address , response: bytes32[]|int[],
      *  response1:string, response2:string, response3:string, response4:string}
-     * @param {()=>void} callback
+     * @param {TransactionCallback} callback
      */
-    listenOffchainResponse(filters:OffchainResponse = {}, callback:()=>void):void{
+    listenOffchainResponse(filters:OffchainResponse = {}, callback:TransactionCallback):void{
         this.contract.events.OffchainResponse(filters, callback);
         this.contract.events.OffchainResponseInt(filters, callback);
         this.contract.events.OffchainResult1(filters, callback);
@@ -248,7 +250,7 @@ export class ZapDispatch extends BaseContract {
      * @param filters
      * @param callback
      */
-    listenCancelRequest(filters:Filter = {}, callback:()=>void):void{
+    listenCancelRequest(filters:Filter = {}, callback:TransactionCallback):void{
         this.contract.events.CancelRequest(filters, callback);
     }
 

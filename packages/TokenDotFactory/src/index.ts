@@ -1,11 +1,11 @@
-import { ApproveType } from '@zapjs/types';
-
-import { utf8ToHex, fromWei, toHex} from 'web3';
+import {ApproveType, TransactionCallback} from '@zapjs/types';
+import {utf8ToHex, fromWei, toHex, toBN} from 'web3-utils';
 import { BaseContract } from '@zapjs/basecontract';
 import { ZapBondage } from '@zapjs/bondage';
 import { ZapToken } from '@zapjs/zaptoken';
 import { ZapRegistry } from '@zapjs/registry';
 import { Artifacts } from '@zapjs/artifacts';
+import BN from 'bn.js';
 import {
     InitDotTokenCurve,
     txid,
@@ -44,7 +44,7 @@ export class TokenDotFactory extends BaseContract {
       from,
       gasPrice,
       gas = DEFAULT_GAS
-  }: InitDotTokenCurve, cb?: Function): Promise<txid> {
+  }: InitDotTokenCurve, cb?: TransactionCallback): Promise<txid> {
       console.log(endpoint, symbol, term, from);
       const hex_term: any = [];
       for (const i in term) {
@@ -99,17 +99,17 @@ export class TokenDotFactory extends BaseContract {
       from,
       gasPrice,
       gas = DEFAULT_GAS
-  }: TokenBondType, cb?: Function): Promise<txid> {
-      const zapRequired = await this.zapBondage.calcZapForDots({
+  }: TokenBondType, cb?: TransactionCallback): Promise<txid> {
+      const zapRequired:BN = toBN(await this.zapBondage.calcZapForDots({
           provider: this.contract._address,
           endpoint: endpoint,
           dots: dots
-      });
-      const allowance = await this.zapToken.contract.methods.allowance(
+      }));
+      const allowance:BN = toBN(await this.zapToken.contract.methods.allowance(
           from,
           this.zapBondage.contract._address
-      );
-      if (fromWei(zapRequired, 'ether') < fromWei(allowance, 'ether')) {
+      ));
+      if (fromWei(zapRequired.toString(), 'ether') < fromWei(allowance.toString(), 'ether')) {
           throw 'Allowance is smaller than amount Zap required';
       }
       const promiEvent = this.contract.methods
@@ -136,7 +136,7 @@ export class TokenDotFactory extends BaseContract {
       from,
       gasPrice,
       gas = DEFAULT_GAS
-  }: EndpointMethods, cb?: Function): Promise<txid> {
+  }: EndpointMethods, cb?: TransactionCallback): Promise<txid> {
       const dotAddress = await this.contract.methods
           .getTokenAddress(utf8ToHex(endpoint))
           .call();
@@ -172,7 +172,7 @@ export class TokenDotFactory extends BaseContract {
       from,
       gasPrice,
       gas = DEFAULT_GAS
-  }: TokenBondType, cb?: Function): Promise<txid> {
+  }: TokenBondType, cb?: TransactionCallback): Promise<txid> {
       const dotAddress = await this.contract.methods
           .getTokenAddress(utf8ToHex(endpoint))
           .call();

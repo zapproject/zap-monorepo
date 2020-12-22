@@ -1,7 +1,7 @@
 import { Artifacts } from '@zapjs/artifacts';
 import { BaseContractType } from '@zapjs/types';
 import { Utils } from './utils';
-import * as Web3 from 'web3';
+const Web3 = require('web3');
 
 /**
  * Parent Class to Dispatch, Bondage, Arbiter, Token, Registry classes
@@ -27,7 +27,7 @@ export class BaseContract {
      * @param {any | null} b.networkProvider - Ethereum network provider (e.g. Infura)
      */
 	constructor({ artifactsDir, artifactName, networkId, networkProvider, coordinator, address, web3 }: BaseContractType) {
-	    let coorArtifact: any = undefined;
+	    let coorArtifact;
 	    this.name = artifactName;
 	    try {
 	        if (!artifactsDir) {
@@ -40,7 +40,7 @@ export class BaseContract {
 	            coorArtifact = artifacts['ZAPCOORDINATOR'];
 	        }
 	        // let currentProvider = networkProvider || new Web3.providers.HttpProvider("http://localhost:8545");
-	        this.provider = web3 ? web3 : new Web3(networkProvider || new Web3.providers.HttpProvider('http://localhost:8545'));
+	        this.provider = web3 || new Web3(networkProvider || new Web3.providers.HttpProvider('http://localhost:8545'));
 	        //network id default to mainnet
 	        this.networkId = networkId || 1;
 	        this.coordinator = new this.provider.eth.Contract(coorArtifact.abi, coordinator || coorArtifact.networks[this.networkId].address);

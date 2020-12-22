@@ -1,7 +1,7 @@
-const assert = require('assert');
+import assert from 'assert';
 import {
     InitProvider, InitCurve, Respond, SetProviderParams, SetProviderTitle,
-    txid, Filter, NetworkProviderOptions, DEFAULT_GAS, BNType,
+    txid, Filter, NetworkProviderOptions, DEFAULT_GAS,
     DataPurchaseEvent,
     SubscriptionEndEvent,
     address,
@@ -10,7 +10,8 @@ import {
     BondFilter,
     BondageArgs,
     CurveType,
-    EndpointMethods
+    EndpointMethods,
+    TransactionCallback
 } from '@zapjs/types';
 import { Curve } from '@zapjs/curve';
 import { ZapDispatch } from '@zapjs/dispatch';
@@ -235,7 +236,7 @@ export class ZapProvider {
      * @param {string} endpoint The endpoint identifier
      * @returns {Promise<string|BigNumber>} Promise of amount of bound Zap (wei).
      */
-	async getZapBound(endpoint: string): Promise<string | BNType> {
+	async getZapBound(endpoint: string): Promise<NumType> {
 	    assert(endpoint, 'endpoint required');
 	    return await this.zapBondage.getZapBound({
 	        provider: this.providerOwner, endpoint: endpoint
@@ -260,7 +261,7 @@ export class ZapProvider {
      * @param {string} endpoint - The endpoint identifier
      * @returns {Promise<string|BigNumber>} Amount of dots
      */
-	async getDotsIssued(endpoint: string): Promise<string | BNType> {
+	async getDotsIssued(endpoint: string): Promise<NumType> {
 	    assert(endpoint, 'endpoint required');
 	    return await this.zapBondage.getDotsIssued({ provider: this.providerOwner, endpoint });
 	}
@@ -270,7 +271,7 @@ export class ZapProvider {
      * @param {string} endpoint -Endpoint identifier
      * @returns {Promise<string|Bignumber>} Maximum dots can be bound to this endpoint
      */
-	async getDotsLimit(endpoint: string): Promise<string | BNType> {
+	async getDotsLimit(endpoint: string): Promise<NumType> {
 	    return this.zapBondage.getDotsLimit({ provider: this.providerOwner, endpoint: endpoint });
 	}
 
@@ -281,7 +282,7 @@ export class ZapProvider {
      * @param {number} e.dots - Number of dots
      * @returns {Promise<string|BigNumber>} Amount of required Zap (wei)
      */
-	async getZapRequired({ endpoint, dots }: { endpoint: string, dots: number }): Promise<string | BNType> {
+	async getZapRequired({ endpoint, dots }: { endpoint: string, dots: number }): Promise<NumType> {
 	    return await this.zapBondage.calcZapForDots({ provider: this.providerOwner, endpoint, dots });
 	}
 
@@ -292,7 +293,7 @@ export class ZapProvider {
      * @param subscriber
      * @returns Number of escrow dots
      */
-	async getNumEscrow({ provider, endpoint, subscriber }: BondageArgs): Promise<number | string> {
+	async getNumEscrow({ provider, endpoint, subscriber }: BondageArgs): Promise<NumType> {
 	    return await this.zapBondage.getNumEscrow({ subscriber, provider, endpoint });
 	}
 
@@ -303,7 +304,7 @@ export class ZapProvider {
      * @param {string} e.queryId - The query identifier to send this response to
      * @param {string[] | number[]} e.responseParams - List of responses returned by provider. Length determines which dispatch response is called
      * @param {boolean} e.dynamic - True if the response contains a dynamic bytes32 array
-	 * @param {()=>void} cb - Callback for transactionHash event
+	 * @param {TransactionCallback} cb - Callback for transactionHash event
      * @returns {Promise<txid>} Transaction hash
      */
 	async respond({ queryId, responseParams, dynamic, gasPrice, gas = DEFAULT_GAS }: Respond): Promise<string> {
@@ -318,7 +319,7 @@ export class ZapProvider {
      * @param filters :{}
      * @param callback
      */
-	listenSubscribes(filters: DataPurchaseEvent = {}, callback: ()=>void): void {
+	listenSubscribes(filters: DataPurchaseEvent = {}, callback: TransactionCallback): void {
 	    const thisFilters = Object.assign(filters, {
 	        provider: this.providerOwner
 	    });
@@ -331,7 +332,7 @@ export class ZapProvider {
      * @param filters :{}
      * @param callback
      */
-	listenUnsubscribes(filters: SubscriptionEndEvent = {}, callback: ()=>void): void {
+	listenUnsubscribes(filters: SubscriptionEndEvent = {}, callback: TransactionCallback): void {
 	    const thisFilters = Object.assign(filters, {
 	        provider: this.providerOwner
 	    });
@@ -343,7 +344,7 @@ export class ZapProvider {
      * @param filters : {subscriber:address, endpoint:string, fromBlock:number,toBlock:number}
      * @param callback
      */
-	listenQueries(filters: Filter = {}, callback: ()=>void): void {
+	listenQueries(filters: Filter = {}, callback: TransactionCallback): void {
 	    const thisFilters = Object.assign(filters, {
 	        provider: this.providerOwner
 	    });
@@ -353,9 +354,9 @@ export class ZapProvider {
 	/**
      * Listen for "Bound" Bondage contract events
      * @param {Filter} filters :{subsriber:address,endpoint:bytes32,dots:number|string, numZap:number|string}
-     * @param {()=>void} callback
+     * @param {TransactionCallback} callback
      */
-	public listenBound(filters: BondFilter = {}, callback: ()=>void): void {
+	public listenBound(filters: BondFilter = {}, callback: TransactionCallback): void {
 	    filters.provider = this.providerOwner;
 	    this.zapBondage.listenBound(filters, callback);
 	}
@@ -363,9 +364,9 @@ export class ZapProvider {
 	/**
      * Listen for "Unbond" Bondage contract events
      * @param {Filter} filters :{subsriber:address,endpoint:bytes32,dots:number|string}
-     * @param {()=>void} callback
+     * @param {TransactionCallback} callback
      */
-	public listenUnbound(filters: BondFilter = {}, callback: ()=>void): void {
+	public listenUnbound(filters: BondFilter = {}, callback: TransactionCallback): void {
 	    filters.provider = this.providerOwner;
 	    this.zapBondage.listenUnbound(filters, callback);
 	}

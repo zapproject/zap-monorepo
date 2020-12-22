@@ -4,9 +4,9 @@
 	"version": "2.2.1",
 	"description": "Zap Curve",
 	"repository": "https://github.com/zapproject/Zap-monorepo",
-	"main": "lib/src/index.js",
-	"type": "lib/src/types.d.ts",
-	"typings": "lib/src",
+	"main": "lib/index.js",
+	"type": "lib/types.d.ts",
+	"typings": "lib",
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
@@ -18,7 +18,6 @@
 	},
 	"dependencies": {
 		"@zapjs/types": "^2.2.1",
-		"web3": "^1.3.1",
 		"web3-utils": "^1.3.1"
 	},
 	"devDependencies": {
@@ -34,7 +33,8 @@
 		"path": "^0.12.7",
 		"ts-loader": "^4.5.0",
 		"ts-node": "^7.0.0",
-		"typescript": "^4.1.3"
+		"typescript": "^4.1.3",
+		"web3": "^1.3.1"
 	},
 	"publishConfig": {
 		"access": "public"

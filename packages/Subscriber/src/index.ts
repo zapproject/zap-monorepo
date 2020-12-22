@@ -1,6 +1,8 @@
-import * as utils from 'web3-utils';
+import {toBN} from 'web3-utils';
+import BN from 'bn.js';
 import {BondType, UnbondType, SubscribeType, QueryArgs, DelegateBondType, ApproveType,
-    txid, address, NetworkProviderOptions, DEFAULT_GAS, BNType,
+    txid, address, NetworkProviderOptions, DEFAULT_GAS,
+    TransactionCallback,
     OffchainResponse,
     NumType,
     cancelQuery,
@@ -46,7 +48,7 @@ export class ZapSubscriber {
       * Gets the Zap balance of the current ZapSubscriber
       * @returns {Promise<string|BigNumber>} Zap Balance in wei
       */
-    async getZapBalance(): Promise<string|BNType> {
+    async getZapBalance(): Promise<string|number> {
         return await this.zapToken.balanceOf(this.subscriberOwner);
     }
 
@@ -54,7 +56,7 @@ export class ZapSubscriber {
       * Gets the Zap allowance of the current ZapSubscriber to Bondage
       * @returns {Promise<string|BigNumber>} Zap Allowance in wei
       */
-    async getZapAllowance(): Promise<string|BNType>{
+    async getZapAllowance(): Promise<NumType>{
         return await this.zapToken.contract.methods.allowance(this.subscriberOwner, this.zapBondage.contract._address).call();
     }
 
@@ -79,14 +81,14 @@ export class ZapSubscriber {
      * @param {string} b.provider - Provider's address
      * @param {string} b.endpoint - Endpoint that this client wants to query from
      * @param {number} b.dots - Amount of dots to bond
-     * @param {()=>void} cb - Callback for transactionHash event
+     * @param {TransactionCallback} cb - Callback for transactionHash event
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-    async bond({provider, endpoint, dots, gasPrice, gas = DEFAULT_GAS }:BondType, cb?:()=>void):Promise<any>{
+    async bond({provider, endpoint, dots, gasPrice, gas = DEFAULT_GAS }:BondType, cb?:TransactionCallback):Promise<any>{
         // assert.ok(this.hasEnoughZap(zapNum), 'Insufficient Balance');
-        const approved = utils.toBN(await this.zapToken.contract.methods.allowance(this.subscriberOwner, this.zapBondage.contract._address).call());
-        const required = utils.toBN(await this.zapBondage.calcZapForDots({ provider, endpoint, dots }));
-        const zapBalance = utils.toBN(await this.getZapBalance());
+        const approved:BN = toBN(await this.zapToken.contract.methods.allowance(this.subscriberOwner, this.zapBondage.contract._address).call());
+        const required:BN = toBN(await this.zapBondage.calcZapForDots({ provider, endpoint, dots }));
+        const zapBalance:BN = toBN(await this.getZapBalance());
 
         assert(approved.gte(required), 'You don\'t have enough ZAP approved.');
         assert(zapBalance.gte(required), 'Balance insufficent.');
@@ -109,14 +111,14 @@ export class ZapSubscriber {
      * @param {address} b.subscriber - subscriber's address that will bond with provider's endpoint
      * @param {string} b.endpoint - Endpoint that this client wants to query from
      * @param {number} b.dots - Amount of dots to bond
-     * @param {()=>void} cb - Callback for transactionHash event
+     * @param {TransactionCallback} cb - Callback for transactionHash event
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-    async delegateBond({provider, subscriber, endpoint, dots, gasPrice, gas = DEFAULT_GAS }:DelegateBondType, cb?: ()=>void):Promise<any>{
+    async delegateBond({provider, subscriber, endpoint, dots, gasPrice, gas = DEFAULT_GAS }:DelegateBondType, cb?: TransactionCallback):Promise<any>{
         // assert.ok(this.hasEnoughZap(zapNum), 'Insufficient Balance');
-        const approved = utils.toBN(await this.zapToken.contract.methods.allowance(this.subscriberOwner, this.zapBondage.contract._address).call());
-        const required = utils.toBN(await this.zapBondage.calcZapForDots({ provider, endpoint, dots }));
-        const zapBalance = utils.toBN(await this.getZapBalance());
+        const approved = toBN(await this.zapToken.contract.methods.allowance(this.subscriberOwner, this.zapBondage.contract._address).call());
+        const required = toBN(await this.zapBondage.calcZapForDots({ provider, endpoint, dots }));
+        const zapBalance = toBN(await this.getZapBalance());
 
         assert(approved.gte(required), 'You don\'t have enough ZAP approved.');
         assert(zapBalance.gte(required), 'Balance insufficent.');
@@ -138,10 +140,10 @@ export class ZapSubscriber {
      * @param {string} u.provider - Oracle's address
      * @param {string} u.endpoint - Endpoint that the client has already bonded to
      * @param {string|number} u.dots - Number of dots to unbond (redeem) from this provider and endpoint
-     * @param {()=>void} cb - Callback for transactionHash event
+     * @param {TransactionCallback} cb - Callback for transactionHash event
      * @returns {Promise<txid>} Transaction hash
      */
-    async unBond({provider, endpoint, dots, gasPrice, gas = DEFAULT_GAS }:UnbondType, cb?: ()=>void):Promise<any>{
+    async unBond({provider, endpoint, dots, gasPrice, gas = DEFAULT_GAS }:UnbondType, cb?: TransactionCallback):Promise<any>{
         const boundDots = await this.zapBondage.getBoundDots({subscriber: this.subscriberOwner, provider, endpoint });
         assert(parseInt(boundDots.toString()) >= parseInt(dots.toString()), 'dots to unbond is less than requested');
         return await this.zapBondage.unbond({provider, endpoint, dots, from: this.subscriberOwner, gas, gasPrice }, cb);
@@ -233,7 +235,7 @@ export class ZapSubscriber {
      * @param filter
      * @param callback
      */
-    async listenToOffchainResponse(filter:OffchainResponse = {}, callback:()=>void){
+    async listenToOffchainResponse(filter:OffchainResponse = {}, callback:TransactionCallback){
         if (!filter['subscriber'])
             filter = {...filter, subscriber: this.subscriberOwner };
         this.zapDispatch.listenOffchainResponse(filter, callback);
@@ -247,7 +249,7 @@ export class ZapSubscriber {
      * @param {number} zapRequired  - Number of zap to check for
      * @returns {Promise<boolean>} boolean of there is enough Zap
      */
-    async hasEnoughZap(zapRequired:string|BNType):Promise<boolean>{
+    async hasEnoughZap(zapRequired:NumType):Promise<boolean>{
         const balance = await this.zapToken.balanceOf(this.subscriberOwner);
         return balance >= zapRequired;
     }

@@ -1,7 +1,7 @@
 import {BaseContract} from '@zapjs/basecontract';
 import {Util} from './utils';
-import {TransferType, address, txid, NetworkProviderOptions, BNType} from '@zapjs/types';
-const {toHex} = require('web3-utils');
+import {TransferType, address, txid, NetworkProviderOptions, TransactionCallback, NumType} from '@zapjs/types';
+import {toHex} from 'web3-utils';
 
 
 /**
@@ -12,13 +12,13 @@ const {toHex} = require('web3-utils');
 export class ZapToken extends BaseContract {
 
     /**
-      * @constructor
-      * @param {NetworkProviderOptions} n. {artifactDir,networkId,networkProvider}
-      * @param {string} n.artifactsDir - Directory where contract ABIs are located
-      * @param {number|string} n.networkId - Select which network the contract is located on (mainnet, testnet, private)
-      * @param {any} n.networkProvider - Ethereum network provider (e.g. Infura)
-      * @example new ZapToken({networkId : 42, networkProvider : web3})
-      */
+     * @constructor
+     * @param obj
+     * @param {string} n.artifactsDir - Directory where contract ABIs are located
+     * @param {number|string} n.networkId - Select which network the contract is located on (mainnet, testnet, private)
+     * @param {any} n.networkProvider - Ethereum network provider (e.g. Infura)
+     * @example new ZapToken({networkId : 42, networkProvider : web3})
+     */
 
     constructor(obj ?: NetworkProviderOptions){
         super(Object.assign(obj, {artifactName: 'ZAP_TOKEN'}));
@@ -30,7 +30,7 @@ export class ZapToken extends BaseContract {
      * @param {address} address  Address to check
      * @returns {Promise<number>} Returns a Promise that will eventually resolve into a Zap balance (wei)
      */
-    async balanceOf(address:address) :Promise<string|BNType>{
+    async balanceOf(address:address) :Promise<string|number>{
         return await this.contract.methods.balanceOf(address).call();
     }
 
@@ -44,7 +44,7 @@ export class ZapToken extends BaseContract {
      * @param {Function} cb - Callback for transactionHash event
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-    async send({to, amount, from, gasPrice, gas = Util.DEFAULT_GAS}:TransferType, cb?: Function) :Promise<txid>{
+    async send({to, amount, from, gasPrice, gas = Util.DEFAULT_GAS}:TransferType, cb?: TransactionCallback) :Promise<txid>{
         amount = toHex(amount);
         const promiEvent = this.contract.methods.transfer(to, amount).send({from, gas, gasPrice});
         if (cb) {
@@ -65,7 +65,7 @@ export class ZapToken extends BaseContract {
      * @param {Function} cb - Callback for transactionHash event
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-    async allocate({to, amount, from, gasPrice, gas = Util.DEFAULT_GAS}:TransferType, cb?: Function):Promise<txid> {
+    async allocate({to, amount, from, gasPrice, gas = Util.DEFAULT_GAS}:TransferType, cb?: TransactionCallback):Promise<txid> {
         amount = toHex(amount);
         const promiEvent = this.contract.methods.allocate(to, amount).send({from, gas, gasPrice});
 
@@ -87,7 +87,7 @@ export class ZapToken extends BaseContract {
      * @param {Function} cb - Callback for transactionHash event
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-    async approve({to, amount, from, gasPrice, gas = Util.DEFAULT_GAS}:TransferType, cb?: Function):Promise<txid> {
+    async approve({to, amount, from, gasPrice, gas = Util.DEFAULT_GAS}:TransferType, cb?: TransactionCallback):Promise<txid> {
         amount = toHex(amount);
 
         const _success = this.contract.methods.approve(to, amount).send({from, gas, gasPrice});

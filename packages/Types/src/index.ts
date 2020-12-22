@@ -1,14 +1,13 @@
-import {BigNumber} from 'bignumber.js';
+import BN from 'bn.js';
 import {ContractAbi} from 'ethereum-types';
 export type address = string;
 export type txid = string;
-export type BNType = BigNumber;
-export type NumType = string|number|BNType;
+export type NumType = string|number|BN;
 
 export interface defaultTx{
     from?:address,
-    gas?: string|number|BNType,
-    gasPrice?: string|number|BNType
+    gas?: string|number|BN,
+    gasPrice?: string|number|BN
 }
 
 export interface listenEvent {
@@ -17,13 +16,13 @@ export interface listenEvent {
 }
 
 export interface Filter {
-    fromBlock ?: number|BNType,
-    toBlock ?: number|BNType,
+    fromBlock ?: number|BN,
+    toBlock ?: number|BN,
     provider ?: address,
     subscriber ?:address,
     terminator ?:address,
     endpoint ?:string,
-    id ?: number|string|BNType
+    id ?: number|string|BN
 }
 
 export interface Artifact {
@@ -61,13 +60,13 @@ export interface NetworkProviderOptions{
 
 export interface TransferType extends defaultTx{
     to:address,
-    amount:BigNumber|string|number
+    amount:BN|string|number
 }
 
 
 // CONSTANTS
 
-export const DEFAULT_GAS = new BigNumber(400000);
+export const DEFAULT_GAS = new BN(400000);
 export const NULL_ADDRESS = '0x0000000000000000000000000000000000000000';
 
 
@@ -99,8 +98,8 @@ export interface SubscriptionParams extends defaultTx{
 }
 
 export interface DataPurchaseEvent extends Filter{
-    publicKey ?: number|string|BNType,
-    amount ?: number|string|BNType,
+    publicKey ?: number|string|BN,
+    amount ?: number|string|BN,
     endpoint ?: string,
     endpointParams ?: string[]
 }
@@ -156,7 +155,7 @@ export interface SubscriberHandler{
 
 export interface ApproveType extends defaultTx{
     provider: address,
-    zapNum: string|number|BigNumber
+    zapNum: string|number|BN
 }
 
 
@@ -408,4 +407,4 @@ export interface SetProviderParams extends defaultTx {
 
 export type TransactionCallback =
     (error: string|null,
-    hash: string|null)=>void;
+    hash?: string|null)=>void;
