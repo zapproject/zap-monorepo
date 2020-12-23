@@ -9,8 +9,6 @@ node_modules/
 docs/
 test/TestArtifactsModule/contracts/*.json
 /dist/*
-package-lock.json
-
 packages/**/lib/
 packages/**/test/contracts/
 packages/**/.cache-loader

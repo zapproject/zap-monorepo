@@ -1,7 +1,7 @@
 {
   "name": "@zapjs/artifacts",
   "private": false,
-  "version": "2.2.1",
+  "version": "3.0.0",
   "description": "ZapArtifacts",
   "engines": {
     "node": ">=12.20 <=14.15"
@@ -15,7 +15,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {},
   "devDependencies": {
     "ts-node": "^7.0.1",
     "typescript": "^4.1.3"

@@ -1,7 +1,7 @@
 {
 	"name": "@zapjs/utils",
 	"private": false,
-	"version": "2.2.1",
+	"version": "3.0.0",
 	"description": "Zap Utils",
 	"repository": "https://github.com/zapproject/Zap-monorepo",
 	"engines": {
@@ -21,8 +21,8 @@
 	"dependencies": {
 		"@truffle/core": "^5.1.58",
 		"@truffle/environment": "^0.2.38",
-		"@zapjs/artifacts": "^2.2.1",
-		"@zapjs/curve": "^2.2.1",
+		"@zapjs/artifacts": "^3.0.0",
+		"@zapjs/curve": "^3.0.0",
 		"bignumber.js": "^7.2.1",
 		"ganache-cli": "^6.12.1",
 		"ganache-core": "^2.13.1",
