@@ -26,7 +26,7 @@ export class ZapArbiter extends BaseContract {
      * @param obj: NetworkProviderOptions
      */
     constructor(obj?: NetworkProviderOptions) {
-        super(Object.assign(obj, { artifactName: 'ARBITER' }));
+        super(Object.assign(obj || {}, { artifactName: 'ARBITER' }));
     }
 
     /**

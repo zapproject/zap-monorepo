@@ -4,7 +4,7 @@ This repository provides an interface tothe  Zap ERC20 token contract. This pack
 
 ### Prerequisites
 ```
-- Nodejs and npm>=6.1.11
+- Node 12.20 <=14.15
 - Typescript
 ```
 

@@ -5,7 +5,7 @@ This repository provides utilities used in other @zapjs packages. This includes 
 ### Prerequisites
 
 ```
-- Nodejs and npm>=6.1.11
+- Node 12.20 <=14.15
 - Typescript
 ```
 

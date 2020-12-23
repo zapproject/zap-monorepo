@@ -40,7 +40,7 @@ export class BaseContract {
 				coorArtifact = artifacts['ZAPCOORDINATOR'];
 			}
 			// let currentProvider = networkProvider || new Web3.providers.HttpProvider("http://localhost:8545");
-			this.provider = web3 || new Web3(networkProvider || new Web3.providers.HttpProvider('http://localhost:8545'));
+			this.provider = web3 || new Web3(networkProvider || new Web3.providers.HttpProvider("https://cloudflare-eth.com"));
 			//network id default to mainnet
 			this.networkId = networkId || 1;
 			this.coordinator = new this.provider.eth.Contract(coorArtifact.abi, coordinator || coorArtifact.networks[this.networkId].address);

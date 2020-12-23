@@ -1,7 +1,9 @@
-import {BaseContract } from '@zapjs/basecontract';
-import {BondageArgs, BondArgs, UnbondArgs, DelegateBondArgs, BondFilter,
-    Filter, txid, NetworkProviderOptions, NULL_ADDRESS, NumType, TransactionCallback } from '@zapjs/types';
-import {utf8ToHex, toHex } from 'web3-utils';
+import { BaseContract } from '@zapjs/basecontract';
+import {
+    BondageArgs, BondArgs, UnbondArgs, DelegateBondArgs, BondFilter,
+    Filter, txid, NetworkProviderOptions, NULL_ADDRESS, NumType, TransactionCallback
+} from '@zapjs/types';
+import { utf8ToHex, toHex } from 'web3-utils';
 import assert from 'assert';
 const DEFAULT_GAS = 300000;
 
@@ -19,8 +21,8 @@ export class ZapBondage extends BaseContract {
      * @param  {Object} net.networkProvider - Ethereum network provider
      * @example new ZaBondage({networkId : 42, networkProvider : web3})
      */
-    constructor(obj ?: NetworkProviderOptions){
-        super(Object.assign(obj, {artifactName: 'BONDAGE' }));
+    constructor(obj?: NetworkProviderOptions) {
+        super(Object.assign(obj || {}, { artifactName: 'BONDAGE' }));
     }
 
     /**
@@ -35,11 +37,11 @@ export class ZapBondage extends BaseContract {
      * @param {TransactionCallback} cb - Callback for transactionHash event
      * @returns {Promise<txid>} Transaction hash.
      */
-    public async bond({provider, endpoint, dots, from, gasPrice, gas = DEFAULT_GAS }: BondArgs, cb?: TransactionCallback): Promise<txid> {
+    public async bond({ provider, endpoint, dots, from, gasPrice, gas = DEFAULT_GAS }: BondArgs, cb?: TransactionCallback): Promise<txid> {
         assert(dots && dots > 0, 'Dots to bond must be greater than 0.');
         const broker = await this.contract.methods.getEndpointBroker(provider, utf8ToHex(endpoint)).call();
-        if (broker != NULL_ADDRESS){
-            if (from !== broker){
+        if (broker != NULL_ADDRESS) {
+            if (from !== broker) {
                 throw new Error(`Broker address ${broker} needs to call delegate bonding`);
             }
         }
@@ -48,7 +50,7 @@ export class ZapBondage extends BaseContract {
             provider,
             utf8ToHex(endpoint),
             toHex(dots))
-            .send({from, gas, gasPrice });
+            .send({ from, gas, gasPrice });
         if (cb) {
             promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
             promiEvent.on('error', (error: any) => cb(error));
@@ -69,12 +71,12 @@ export class ZapBondage extends BaseContract {
      * @param {TransactionCallback} cb - Callback for transactionHash event
      * @returns {Promise<txid>} Transaction hash
      */
-    public async delegateBond({provider, endpoint, dots, subscriber, from, gasPrice, gas = DEFAULT_GAS }: DelegateBondArgs, cb?: TransactionCallback): Promise<txid> {
+    public async delegateBond({ provider, endpoint, dots, subscriber, from, gasPrice, gas = DEFAULT_GAS }: DelegateBondArgs, cb?: TransactionCallback): Promise<txid> {
         assert(dots && dots > 0, 'Dots to bond must be greater than 0.');
         dots = toHex(dots);
         const broker = await this.contract.methods.getEndpointBroker(provider, utf8ToHex(endpoint)).call();
-        if (broker != NULL_ADDRESS){
-            if (from !== broker){
+        if (broker != NULL_ADDRESS) {
+            if (from !== broker) {
                 throw new Error(`Broker address ${broker} needs to call delegate bonding for this endpoint`);
             }
         }
@@ -83,7 +85,7 @@ export class ZapBondage extends BaseContract {
             provider,
             utf8ToHex(endpoint),
             dots)
-            .send({from, gas, gasPrice });
+            .send({ from, gas, gasPrice });
         if (cb) {
             promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
             promiEvent.on('error', (error: any) => cb(error));
@@ -104,12 +106,12 @@ export class ZapBondage extends BaseContract {
      * @param {TransactionCallback} cb - Callback for transactionHash event
      * @returns {Promise<txid>} Transaction hash
      */
-    public async unbond({provider, endpoint, dots, from, gasPrice, gas = DEFAULT_GAS }: UnbondArgs, cb?: TransactionCallback): Promise<txid> {
+    public async unbond({ provider, endpoint, dots, from, gasPrice, gas = DEFAULT_GAS }: UnbondArgs, cb?: TransactionCallback): Promise<txid> {
         assert(dots && dots > 0, 'Dots to unbond must be greater than 0');
         dots = toHex(dots);
         const broker = await this.contract.methods.getEndpointBroker(provider, utf8ToHex(endpoint)).call();
-        if (broker != NULL_ADDRESS){
-            if (from !== broker){
+        if (broker != NULL_ADDRESS) {
+            if (from !== broker) {
                 throw `Broker address ${broker} needs to call unbonding for this endpoint`;
             }
         }
@@ -117,7 +119,7 @@ export class ZapBondage extends BaseContract {
             provider,
             utf8ToHex(endpoint),
             dots)
-            .send({from, gas, gasPrice });
+            .send({ from, gas, gasPrice });
         if (cb) {
             promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
             promiEvent.on('error', (error: any) => cb(error));
@@ -137,7 +139,7 @@ export class ZapBondage extends BaseContract {
      * @param {string} bond.endpoint - Data endpoint of the provider
      * @returns {Promise<string|BigNumber>} Number of bound dots to this provider's endpoint
      */
-    public async getBoundDots({subscriber, provider, endpoint }: BondageArgs): Promise<string|number> {
+    public async getBoundDots({ subscriber, provider, endpoint }: BondageArgs): Promise<string | number> {
         return await this.contract.methods.getBoundDots(
             subscriber,
             provider,
@@ -153,7 +155,7 @@ export class ZapBondage extends BaseContract {
      * @param {number} bondage.dots - Number of dots to calculate the price (in Zap) for
      * @returns {Promise<string|BigNumber>} Price (in Zap) for the given number of dots
      */
-    public async calcZapForDots({provider, endpoint, dots }: BondageArgs): Promise<string|number> {
+    public async calcZapForDots({ provider, endpoint, dots }: BondageArgs): Promise<string | number> {
         return await this.contract.methods.calcZapForDots(
             provider,
             utf8ToHex(endpoint),
@@ -168,7 +170,7 @@ export class ZapBondage extends BaseContract {
      * @param {number} bondage.dots - dots that subscriber want to use
      * @returns {Promise<string|BigNumber>} Price (in Zap wei) for next x dots to bond
      */
-    public async currentCostOfDot({provider, endpoint, dots }: BondageArgs): Promise<string|number> {
+    public async currentCostOfDot({ provider, endpoint, dots }: BondageArgs): Promise<string | number> {
         dots = toHex(dots);
         return this.contract.methods.currentCostOfDot(
             provider,
@@ -184,7 +186,7 @@ export class ZapBondage extends BaseContract {
      * @param {string} b.endpoint - Provider's endpoint to get dots limit
      * @returns {Promise<string|BigNumber>} Number of maximum dots that can be bound
      */
-    public async getDotsLimit({provider, endpoint }:BondageArgs):Promise<string|number>{
+    public async getDotsLimit({ provider, endpoint }: BondageArgs): Promise<string | number> {
         return await this.contract.methods.dotLimit(provider, utf8ToHex(endpoint)).call().valueOf();
     }
 
@@ -195,7 +197,7 @@ export class ZapBondage extends BaseContract {
      * @param {string} b.endpoint - Data endpoint of the provider
      * @returns {Promise<string|BigNumber>} Number of dots issued
      */
-    public async getDotsIssued({provider, endpoint }: BondageArgs): Promise<string|number> {
+    public async getDotsIssued({ provider, endpoint }: BondageArgs): Promise<string | number> {
         return await this.contract.methods.getDotsIssued(
             provider,
             utf8ToHex(endpoint)
@@ -210,7 +212,7 @@ export class ZapBondage extends BaseContract {
      * @param {string} b.endpoint - Provider's endpoint to get Broker's address
      * @returns {Promise<string>} Broker's address for this endpoint, null address if none
      */
-    public async getBrokerAddress({provider, endpoint }:BondageArgs):Promise<string>{
+    public async getBrokerAddress({ provider, endpoint }: BondageArgs): Promise<string> {
         return await this.contract.methods.getEndpointBroker(provider, utf8ToHex(endpoint)).call();
     }
     /**
@@ -220,7 +222,7 @@ export class ZapBondage extends BaseContract {
      * @param {string} b.endpoint  - Data endpoint of the provider
      * @returns {Promise<number>} Amount of Zaps (wei) that are bound to this endpoint
      */
-    public async getZapBound({provider, endpoint }: BondageArgs): Promise<string|number> {
+    public async getZapBound({ provider, endpoint }: BondageArgs): Promise<string | number> {
         return await this.contract.methods.getZapBound(provider, utf8ToHex(endpoint)).call();
     }
 
@@ -232,7 +234,7 @@ export class ZapBondage extends BaseContract {
      * @param subscriber
      * @returns Number of escrow dots
      */
-    async getNumEscrow({provider, endpoint, subscriber }:BondageArgs) :Promise<number|string>{
+    async getNumEscrow({ provider, endpoint, subscriber }: BondageArgs): Promise<number | string> {
         return await this.contract.methods.getNumEscrow(subscriber, provider, endpoint).call();
     }
 
@@ -243,7 +245,7 @@ export class ZapBondage extends BaseContract {
      * @param {TransactionCallback} callback
      */
     public listen(filters: BondFilter = {}, callback: TransactionCallback): void {
-        this.contract.events.allEvents(filters, {fromBlock: 0, toBlock: 'latest' }, callback);
+        this.contract.events.allEvents(filters, { fromBlock: 0, toBlock: 'latest' }, callback);
     }
 
     /**
@@ -252,7 +254,7 @@ export class ZapBondage extends BaseContract {
      * @param {TransactionCallback} callback
      */
     public listenBound(filters: BondFilter = {}, callback: TransactionCallback): void {
-        this.contract.events.Bound(filters, {toBlock: 'latest' }, callback);
+        this.contract.events.Bound(filters, { toBlock: 'latest' }, callback);
     }
 
     /**
@@ -261,7 +263,7 @@ export class ZapBondage extends BaseContract {
      * @param {TransactionCallback} callback
      */
     public listenUnbound(filters: BondFilter = {}, callback: TransactionCallback): void {
-        this.contract.events.Unbond(filters, {toBlock: 'latest' }, callback);
+        this.contract.events.Unbond(filters, { toBlock: 'latest' }, callback);
     }
 
     /**
@@ -270,7 +272,7 @@ export class ZapBondage extends BaseContract {
      * @param {TransactionCallback} callback
      */
     public listenEscrowed(filters: BondFilter = {}, callback: TransactionCallback): void {
-        this.contract.events.Escrowed(filters, {toBlock: 'latest' }, callback);
+        this.contract.events.Escrowed(filters, { toBlock: 'latest' }, callback);
     }
 
     /**
@@ -279,7 +281,7 @@ export class ZapBondage extends BaseContract {
      * @param {TransactionCallback} callback
      */
     public listenReleased(filters: BondFilter = {}, callback: TransactionCallback): void {
-        this.contract.events.Released(filters, {toBlock: 'latest' }, callback);
+        this.contract.events.Released(filters, { toBlock: 'latest' }, callback);
     }
 
     /**
@@ -287,8 +289,8 @@ export class ZapBondage extends BaseContract {
      * @param filters
      * @param callback
      */
-    public listenReturned(filters: BondFilter = {}, callback:TransactionCallback):void{
-        this.contract.events.Returned(filters, {toBlock: 'latest' }, callback);
+    public listenReturned(filters: BondFilter = {}, callback: TransactionCallback): void {
+        this.contract.events.Returned(filters, { toBlock: 'latest' }, callback);
     }
 
 }

@@ -19,7 +19,7 @@ export class ZapRegistry extends BaseContract {
      * @example new ZapRegistry({networkId : 42, networkProvider : web3})
      */
     constructor(obj?: NetworkProviderOptions) {
-        super(Object.assign(obj, { artifactName: 'REGISTRY' }));
+        super(Object.assign(obj || {}, { artifactName: 'REGISTRY' }));
     }
 
     /*************************** REGISTRY STORAGE CALLS FOR ALL PROVIDER *************************/

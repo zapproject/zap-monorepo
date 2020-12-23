@@ -4,7 +4,7 @@ This package provides an interface to the Zap bondage contract. This package ena
 
 ### Prerequisites
 ```
-- Nodejs and npm>=6.1.11
+- Node 12.20 <=14.15
 - Typescript
 ```
 
