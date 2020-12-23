@@ -1,7 +1,7 @@
 {
 	"name": "@zapjs/curve",
 	"private": false,
-	"version": "3.0.0",
+	"version": "3.0.1",
 	"description": "Zap Curve",
 	"repository": "https://github.com/zapproject/Zap-monorepo",
 	"main": "lib/index.js",
@@ -17,7 +17,7 @@
 		"webpack": "./node_modules/.bin/webpack"
 	},
 	"dependencies": {
-		"@zapjs/types": "^3.0.0",
+		"@zapjs/types": "^3.0.1",
 		"bignumber.js": "^7.2.1",
 		"web3-utils": "^1.3.1"
 	},
