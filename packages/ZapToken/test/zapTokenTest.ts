@@ -39,7 +39,6 @@ describe('ZapToken, path to "/src/api/contracts/ZapToken"', () => {
 
     after(function(){
         console.log('Done running Token tests');
-        ganacheServer.close();
         process.exit();
     });
 

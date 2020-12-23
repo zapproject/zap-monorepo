@@ -1,11 +1,14 @@
 
 const {readdirSync, readFileSync, writeFileSync, unlinkSync, existsSync, mkdirSync} = require('fs');
 import {join, basename} from 'path';
-const { provider, server } = require('ganache-core');
+import ganache from 'ganache-cli';
+import { ethers } from "ethers";
+import {Artifacts} from '@zapjs/artifacts';
 import { promisify } from 'util';
 import {ganacheServerOptions, DEFAULT_GAS, GAS_PRICE, buildOptions, migrate} from '../constants';
 import {serverOptionsType, buildOptionsType} from '../types';
 const asyncMigrate = promisify(migrate.run);
+async function sleep(ms:number){ return new Promise(resolve=>setTimeout(resolve, ms)); }
 
 
 /**
@@ -13,22 +16,33 @@ const asyncMigrate = promisify(migrate.run);
  * @param _serverOptions
  * @returns {Promise<any>}
  */
-export function startGanacheServer(_serverOptions ?: any){
-    return new Promise((resolve, reject)=>{
+export async function startGanacheServer(_serverOptions ?: any){
+    try {
         const serverOptions = _serverOptions || ganacheServerOptions;
-        const ganacheServer = server(serverOptions);
-        ganacheServer.listen(serverOptions.port, (err:any, blockchain:any) => {
-            if (err) {
-                console.error(err);
-                console.log('server might already is created from other tests');
-                ganacheServer.close();
-                return reject(err);
-            }
-            console.log('Ganache server started on port: ' + serverOptions.port);
-            return resolve(ganacheServer);
-        });
-    });
+        const flag = await isPortTaken(serverOptions.port);
+        if (!flag) {
+            const ganacheServer = ganache.server(serverOptions);
+            ganacheServer.listen(serverOptions.port);
+            return ganacheServer;
+        }
+    } catch (e){
+        console.error('Failed to start ganache sever, retrying ');
+        setTimeout(()=>{ startGanacheServer(_serverOptions); }, 1000);
+    }
 }
+
+/**
+ *
+ * @param port
+ */
+const isPortTaken = (port) => {
+    return new Promise((resolve, reject) => {
+        const tester = require('http').createServer();
+        tester.once('error', err => err.code == 'EADDRINUSE' ? resolve(true) : reject(err));
+        tester.once('listening', () => tester.once('close', () => resolve(false)).close());
+        tester.listen(port);
+    });
+};
 
 /**
  * @ignore
@@ -48,7 +62,6 @@ export function clearBuild(onlyRemoveNetworks = true, buildDir:string) {
             if (!compiledJson.networks) {
                 continue;
             }
-
             compiledJson.networks = {};
             writeFileSync(filePath, JSON.stringify(compiledJson), {flag: 'w'});
             //console.log('deployment info for file ' + filePath + ' was cleared.');
@@ -90,17 +103,20 @@ export function getArtifacts(buildDir:string){
  */
 export async function migrateContracts(buildDir:string, _serverOptions ?:serverOptionsType) {
     console.log('Begin contract migration');
+    console.log('Deploy token')
+
     const serverOpts = _serverOptions || ganacheServerOptions;
     const buildOpts:buildOptionsType = buildOptions;
     buildOpts.contracts_build_directory = buildDir;
     const options = Object.assign(serverOpts, buildOpts);
     try {
         clearBuild(false, buildDir);
-        //console.log("running all");
-        await asyncMigrate(options);
+        console.log("running all");
+        migrate.run(options);
+        await sleep(20 * 1000);
         return true;
     } catch (err) {
-        console.error(err);
+        console.error('Error Migrating Contracts', err);
         return true;
     }
 }

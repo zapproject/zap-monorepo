@@ -3,11 +3,9 @@ const expect = require('chai')
     .use(require('chai-as-promised'))
     .use(require('chai-bignumber'))
     .expect;
-import * as Web3 from 'web3';
+import Web3 from 'web3';
 import {toHex } from 'web3-utils';
-
 import {BigNumber } from 'bignumber.js';
-
 import {BaseContract } from '@zapjs/basecontract';
 import {Utils } from '@zapjs/utils';
 import {ZapBondage } from '../src';
@@ -39,9 +37,9 @@ describe('Zap Bondage Test', () => {
     const endpointB = Utils.Constants.EndpointBroker;
 
 
-    before(function(done) {
-        configureEnvironment(async () => {
-            ganacheServer = await Utils.startGanacheServer();
+    it('should set env',async ()=> {
+        // configureEnvironment(async () => {
+            ganacheServer = Utils.startGanacheServer();
             web3 = new Web3(Utils.Constants.ganacheProvider);
             accounts = await web3.eth.getAccounts();
             broker = accounts[5];
@@ -52,13 +50,12 @@ describe('Zap Bondage Test', () => {
             deployedRegistry = new BaseContract(Object.assign(options, {artifactName: 'REGISTRY' }));
             deployedToken = new BaseContract(Object.assign(options, {artifactName: 'ZAP_TOKEN' }));
             await Utils.delay(3000);
-            done();
-        });
+            // done();
+        // });
     });
 
     after(function(){
         console.log('Done running Bondage tests');
-        ganacheServer.close();
         process.exit();
     });
 
@@ -106,13 +103,15 @@ describe('Zap Bondage Test', () => {
         });
         console.log('required zap : ', requiredZap);
         // approve
-        await deployedToken.contract.methods.approve(deployedBondage.contract._address, requiredZap).send({from: accounts[2], gas: Utils.Constants.DEFAULT_GAS });
+        await deployedToken.contract.methods.approve(deployedBondage.contract._address, requiredZap).send({from: accounts[2], gas:200000 });
+        console.log('approved completed')
 
         const bonded = await bondageWrapper.bond({
             provider: accounts[0],
             endpoint: testZapProvider.endpoint,
             dots: 5,
-            from: accounts[2]
+            from: accounts[2],
+            gas: 600000
         }, (err: any, txid: string) => expect(txid).to.be.a('string'));
         const numZap = bonded.events.Bound.returnValues.numZap;
         const numDots = bonded.events.Bound.returnValues.numDots;
@@ -135,12 +134,13 @@ describe('Zap Bondage Test', () => {
             dots: 5
         });
         // approve
-        await deployedToken.contract.methods.approve(deployedBondage.contract._address, requiredZap).send({from: broker, gas: Utils.Constants.DEFAULT_GAS });
+        await deployedToken.contract.methods.approve(deployedBondage.contract._address, requiredZap).send({from: broker, gas: 600000 });
         const bonded = await bondageWrapper.bond({
             provider: accounts[0],
             endpoint: endpointB,
             dots: 5,
-            from: broker
+            from: broker,
+            gas: 600000
         }, (err: any, txid: string) => expect(txid).to.be.a('string'));
         const numZap = bonded.events.Bound.returnValues.numZap;
         const numDots = bonded.events.Bound.returnValues.numDots;
@@ -163,7 +163,8 @@ describe('Zap Bondage Test', () => {
             provider: accounts[0],
             endpoint: testZapProvider.endpoint,
             dots: 1,
-            from: accounts[2]
+            from: accounts[2],
+            gas: 600000
         }, (err: any, txid: string) => expect(txid).to.be.a('string'));
 
         const postAmt = await deployedToken.contract.methods.balanceOf(accounts[2]).call();
@@ -178,7 +179,8 @@ describe('Zap Bondage Test', () => {
             provider: accounts[0],
             endpoint: endpointB,
             dots: 1,
-            from: broker
+            from: broker,
+            gas: 600000
         }, (err: any, txid: string) => expect(txid).to.be.a('string'));
 
         const postAmt = await deployedToken.contract.methods.balanceOf(accounts[2]).call();
@@ -194,7 +196,8 @@ describe('Zap Bondage Test', () => {
                 provider: accounts[0],
                 endpoint: endpointB,
                 dots: 1,
-                from: accounts[2]
+                from: accounts[2],
+                gas:600000
             });
         } catch (e){
             expect(e).to.deep.equal(`Broker address ${broker} needs to call unbonding for this endpoint`);

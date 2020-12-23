@@ -9,7 +9,7 @@ import { ZapBondage } from '@zapjs/bondage';
 import { ZapDispatch } from '@zapjs/dispatch';
 import { ZapArbiter } from '@zapjs/arbiter';
 import { ZapProvider } from '../src';
-import * as Web3 from 'web3';
+const Web3 = require('web3');
 import { hexToUtf8, toWei } from 'web3-utils';
 import { join } from 'path';
 import {Utils } from '@zapjs/utils';
@@ -58,6 +58,7 @@ describe('Zap Provider Test', () => {
 
     after(function(){
         console.log('Done running Provider tests');
+        if(ganacheServer)
         ganacheServer.close();
         process.exit();
     });
@@ -139,7 +140,8 @@ describe('Zap Provider Test', () => {
             provider: providerAddress,
             endpoint: testZapProvider.endpoint,
             dots: DOTS,
-            from: subscriberAddress
+            from: subscriberAddress,
+            gas:600000
         });
     });
     it('10. Should allow Subscriber to start subscription', async () => {
@@ -149,7 +151,8 @@ describe('Zap Provider Test', () => {
             endpoint_params: testZapProvider.endpoint_params,
             blocks: DOTS,
             pubkey: testZapProvider.pubkey,
-            from: subscriberAddress
+            from: subscriberAddress,
+            gas:600000
         });
     });
     it('11. Should have subscription data in arbiter', async () => {

@@ -84,6 +84,7 @@ describe('TokenDotFactory test', () => {
 
     after(function(){
         console.log('Done running Token tests');
+        if(ganacheServer)
         ganacheServer.close();
         process.exit();
     });

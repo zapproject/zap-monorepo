@@ -1,7 +1,8 @@
 import {join } from 'path';
-import * as Web3 from 'web3';
-Web3.providers.HttpProvider.prototype.sendAsync = Web3.providers.HttpProvider.prototype.send;
-import {hexToUtf8, BN } from 'web3-utils';
+const Web3 = require('web3');
+// Web3.providers.HttpProvider.prototype.sendAsync = Web3.providers.HttpProvider.prototype.send;
+import {hexToUtf8 } from 'web3-utils';
+import BN from 'bn.js';
 const expect = require('chai')
     .use(require('chai-as-promised'))
     .use(require('chai-bignumber'))
@@ -44,6 +45,7 @@ describe('Registry test', () => {
 
     after(function(){
         console.log('Done running Registry tests');
+        if(ganacheServer)
         ganacheServer.close();
         process.exit();
     });

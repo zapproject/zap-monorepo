@@ -13,7 +13,7 @@ import { ZapRegistry } from '@zapjs/registry';
 import { ZapToken } from '@zapjs/zaptoken';
 import { ZapDispatch } from '@zapjs/dispatch';
 import { ZapArbiter } from '@zapjs/arbiter';
-import {BNType} from '@zapjs/types';
+import {NumType} from '@zapjs/types';
 
 async function configureEnvironment(func: Function) {
     await func();
@@ -66,6 +66,7 @@ describe('Zap Subscriber Test', () => {
 
     after(function(){
         console.log('Done running Subscriber tests');
+        if(ganacheServer)
         ganacheServer.close();
         process.exit();
     });
@@ -75,7 +76,7 @@ describe('Zap Subscriber Test', () => {
         await expect(res).to.be.equal('done');
     });
     it('2. Should bond specified number of zap', async () => {
-        const zapRequired:BNType = await bondageWrapper.calcZapForDots({
+        const zapRequired:NumType = await bondageWrapper.calcZapForDots({
             provider: accounts[0],
             endpoint: testZapProvider.endpoint,
             dots: 1
@@ -86,7 +87,8 @@ describe('Zap Subscriber Test', () => {
         const res = await subscriber.bond({
             provider: accounts[0],
             endpoint: testZapProvider.endpoint,
-            dots: 1
+            dots: 1,
+            gas:600000
         }, (err: any, txid: string) => expect(txid).to.be.a('string'));
         await expect(res.events.Bound.event).to.be.equal('Bound');
     });
@@ -95,7 +97,8 @@ describe('Zap Subscriber Test', () => {
         const res = await subscriber.unBond({
             provider: accounts[0],
             endpoint: testZapProvider.endpoint,
-            dots: 1
+            dots: 1,
+            gas:600000
         }, (err: any, txid: string) => expect(txid).to.be.a('string'));
         await expect(res.events.Unbound.event).to.be.equal('Unbound');
     });

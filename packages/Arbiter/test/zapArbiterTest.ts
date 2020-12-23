@@ -24,20 +24,20 @@ describe('Arbiter Test', () => {
         arbiterWrapper:any,
         testArtifacts:any,
         ganacheServer:any,
-        web3:any,
-        options:any;
+        web3:any;
     const buildDir = join(__dirname, 'contracts'),
         testZapProvider = Utils.Constants.testZapProvider;
     const options = {
         artifactsDir: buildDir,
         networkId: Utils.Constants.ganacheServerOptions.network_id,
-        networkProvider: Utils.Constants.ganacheProvider
+        networkProvider: Utils.Constants.ganacheProvider,
+        coordinator: undefined
     };
 
 
-    before(function(done) {
-        configureEnvironment(async() => {
-            ganacheServer = await Utils.startGanacheServer();
+    it('Should set env', async ()=> {
+        // configureEnvironment(async() => {
+            ganacheServer = Utils.startGanacheServer();
             web3 = new Web3(Utils.Constants.ganacheProvider);
             accounts = await web3.eth.getAccounts();
             //delete require.cache[require.resolve('/contracts')];
@@ -47,15 +47,13 @@ describe('Arbiter Test', () => {
             deployedRegistry = new BaseContract(Object.assign(options, {artifactName: 'REGISTRY' }));
             deployedToken = new BaseContract(Object.assign(options, {artifactName: 'ZAP_TOKEN' }));
             await Utils.delay(3000);
-            done();
-        });
+        // });
     });
 
-    // after(function(){
-    //   console.log("Done running Arbiter tests");
-    //   ganacheServer.close();
-    //   process.exit();
-    // });
+    after(function(){
+        console.log('Done running Arbiter tests');
+        process.exit();
+    });
 
     it('Should have all pre conditions set up for dispatch to work', async () => {
         const res = await bootstrap(testZapProvider, accounts, deployedRegistry, deployedToken, deployedBondage);

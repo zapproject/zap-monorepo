@@ -3,7 +3,7 @@ const expect = require('chai')
     .use(require('chai-as-promised'))
     .use(require('chai-bignumber'))
     .expect;
-import * as Web3 from 'web3';
+import Web3 from 'web3';
 import {bootstrap } from './utils/setup_test';
 import {hexToUtf8 } from 'web3-utils';
 
@@ -54,11 +54,12 @@ describe('Zap Dispatch Test', () => {
         });
     });
 
-    // after(function(){
-    //     console.log("Done running Dispatch tests");
-    //     ganacheServer.close();
-    //     process.exit();
-    // });
+    after(function(){
+        console.log("Done running Dispatch tests");
+        if(ganacheServer)
+        ganacheServer.close();
+        process.exit();
+    });
 
     it('Should have all pre conditions set up for dispatch to work', async () => {
         const res = await bootstrap(testZapProvider, accounts, deployedRegistry, deployedToken, deployedBondage);

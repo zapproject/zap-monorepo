@@ -11,8 +11,7 @@ const workingDir = zapContractDirName;
 // y = 2x + x^2 from [1, 100]
 export const TEST_CURVE = [3, 0, 2, 1, 1000000000000000000];
 
-const env = require('truffle-core/lib/environment.js');
-export const migrate = require('truffle-core/lib/commands/migrate.js');
+export const migrate = require('@truffle/core/lib/commands/migrate.js');
 /**
  * @ignore
  * Local ganache server options
@@ -24,14 +23,16 @@ export const ganacheServerOptions = {
     port: 7545,
     total_accounts: 10,
     ws: true,
+    quiet: true,
     gas: 6700000,
     gasPrice: 20000000,
     network: 'ganache-gui',
+    keepAliveTimeout: 500,
     mnemonic: 'solid giraffe crowd become skin deliver screen receive balcony ask manual current',
-    solc: '0.4.24',
+    solc: '0.4.25',
     compilers: {
         solc: {
-            version: '0.4.24'
+            version: '0.4.25'
         }
     }
 };
@@ -73,7 +74,7 @@ export const ganacheProvider = 'http://127.0.0.1:7545';
  *
  * @type {number}
  */
-export const DEFAULT_GAS = null;
+export const DEFAULT_GAS = 500000;
 /**
  *
  * @type {number}

@@ -13,10 +13,13 @@ import {toHex } from 'web3-utils';
  */
 export async function bootstrap(zapProvider:any, accounts:Array<string>, deployedRegistry:any, deployedToken:any, deployedBondage:any){
     const normalizedP = Utils.normalizeProvider(zapProvider);
-    const defaultTx = {from: accounts[0], gas: Utils.Constants.DEFAULT_GAS };
-    await deployedRegistry.contract.methods.initiateProvider(normalizedP.pubkey, normalizedP.title).send(defaultTx);
+    const defaultTx = {from: accounts[0],gas:200000};
+    console.log('init provier: ', normalizedP)
+    await deployedRegistry.contract.methods.initiateProvider(normalizedP.pubkey, normalizedP.title).send(defaultTx,(console.log));
+    console.log("init provider completed")
     const tokenOwner = await deployedToken.contract.methods.owner().call();
     await deployedRegistry.contract.methods.initiateProviderCurve(normalizedP.endpoint, zapProvider.curve.values.map((i:string)=>toHex(i)), NULL_ADDRESS).send(defaultTx);
+    console.log('init provider curve completed');
     const providerCurve = await deployedRegistry.contract.methods.getProviderCurve(accounts[0], normalizedP.endpoint).call();
     const endpointBroker = await deployedRegistry.contract.methods.getEndpointBroker(accounts[0], normalizedP.endpoint).call();
 
@@ -27,14 +30,16 @@ export async function bootstrap(zapProvider:any, accounts:Array<string>, deploye
 
 
     for (const account of accounts) {
-        await deployedToken.contract.methods.allocate(account, 1000).send({from: tokenOwner, gas: Utils.Constants.DEFAULT_GAS });
+        await deployedToken.contract.methods.allocate(account, 1000).send({from: tokenOwner, gas: 200000 });
     }
     console.log('Token allocated');
+    console.log('balance:', await deployedToken.contract.methods.balanceOf(accounts[2]).call())
     const requiredZap = await deployedBondage.contract.methods.calcZapForDots(accounts[0], normalizedP.endpoint, 10).call();
     console.log('required zap : ', requiredZap);
     console.log('bondage contract address', deployedBondage.contract._address);
-    await deployedToken.contract.methods.approve(deployedBondage.contract._address, requiredZap).send({from: accounts[2], gas: Utils.Constants.DEFAULT_GAS });
+    await deployedToken.contract.methods.approve(deployedBondage.contract._address, 1000).send({from: accounts[2], gas: 200000 });
     console.log('Token approved, endpoint : ', normalizedP.endpoint);
-    await deployedBondage.contract.methods.bond(accounts[0], normalizedP.endpoint, 10).send({from: accounts[2], gas: Utils.Constants.DEFAULT_GAS });
+    await deployedBondage.contract.methods.bond(accounts[0], normalizedP.endpoint, 10).send({from: accounts[2], gas: 500000 });
+    console.log('Bonded')
     return 'done';
 }

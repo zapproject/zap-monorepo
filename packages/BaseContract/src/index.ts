@@ -36,15 +36,15 @@ export class BaseContract {
 	        }
 	        else {
 	            const artifacts: any = Utils.getArtifacts(artifactsDir);
-	            this.artifact = artifacts[artifactName];
+				this.artifact = artifacts[artifactName];
 	            coorArtifact = artifacts['ZAPCOORDINATOR'];
 	        }
 	        // let currentProvider = networkProvider || new Web3.providers.HttpProvider("http://localhost:8545");
 	        this.provider = web3 || new Web3(networkProvider || new Web3.providers.HttpProvider('http://localhost:8545'));
 	        //network id default to mainnet
-	        this.networkId = networkId || 1;
+	        this.networkId = networkId || 5777;
 	        this.coordinator = new this.provider.eth.Contract(coorArtifact.abi, coordinator || coorArtifact.networks[this.networkId].address);
-	        this.contract = undefined;
+			this.contract = undefined;
 	        if (address) {
 	            this.address = address;
 	        }
@@ -57,7 +57,7 @@ export class BaseContract {
 	        }
 	        else {
 	            this.contract = new this.provider.eth.Contract(this.artifact.abi, this.address);
-	        }
+			}
 	    } catch (err) {
 	        throw err;
 	    }
