@@ -101,9 +101,7 @@ describe('Registry test', () => {
         expect(returnValues.provider).to.equal(accounts[0]);
         expect(testZapProvider.endpoint).to.equal(hexToUtf8(returnValues.endpoint));
         const a:string = JSON.stringify(returnValues.curve);
-        console.log('return value curve:', a);
         const b:string = JSON.stringify(testZapProvider.curve.values.map((i:number)=>{ return '' + i; }));
-        console.log('test curve', b);
         expect(a).to.be.equal(b);
     });
     it('Should get all provider params', async()=>{
@@ -177,7 +175,6 @@ describe('Registry test', () => {
             endpoint: testZapProvider.endpoint
         }, (err: any, txid: string) => expect(txid).to.be.a('string'));
         const eps = await registryWrapper.getProviderEndpoints(accounts[0]);
-        console.log('endpoints in test : ', eps);
         expect(eps.length).to.equal(0);
     });
 

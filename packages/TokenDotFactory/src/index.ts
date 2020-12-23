@@ -45,7 +45,6 @@ export class TokenDotFactory extends BaseContract {
       gasPrice,
       gas = DEFAULT_GAS
   }: InitDotTokenCurve, cb?: TransactionCallback): Promise<txid> {
-      console.log(endpoint, symbol, term, from);
       const hex_term: any = [];
       for (const i in term) {
           hex_term[i] = toHex(term[i]);
@@ -176,8 +175,6 @@ export class TokenDotFactory extends BaseContract {
       const dotAddress = await this.contract.methods
           .getTokenAddress(utf8ToHex(endpoint))
           .call();
-      console.log('dot address ', dotAddress);
-
       const dotToken = new this.provider.eth.Contract(
           Artifacts['ZAP_TOKEN'].abi,
           dotAddress
@@ -185,7 +182,6 @@ export class TokenDotFactory extends BaseContract {
       const approved = await dotToken.methods
           .allowance(from, this.contract._address)
           .call();
-      console.log('approved ', approved);
       const promiEvent = this.contract.methods
           .unbond(utf8ToHex(endpoint), dots)
           .send({ from, gas, gasPrice });
@@ -205,7 +201,6 @@ export class TokenDotFactory extends BaseContract {
       const dotAddress = await this.contract.methods
           .getTokenAddress(utf8ToHex(endpoint))
           .call();
-      console.log('dot address ', dotAddress);
       return dotAddress;
   }
 
@@ -229,7 +224,6 @@ export class TokenDotFactory extends BaseContract {
           dotAddress
       );
       const dotBalance = await dotToken.methods.balanceOf(from).call();
-      console.log('dot balance ', dotBalance);
       return dotBalance;
   }
 }

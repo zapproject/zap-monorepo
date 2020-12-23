@@ -127,7 +127,6 @@ export class ZapProvider {
 	        provider: this.providerOwner,
 	        endpoint
 	    });
-	    console.log('zap bound : ', zapBound, typeof zapBound);
 	    if (parseInt(zapBound.toString()) > 0) {
 	        throw 'There are zap bound from subscribers, cant clear endpoint';
 	    }

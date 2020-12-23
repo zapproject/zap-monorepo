@@ -64,12 +64,10 @@ export function clearBuild(onlyRemoveNetworks = true, buildDir:string) {
             }
             compiledJson.networks = {};
             writeFileSync(filePath, JSON.stringify(compiledJson), {flag: 'w'});
-            //console.log('deployment info for file ' + filePath + ' was cleared.');
         } else {
             try {
                 if (filePath.endsWith('.json')){
                     unlinkSync(filePath);
-                    //console.log('file ' + filePath + ' was deleted.');
                 }
             } catch (e){ console.error(e); }
         }
@@ -103,7 +101,6 @@ export function getArtifacts(buildDir:string){
  */
 export async function migrateContracts(buildDir:string, _serverOptions ?:serverOptionsType) {
     console.log('Begin contract migration');
-    console.log('Deploy token')
 
     const serverOpts = _serverOptions || ganacheServerOptions;
     const buildOpts:buildOptionsType = buildOptions;
@@ -111,7 +108,6 @@ export async function migrateContracts(buildDir:string, _serverOptions ?:serverO
     const options = Object.assign(serverOpts, buildOpts);
     try {
         clearBuild(false, buildDir);
-        console.log("running all");
         migrate.run(options);
         await sleep(20 * 1000);
         return true;

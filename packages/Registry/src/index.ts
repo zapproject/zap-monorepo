@@ -189,7 +189,6 @@ export class ZapRegistry extends BaseContract {
         for (const i in term){
             hex_term[i] = toHex(term[i]);
         }
-        console.log('term;', term);
         const promiEvent = this.contract.methods.initiateProviderCurve(utf8ToHex(endpoint), hex_term, broker)
             .send({from, gas, gasPrice });
         if (cb) {

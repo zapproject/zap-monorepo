@@ -154,7 +154,6 @@ export class ZapBondage extends BaseContract {
      * @returns {Promise<string|BigNumber>} Price (in Zap) for the given number of dots
      */
     public async calcZapForDots({provider, endpoint, dots }: BondageArgs): Promise<string|number> {
-        console.log('to hex dots', dots, toHex(dots));
         return await this.contract.methods.calcZapForDots(
             provider,
             utf8ToHex(endpoint),

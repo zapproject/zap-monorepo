@@ -38,20 +38,17 @@ describe('Zap Bondage Test', () => {
 
 
     it('should set env',async ()=> {
-        // configureEnvironment(async () => {
-            ganacheServer = Utils.startGanacheServer();
-            web3 = new Web3(Utils.Constants.ganacheProvider);
-            accounts = await web3.eth.getAccounts();
-            broker = accounts[5];
-            // delete require.cache[require.resolve('/contracts')];
-            await Utils.migrateContracts(buildDir);
-            testArtifacts = Utils.getArtifacts(buildDir);
-            deployedBondage = new BaseContract(Object.assign(options, {artifactName: 'BONDAGE' }));
-            deployedRegistry = new BaseContract(Object.assign(options, {artifactName: 'REGISTRY' }));
-            deployedToken = new BaseContract(Object.assign(options, {artifactName: 'ZAP_TOKEN' }));
-            await Utils.delay(3000);
-            // done();
-        // });
+        ganacheServer = Utils.startGanacheServer();
+        web3 = new Web3(Utils.Constants.ganacheProvider);
+        accounts = await web3.eth.getAccounts();
+        broker = accounts[5];
+        // delete require.cache[require.resolve('/contracts')];
+        await Utils.migrateContracts(buildDir);
+        testArtifacts = Utils.getArtifacts(buildDir);
+        deployedBondage = new BaseContract(Object.assign(options, {artifactName: 'BONDAGE' }));
+        deployedRegistry = new BaseContract(Object.assign(options, {artifactName: 'REGISTRY' }));
+        deployedToken = new BaseContract(Object.assign(options, {artifactName: 'ZAP_TOKEN' }));
+        await Utils.delay(3000);
     });
 
     after(function(){
@@ -101,11 +98,8 @@ describe('Zap Bondage Test', () => {
             endpoint: testZapProvider.endpoint,
             dots: 5
         });
-        console.log('required zap : ', requiredZap);
         // approve
         await deployedToken.contract.methods.approve(deployedBondage.contract._address, requiredZap).send({from: accounts[2], gas:200000 });
-        console.log('approved completed')
-
         const bonded = await bondageWrapper.bond({
             provider: accounts[0],
             endpoint: testZapProvider.endpoint,
@@ -121,7 +115,6 @@ describe('Zap Bondage Test', () => {
             provider: accounts[0],
             endpoint: testZapProvider.endpoint
         });
-        console.log('bound dots :', boundDots);
         expect(numZap).to.equal('85');
         expect(numDots).to.equal('5');
         return;
@@ -274,16 +267,13 @@ describe('Zap Bondage Test', () => {
             provider: accounts[0],
             endpoint: testZapProvider.endpoint
         });
-        console.log('dot limit:', dotsLimit);
         const dotsIssued = await bondageWrapper.getDotsIssued({provider: accounts[0], endpoint: testZapProvider.endpoint });
         const availableDots = dotsIssued * 1000000;
-        console.log('availableDots', availableDots);
         const zapForDots:string = await bondageWrapper.calcZapForDots({
             provider: accounts[0],
             endpoint: testZapProvider.endpoint,
             dots: availableDots
         });
-        console.log('zap for dots', zapForDots);
         await deployedToken.contract.methods.approve(deployedBondage.contract._address, toHex(zapForDots)).send({from: accounts[3], gas: Utils.Constants.DEFAULT_GAS });
         const bond = await bondageWrapper.bond({
             provider: accounts[0],
@@ -291,7 +281,6 @@ describe('Zap Bondage Test', () => {
             dots: availableDots,
             from: accounts[3]
         });
-        console.log(`zap required for dots limit : ${dotsLimit} , ${zapForDots}`);
     });
 
     /* Can't figure out how to get this working

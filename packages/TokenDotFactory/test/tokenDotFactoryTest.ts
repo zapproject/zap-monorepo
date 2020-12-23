@@ -1,16 +1,12 @@
 import {join} from 'path';
 const Web3 = require('web3');
 import {ZapRegistry} from '@zapjs/registry';
-const {utf8ToHex, toWei, fromWei} = require('web3-utils');
+const {toWei} = require('web3-utils');
 const expect = require('chai')
     .use(require('chai-as-promised'))
     .use(require('chai-bignumber'))
     .expect;
-const ganache = require('ganache-cli');
-
-import {ZapProvider} from '@zapjs/provider';
 import {ZapBondage} from '@zapjs/bondage';
-import {Curve} from '@zapjs/curve';
 import {Utils} from '@zapjs/utils';
 import {BaseContract} from '@zapjs/basecontract';
 import {TokenDotFactory} from '../src';
@@ -67,7 +63,6 @@ describe('TokenDotFactory test', () => {
                 tokenDotAccount = accounts[0];
                 providerAccount = accounts[1];
                 userAccount = accounts[3];
-                console.log('account: ', tokenDotAccount, providerAccount);
                 await Utils.migrateContracts(buildDir);
 
                 testArtifacts = Utils.getArtifacts(join(__dirname, 'contracts'));
@@ -76,14 +71,12 @@ describe('TokenDotFactory test', () => {
                 Bondage = new ZapBondage(options);
                 done();
             } catch (e) {
-                console.log(e);
                 process.exit(1);
             }
         });
     });
 
     after(function(){
-        console.log('Done running Token tests');
         if(ganacheServer)
         ganacheServer.close();
         process.exit();
@@ -113,7 +106,6 @@ describe('TokenDotFactory test', () => {
         expect(dotWrapper).to.be.ok;
         expect(dotWrapper.contract._address).to.be.ok;
         await Registry.initiateProvider({public_key: 111, title: 'title', from: providerAccount});
-        console.log('TITLE', await Registry.getProviderTitle(providerAccount));
 
     });
 

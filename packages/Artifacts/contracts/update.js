@@ -21,7 +21,6 @@ for (let n of package_art){
             let address_42 = 	c_art.networks['42'].address;
             p_art.networks['42']['address'] = address_42;
             if (!fs.existsSync(__dirname + '/../contracts_temp')) {
-                console.log(__dirname);
                 fs.mkdirSync(__dirname + '/../contracts_temp');
             }
             fs.writeFileSync(__dirname + '/../contracts_temp/' + n, JSON.stringify(p_art, null, 2));

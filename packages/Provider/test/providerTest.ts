@@ -112,7 +112,6 @@ describe('Zap Provider Test', () => {
     });
     it('7. Should initiate provider curve', async () => {
         let tx:any;
-        console.log(testZapProvider.curve.constants, testZapProvider.curve.parts, testZapProvider.curve.dividers);
         tx = await zapProvider.initiateProviderCurve({
             endpoint: testZapProvider.endpoint,
             term: testZapProvider.curve.values,
@@ -346,7 +345,6 @@ describe('Zap Provider Test', () => {
             endpoint: newEndpoint
         });
         const endpoints = await zapProvider.getEndpoints();
-        console.log('endpoints : ', endpoints);
         expect(!endpoints.includes(newEndpoint));
     });
 

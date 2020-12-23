@@ -15,7 +15,6 @@ export async function bootstrap(zapProvider:any, accounts:Array<string>, zapRegi
     const defaultTx = {from: accounts[0], gas: Utils.Constants.DEFAULT_GAS };
     await zapRegistry.contract.methods.initiateProvider(normalizedP.pubkey, normalizedP.title).send(defaultTx);
     const tokenOwner = await zapToken.contract.methods.owner().call();
-    console.log('P : ', zapProvider);
     await zapRegistry.initiateProviderCurve({endpoint: zapProvider.endpoint, term: zapProvider.curve.values.map((i:string)=>toHex(i)), broker: zapProvider.broker, from: accounts[0] });
     const providerCurve = await zapRegistry.getProviderCurve(accounts[0], zapProvider.endpoint);
     const endpointBroker = await zapRegistry.getEndpointBroker(accounts[0], normalizedP.endpoint);

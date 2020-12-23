@@ -36,7 +36,6 @@ describe('Arbiter Test', () => {
 
 
     it('Should set env', async ()=> {
-        // configureEnvironment(async() => {
             ganacheServer = Utils.startGanacheServer();
             web3 = new Web3(Utils.Constants.ganacheProvider);
             accounts = await web3.eth.getAccounts();
@@ -47,7 +46,6 @@ describe('Arbiter Test', () => {
             deployedRegistry = new BaseContract(Object.assign(options, {artifactName: 'REGISTRY' }));
             deployedToken = new BaseContract(Object.assign(options, {artifactName: 'ZAP_TOKEN' }));
             await Utils.delay(3000);
-        // });
     });
 
     after(function(){
@@ -94,16 +92,6 @@ describe('Arbiter Test', () => {
         expect(subscription.dots).to.equal('4');
 
     });
-
-    //TODO when websocket issue fixed
-    // it('Should listen to Data purchase in zapArbiter', async function() {
-    //   arbiterWrapper.listen((err:any, res:any) => {
-    //      console.log("event listen : ", err,res)
-    //      expect(err).to.be.null;
-    //      expect(res.event).to.be.equal("DataPurchase")
-    //     return;
-    //   });
-    // });
     it('5) Should allow unscubscription from provider', async ()=>{
         const unsubscription = await arbiterWrapper.endSubscriptionProvider({
             subscriber: accounts[2],

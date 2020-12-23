@@ -26,12 +26,8 @@ export async function bootstrap(zapProvider:any, accounts:Array<string>, deploye
     for (const account of accounts) {
         await deployedToken.contract.methods.allocate(account, 1000).send({from: tokenOwner, gas: Utils.Constants.DEFAULT_GAS });
     }
-    console.log('Token allocated');
     const requiredZap = await deployedBondage.contract.methods.calcZapForDots(accounts[0], normalizedP.endpoint, dots).call();
-    console.log('required zap : ', requiredZap);
-    console.log('bondage contract address', deployedBondage.contract._address);
     await deployedToken.contract.methods.approve(deployedBondage.contract._address, requiredZap).send({from: accounts[2], gas: Utils.Constants.DEFAULT_GAS });
-    console.log('Token approved, endpoint : ', normalizedP.endpoint);
     await deployedBondage.contract.methods.bond(accounts[0], normalizedP.endpoint, dots).send({from: accounts[2], gas: Utils.Constants.DEFAULT_GAS });
     return 'done';
 }

@@ -44,7 +44,6 @@ describe('Zap Dispatch Test', () => {
             web3 = new Web3(Utils.Constants.ganacheProvider);
             accounts = await web3.eth.getAccounts();
             await Utils.migrateContracts(buildDir);
-            console.log('Migration complete. ');
             testArtifacts = Utils.getArtifacts(buildDir);
             deployedBondage = new BaseContract(Object.assign(options, {artifactName: 'BONDAGE' }));
             deployedRegistry = new BaseContract(Object.assign(options, {artifactName: 'REGISTRY' }));
