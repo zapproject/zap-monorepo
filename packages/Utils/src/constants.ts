@@ -1,6 +1,6 @@
-import {Curve} from '@zapjs/curve';
+import { Curve } from '@zapjs/curve';
 const Web3 = require('web3');
-import {join, dirname} from 'path';
+import { join, dirname } from 'path';
 Web3.providers.HttpProvider.prototype.sendAsync = Web3.providers.HttpProvider.prototype.send;
 Web3.providers.WebsocketProvider.prototype.sendAsync = Web3.providers.WebsocketProvider.prototype.send;
 const zapContractDirName = dirname(require.resolve('zap_contracts/truffle-config.js'));
@@ -27,7 +27,7 @@ export const ganacheServerOptions = {
     gas: 6700000,
     gasPrice: 20000000,
     network: 'ganache-gui',
-    keepAliveTimeout: 500,
+    keepAliveTimeout: 1000,
     mnemonic: 'solid giraffe crowd become skin deliver screen receive balcony ask manual current',
     solc: '0.4.25',
     compilers: {
@@ -54,7 +54,7 @@ export const buildOptions = {
  * Local test Zap provider information
  * @type {{pubkey: number; title: string; endpoint_params: string[]; endpoint: string; query: string; curve: Curve, broker: string}}
  */
-export const testZapProvider:any = {
+export const testZapProvider: any = {
     pubkey: 111,
     title: 'testProvider',
     endpoint_params: ['p1', 'p2'],

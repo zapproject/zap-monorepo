@@ -3,6 +3,9 @@
   "private": false,
   "version": "2.2.1",
   "description": "ZapArtifacts",
+  "engines": {
+    "node": ">=12.20 <=14.15"
+  },
   "main": "lib/index.js",
   "repository": "https://github.com/zapproject/Zap-monorepo",
   "scripts": {

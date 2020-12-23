@@ -4,8 +4,11 @@
 	"version": "2.2.2",
 	"description": "Zap Token",
 	"repository": "https://github.com/zapproject/Zap-monorepo",
+	"engines": {
+		"node": ">=12.20 <=14.15"
+	},
 	"main": "lib/index.js",
-	"type": "lib/types.d.ts",
+	"types": "lib/types.d.ts",
 	"typings": "lib",
 	"scripts": {
 		"build": "tsc",

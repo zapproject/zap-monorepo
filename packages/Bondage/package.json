@@ -3,6 +3,9 @@
   "private": false,
   "version": "2.2.2",
   "description": "",
+  "engines": {
+    "node": ">=12.20 <=14.15"
+  },
   "repository": "https://github.com/zapproject/Zap-monorepo",
   "main": "lib/index.js",
   "type": "lib/types.d.ts",

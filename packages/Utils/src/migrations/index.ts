@@ -1,7 +1,7 @@
 
 const { readdirSync, readFileSync, writeFileSync, unlinkSync, existsSync, mkdirSync } = require('fs');
 import { join, basename } from 'path';
-import ganache from 'ganache-cli';
+import ganache from 'ganache-core';
 import { promisify } from 'util';
 import { ganacheServerOptions, DEFAULT_GAS, GAS_PRICE, buildOptions, migrate } from '../constants';
 import { serverOptionsType, buildOptionsType } from '../types';
