@@ -1,36 +1,35 @@
-import {join } from 'path';
+import { join } from 'path';
 const Web3 = require('web3');
 // Web3.providers.HttpProvider.prototype.sendAsync = Web3.providers.HttpProvider.prototype.send;
-import {hexToUtf8 } from 'web3-utils';
-import BN from 'bn.js';
+import { hexToUtf8 } from 'web3-utils';
 const expect = require('chai')
     .use(require('chai-as-promised'))
     .use(require('chai-bignumber'))
     .expect;
 
-import {Utils } from '@zapjs/utils';
-import {ZapRegistry } from '../src';
+import { Utils } from '@zapjs/utils';
+import { ZapRegistry } from '../src';
 
-async function configureEnvironment(func:Function) {
+async function configureEnvironment(func: Function) {
     await func();
 }
 
 describe('Registry test', () => {
-    let accounts :Array<string> = [],
-        ganacheServer:any,
-        registryWrapper:any,
+    let accounts: Array<string> = [],
+        ganacheServer: any,
+        registryWrapper: any,
         web3,
         testArtifacts,
         testZapProvider = Utils.Constants.testZapProvider,
-        buildDir:string = join(__dirname, 'contracts'),
-        options:any = {
+        buildDir: string = join(__dirname, 'contracts'),
+        options: any = {
             artifactsDir: buildDir,
             networkId: Utils.Constants.ganacheServerOptions.network_id,
             networkProvider: Utils.Constants.ganacheProvider
         };
 
     before(function (done) {
-        configureEnvironment(async() => {
+        configureEnvironment(async () => {
             await Utils.clearBuild(false, buildDir);
             ganacheServer = await Utils.startGanacheServer();
             web3 = new Web3(Utils.Constants.ganacheProvider);
@@ -43,20 +42,20 @@ describe('Registry test', () => {
         });
     });
 
-    after(function(){
+    after(function () {
         console.log('Done running Registry tests');
-        if(ganacheServer)
-        ganacheServer.close();
+        if (ganacheServer)
+            ganacheServer.close();
         process.exit();
     });
 
-    it('should be able to create registryWrapper', async ()=>{
+    it('should be able to create registryWrapper', async () => {
         registryWrapper = new ZapRegistry(options);
         await Utils.delay(3000);
         expect(registryWrapper).to.be.ok;
     });
 
-    it('should be able to create registryWrapper with coordinator', async ()=>{
+    it('should be able to create registryWrapper with coordinator', async () => {
         options.coordinator = registryWrapper.coordinator._address;
         registryWrapper = new ZapRegistry(options);
         await Utils.delay(3000);
@@ -100,17 +99,17 @@ describe('Registry test', () => {
         expect(returnValues.broker).to.equal(Utils.Constants.NULL_ADDRESS);
         expect(returnValues.provider).to.equal(accounts[0]);
         expect(testZapProvider.endpoint).to.equal(hexToUtf8(returnValues.endpoint));
-        const a:string = JSON.stringify(returnValues.curve);
-        const b:string = JSON.stringify(testZapProvider.curve.values.map((i:number)=>{ return '' + i; }));
+        const a: string = JSON.stringify(returnValues.curve);
+        const b: string = JSON.stringify(testZapProvider.curve.values.map((i: number) => { return '' + i; }));
         expect(a).to.be.equal(b);
     });
-    it('Should get all provider params', async()=>{
+    it('Should get all provider params', async () => {
         const params = await registryWrapper.getAllProviderParams(accounts[0]);
     });
 
-    it('Should set new title', async()=>{
+    it('Should set new title', async () => {
         const title = 'NEWTITLE';
-        await registryWrapper.setProviderTitle({from: accounts[0], title: title });
+        await registryWrapper.setProviderTitle({ from: accounts[0], title: title });
         const newTitle = await registryWrapper.getProviderTitle(accounts[0]);
         expect(newTitle).to.equal(title);
     });
@@ -139,8 +138,8 @@ describe('Registry test', () => {
         expect(returnValues.provider).to.equal(providerAddress);
         expect(returnValues.broker).to.equal(brokerAddress);
         expect(testZapProvider.endpoint).to.equal(hexToUtf8(returnValues.endpoint));
-        const a:string = JSON.stringify(returnValues.curve);
-        const b:string = JSON.stringify(testZapProvider.curve.values.map((i:number)=>{ return '' + i; }));
+        const a: string = JSON.stringify(returnValues.curve);
+        const b: string = JSON.stringify(testZapProvider.curve.values.map((i: number) => { return '' + i; }));
         expect(a).to.be.equal(b);
     });
 
@@ -164,12 +163,13 @@ describe('Registry test', () => {
     it('Should get endpoint endpointParams in chunks in zap registry contract', async () => {
         const result = await registryWrapper.getEndpointParams({
             provider: accounts[0],
-            endpoint: testZapProvider.endpoint });
+            endpoint: testZapProvider.endpoint
+        });
         expect(result).to.be.ok;
         expect(result.length).to.be.equal(1);
         expect(result[0]).to.equal('http://test_url_that_is_longer_than_32_bytes_oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo.com');
     });
-    it('Should clear endpoint', async()=>{
+    it('Should clear endpoint', async () => {
         await registryWrapper.clearEndpoint({
             from: accounts[0],
             endpoint: testZapProvider.endpoint

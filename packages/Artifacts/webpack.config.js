@@ -3,7 +3,6 @@ const path = require('path');
 module.exports = {
     entry: {
         'zapjs': './src/index.ts'
-        // "zapjs.min": "./src/index.ts"
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -23,18 +22,7 @@ module.exports = {
             // all files with a '.ts' or '.tsx' extension will be handled by 'ts-loader'
             {
                 test: /\.ts?$/,
-                use: [
-                    {
-                        loader: 'awesome-typescript-loader',
-                        options: {
-                            transpileOnly: true,
-                            happyPackModeL: true
-                        }
-                    },
-                    {
-                        loader: 'cache-loader'
-                    }
-                ],
+                use: "ts-loader",
                 exclude: [
                     /node_modules/,
                     /test/,

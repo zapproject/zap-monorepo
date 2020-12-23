@@ -1,5 +1,6 @@
-import {BaseContract } from '@zapjs/basecontract';
-import {Filter, txid, DEFAULT_GAS, NetworkProviderOptions,
+import { BaseContract } from '@zapjs/basecontract';
+import {
+    Filter, txid, DEFAULT_GAS, NetworkProviderOptions,
     NumType,
     DataPurchaseEvent,
     SubscriptionEndEvent,
@@ -7,9 +8,10 @@ import {Filter, txid, DEFAULT_GAS, NetworkProviderOptions,
     SubscriptionInit,
     SubscriptionEnd,
     SubscriptionType,
-    SubscriptionParams } from '@zapjs/types';
-import {utf8ToHex, isHex } from 'web3-utils';
-import {TransactionCallback} from '@zapjs/types';
+    SubscriptionParams,
+    TransactionCallback
+} from '@zapjs/types';
+import { utf8ToHex, isHex } from 'web3-utils';
 /**
  * @class
  * Provides an interface to the Arbiter contract for managing temporal subscriptions to oracles.
@@ -23,8 +25,8 @@ export class ZapArbiter extends BaseContract {
      * @example new ZapArbiter({networkId : 42, networkProvider : web3})
      * @param obj: NetworkProviderOptions
      */
-    constructor(obj ?: NetworkProviderOptions){
-        super(Object.assign(obj, {artifactName: 'ARBITER' }));
+    constructor(obj?: NetworkProviderOptions) {
+        super(Object.assign(obj, { artifactName: 'ARBITER' }));
     }
 
     /**
@@ -41,8 +43,8 @@ export class ZapArbiter extends BaseContract {
      * @returns {Promise<txid>} Transaction hash
      */
     async initiateSubscription(
-        {provider, endpoint, endpoint_params, blocks, pubkey, from, gasPrice, gas = DEFAULT_GAS } : SubscriptionInit, cb?: TransactionCallback):Promise<txid> {
-        endpoint_params = endpoint_params.map((i:string)=>{
+        { provider, endpoint, endpoint_params, blocks, pubkey, from, gasPrice, gas = DEFAULT_GAS }: SubscriptionInit, cb?: TransactionCallback): Promise<txid> {
+        endpoint_params = endpoint_params.map((i: string) => {
             if (!isHex(i)) {
                 return utf8ToHex(i);
             }
@@ -53,7 +55,7 @@ export class ZapArbiter extends BaseContract {
             utf8ToHex(endpoint),
             endpoint_params,
             pubkey,
-            blocks).send({from, gas, gasPrice });
+            blocks).send({ from, gas, gasPrice });
         if (cb) {
             promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
             promiEvent.on('error', (error: any) => cb(error));
@@ -72,11 +74,11 @@ export class ZapArbiter extends BaseContract {
      * @param {Function} cb - Callback for transactionHash event
      * @returns {Promise<txid>} Transaction hash
      */
-    async endSubscriptionSubscriber({provider, endpoint, from, gasPrice, gas = DEFAULT_GAS }:SubscriptionEnd, cb?: TransactionCallback) :Promise<txid>{
+    async endSubscriptionSubscriber({ provider, endpoint, from, gasPrice, gas = DEFAULT_GAS }: SubscriptionEnd, cb?: TransactionCallback): Promise<txid> {
         const promiEvent = this.contract.methods.endSubscriptionSubscriber(
             provider,
             utf8ToHex(endpoint))
-            .send({from, gas, gasPrice });
+            .send({ from, gas, gasPrice });
         if (cb) {
             promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
             promiEvent.on('error', (error: any) => cb(error));
@@ -95,11 +97,11 @@ export class ZapArbiter extends BaseContract {
      * @param {Function} cb - Callback for transactionHash event
      * @returns {Promise<txid>} Transaction hash
      */
-    async endSubscriptionProvider({subscriber, endpoint, from, gasPrice, gas = DEFAULT_GAS }:SubscriptionEnd, cb?: TransactionCallback) :Promise<txid>{
+    async endSubscriptionProvider({ subscriber, endpoint, from, gasPrice, gas = DEFAULT_GAS }: SubscriptionEnd, cb?: TransactionCallback): Promise<txid> {
         const promiEvent = this.contract.methods.endSubscriptionProvider(
             subscriber,
             utf8ToHex(endpoint))
-            .send({from, gas, gasPrice });
+            .send({ from, gas, gasPrice });
         if (cb) {
             promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
             promiEvent.on('error', (error: any) => cb(error));
@@ -118,14 +120,14 @@ export class ZapArbiter extends BaseContract {
      * @param {Function} cb - Callback for transactionHash event
      * @returns {Promise<txid>} Transaction hash
      */
-    async passParams({receiver, endpoint, params, from, gasPrice, gas = DEFAULT_GAS } : SubscriptionParams, cb?: TransactionCallback) :Promise<txid>{
-        params = params.map((i:string)=>{
+    async passParams({ receiver, endpoint, params, from, gasPrice, gas = DEFAULT_GAS }: SubscriptionParams, cb?: TransactionCallback): Promise<txid> {
+        params = params.map((i: string) => {
             if (!isHex(i)) {
                 return utf8ToHex(i);
             }
             else return i;
         });
-        const promiEvent = this.contract.methods.passParams(receiver, utf8ToHex(endpoint), params).send({from, gas, gasPrice });
+        const promiEvent = this.contract.methods.passParams(receiver, utf8ToHex(endpoint), params).send({ from, gas, gasPrice });
         if (cb) {
             promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
             promiEvent.on('error', (error: any) => cb(error));
@@ -144,7 +146,7 @@ export class ZapArbiter extends BaseContract {
      * @param {string} s.endpoint - Data endpoint of the provider
      * @returns {Promise<string>} Information on the currently active subscription (dots,blockStart,blockEnd)
      */
-    async getSubscription({provider, subscriber, endpoint }:SubscriptionType):Promise<number[]|string[]>{
+    async getSubscription({ provider, subscriber, endpoint }: SubscriptionType): Promise<number[] | string[]> {
         return await this.contract.methods.getSubscription(provider, subscriber, utf8ToHex(endpoint)).call();
     }
 
@@ -155,7 +157,7 @@ export class ZapArbiter extends BaseContract {
      * @param endpoint
      * @returns {Promise<number|string>} Number of dots remaining
      */
-    async getDots({provider, subscriber, endpoint }:SubscriptionType): Promise<NumType>{
+    async getDots({ provider, subscriber, endpoint }: SubscriptionType): Promise<NumType> {
         return await this.contract.methods.getDots(provider, subscriber, endpoint).call();
     }
 
@@ -166,7 +168,7 @@ export class ZapArbiter extends BaseContract {
      * @param endpoint
      * @returns {Promise<number|string>} First subscribed block number
      */
-    async getBlockStart({provider, subscriber, endpoint }:SubscriptionType): Promise<NumType>{
+    async getBlockStart({ provider, subscriber, endpoint }: SubscriptionType): Promise<NumType> {
         return await this.contract.methods.getBlockStart(provider, subscriber, endpoint).call();
     }
 
@@ -177,7 +179,7 @@ export class ZapArbiter extends BaseContract {
      * @param endpoint
      * @returns Block Number that subscription will end
      */
-    async getPreBlockEnd({provider, subscriber, endpoint }:SubscriptionType): Promise<NumType>{
+    async getPreBlockEnd({ provider, subscriber, endpoint }: SubscriptionType): Promise<NumType> {
         return await this.contract.methods.getPreBlockEnd(provider, subscriber, endpoint).call();
     }
 
@@ -190,7 +192,7 @@ export class ZapArbiter extends BaseContract {
      * @param {Filter} filters
      * @param {Function} callback
      */
-    listenSubscriptionEnd(filters:SubscriptionEndEvent = {}, callback:TransactionCallback):void{
+    listenSubscriptionEnd(filters: SubscriptionEndEvent = {}, callback: TransactionCallback): void {
         this.contract.events.DataSubscriptionEnd(
             filters,
             { fromBlock: filters.fromBlock ? filters.fromBlock : 0, toBlock: 'latest' },
@@ -202,14 +204,14 @@ export class ZapArbiter extends BaseContract {
      * @param {Filter} filters
      * @param {()=>void} callback
      */
-    listenDataPurchase(filters:DataPurchaseEvent = {}, callback:TransactionCallback):void{
+    listenDataPurchase(filters: DataPurchaseEvent = {}, callback: TransactionCallback): void {
         this.contract.events.DataPurchase(
             filters,
             { fromBlock: filters.fromBlock ? filters.fromBlock : 0, toBlock: 'latest' },
             callback);
     }
 
-    listenParamsPassedEvent(filters:ParamsPassedEvent = {}, callback:TransactionCallback):void{
+    listenParamsPassedEvent(filters: ParamsPassedEvent = {}, callback: TransactionCallback): void {
         this.contract.events.ParamsPassed(filters, callback);
     }
 
@@ -219,8 +221,8 @@ export class ZapArbiter extends BaseContract {
      * @param {Filter} filter
      * @param {()=>void} callback
      */
-    listen(filters:Record<string, unknown> = {}, callback:TransactionCallback):void{
-        return this.contract.events.allEvents({fromBlock: 0, toBlock: 'latest' }, callback);
+    listen(filters: Record<string, unknown> = {}, callback: TransactionCallback): void {
+        return this.contract.events.allEvents({ fromBlock: 0, toBlock: 'latest' }, callback);
     }
 
 }

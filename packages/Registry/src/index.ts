@@ -1,9 +1,10 @@
-import {utf8ToHex, toBN, hexToUtf8, bytesToHex, hexToBytes, toHex } from 'web3-utils';
-import {BaseContract } from '@zapjs/basecontract';
-import {Curve, CurveType } from '@zapjs/curve';
-import {InitProvider, InitCurve, NextEndpoint, EndpointParams, SetProviderParams, SetProviderTitle, Endpoint,
-    Filter, txid, address, NetworkProviderOptions, DEFAULT_GAS, NULL_ADDRESS, TransactionCallback } from '@zapjs/types';
-import {resolveAny} from 'dns';
+import { utf8ToHex, toBN, hexToUtf8, bytesToHex, hexToBytes, toHex } from 'web3-utils';
+import { BaseContract } from '@zapjs/basecontract';
+import { Curve } from '@zapjs/curve';
+import {
+    InitProvider, InitCurve, NextEndpoint, EndpointParams, SetProviderParams, SetProviderTitle, Endpoint,
+    Filter, txid, address, NetworkProviderOptions, DEFAULT_GAS, NULL_ADDRESS, TransactionCallback
+} from '@zapjs/types';
 
 /**
  * Manage Providers and Curves registration
@@ -17,8 +18,8 @@ export class ZapRegistry extends BaseContract {
      * @param {any} networkProvider Ethereum network provider (e.g. Infura)
      * @example new ZapRegistry({networkId : 42, networkProvider : web3})
      */
-    constructor(obj ?: NetworkProviderOptions){
-        super(Object.assign(obj, {artifactName: 'REGISTRY' }));
+    constructor(obj?: NetworkProviderOptions) {
+        super(Object.assign(obj, { artifactName: 'REGISTRY' }));
     }
 
     /*************************** REGISTRY STORAGE CALLS FOR ALL PROVIDER *************************/
@@ -36,7 +37,7 @@ export class ZapRegistry extends BaseContract {
      * @param index
      * @returns Promise<address> address of indexed provider
      */
-    async getProviderAddressByIndex(index:number|string):Promise<address>{
+    async getProviderAddressByIndex(index: number | string): Promise<address> {
         return await this.contract.methods.getOracleAddress(index).call();
     }
 
@@ -52,11 +53,11 @@ export class ZapRegistry extends BaseContract {
      * @param {()=>void} cb - Callback for transactionHash event
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-    async initiateProvider({public_key, title, from, gas = DEFAULT_GAS }:InitProvider, cb?: TransactionCallback): Promise<txid>{
+    async initiateProvider({ public_key, title, from, gas = DEFAULT_GAS }: InitProvider, cb?: TransactionCallback): Promise<txid> {
         const promiEvent = this.contract.methods.initiateProvider(
             toBN(public_key).toString(),
             utf8ToHex(title))
-            .send({from, gas });
+            .send({ from, gas });
         if (cb) {
             promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
             promiEvent.on('error', (error: any) => cb(error));
@@ -70,8 +71,8 @@ export class ZapRegistry extends BaseContract {
      * @param {address} provider - The address of this provider
      * @returns {Promise<number>} Returns a Promise that will eventually resolve into public key number
      */
-    async getProviderPublicKey(provider:address):Promise<number|string>{
-        const pubKey:string = await this.contract.methods.getProviderPublicKey(provider).call();
+    async getProviderPublicKey(provider: address): Promise<number | string> {
+        const pubKey: string = await this.contract.methods.getProviderPublicKey(provider).call();
         return pubKey.valueOf(); //string
     }
 
@@ -80,7 +81,7 @@ export class ZapRegistry extends BaseContract {
      * @param {address} provider The address of this provider
      * @returns {Promise<string>} Returns a Promise that will eventually resolve into a title string
      */
-    async getProviderTitle(provider:address):Promise<string>{
+    async getProviderTitle(provider: address): Promise<string> {
         const title = await this.contract.methods.getProviderTitle(provider).call();
         return hexToUtf8(title);
     }
@@ -92,8 +93,8 @@ export class ZapRegistry extends BaseContract {
     * @param {()=>void} cb - Callback for transactionHash event
     * @returns {Promise<string>} Transaction hash
     */
-    async setProviderTitle({from, title, gas = DEFAULT_GAS }:SetProviderTitle, cb?: TransactionCallback):Promise<txid>{
-        const promiEvent = this.contract.methods.setProviderTitle(utf8ToHex(title)).send({from: from, gas });
+    async setProviderTitle({ from, title, gas = DEFAULT_GAS }: SetProviderTitle, cb?: TransactionCallback): Promise<txid> {
+        const promiEvent = this.contract.methods.setProviderTitle(utf8ToHex(title)).send({ from: from, gas });
         if (cb) {
             promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
             promiEvent.on('error', (error: any) => cb(error, null));
@@ -108,8 +109,8 @@ export class ZapRegistry extends BaseContract {
      * @param {address} provider The address of this provider
      * @returns {Promise<boolean>} Returns a Promise that will eventually resolve a true/false value.
      */
-    async isProviderInitiated(provider:address):Promise<boolean> {
-        const created:boolean = await this.contract.methods.isProviderInitiated(provider);
+    async isProviderInitiated(provider: address): Promise<boolean> {
+        const created: boolean = await this.contract.methods.isProviderInitiated(provider);
         return created;
     }
 
@@ -161,8 +162,8 @@ export class ZapRegistry extends BaseContract {
         let endpoints = await this.contract.methods.getProviderEndpoints(provider).call();
         const validEndpoints = [];
         endpoints = endpoints.map(hexToUtf8);
-        for (const e of endpoints){
-            if (e != ''){
+        for (const e of endpoints) {
+            if (e != '') {
                 validEndpoints.push(e);
             }
         }
@@ -184,13 +185,13 @@ export class ZapRegistry extends BaseContract {
      * @param {()=>void} cb - Callback for transactionHash event
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-    async initiateProviderCurve({endpoint, term, broker = NULL_ADDRESS, from, gasPrice, gas = DEFAULT_GAS }:InitCurve, cb?: TransactionCallback):Promise<txid> {
-        const hex_term:string[] = [];
-        for (const i in term){
+    async initiateProviderCurve({ endpoint, term, broker = NULL_ADDRESS, from, gasPrice, gas = DEFAULT_GAS }: InitCurve, cb?: TransactionCallback): Promise<txid> {
+        const hex_term: string[] = [];
+        for (const i in term) {
             hex_term[i] = toHex(term[i]);
         }
         const promiEvent = this.contract.methods.initiateProviderCurve(utf8ToHex(endpoint), hex_term, broker)
-            .send({from, gas, gasPrice });
+            .send({ from, gas, gasPrice });
         if (cb) {
             promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
             promiEvent.on('error', (error: any) => cb(error));
@@ -206,8 +207,8 @@ export class ZapRegistry extends BaseContract {
      * @param {()=>void} cb - Callback for transactionHash event
      * @returns {Promise<txid>} Transaction Hash
      */
-    async clearEndpoint({endpoint, from, gasPrice, gas = DEFAULT_GAS }:Endpoint, cb?: TransactionCallback):Promise<txid>{
-        const promiEvent = this.contract.methods.clearEndpoint(utf8ToHex(endpoint)).send({from, gas, gasPrice });
+    async clearEndpoint({ endpoint, from, gasPrice, gas = DEFAULT_GAS }: Endpoint, cb?: TransactionCallback): Promise<txid> {
+        const promiEvent = this.contract.methods.clearEndpoint(utf8ToHex(endpoint)).send({ from, gas, gasPrice });
         if (cb) {
             promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
             promiEvent.on('error', (error: any) => cb(error));
@@ -222,12 +223,12 @@ export class ZapRegistry extends BaseContract {
      * @param {string} endpoint Data endpoint of the provider
      * @returns {Promise<CurveType>} Returns a Promise that will eventually resolve into a Curve object
      */
-    async getProviderCurve(provider:string, endpoint:string):Promise<Curve>{
-        const term:string[] = await this.contract.methods.getProviderCurve(
+    async getProviderCurve(provider: string, endpoint: string): Promise<Curve> {
+        const term: string[] = await this.contract.methods.getProviderCurve(
             provider,
             utf8ToHex(endpoint)
         ).call();
-        return new Curve(term.map((i:string)=>{ return parseInt(i); }));
+        return new Curve(term.map((i: string) => { return parseInt(i); }));
     }
 
     /**
@@ -240,12 +241,12 @@ export class ZapRegistry extends BaseContract {
      * @param {()=>void} cb - Callback for transactionHash event
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-    async setEndpointParams({endpoint, endpoint_params = [], from, gasPrice, gas = DEFAULT_GAS }:EndpointParams, cb?:TransactionCallback): Promise<txid>{
+    async setEndpointParams({ endpoint, endpoint_params = [], from, gasPrice, gas = DEFAULT_GAS }: EndpointParams, cb?: TransactionCallback): Promise<txid> {
         const params = ZapRegistry.encodeParams(endpoint_params);
         const promiEvent = this.contract.methods.setEndpointParams(
             utf8ToHex(endpoint),
             params
-        ).send({from, gas, gasPrice });
+        ).send({ from, gas, gasPrice });
         if (cb) {
             promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
             promiEvent.on('error', (error: any) => cb(error));
@@ -261,7 +262,7 @@ export class ZapRegistry extends BaseContract {
      * @returns {Promise<address>} Returns a Promise of broker's address or Null_address if there is
      * no broker for this endpoint
      */
-    async getEndpointBroker(provider:address, endpoint:string):Promise<string>{
+    async getEndpointBroker(provider: address, endpoint: string): Promise<string> {
         const broker = await this.contract.methods.getEndpointBroker(provider, utf8ToHex(endpoint)).call();
         return hexToUtf8(broker);
     }
@@ -272,8 +273,8 @@ export class ZapRegistry extends BaseContract {
      * @param {string} endpoint - Endpoint's string
      * @returns {Promise<boolean>} Returns a Promise of a true/false value.
      */
-    async isEndpointSet(provider:address, endpoint:string):Promise<boolean> {
-        const unset:boolean = await this.contract.methods.getCurveUnset(provider, utf8ToHex(endpoint)).call();
+    async isEndpointSet(provider: address, endpoint: string): Promise<boolean> {
+        const unset: boolean = await this.contract.methods.getCurveUnset(provider, utf8ToHex(endpoint)).call();
         return !unset;
     }
 
@@ -283,7 +284,7 @@ export class ZapRegistry extends BaseContract {
      * @param {string} endpoint Data endpoint of the provider
      * @returns {Promise<string>} Returns a Promise of the endpoint's all params
      */
-    async getEndpointParams({provider, endpoint }:NextEndpoint): Promise<string[]>{
+    async getEndpointParams({ provider, endpoint }: NextEndpoint): Promise<string[]> {
         const params: string[] = await this.contract.methods.getEndpointParams(
             provider,
             utf8ToHex(endpoint)
@@ -364,7 +365,7 @@ export class ZapRegistry extends BaseContract {
      * Listen to all Registry contract events
      * @param {()=>void} callback Callback function that is called whenever an event is emitted
      */
-    async listen(callback:()=>void):Promise<void>{
+    async listen(callback: () => void): Promise<void> {
         this.contract.events.allEvents(callback);
     }
 
@@ -373,7 +374,7 @@ export class ZapRegistry extends BaseContract {
      * @param filters : {provider:address,title:bytes32}
      * @param callback function
      */
-    async listenNewProvider(filters:Filter = {}, callback:TransactionCallback):Promise<void>{
+    async listenNewProvider(filters: Filter = {}, callback: TransactionCallback): Promise<void> {
         this.contract.events.NewProvider(filters, callback);
     }
 
@@ -382,7 +383,7 @@ export class ZapRegistry extends BaseContract {
      * @param filters : {provider:address, endpoint:bytes32, curve:int[], broker:address}
      * @param callback
      */
-    async listenNewCurve(filters:Filter, callback:TransactionCallback):Promise<void>{
+    async listenNewCurve(filters: Filter, callback: TransactionCallback): Promise<void> {
         this.contract.events.NewCurve(filters, callback);
     }
 

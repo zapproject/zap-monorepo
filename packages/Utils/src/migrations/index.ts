@@ -1,14 +1,12 @@
 
-const {readdirSync, readFileSync, writeFileSync, unlinkSync, existsSync, mkdirSync} = require('fs');
-import {join, basename} from 'path';
+const { readdirSync, readFileSync, writeFileSync, unlinkSync, existsSync, mkdirSync } = require('fs');
+import { join, basename } from 'path';
 import ganache from 'ganache-cli';
-import { ethers } from "ethers";
-import {Artifacts} from '@zapjs/artifacts';
 import { promisify } from 'util';
-import {ganacheServerOptions, DEFAULT_GAS, GAS_PRICE, buildOptions, migrate} from '../constants';
-import {serverOptionsType, buildOptionsType} from '../types';
+import { ganacheServerOptions, DEFAULT_GAS, GAS_PRICE, buildOptions, migrate } from '../constants';
+import { serverOptionsType, buildOptionsType } from '../types';
 const asyncMigrate = promisify(migrate.run);
-async function sleep(ms:number){ return new Promise(resolve=>setTimeout(resolve, ms)); }
+async function sleep(ms: number) { return new Promise(resolve => setTimeout(resolve, ms)); }
 
 
 /**
@@ -16,7 +14,7 @@ async function sleep(ms:number){ return new Promise(resolve=>setTimeout(resolve,
  * @param _serverOptions
  * @returns {Promise<any>}
  */
-export async function startGanacheServer(_serverOptions ?: any){
+export async function startGanacheServer(_serverOptions?: any) {
     try {
         const serverOptions = _serverOptions || ganacheServerOptions;
         const flag = await isPortTaken(serverOptions.port);
@@ -25,9 +23,9 @@ export async function startGanacheServer(_serverOptions ?: any){
             ganacheServer.listen(serverOptions.port);
             return ganacheServer;
         }
-    } catch (e){
+    } catch (e) {
         console.error('Failed to start ganache sever, retrying ');
-        setTimeout(()=>{ startGanacheServer(_serverOptions); }, 1000);
+        setTimeout(() => { startGanacheServer(_serverOptions); }, 1000);
     }
 }
 
@@ -49,8 +47,8 @@ const isPortTaken = (port) => {
  * @param {boolean} onlyRemoveNetworks
  * @param {string} buildDir
  */
-export function clearBuild(onlyRemoveNetworks = true, buildDir:string) {
-    if (!existsSync(buildDir)){
+export function clearBuild(onlyRemoveNetworks = true, buildDir: string) {
+    if (!existsSync(buildDir)) {
         mkdirSync(buildDir);
     }
     const files = readdirSync(buildDir + '');
@@ -63,13 +61,13 @@ export function clearBuild(onlyRemoveNetworks = true, buildDir:string) {
                 continue;
             }
             compiledJson.networks = {};
-            writeFileSync(filePath, JSON.stringify(compiledJson), {flag: 'w'});
+            writeFileSync(filePath, JSON.stringify(compiledJson), { flag: 'w' });
         } else {
             try {
-                if (filePath.endsWith('.json')){
+                if (filePath.endsWith('.json')) {
                     unlinkSync(filePath);
                 }
-            } catch (e){ console.error(e); }
+            } catch (e) { console.error(e); }
         }
     }
 }
@@ -79,9 +77,9 @@ export function clearBuild(onlyRemoveNetworks = true, buildDir:string) {
  * @param {string} buildDir
  * @returns {any}
  */
-export function getArtifacts(buildDir:string){
-    const artifacts:any = {};
-    readdirSync(buildDir).forEach(function (file:string) {
+export function getArtifacts(buildDir: string) {
+    const artifacts: any = {};
+    readdirSync(buildDir).forEach(function (file: string) {
 
         /* If its the current file ignore it */
         if (!file.endsWith('.json')) return;
@@ -99,11 +97,11 @@ export function getArtifacts(buildDir:string){
  * @param {serverOptionsType} _serverOptions
  * @returns {Promise<boolean>}
  */
-export async function migrateContracts(buildDir:string, _serverOptions ?:serverOptionsType) {
+export async function migrateContracts(buildDir: string, _serverOptions?: serverOptionsType) {
     console.log('Begin contract migration');
 
     const serverOpts = _serverOptions || ganacheServerOptions;
-    const buildOpts:buildOptionsType = buildOptions;
+    const buildOpts: buildOptionsType = buildOptions;
     buildOpts.contracts_build_directory = buildDir;
     const options = Object.assign(serverOpts, buildOpts);
     try {

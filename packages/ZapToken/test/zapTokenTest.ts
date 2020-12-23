@@ -1,32 +1,31 @@
-import {Utils} from '@zapjs/utils';
+import { Utils } from '@zapjs/utils';
 
 const expect = require('chai')
     .use(require('chai-as-promised'))
     .use(require('chai-bignumber'))
     .expect;
 
-import {ZapToken} from '../src';
-import {join} from 'path';
+import { ZapToken } from '../src';
+import { join } from 'path';
 const Web3 = require('web3');
-const BigNumber = require('bignumber.js');
 
-async function configureEnvironment(func:Function) {
+async function configureEnvironment(func: Function) {
     await func();
 }
 describe('ZapToken, path to "/src/api/contracts/ZapToken"', () => {
-    let addressZapToken:string,
-        accounts:Array<string> = [],
-        zapTokenWrapper:any,
-        ganacheServer:any,
-        web3:any,
-        testArtifacts:any,
-        buildDir:string = join(__dirname, 'contracts'),
-        zapTokenOwner:string;
+    let addressZapToken: string,
+        accounts: Array<string> = [],
+        zapTokenWrapper: any,
+        ganacheServer: any,
+        web3: any,
+        testArtifacts: any,
+        buildDir: string = join(__dirname, 'contracts'),
+        zapTokenOwner: string;
     const allocateAmount = '1000';
 
 
     before(function (done) {
-        configureEnvironment(async() => {
+        configureEnvironment(async () => {
             ganacheServer = await Utils.startGanacheServer();
             web3 = new Web3(Utils.Constants.ganacheProvider);
             accounts = await web3.eth.getAccounts();
@@ -37,7 +36,7 @@ describe('ZapToken, path to "/src/api/contracts/ZapToken"', () => {
         });
     });
 
-    after(function(){
+    after(function () {
         console.log('Done running Token tests');
         process.exit();
     });
@@ -46,7 +45,8 @@ describe('ZapToken, path to "/src/api/contracts/ZapToken"', () => {
         zapTokenWrapper = new ZapToken({
             artifactsDir: buildDir,
             networkId: Utils.Constants.ganacheServerOptions.network_id,
-            networkProvider: Utils.Constants.ganacheProvider});
+            networkProvider: Utils.Constants.ganacheProvider
+        });
         await Utils.delay(3000);
         expect(zapTokenWrapper).to.be.ok;
         zapTokenOwner = await zapTokenWrapper.getContractOwner();
@@ -80,7 +80,8 @@ describe('ZapToken, path to "/src/api/contracts/ZapToken"', () => {
         await zapTokenWrapper.allocate({
             to: accounts[1],
             from: zapTokenOwner,
-            amount: allocateAmount}, (err: any, txid: string) => expect(txid).to.be.a('string'));
+            amount: allocateAmount
+        }, (err: any, txid: string) => expect(txid).to.be.a('string'));
         const balance = await zapTokenWrapper.balanceOf(accounts[1]);
         await expect(balance).to.be.equal(allocateAmount);
     });

@@ -1,4 +1,4 @@
-export const Artifacts :{[index:string]:any} = {
+export const Artifacts: { [index: string]: any } = {
     'ARBITER': require('../contracts/Arbiter.json'),
     'BONDAGE': require('../contracts/Bondage.json'),
     'DISPATCH': require('../contracts/Dispatch.json'),
