@@ -10,7 +10,7 @@ This repository provides wrapper classes for data subscribers subscribers to int
 What things you need to install the software and how to install them
 
 ```
-- Nodejs and npm>=6.1.11
+- Node 12.20 <=14.15
 - Typescript
 ```
 

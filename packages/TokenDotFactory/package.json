@@ -1,12 +1,15 @@
 {
   "name": "@zapjs/tokendot",
   "private": false,
-  "version": "2.2.2",
+  "version": "3.0.1",
   "description": "",
   "repository": "https://github.com/zapproject/Zap-monorepo",
-  "main": "lib/src/index.js",
-  "types": "lib/src/types.d.ts",
-  "typings": "lib/src",
+  "engines": {
+    "node": ">=12.20 <=14.15"
+  },
+  "main": "lib/index.js",
+  "types": "lib/types.d.ts",
+  "typings": "lib",
   "scripts": {
     "build": "tsc",
     "test": "mocha $PKG -r ts-node/register test/*.ts --serial --bail --exit",
@@ -16,33 +19,35 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@zapjs/artifacts": "^2.2.1",
-    "@zapjs/basecontract": "^2.2.1",
-    "@zapjs/bondage": "^2.2.2",
-    "@zapjs/curve": "^2.2.1",
-    "@zapjs/dispatch": "^2.2.2",
-    "@zapjs/provider": "^2.2.2",
-    "@zapjs/registry": "^2.2.2",
-    "@zapjs/types": "^2.2.1",
-    "@zapjs/zaptoken": "^2.2.2",
-    "bignumber.js": "^7.2.1",
-    "web3-utils": "1.0.0-beta.37"
+    "@zapjs/artifacts": "^3.0.1",
+    "@zapjs/basecontract": "^3.0.1",
+    "@zapjs/bondage": "^3.0.1",
+    "@zapjs/curve": "^3.0.1",
+    "@zapjs/dispatch": "^3.0.1",
+    "@zapjs/provider": "^3.0.1",
+    "@zapjs/registry": "^3.0.1",
+    "@zapjs/types": "^3.0.1",
+    "@zapjs/zaptoken": "^3.0.1",
+    "bn.js": "^5.1.3",
+    "web3-utils": "^1.3.1"
   },
   "devDependencies": {
+    "@truffle/environment": "^0.2.38",
     "@types/chai": "^4.1.5",
     "@types/mocha": "^5.2.4",
-    "@types/node": "^10.10.3",
-    "@zapjs/utils": "^2.2.1",
+    "@types/node": "^14.14.14",
+    "@zapjs/utils": "^3.0.1",
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
     "chai-bignumber": "^2.0.2",
+    "ethers": "^5.0.24",
     "make-promises-safe": "^1.1.0",
     "mocha": "^5.2.0",
     "npm-run-all": "^4.1.3",
     "path": "^0.12.7",
     "ts-node": "^7.0.1",
     "tslint": "^5.10.0",
-    "typescript": "^2.9.2",
-    "web3": "1.0.0-beta.37"
+    "typescript": "^4.1.3",
+    "web3": "^1.3.1"
   }
 }

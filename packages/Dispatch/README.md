@@ -5,7 +5,7 @@ This repository provides an interface to the Zap Dispatch contract, enabling que
 ### Prerequisites
 
 ```
-- Nodejs and npm>=6.1.11
+- Node 12.20 <=14.15
 - Typescript
 ```
 

@@ -1,3 +1,5 @@
+[![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lerna.js.org/)
+
 # ZAP
 ZAP Oracles (introduction here)
 # ZAP-Monorepo
@@ -5,16 +7,15 @@ ZAP Oracles (introduction here)
 This repository provides Interface to Zap contracts and tools to use Zap platform with Javascript projects
 Each package is a public npm module that serve developer's needs to intergrate Zap platform
 
-## Getting Started
+# Development
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes
 
 ### Prerequisites
 
 ```
-- Nodejs and npm>=6.1.11
+- Nodejs and npm>=12.20 <=14
 - Lerna
-- Typescript
 ```
 
 ### Installing
@@ -22,9 +23,11 @@ These instructions will get you a copy of the project up and running on your loc
 - Installs lerna (used for package bundling) and typescript, as well as all build dependencies.
 
 ```
-npm install lerna typescript
-npm install
+npm i
+npm run setup
 ```
+- Log into npm registry :
+` npm login`
 
 
 ## Running build and tests
@@ -47,15 +50,14 @@ npm run test
 - Developing in single package
 
 ```
-cd packages/{package_name}
-npm run build
-npm run test
+npx lerna run build --scope={package name}
 ```
+- Example: `npx lerna run build --scope=@zapjs/registry`
 
 - Running build and test
 
 ```
-npm run run_test
+npx lerna run run_test
 ```
 ## Packages
 

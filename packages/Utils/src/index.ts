@@ -1,8 +1,8 @@
-import {ZapProviderType} from "./types";
-import {clearBuild, getArtifacts, migrateContracts, startGanacheServer} from "./migrations";
-import BigNumber from "bignumber.js";
-const {utf8ToHex,fromWei,toWei} = require("web3-utils");
-const Web3 = require("web3")
+import {ZapProviderType} from './types';
+import {clearBuild, getArtifacts, migrateContracts, startGanacheServer} from './migrations';
+import BigNumber from 'bignumber.js';
+const {utf8ToHex, fromWei, toWei} = require('web3-utils');
+const Web3 = require('web3');
 /**
  * @class
  * Utils
@@ -19,7 +19,7 @@ export class Utils {
             hex += '' + str.charCodeAt(i).toString(16);
         }
         return `0x${hex}`;
-    };
+    }
 
     /**
      *
@@ -27,14 +27,14 @@ export class Utils {
      * @returns {Buffer}
      */
     static getHexBuffer(specifier: string) {
-        return new Buffer(specifier, 'hex')
-    };
+        return new Buffer(specifier, 'hex');
+    }
 
     static getHexString(str: string) {
         const data = new Buffer(str);
         const hex = data.toString('hex');
         return `0x${hex}`;
-    };
+    }
 
     /**
      *@ignore
@@ -50,7 +50,7 @@ export class Utils {
             };
         }
         return contract;
-    };
+    }
 
     /**
      * Delay async
@@ -64,7 +64,7 @@ export class Utils {
      * @returns {any}
      */
     static toZapBase(num: number|string|BigNumber) {
-        return toWei(num)
+        return toWei(num);
     }
 
     /**
@@ -73,7 +73,7 @@ export class Utils {
      * @returns {number}
      */
     static fromZapBase(num: number|string):number {
-        return fromWei(num)
+        return fromWei(num);
     }
 
     /**
@@ -82,12 +82,12 @@ export class Utils {
      * @returns {ZapProviderType}
      */
     static normalizeProvider(provider: ZapProviderType): ZapProviderType {
-        let normalize: any = {};
+        const normalize: any = {};
         normalize.title = utf8ToHex(provider.title);
         normalize.pubkey = provider.pubkey;
         normalize.endpoint = utf8ToHex(provider.endpoint);
         normalize.endpoint_params = [];
-        for (let i in provider.endpoint_params) {
+        for (const i in provider.endpoint_params) {
             normalize.endpoint_params[i] = utf8ToHex(provider.endpoint_params[i]);
         }
         return normalize;
@@ -106,12 +106,12 @@ export class Utils {
         instance = this.fixTruffleContractCompatibilityIssue(instance);
         return instance;
     }
-    static getArtifacts = getArtifacts
-    static migrateContracts = migrateContracts
-    static clearBuild = clearBuild
-    static  startGanacheServer = startGanacheServer;
+    static getArtifacts = getArtifacts;
+    static migrateContracts = migrateContracts;
+    static clearBuild = clearBuild;
+    static startGanacheServer = startGanacheServer;
     //===CONSTANTS===//
-    static Constants = require("./constants")
+    static Constants = require('./constants');
 
 
 

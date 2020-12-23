@@ -11,23 +11,21 @@ These instructions will get you a copy of the project up and running on your loc
 What things you need to install the software and how to install them
 
 ```
-- Nodejs and npm>=6.1.11
+- Node 12.20 <=14.15
 - Lerna
-- Typescript
 ```
 
 ### Installing
 
 
 ```
-npm install -g lerna typescript
 npm i
 ```
 
-- Bootstrap lerna with --hoist option
+- Bootstrap lerna 
 
 ```
-lerna bootstrap --hoist
+lerna bootstrap
 ```
 
 

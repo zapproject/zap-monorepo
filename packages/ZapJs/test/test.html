@@ -1,23 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <script src = "../dist/zapjs.js"></script>
-    <script async>
-        async function getProvider() {
-          let provider = new zapjs.ZapProvider("0x6bfbde5507141eef1ce15f9b74bc05fcebe18aa3", {
-            networkId: 42,
-            networkProvider: web3.currentProvider
-          })
-          let curve = await provider.getCurve('btcprice')//.then(console.log).catch(console.error)
-          alert(curve.values)
-        }
-     </script>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="../dist/zapjs.js"></script>
+  <script async>
+    async function getProvider() {
+      let provider = new ZapProvider("0x4d25fAF5c0f7faD9AbaADf03E37676F537C7a7fb", {
+        networkId: 42,
+        networkProvider: ethereum
+      })
+      // let curve = await provider.getCurve('btcprice')//.then(console.log).catch(console.error)
+      let title = await provider.getTitle()
+      console.log("title", title)
+      alert(title)
+    }
+  </script>
 </head>
+
 <body>
-<div id="main">
-</div>
-<button onclick="getProvider()">Get Provider</button>
+  <div id="main">
+  </div>
+  <button onclick="getProvider()">Get Provider</button>
 </body>
+
 </html>

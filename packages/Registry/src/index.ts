@@ -1,13 +1,15 @@
-const {utf8ToHex, toBN, hexToUtf8, bytesToHex, hexToBytes,toHex} = require("web3-utils");
-import {BaseContract} from "@zapjs/basecontract";
-import {Curve,CurveType} from "@zapjs/curve";
-import {InitProvider, InitCurve, NextEndpoint, EndpointParams, SetProviderParams, SetProviderTitle,Endpoint,
-    Filter, txid,address,NetworkProviderOptions,DEFAULT_GAS,NULL_ADDRESS} from "@zapjs/types";
+import { utf8ToHex, toBN, hexToUtf8, bytesToHex, hexToBytes, toHex } from 'web3-utils';
+import { BaseContract } from '@zapjs/basecontract';
+import { Curve } from '@zapjs/curve';
+import {
+    InitProvider, InitCurve, NextEndpoint, EndpointParams, SetProviderParams, SetProviderTitle, Endpoint,
+    Filter, txid, address, NetworkProviderOptions, DEFAULT_GAS, NULL_ADDRESS, TransactionCallback
+} from '@zapjs/types';
 
 /**
  * Manage Providers and Curves registration
  */
- export class ZapRegistry extends BaseContract {
+export class ZapRegistry extends BaseContract {
 
     /**
      * @extends BaseContract
@@ -16,8 +18,8 @@ import {InitProvider, InitCurve, NextEndpoint, EndpointParams, SetProviderParams
      * @param {any} networkProvider Ethereum network provider (e.g. Infura)
      * @example new ZapRegistry({networkId : 42, networkProvider : web3})
      */
-    constructor(obj ?: NetworkProviderOptions){
-        super(Object.assign(obj,{artifactName:"REGISTRY"}));
+    constructor(obj?: NetworkProviderOptions) {
+        super(Object.assign(obj || {}, { artifactName: 'REGISTRY' }));
     }
 
     /*************************** REGISTRY STORAGE CALLS FOR ALL PROVIDER *************************/
@@ -26,7 +28,7 @@ import {InitProvider, InitCurve, NextEndpoint, EndpointParams, SetProviderParams
      * Get all providers in Registry contract.
      * @returns {Promise<Object>} Returns a Promise that will eventually resolve into list of oracles
      */
-    async getAllProviders(): Promise<Object> {
+    async getAllProviders(): Promise<Record<string, any>> {
         return await this.contract.methods.getAllOracles().call();
     }
 
@@ -35,7 +37,7 @@ import {InitProvider, InitCurve, NextEndpoint, EndpointParams, SetProviderParams
      * @param index
      * @returns Promise<address> address of indexed provider
      */
-    async getProviderAddressByIndex(index:number|string):Promise<address>{
+    async getProviderAddressByIndex(index: number | string): Promise<address> {
         return await this.contract.methods.getOracleAddress(index).call();
     }
 
@@ -48,14 +50,14 @@ import {InitProvider, InitCurve, NextEndpoint, EndpointParams, SetProviderParams
      * @param {string} i.title - A descriptor describing what data this oracle provides
      * @param {address} i.from - Ethereum Address of the account that is initializing this provider
      * @param {BigNumber} i.gas - Sets the gas limit for this transaction (optional)
-     * @param {Function} cb - Callback for transactionHash event
+     * @param {()=>void} cb - Callback for transactionHash event
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-    async initiateProvider({public_key, title, from, gas=DEFAULT_GAS}:InitProvider, cb?: Function): Promise<txid>{
+    async initiateProvider({ public_key, title, from, gas = DEFAULT_GAS }: InitProvider, cb?: TransactionCallback): Promise<txid> {
         const promiEvent = this.contract.methods.initiateProvider(
             toBN(public_key).toString(),
             utf8ToHex(title))
-        .send({from,gas});
+            .send({ from, gas });
         if (cb) {
             promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
             promiEvent.on('error', (error: any) => cb(error));
@@ -69,8 +71,8 @@ import {InitProvider, InitCurve, NextEndpoint, EndpointParams, SetProviderParams
      * @param {address} provider - The address of this provider
      * @returns {Promise<number>} Returns a Promise that will eventually resolve into public key number
      */
-    async getProviderPublicKey(provider:address):Promise<number|string>{
-        let pubKey:string =  await this.contract.methods.getProviderPublicKey(provider).call();
+    async getProviderPublicKey(provider: address): Promise<number | string> {
+        const pubKey: string = await this.contract.methods.getProviderPublicKey(provider).call();
         return pubKey.valueOf(); //string
     }
 
@@ -79,23 +81,23 @@ import {InitProvider, InitCurve, NextEndpoint, EndpointParams, SetProviderParams
      * @param {address} provider The address of this provider
      * @returns {Promise<string>} Returns a Promise that will eventually resolve into a title string
      */
-    async getProviderTitle(provider:address):Promise<string>{
-        let title = await this.contract.methods.getProviderTitle(provider).call();
-        return hexToUtf8(title)
+    async getProviderTitle(provider: address): Promise<string> {
+        const title = await this.contract.methods.getProviderTitle(provider).call();
+        return hexToUtf8(title);
     }
 
     /**
     * Set new provider's title.
     * @param {address} provider The address of this provider
     * @param {string} title The new title of this provider
-    * @param {Function} cb - Callback for transactionHash event
+    * @param {()=>void} cb - Callback for transactionHash event
     * @returns {Promise<string>} Transaction hash
     */
-    async setProviderTitle({from,title,gas=DEFAULT_GAS}:SetProviderTitle, cb?: Function):Promise<txid>{
-        const promiEvent = this.contract.methods.setProviderTitle(utf8ToHex(title)).send({from:from,gas});
+    async setProviderTitle({ from, title, gas = DEFAULT_GAS }: SetProviderTitle, cb?: TransactionCallback): Promise<txid> {
+        const promiEvent = this.contract.methods.setProviderTitle(utf8ToHex(title)).send({ from: from, gas });
         if (cb) {
             promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
-            promiEvent.on('error', (error: any) => cb(error));
+            promiEvent.on('error', (error: any) => cb(error, null));
         }
 
         return promiEvent;
@@ -107,8 +109,8 @@ import {InitProvider, InitCurve, NextEndpoint, EndpointParams, SetProviderParams
      * @param {address} provider The address of this provider
      * @returns {Promise<boolean>} Returns a Promise that will eventually resolve a true/false value.
      */
-    async isProviderInitiated(provider:address):Promise<boolean> {
-        const created:boolean = await this.contract.methods.isProviderInitiated(provider);
+    async isProviderInitiated(provider: address): Promise<boolean> {
+        const created: boolean = await this.contract.methods.isProviderInitiated(provider);
         return created;
     }
 
@@ -121,7 +123,7 @@ import {InitProvider, InitCurve, NextEndpoint, EndpointParams, SetProviderParams
      * @param {BN} s.gas - The amount of gas to use.
      * @returns {Promise<txid>} Transaction hash
      */
-    async setProviderParameter({ key, value, from, gas=DEFAULT_GAS }: SetProviderParams): Promise<txid> {
+    async setProviderParameter({ key, value, from, gas = DEFAULT_GAS }: SetProviderParams): Promise<txid> {
         return await this.contract.methods.setProviderParameter(
             utf8ToHex(key),
             utf8ToHex(value)
@@ -147,8 +149,8 @@ import {InitProvider, InitCurve, NextEndpoint, EndpointParams, SetProviderParams
      * @returns {Promise<string[]>} A promise that will be resolved with all the keys
      */
     async getAllProviderParams(provider: address): Promise<string[]> {
-        const allParams = await this.contract.methods.getAllProviderParams(provider).call()
-        return allParams
+        const allParams = await this.contract.methods.getAllProviderParams(provider).call();
+        return allParams;
     }
 
     /**
@@ -158,14 +160,14 @@ import {InitProvider, InitCurve, NextEndpoint, EndpointParams, SetProviderParams
      */
     async getProviderEndpoints(provider: address): Promise<string[]> {
         let endpoints = await this.contract.methods.getProviderEndpoints(provider).call();
-        let validEndpoints = []
-        endpoints = endpoints.map(hexToUtf8)
-        for(let e of endpoints){
-            if(e!=''){
-                validEndpoints.push(e)
+        const validEndpoints = [];
+        endpoints = endpoints.map(hexToUtf8);
+        for (const e of endpoints) {
+            if (e != '') {
+                validEndpoints.push(e);
             }
         }
-        return validEndpoints
+        return validEndpoints;
     }
 
 
@@ -180,17 +182,16 @@ import {InitProvider, InitCurve, NextEndpoint, EndpointParams, SetProviderParams
      * @param {address} i.broker - The address allowed to bond/unbond. If 0, any address allowed
      * @param {address} i.from - The address of the owner of this oracle
      * @param {BigNumber} i.gas - Sets the gas limit for this transaction (optional)
-     * @param {Function} cb - Callback for transactionHash event
+     * @param {()=>void} cb - Callback for transactionHash event
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-    async initiateProviderCurve({endpoint, term, broker=NULL_ADDRESS, from, gasPrice, gas=DEFAULT_GAS}:InitCurve, cb?: Function):Promise<txid> {
-        let hex_term:string[] = []
-        for(let i in term){
-          hex_term[i] = toHex(term[i])
+    async initiateProviderCurve({ endpoint, term, broker = NULL_ADDRESS, from, gasPrice, gas = DEFAULT_GAS }: InitCurve, cb?: TransactionCallback): Promise<txid> {
+        const hex_term: string[] = [];
+        for (const i in term) {
+            hex_term[i] = toHex(term[i]);
         }
-        console.log("term;",term)
         const promiEvent = this.contract.methods.initiateProviderCurve(utf8ToHex(endpoint), hex_term, broker)
-            .send({from, gas, gasPrice});
+            .send({ from, gas, gasPrice });
         if (cb) {
             promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
             promiEvent.on('error', (error: any) => cb(error));
@@ -203,11 +204,11 @@ import {InitProvider, InitCurve, NextEndpoint, EndpointParams, SetProviderParams
      * Clear endpoint
      * @param {string} from The address of this provider
      * @param {string} endpoint Data endpoint of the provider
-     * @param {Function} cb - Callback for transactionHash event
+     * @param {()=>void} cb - Callback for transactionHash event
      * @returns {Promise<txid>} Transaction Hash
      */
-    async clearEndpoint({endpoint,from,gasPrice,gas=DEFAULT_GAS}:Endpoint, cb?: Function):Promise<txid>{
-        const promiEvent = this.contract.methods.clearEndpoint(utf8ToHex(endpoint)).send({from,gas,gasPrice})
+    async clearEndpoint({ endpoint, from, gasPrice, gas = DEFAULT_GAS }: Endpoint, cb?: TransactionCallback): Promise<txid> {
+        const promiEvent = this.contract.methods.clearEndpoint(utf8ToHex(endpoint)).send({ from, gas, gasPrice });
         if (cb) {
             promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
             promiEvent.on('error', (error: any) => cb(error));
@@ -222,12 +223,12 @@ import {InitProvider, InitCurve, NextEndpoint, EndpointParams, SetProviderParams
      * @param {string} endpoint Data endpoint of the provider
      * @returns {Promise<CurveType>} Returns a Promise that will eventually resolve into a Curve object
      */
-    async getProviderCurve(provider:string,endpoint:string):Promise<Curve>{
-        const term:string[] =  await this.contract.methods.getProviderCurve(
+    async getProviderCurve(provider: string, endpoint: string): Promise<Curve> {
+        const term: string[] = await this.contract.methods.getProviderCurve(
             provider,
             utf8ToHex(endpoint)
         ).call();
-        return new Curve(term.map((i:string)=>{return parseInt(i)}))
+        return new Curve(term.map((i: string) => { return parseInt(i); }));
     }
 
     /**
@@ -237,21 +238,21 @@ import {InitProvider, InitCurve, NextEndpoint, EndpointParams, SetProviderParams
      * @param {string[]} e.endpoint_params - The parameters that this endpoint accepts as query arguments
      * @param {address} e.from - The address of the owner of this oracle
      * @param {BigNumber} e.gas - Sets the gas limit for this transaction (optional)
-     * @param {Function} cb - Callback for transactionHash event
+     * @param {()=>void} cb - Callback for transactionHash event
      * @returns {Promise<txid>} Returns a Promise that will eventually resolve into a transaction hash
      */
-    async setEndpointParams({endpoint, endpoint_params = [], from, gasPrice,gas=DEFAULT_GAS}:EndpointParams, cb?: Function): Promise<txid>{
-      const params = ZapRegistry.encodeParams(endpoint_params);
-      const promiEvent = this.contract.methods.setEndpointParams(
+    async setEndpointParams({ endpoint, endpoint_params = [], from, gasPrice, gas = DEFAULT_GAS }: EndpointParams, cb?: TransactionCallback): Promise<txid> {
+        const params = ZapRegistry.encodeParams(endpoint_params);
+        const promiEvent = this.contract.methods.setEndpointParams(
             utf8ToHex(endpoint),
             params
-        ).send({from, gas, gasPrice});
-      if (cb) {
-          promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
-          promiEvent.on('error', (error: any) => cb(error));
-      }
+        ).send({ from, gas, gasPrice });
+        if (cb) {
+            promiEvent.on('transactionHash', (transactionHash: string) => cb(null, transactionHash));
+            promiEvent.on('error', (error: any) => cb(error));
+        }
 
-      return promiEvent;
+        return promiEvent;
     }
 
     /**
@@ -261,8 +262,8 @@ import {InitProvider, InitCurve, NextEndpoint, EndpointParams, SetProviderParams
      * @returns {Promise<address>} Returns a Promise of broker's address or Null_address if there is
      * no broker for this endpoint
      */
-    async getEndpointBroker(provider:address, endpoint:string ):Promise<string>{
-        let broker =  await this.contract.methods.getEndpointBroker(provider, utf8ToHex(endpoint)).call();
+    async getEndpointBroker(provider: address, endpoint: string): Promise<string> {
+        const broker = await this.contract.methods.getEndpointBroker(provider, utf8ToHex(endpoint)).call();
         return hexToUtf8(broker);
     }
 
@@ -272,8 +273,8 @@ import {InitProvider, InitCurve, NextEndpoint, EndpointParams, SetProviderParams
      * @param {string} endpoint - Endpoint's string
      * @returns {Promise<boolean>} Returns a Promise of a true/false value.
      */
-    async isEndpointSet(provider:address, endpoint:string):Promise<boolean> {
-        const unset:boolean = await this.contract.methods.getCurveUnset(provider, utf8ToHex(endpoint)).call();
+    async isEndpointSet(provider: address, endpoint: string): Promise<boolean> {
+        const unset: boolean = await this.contract.methods.getCurveUnset(provider, utf8ToHex(endpoint)).call();
         return !unset;
     }
 
@@ -283,7 +284,7 @@ import {InitProvider, InitCurve, NextEndpoint, EndpointParams, SetProviderParams
      * @param {string} endpoint Data endpoint of the provider
      * @returns {Promise<string>} Returns a Promise of the endpoint's all params
      */
-    async getEndpointParams({provider, endpoint}:NextEndpoint): Promise<string[]>{
+    async getEndpointParams({ provider, endpoint }: NextEndpoint): Promise<string[]> {
         const params: string[] = await this.contract.methods.getEndpointParams(
             provider,
             utf8ToHex(endpoint)
@@ -309,8 +310,8 @@ import {InitProvider, InitCurve, NextEndpoint, EndpointParams, SetProviderParams
             const chunksLength = Math.ceil((el.length + 2) / 32);
             const paramBytesWithLength = [0, chunksLength].concat(el);
             for (let i = 0; i < chunksLength; i++) {
-                let start = i * 32;
-                let end = start + 32;
+                const start = i * 32;
+                const end = start + 32;
                 params.push(bytesToHex(paramBytesWithLength.slice(start, end)));
             }
         });
@@ -327,7 +328,7 @@ import {InitProvider, InitCurve, NextEndpoint, EndpointParams, SetProviderParams
         const params: string[] = [];
         let i = 0;
         const len = bytesParams.length;
-        while(i < len) {
+        while (i < len) {
             // check if the first byte is 0, the second byte is number and is larger than 1 (chuncks count), and the length must be 32 bytes
             const isStartOfChunks = bytesParams[i][0] === 0 && bytesParams[i][1] > 1 && bytesParams[i].length === 32;
             if (!isStartOfChunks) {
@@ -336,7 +337,7 @@ import {InitProvider, InitCurve, NextEndpoint, EndpointParams, SetProviderParams
                 continue;
             }
             const chunksLength = bytesParams[i][1];
-            let end = i + chunksLength;
+            const end = i + chunksLength;
             // strip zero byte and chunks length from the beginning
             let bytes = bytesParams[i].slice(2);
             i++;
@@ -349,7 +350,7 @@ import {InitProvider, InitCurve, NextEndpoint, EndpointParams, SetProviderParams
         return params.map(hex => {
             try {
                 return hexToUtf8(hex);
-            } catch(e) {
+            } catch (e) {
                 console.log(e);
             }
             return hex;
@@ -362,9 +363,9 @@ import {InitProvider, InitCurve, NextEndpoint, EndpointParams, SetProviderParams
 
     /**
      * Listen to all Registry contract events
-     * @param {Function} callback Callback function that is called whenever an event is emitted
+     * @param {()=>void} callback Callback function that is called whenever an event is emitted
      */
-    async listen(callback:Function):Promise<void>{
+    async listen(callback: () => void): Promise<void> {
         this.contract.events.allEvents(callback);
     }
 
@@ -373,7 +374,7 @@ import {InitProvider, InitCurve, NextEndpoint, EndpointParams, SetProviderParams
      * @param filters : {provider:address,title:bytes32}
      * @param callback function
      */
-    async listenNewProvider(filters:Filter={}, callback:Function):Promise<void>{
+    async listenNewProvider(filters: Filter = {}, callback: TransactionCallback): Promise<void> {
         this.contract.events.NewProvider(filters, callback);
     }
 
@@ -382,7 +383,7 @@ import {InitProvider, InitCurve, NextEndpoint, EndpointParams, SetProviderParams
      * @param filters : {provider:address, endpoint:bytes32, curve:int[], broker:address}
      * @param callback
      */
-    async listenNewCurve(filters:Filter, callback:Function):Promise<void>{
+    async listenNewCurve(filters: Filter, callback: TransactionCallback): Promise<void> {
         this.contract.events.NewCurve(filters, callback);
     }
 

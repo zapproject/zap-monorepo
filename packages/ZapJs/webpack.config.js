@@ -3,7 +3,7 @@ const path = require("path")
 module.exports = {
     entry: {
         "zapjs": "./src/index.ts"
-       // "zapjs.min": "./src/index.ts"
+        // "zapjs.min": "./src/index.ts"
     },
     output: {
         path: path.resolve(__dirname, 'dist'),

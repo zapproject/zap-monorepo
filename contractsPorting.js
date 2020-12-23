@@ -1,7 +1,7 @@
 let path = require("path")
 let fs = require("fs")
 let zapContracts = require("zap_contracts")
-console.log(zapContracts)
+// console.log(zapContracts)
 // let Artifacts = fs.readdirSync(__dirname)
 // for(let n of Artifacts){
 //     if(n=="index.ts") continue

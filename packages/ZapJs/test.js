@@ -1,2 +1,2 @@
-let zapjs = require("./src")
-console.log("zapjs :", zapjs )
+let zapjs = require('./src');
+console.log('zapjs :', zapjs);

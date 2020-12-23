@@ -1,11 +1,14 @@
 {
   "extends": "../../tsconfig",
   "compilerOptions": {
-    "target":"es6",
-    "outDir": "lib"
+    "outDir": "lib",
+    "sourceMap": true
   },
-  "include": ["./src/**/*","./src/typings.d.ts","./src/contracts/*", "./test/*"],
-  "exclude":[
+  "include": [
+    "./src/*"
+  ],
+  "exclude": [
+    "./test/**/*",
     "node_modules"
   ]
 }

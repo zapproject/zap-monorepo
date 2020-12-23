@@ -1,12 +1,15 @@
 {
   "name": "@zapjs/arbiter",
   "private": false,
-  "version": "2.2.2",
+  "version": "3.0.1",
   "description": "Zap Arbiter",
-  "main": "lib/src/index.js",
+  "engines": {
+    "node": ">=12.20 <=14.15"
+  },
+  "main": "lib/index.js",
   "repository": "https://github.com/zapproject/Zap-monorepo",
-  "type": "lib/src/types.d.ts",
-  "typings": "lib/src",
+  "type": "lib/types.d.ts",
+  "typings": "lib",
   "scripts": {
     "build": "tsc --module commonjs",
     "test": "mocha  -r ts-node/register test/*.ts --serial --bail --exit",
@@ -16,16 +19,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@zapjs/basecontract": "^2.2.1",
-    "@zapjs/types": "^2.2.1",
-    "web3-utils": "1.0.0-beta.37"
+    "@zapjs/basecontract": "^3.0.1",
+    "@zapjs/types": "^3.0.1",
+    "web3-utils": "^1.3.1"
   },
   "devDependencies": {
     "@types/chai": "^4.1.5",
     "@types/mocha": "^5.2.4",
-    "@types/node": "^10.10.3",
-    "@zapjs/utils": "^2.2.1",
-    "bignumber.js": "^7.2.1",
+    "@types/node": "^14.14.14",
+    "@zapjs/utils": "^3.0.1",
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
     "chai-bignumber": "^2.0.2",
@@ -33,8 +35,7 @@
     "mocha": "^5.2.0",
     "npm-run-all": "^4.1.3",
     "ts-node": "^7.0.1",
-    "tslint": "^5.10.0",
-    "typescript": "^2.9.2",
-    "web3": "1.0.0-beta.37"
+    "typescript": "^4.1.3",
+    "web3": "^1.3.1"
   }
 }
