@@ -213,6 +213,9 @@
     },
     "42": {
       "address": "0xdbcac7c8bcca78fb05e96d0d2c68efb1c5922539"
+    },
+    "31337": {
+      "address": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0"
     }
   }
 }
