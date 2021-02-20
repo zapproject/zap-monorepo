@@ -16,7 +16,7 @@
     "@zapjs/provider": "^3.0.1",
     "@zapjs/registry": "^3.0.1",
     "@zapjs/subscriber": "^3.0.1",
-    "@zapjs/tokendot": "^3.0.1",
+    "@zapjs/tokendot": "3.0.1",
     "@zapjs/types": "^3.0.1",
     "@zapjs/zaptoken": "^3.0.1",
     "web3": "^1.3.1"
