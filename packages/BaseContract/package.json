@@ -1,7 +1,7 @@
 {
   "name": "@zapjs/basecontract",
   "private": false,
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "",
   "engines": {
     "node": ">=12.20 <=14.15"
@@ -19,8 +19,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@zapjs/artifacts": "^3.0.1",
-    "@zapjs/types": "^3.0.1",
+    "@zapjs/artifacts": "^3.0.2",
+    "@zapjs/types": "^3.0.2",
     "web3": "^1.3.1"
   },
   "devDependencies": {
