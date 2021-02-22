@@ -36,6 +36,7 @@ npm run setup
   node_modules folder, and compiles all Typescript files.
 
 ```
+npm i @zapjs/tokendot
 npm run build
 
 ```
